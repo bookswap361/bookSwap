@@ -1,0 +1,19 @@
+{
+  "name": "bookswap",
+  "version": "1.0.0",
+  "description": "bookswap application for cs361",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bookswap361/bookSwap"
+  },
+  "author": "Team Bound Together",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "path": "^0.12.7"
+  }
+}
