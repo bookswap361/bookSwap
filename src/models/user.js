@@ -12,7 +12,7 @@ User.getAllUsers = function() {
 
 User.getUserById = function(id) {
     return new Promise(function(resolve, reject) {
-        mysql.query(queryParam("userById", id), [])
+        mysql.query(getQuery("userById", id), [id])
             .then(resolve)
             .catch(reject);
     })
@@ -24,20 +24,12 @@ function getQuery(type) {
         case "allUsers":
             query = "SELECT * from user;"
             break;
-    }
-
-    return query;
-};
-
-function queryParam(type, param) {
-    var query = "";
-    switch(type) {
         case "userById":
-            query = "SELECT * from user WHERE user_id = " + param;
+            query = "SELECT * from user WHERE user_id = ?";
             break;
     }
 
     return query;
-}
+};
 
 module.exports = User;
