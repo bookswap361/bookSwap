@@ -12,7 +12,7 @@ User.getAllUsers = function() {
 
 User.getUserById = function(id) {
     return new Promise(function(resolve, reject) {
-        mysql.query(getQuery("userById", id), [id])
+        mysql.query(getQuery("userById"), [id])
             .then(resolve)
             .catch(reject);
     })
