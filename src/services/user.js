@@ -17,4 +17,12 @@ UserServices.getUserById = function(id) {
     });
 };
 
+UserServices.createUser = function(body) {
+    return new Promise(function(resolve, reject) {
+        UserModel.createUser(body)
+            .then(resolve)
+            .catch(reject);
+    });
+};
+
 module.exports = UserServices;
