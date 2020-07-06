@@ -13,6 +13,7 @@ var settings = function(app) {
     app.set("view engine", "handlebars");
     app.use("/", require("../api/pages"));
     app.use("/book", require("../api/book"));
+    app.use("/user", require("../api/user"));
 };
 
 module.exports = settings;
