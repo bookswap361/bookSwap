@@ -25,7 +25,7 @@ function getQuery(type) {
             query = "SELECT * from user;"
             break;
     }
-    
+
     return query;
 };
 
