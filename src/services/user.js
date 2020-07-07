@@ -1,5 +1,7 @@
 var UserModel = require("../models/user");
+var bcrypt = require('bcryptjs');
 var UserServices = {};
+
 
 UserServices.getAllUsers = function() {
     return new Promise(function(resolve, reject) {
@@ -27,17 +29,26 @@ UserServices.getUserByEmail = function(body) {
 
 UserServices.createUser = function(body) {
     return new Promise(function(resolve, reject) {
-        UserModel.createUser(body)
-            .then(resolve)
-            .catch(reject);
+        bcrypt.hash(body.password, 10, function(err, hash) {
+            UserModel.createUser(body, hash)
+                .then(resolve)
+                .catch(reject);
+        });
     });
 };
 
 UserServices.verifyLogin = function(body) {
     return new Promise(function(resolve, reject) {
-        UserModel.verifyLogin(body)
-            .then(resolve)
-            .catch(reject);
+        UserModel.getUserByEmail(body)
+            .then(function(user) {
+                bcrypt.compare(body.password, user[0].password, function( err, result) {
+                    if (result == true) {
+                        resolve(result);
+                    } else {
+                        reject();
+                    }
+                })
+            })
     });
 };
 
