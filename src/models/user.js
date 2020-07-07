@@ -1,5 +1,5 @@
 var mysql = require("../loaders/mysql");
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 const { response } = require("express");
 const e = require("express");
 var User = {};
