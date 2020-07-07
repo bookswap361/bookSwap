@@ -9,9 +9,17 @@ Swap.getAllSwaps = function() {
     });
 }
 
-Swap.getSwapById = function() {
+Swap.getSwapById = function(id) {
     return new Promise(function(resolve, reject) {
         mysql.query(getQuery("swapById"), [id])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+Swap.deleteSwap = function(id) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("deleteSwap"), [id])
             .then(resolve)
             .catch(reject);
     });
@@ -26,6 +34,9 @@ function getQuery(type) {
         case "swapById":
             query = "SELECT * FROM swap WHERE swap_id = ?;"
             break;
+        case "deleteSwap":
+            query = "DELETE FROM swap WHERE swap_id = ?;"
+            break;        
     }
 
     return query;

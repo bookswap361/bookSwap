@@ -11,7 +11,7 @@ SwapServices.getAllSwaps = function() {
     });
 }
 
-SwapServices.getSwapById = function() {
+SwapServices.getSwapById = function(id) {
     return new Promise(function(resolve, reject){
         SwapModel.getSwapById()
             .then(resolve)
@@ -19,17 +19,17 @@ SwapServices.getSwapById = function() {
     });
 }
 
-SwapServices.deleteSwap = function() {
+SwapServices.deleteSwap = function(id) {
     return new Promise(function(resolve, reject){
-        SwapModel.deleteSwap()
+        SwapModel.deleteSwap(id)
             .then(resolve)
             .catch(reject);
     });
 }
 
-SwapServices.updateSwap = function(){
+SwapServices.updateSwap = function(id){
     return new Promise(function(resolve, reject){
-        SwapModel.updateSwap()
+        SwapModel.updateSwap(id)
             .then(resolve)
             .catch(reject);
     });  

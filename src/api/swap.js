@@ -7,18 +7,16 @@ router.get("/", function(req, res){
         .then(function(result) {
             res.json({"payload": result});
         }).catch(function(err) {
-            console.error(err);
-            res.send("Error");
+            res.status(400).json({"error": err});
         });
 })
 
 router.get("/:id", function(req, res){
-    SwapServices.getSwapById()
+    SwapServices.getSwapById(req.params.id)
         .then(function(result) {
             res.json({"payload": result});
         }).catch(function(err) {
-            console.error(err);
-            res.send("Error");
+            res.status(400).json({"error": err});
         });
 })
 
@@ -27,18 +25,16 @@ router.post("/:id", function(req, res){
         .then(function(result) {
             res.send("Add Book Swap to Selected Book");
         }).catch(function(err) {
-            console.error(err);
-            res.send("Error");
+            res.status(400).json({"error": err});
         });
 })
 
 router.post("/:id", function(req, res){
-    SwapServices.deleteSwap()
+    SwapServices.deleteSwap(req.params.id)
     .then(function(result) {
         res.send("Delete Book Swap");
     }).catch(function(err) {
-        console.error(err);
-        res.send("Error");
+        res.status(400).json({"error": err});
     });
 })
 
@@ -47,8 +43,7 @@ router.put("/:id", function(req, res){
     .then(function(result) {
         res.send("Update the swap progress");
     }).catch(function(err) {
-        console.error(err);
-        res.send("Error");
+        res.status(400).json({"error": err});
     });
 })
 
