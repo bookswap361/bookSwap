@@ -2,3 +2,4 @@
 /.vs
 *.log
 .env
+*.DS_Store
