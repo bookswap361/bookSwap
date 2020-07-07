@@ -1,5 +1,4 @@
 var mysql = require("../loaders/mysql");
-var bcrypt = require('bcryptjs');
 var User = {};
 
 
