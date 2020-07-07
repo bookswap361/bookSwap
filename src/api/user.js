@@ -26,6 +26,19 @@ router.route("/create")
             });
     })
 
+router.route("/login")
+    .post(function(req, res) {
+        UserServices.verifyLogin(req.body)
+            .then(function(result) {
+                if (result) {
+                    res.redirect('/account');
+                }
+            })
+            .catch(function(err) {
+                res.redirect('/about');
+            });
+    })
+
 router.route("/:id")
     .get(function(req, res) {
         UserServices.getUserById(req.params.id)
