@@ -3,21 +3,25 @@ var User = {};
 
 
 User.getAllUsers = function() {
-    return mysql.query(getQuery("allUsers"), [])
+    return mysql.query(getQuery("allUsers"), []);
 }
 
 User.getUserById = function(id) {
-    return mysql.query(getQuery("userById"), [id])
+    return mysql.query(getQuery("userById"), [id]);
 }
 
 User.getUserByEmail = function(body) {
-    return mysql.query(getQuery("userByEmail"), [body.email])
+    return mysql.query(getQuery("userByEmail"), [body.email]);
 }
 
 User.createUser = function(body, hash) {
     return mysql.query(getQuery("createUser"), 
         [body.first_name, body.last_name,
-            body.email, body.address, hash])
+            body.email, body.address, hash]);
+}
+
+User.deleteUser = function(body) {
+    return mysql.query(getQuery("deleteUser"), [body.email]);
 }
 
 function getQuery(type) {
@@ -39,6 +43,10 @@ function getQuery(type) {
 
         case "userByEmail":
             query = "SELECT * from user WHERE email = ?";
+            break;
+
+        case "deleteUser":
+            query = "DELETE from user WHERE email = ?";
             break;
     }
 

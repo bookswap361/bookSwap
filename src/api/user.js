@@ -26,6 +26,19 @@ router.route("/create")
             });
     })
 
+router.route("/delete")
+    .post(function(req, res) {
+        UserServices.deleteUser(req.body)
+            .then(function(result) {
+                if (result) {
+                    res.redirect('/home');
+                }
+            })
+            .catch(function(err) {
+                res.redirect('/about');
+            });
+    })
+
 router.route("/login")
     .post(function(req, res) {
         UserServices.verifyLogin(req.body)

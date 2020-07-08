@@ -27,6 +27,14 @@ UserServices.getUserByEmail = function(body) {
     });
 };
 
+UserServices.deleteUser = function(body) {
+    return new Promise(function(resolve, reject) {
+        UserModel.deleteUser(body)
+            .then(resolve)
+            .catch(reject);
+    });
+};
+
 UserServices.createUser = function(body) {
     return new Promise(function(resolve, reject) {
         bcrypt.hash(body.password, 10, function(err, hash) {
