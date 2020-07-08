@@ -52,6 +52,15 @@ router.put("/completed-swaps", function(req, res){
     });
 })
 
+router.put("/swap-by-traded-to", function(req, res){
+    SwapServices.getSwapByTradedTo()
+    .then(function(result) {
+        res.render("swap", {"payload": result});
+    }).catch(function(err) {
+        res.status(400).json({"error": err});
+    });
+})
+
 /* Will need updated once page layout is finished */
 router.route("/get_swap_by_traded_by")
     .post(function(req, res) {

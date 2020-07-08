@@ -34,10 +34,17 @@ Swap.getSwapById = function(id) {
     });
 }
 
-
 Swap.getCompletedSwaps = function(id) {
     return new Promise(function(resolve, reject) {
         mysql.query(getQuery("completedSwaps"), [id])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+Swap.getSwapByTradedTo = function(id) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("getSwapByTradedTo"), [id])
             .then(resolve)
             .catch(reject);
     });
@@ -139,6 +146,9 @@ function getQuery(type) {
             break;
         case "getSwapByTradedBy":
             query = "SELECT traded_by, status_id FROM swap WHERE traded_by = ?;"
+            break;
+        case "getSwapByTradedTo":
+            query = "SELECT traded_to, status_id FROM swap WHERE traded_to = ?;"
             break;
         case "createSwap":
             query = "INSERT INTO swap \
