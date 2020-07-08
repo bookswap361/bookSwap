@@ -59,7 +59,7 @@ router.route("/get_swap_by_traded_by")
                 }
             })
             .catch(function(err) {
-                res.status(400).json({"error: err"});
+                res.status(400).json({ "error": err });
             });
 })
 
@@ -74,7 +74,7 @@ router.route("/create_swap")
                 }
             })
             .catch(function(err) {
-                res.status(400).json({"error: err"});
+                res.status(400).json({"error": err});
             });
 })
 
@@ -89,7 +89,7 @@ router.route("/update_swap_accepted")
                 }
             })
             .catch(function(err) {
-                res.status(400).json({"error: err"});
+                res.status(400).json({"error": err});
             });
 })
 
@@ -104,7 +104,7 @@ router.route("/update_swap_ship_date")
                 }
             })
             .catch(function(err) {
-                res.status(400).json({"error: err"});
+                res.status(400).json({"error": err});
             });
 })
 
@@ -119,7 +119,7 @@ router.route("/update_swap_received_date")
                 }
             })
             .catch(function(err) {
-                res.status(400).json({"error: err"});
+                res.status(400).json({"error": err});
             });
 })
 
@@ -134,7 +134,7 @@ router.route("/update_swap_status_id")
                 }
             })
             .catch(function(err) {
-                res.status(400).json({"error: err"});
+                res.status(400).json({"error": err});
             });
 })
 
