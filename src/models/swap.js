@@ -1,6 +1,23 @@
 var mysql = require("../loaders/mysql");
 var Swap = {};
 
+// For testing:
+Swap.createTable = function() {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("createTable"), [])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+Swap.deleteTable = function(id) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("deleteTable"),)
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
 Swap.getAllSwaps = function() {
     return new Promise(function(resolve, reject) {
         mysql.query(getQuery("allSwaps"), [])
@@ -81,6 +98,28 @@ Swap.deleteSwap = function(id) {
 function getQuery(type) {
     var query = "";
     switch(type) {
+        case "createTable":
+            query = `CREATE TABLE swap (
+            swap_id int(11) UNIQUE NOT NULL AUTO_INCREMENT,
+            list_id int(11) NOT NULL,
+            traded_to int(11) NOT NULL,
+            traded_by int(11) NOT NULL,
+            is_accepted boolean DEFAULT 0,
+            request_date date NOT NULL,
+            approve_date date DEFAULT NULL,
+            reject_date date DEFAULT NULL,
+            ship_date date DEFAULT NULL,
+            lost_date date DEFAULT NULL,
+            received_date date DEFAULT NULL,
+            refund_date date DEFAULT NULL,
+            has_claim boolean DEFAULT 0,
+            claim_open_date date DEFAULT NULL,
+            claim_settle_date date DEFAULT NULL,
+            is_complete boolean DEFAULT 0,
+            PRIMARY KEY (swap_id)
+            ) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=latin1;`
+            break;
+
         case "allSwaps":
             query = "SELECT * FROM swap;"
             break;
@@ -111,6 +150,9 @@ function getQuery(type) {
         case "deleteSwap":
             query = "DELETE FROM swap WHERE swap_id = ?;"
             break;        
+        case "deleteTable":
+            query = "DROP TABLE IF EXISTS swap;"
+            break;       
     }
 
     return query;

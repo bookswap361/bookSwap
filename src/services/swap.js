@@ -3,6 +3,24 @@ var BookModel = require("../models/book");
     SwapModel = require("../models/swap");
 var SwapServices = {};
 
+
+// For testing:
+SwapServices.createTable = function() {
+    return new Promise(function(resolve, reject){
+        SwapModel.createTable()
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+SwapServices.deleteTable = function(id) {
+    return new Promise(function(resolve, reject){
+        SwapModel.deleteTable(id)
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
 SwapServices.getAllSwaps = function() {
     return new Promise(function(resolve, reject){
         SwapModel.getAllSwaps()
