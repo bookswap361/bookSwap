@@ -2,24 +2,11 @@ var express = require("express");
 var router = express.Router()
 var SwapServices = require("../services/swap");
 
-// For my testing (Haven't created other tables in my DB yet, so model query has no FK)
-router.get("/reset-table", function(req, res){
-    SwapServices.deleteTable()
-        .then(function(result){
-            SwapServices.createTable();
-        })
-        .then(function(result) {
-            res.render("swap", { "payload": "Table Has Been Reset"} );
-        }).catch(function(err) {
-            res.status(400).json({"error": err});
-        });
-})
-//
-
 router.get("/", function(req, res){
     SwapServices.getAllSwaps()
         .then(function(result) {
-            res.render("swap", {"payload": result});
+            console.log(result);
+            res.render("swap", {"swaps": result});
         }).catch(function(err) {
             res.status(400).json({"error": err});
         });

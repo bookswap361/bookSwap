@@ -7,6 +7,11 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
+table, th, td {
+  border: 1px solid black;
+  padding: 5px;
+}
+
 .topHeader {
   background-color: #F8F3EA;
   padding-bottom: 6px;
@@ -51,3 +56,4 @@ body {
 .container-fluid *{
   align-items: flex-start;
 }
+

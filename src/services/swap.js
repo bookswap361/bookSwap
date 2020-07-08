@@ -3,27 +3,21 @@ var BookModel = require("../models/book");
     SwapModel = require("../models/swap");
 var SwapServices = {};
 
-
-// For testing:
-SwapServices.createTable = function() {
-    return new Promise(function(resolve, reject){
-        SwapModel.createTable()
-            .then(resolve)
-            .catch(reject);
-    });
-}
-
-SwapServices.deleteTable = function(id) {
-    return new Promise(function(resolve, reject){
-        SwapModel.deleteTable(id)
-            .then(resolve)
-            .catch(reject);
-    });
-}
-
 SwapServices.getAllSwaps = function() {
     return new Promise(function(resolve, reject){
         SwapModel.getAllSwaps()
+            .then(function(results){
+                var allSwaps = [];
+                results.forEach(function(swapItem) {
+                    allSwaps.push({
+                      "swap_id": swapItem.swap_id,
+                      "traded_by": swapItem.traded_by,
+                      "traded_to": swapItem.traded_to,
+                      "is_complete": swapItem.is_complete
+                  });
+                })
+                return allSwaps;
+            })
             .then(resolve)
             .catch(reject);
     });
