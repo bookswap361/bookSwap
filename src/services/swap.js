@@ -1,5 +1,5 @@
 var BookModel = require("../models/book");
-    UserModel = require("../models/swap");
+    UserModel = require("../models/user");
     SwapModel = require("../models/swap");
 var SwapServices = {};
 
@@ -14,6 +14,54 @@ SwapServices.getAllSwaps = function() {
 SwapServices.getSwapById = function(id) {
     return new Promise(function(resolve, reject){
         SwapModel.getSwapById()
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+SwapServices.getSwapByTradedBy = function(user_id) {
+    return new Promise(function(resolve, reject){
+        SwapModel.getSwapByTradedBy(user_id)
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+SwapServices.createSwap = function(info) {
+    return new Promise(function(resolve, reject) {
+        SwapModel.createSwap(info)
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+SwapServices.updateSwapAccepted = function(info) {
+    return new Promise(function(resolve, reject) {
+        SwapModel.updateSwapAccepted(info)
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+SwapServices.updateSwapShipDate = function(info) {
+    return new Promise(function(resolve, reject) {
+        SwapModel.updateSwapShipDate(info)
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+SwapServices.updateSwapReceivedDate = function(info) {
+    return new Promise(function(resolve, reject) {
+        SwapModel.updateSwapReceivedDate(info)
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+SwapServices.updateSwapStatusId = function(info) {
+    return new Promise(function(resolve, reject) {
+        SwapModel.updateSwapStatusId(info)
             .then(resolve)
             .catch(reject);
     });

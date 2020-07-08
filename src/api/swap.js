@@ -47,4 +47,95 @@ router.put("/:id", function(req, res){
     });
 })
 
+/* Will need updated once page layout is finished */
+router.route("/get_swap_by_traded_by")
+    .post(function(req, res) {
+        console.log("Retrieving swap information...");
+        SwapServices.getSwapByTradedBy(req.body)
+            .then(function(result) {
+                if (result) {
+                    res.redirect('/account');
+                    console.log("Success: Swap Information Retrieved");
+                }
+            })
+            .catch(function(err) {
+                res.status(400).json({"error: err"});
+            });
+})
+
+router.route("/create_swap")
+    .post(function(req, res) {
+        console.log("Creating swap...");
+        SwapServices.createSwap(req.body)
+            .then(function(result) {
+                if (result) {
+                    res.redirect('/account');
+                    console.log("Success: Swap Created");
+                }
+            })
+            .catch(function(err) {
+                res.status(400).json({"error: err"});
+            });
+})
+
+router.route("/update_swap_accepted")
+    .post(function(req, res) {
+        console.log("Updating swap information...");
+        SwapServices.updateSwapAccepted(req.body)
+            .then(function(result) {
+                if (result) {
+                    res.redirect('/account');
+                    console.log("Success: Swap Accepted");
+                }
+            })
+            .catch(function(err) {
+                res.status(400).json({"error: err"});
+            });
+})
+
+router.route("/update_swap_ship_date")
+    .post(function(req, res) {
+        console.log("Updating Shipped Date of swap...");
+        SwapServices.updateSwapShipDate(req.body)
+            .then(function(result) {
+                if (result) {
+                    res.redirect('/account');
+                    console.log("Success: Shipped Date Updated");
+                }
+            })
+            .catch(function(err) {
+                res.status(400).json({"error: err"});
+            });
+})
+
+router.route("/update_swap_received_date")
+    .post(function(req, res) {
+        console.log("Updating Received Date of swap...");
+        SwapServices.updateSwapReceivedDate(req.body)
+            .then(function(result) {
+                if (result) {
+                    res.redirect('/account');
+                    console.log("Success: Received Date Updated");
+                }
+            })
+            .catch(function(err) {
+                res.status(400).json({"error: err"});
+            });
+})
+
+router.route("/update_swap_status_id")
+    .post(function(req, res) {
+        console.log("Updating Status of swap...");
+        SwapServices.updateSwapStatusId(req.body)
+            .then(function(result) {
+                if (result) {
+                    res.redirect('/account');
+                    console.log("Success: Status Updated");
+                }
+            })
+            .catch(function(err) {
+                res.status(400).json({"error: err"});
+            });
+})
+
 module.exports = router;
