@@ -34,19 +34,19 @@ router.get("/:id", function(req, res){
         });
 })
 
-router.post("/confirm-delete", function(req, res){
-    SwapServices.deleteSwap(req.params.id)
+router.put("/:id", function(req, res){
+    SwapServices.updateSwap()
     .then(function(result) {
-        res.render("swap", {"payload": "Swap for book has been deleted"});
+        res.send("Update the swap progress");
     }).catch(function(err) {
         res.status(400).json({"error": err});
     });
 })
 
-router.put("/:id", function(req, res){
-    SwapServices.updateSwap()
+router.put("/completed-swaps", function(req, res){
+    SwapServices.getCompletedSwaps()
     .then(function(result) {
-        res.send("Update the swap progress");
+        res.render("swap", {"payload": result});
     }).catch(function(err) {
         res.status(400).json({"error": err});
     });
@@ -141,6 +141,15 @@ router.route("/update_swap_status_id")
             .catch(function(err) {
                 res.status(400).json({"error": err});
             });
+})
+
+router.post("/confirm-delete", function(req, res){
+    SwapServices.deleteSwap(req.params.id)
+    .then(function(result) {
+        res.render("swap", {"payload": "Swap for book has been deleted"});
+    }).catch(function(err) {
+        res.status(400).json({"error": err});
+    });
 })
 
 module.exports = router;
