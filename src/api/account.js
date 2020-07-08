@@ -11,7 +11,7 @@ router.route("/")
                 res.render('account', account);
             })
             .catch(function(err) {
-                res.redirect('/about');
+                res.redirect('/');
             });
     })
 

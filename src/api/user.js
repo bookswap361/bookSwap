@@ -22,7 +22,7 @@ router.route("/create")
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                res.redirect('/');
             });
     })
 
@@ -31,11 +31,11 @@ router.route("/delete")
         UserServices.deleteUser(req.body)
             .then(function(result) {
                 if (result) {
-                    res.redirect('/home');
+                    res.redirect('/');
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                res.redirect('/');
             });
     })
 
@@ -48,7 +48,7 @@ router.route("/login")
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                res.redirect('/');
             });
     })
 
