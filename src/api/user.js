@@ -48,8 +48,7 @@ router.route("/login")
                 }
             })
             .catch(function(err) {
-                res.send("Login credentials are incorrect");
-                res.end();
+                res.redirect('/home')
             });
     })
 

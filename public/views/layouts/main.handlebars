@@ -16,10 +16,9 @@
             <div><img src="/imgs/forwordheader.png" id="fwLogo"></div>
             <div class="login">
                 <form id="loginForm" form action="user/login" method="POST">
-                    <input type="text" id="email" placeholder="email" required><input type="password" id="password" placeholder="password" required>
-                    <input id ="submit" type="button" onclick="sendLoginJSON()" value="go!">
+                    <input type="text" name = "email" placeholder="email" required><input type="password" name="password" placeholder="password" required>
+                    <input type="button" onclick="sendLoginJSON()" value="go!">
                 </form>
-                <p class="result"></p>
                 <br>
                 not a member? <a href="#">create an account!</a>
             </div>
