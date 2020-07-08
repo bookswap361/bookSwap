@@ -48,7 +48,7 @@ router.route("/login")
                 }
             })
             .catch(function(err) {
-                res.redirect('/home')
+                res.redirect('/about')
             });
     })
 
