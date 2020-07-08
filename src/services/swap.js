@@ -45,6 +45,14 @@ SwapServices.getCompletedSwaps = function(id) {
     });
 }
 
+SwapServices.getSwapByTradedTo = function(id) {
+    return new Promise(function(resolve, reject){
+        SwapModel.getSwapByTradedTo()
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
 SwapServices.getSwapByTradedBy = function(user_id) {
     return new Promise(function(resolve, reject){
         SwapModel.getSwapByTradedBy(user_id)
