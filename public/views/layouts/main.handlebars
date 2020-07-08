@@ -1,9 +1,53 @@
-<!doctype html>
-<html>
-    <head>
-        <title>BookSwap</title>
-    </head>
-    <body>
-        {{{body}}}
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>forword - BookSwap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/main.css">
+
+</head>
+<body>
+    
+    <div class="container-fluid topHeader">
+        <div class="row">
+            <div><img src="/imgs/forwordheader.png" id="fwLogo"></div>
+            <div class="login">
+                <form>
+                    <input type="text" name="" id="" placeholder="username"><input type="password" name="" id="" placeholder="password">
+                    <input type="submit" value="go!">
+                </form>
+                <br>
+                not a member? <a href="#">create an account!</a>
+            </div>
+        </div>
+    </div>
+        
+
+    <nav class="navbar navbar-light navbar-expand-sm" id="mainNavBar">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBarText"  aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse flex-row justify-content-center" id="navBarText">
+          <ul class="navbar-nav">
+              <li><a href="#" class="nav-link">my account</a></li>
+              <li><a href="#" class="nav-link">swaps</a></li>
+              <li><a href="#" class="nav-link">search books</a></li>
+              <li><a href="#" class="nav-link">search users</a></li>
+              <li><a href="#" class="nav-link">forum</a></li>
+              <li><a href="#" class="nav-link">about?</a></li>
+          </ul>
+      </div>
+    </nav>
+
+    {{{body}}}
+
+    <!-- BootStrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+</body>
 </html>
