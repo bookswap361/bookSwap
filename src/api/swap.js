@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router()
-var SwapServices = require("../services/");
+var SwapServices = require("../services/swap");
 
 router.get("/", function(req, res){
     SwapServices.getAllSwaps()
