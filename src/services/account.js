@@ -8,17 +8,23 @@ var AccountServices = {};
 AccountServices.getAccount = function(id) {
     var p1 = new Promise(function(resolve, reject) {
     UserModel.getUserById(id)
-    .then(resolve)
+    .then(function(user) {
+        resolve(user[0]);
+    })
     .catch(reject);
     });
     var p2 = new Promise(function(resolve, reject) {
     BooksOwnedModel.getBooks(id)
-    .then(resolve)
+    .then(function(books) {
+        resolve({"books": books});
+    })
     .catch(reject);
     });
     var p3 = new Promise(function(resolve, reject) {
     WishListModel.getWishList(id)
-    .then(resolve)
+    .then(function(wishlist) {
+        resolve({"wishlist": wishlist});
+    })
     .catch(reject);
     });
 return Promise.all([p1, p2, p3])
