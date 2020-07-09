@@ -8,7 +8,7 @@ router.route("/")
         id = 1;                                //test variable until sessions are implemented
         AccountServices.getAccount(id)
             .then(function(account) {
-                res.render('account', account[0]);
+                res.render('account', account);
             })
             .catch(function(err) {
                 res.redirect('/about');
