@@ -20,7 +20,7 @@ AccountServices.getAccount = function(id) {
 AccountServices.addBook = function(body, id) {
     return new Promise(function(resolve, reject) {
         BooksOwnedModel.addBook(body);
-        UserModel.updatePoints(id, 1)
+        UserModel.updatePoints(1, id)
             .then(resolve)
             .catch(reject);
     });
