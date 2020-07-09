@@ -6,6 +6,18 @@ var SwapServices = {};
 SwapServices.getAllSwaps = function() {
     return new Promise(function(resolve, reject){
         SwapModel.getAllSwaps()
+            .then(function(results){
+                var allSwaps = [];
+                results.forEach(function(swapItem) {
+                    allSwaps.push({
+                      "swap_id": swapItem.swap_id,
+                      "traded_by": swapItem.traded_by,
+                      "traded_to": swapItem.traded_to,
+                      "is_complete": swapItem.is_complete
+                  });
+                })
+                return allSwaps;
+            })
             .then(resolve)
             .catch(reject);
     });
@@ -14,6 +26,22 @@ SwapServices.getAllSwaps = function() {
 SwapServices.getSwapById = function(id) {
     return new Promise(function(resolve, reject){
         SwapModel.getSwapById()
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+SwapServices.getCompletedSwaps = function(id) {
+    return new Promise(function(resolve, reject){
+        SwapModel.getCompletedSwaps()
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+SwapServices.getSwapByTradedTo = function(id) {
+    return new Promise(function(resolve, reject){
+        SwapModel.getSwapByTradedTo()
             .then(resolve)
             .catch(reject);
     });

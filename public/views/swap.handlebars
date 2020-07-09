@@ -1,0 +1,21 @@
+ALL SWAPS:
+
+<P>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Traded By</th>
+        <th>Traded To</th>
+        <th>Complete</th>
+    </tr>
+
+    {{#each swaps}}
+    <tr>
+        <td>{{swap_id}}</td>
+        <td>{{traded_by}}</td>
+        <td>{{traded_to}}</td>
+        <td>{{is_complete}}</td>
+    </tr>
+    {{/each}}
+</table>

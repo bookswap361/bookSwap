@@ -5,7 +5,8 @@ var SwapServices = require("../services/swap");
 router.get("/", function(req, res){
     SwapServices.getAllSwaps()
         .then(function(result) {
-            res.json({"payload": result});
+            console.log(result);
+            res.render("swap", {"swaps": result});
         }).catch(function(err) {
             res.status(400).json({"error": err});
         });
@@ -14,34 +15,34 @@ router.get("/", function(req, res){
 router.get("/:id", function(req, res){
     SwapServices.getSwapById(req.params.id)
         .then(function(result) {
-            res.json({"payload": result});
+            res.render("swap", {"payload": result});
         }).catch(function(err) {
             res.status(400).json({"error": err});
         });
-})
-
-router.post("/:id", function(req, res){
-    SwapServices.addSwap()
-        .then(function(result) {
-            res.send("Add Book Swap to Selected Book");
-        }).catch(function(err) {
-            res.status(400).json({"error": err});
-        });
-})
-
-router.post("/:id", function(req, res){
-    SwapServices.deleteSwap(req.params.id)
-    .then(function(result) {
-        res.send("Delete Book Swap");
-    }).catch(function(err) {
-        res.status(400).json({"error": err});
-    });
 })
 
 router.put("/:id", function(req, res){
     SwapServices.updateSwap()
     .then(function(result) {
         res.send("Update the swap progress");
+    }).catch(function(err) {
+        res.status(400).json({"error": err});
+    });
+})
+
+router.put("/completed-swaps", function(req, res){
+    SwapServices.getCompletedSwaps()
+    .then(function(result) {
+        res.render("swap", {"payload": result});
+    }).catch(function(err) {
+        res.status(400).json({"error": err});
+    });
+})
+
+router.put("/swap-by-traded-to", function(req, res){
+    SwapServices.getSwapByTradedTo()
+    .then(function(result) {
+        res.render("swap", {"payload": result});
     }).catch(function(err) {
         res.status(400).json({"error": err});
     });
@@ -136,6 +137,15 @@ router.route("/update_swap_status_id")
             .catch(function(err) {
                 res.status(400).json({"error": err});
             });
+})
+
+router.post("/confirm-delete", function(req, res){
+    SwapServices.deleteSwap(req.params.id)
+    .then(function(result) {
+        res.render("swap", {"payload": "Swap for book has been deleted"});
+    }).catch(function(err) {
+        res.status(400).json({"error": err});
+    });
 })
 
 module.exports = router;

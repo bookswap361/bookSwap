@@ -17,6 +17,22 @@ Swap.getSwapById = function(id) {
     });
 }
 
+Swap.getCompletedSwaps = function(id) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("completedSwaps"), [id])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+Swap.getSwapByTradedTo = function(id) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("getSwapByTradedTo"), [id])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
 /* To be used to pull swap information for a particular 'traded_by' user 
 in order to check whether the user has multiple "lost in mail" statuses */
 Swap.getSwapByTradedBy = function(user_id) {
@@ -84,8 +100,17 @@ function getQuery(type) {
         case "allSwaps":
             query = "SELECT * FROM swap;"
             break;
+        case "swapById":
+            query = "SELECT * FROM swap WHERE swap_id = ?;"
+            break;
+        case "completedSwaps":
+            query = "SELECT * FROM swap WHERE is_complete = ?;"
+            break;
         case "getSwapByTradedBy":
             query = "SELECT traded_by, status_id FROM swap WHERE traded_by = ?;"
+            break;
+        case "getSwapByTradedTo":
+            query = "SELECT traded_to, status_id FROM swap WHERE traded_to = ?;"
             break;
         case "createSwap":
             query = "INSERT INTO swap \
@@ -105,12 +130,9 @@ function getQuery(type) {
         case "updateSwapStatusId":
             query = "UPDATE swap SET status_id = ? WHERE swap_id = ?;"
             break;
-        case "swapById":
-            query = "SELECT * FROM swap WHERE swap_id = ?;"
-            break;
         case "deleteSwap":
             query = "DELETE FROM swap WHERE swap_id = ?;"
-            break;        
+            break;    
     }
 
     return query;

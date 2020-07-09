@@ -1,0 +1,25 @@
+<h2>Search OpenLibrary</h2>
+<div class="row">
+    <P>
+        <form>
+            <input type="text" name="searchText" id="searchText">
+            <input type="submit" value="Submit" id="searchSubmit">
+        </form>
+    </P>
+</div>
+
+<span id="loadingText"></span>
+<BR>
+<div class="row hidden" id="resultsDiv">
+    <div class="row">
+        <div id="topImg"></div>
+        <div>
+            <span id="info">
+                <span id="topTitle"></span> by <span id="topAuthor"></span>
+                <P><span id="topGenre"></span></P>
+            </span>
+        </div>
+    </div>
+</div>
+
+<script src="../scripts/searchbook.js"></script>

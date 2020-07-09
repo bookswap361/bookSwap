@@ -7,6 +7,11 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
+table, th, td {
+  border: 1px solid black;
+  padding: 5px;
+}
+
 .topHeader {
   background-color: #F8F3EA;
   padding-bottom: 6px;
@@ -50,4 +55,13 @@ body {
 /* prevent Safari bug that stretches images in fluid containers */
 .container-fluid *{
   align-items: flex-start;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+#info span{
+  margin-left: 5px;
+  margin-right: 5px;
 }
