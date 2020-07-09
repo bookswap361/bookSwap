@@ -6,4 +6,9 @@ router.route("/")
         res.render("about");
     });
 
+router.route("/search")
+    .get(function(req, res) {
+        res.render("search");
+    });
+
 module.exports = router;
