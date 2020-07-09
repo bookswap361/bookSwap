@@ -10,7 +10,11 @@ BooksOwned.addBooks = function(body) {
 }
 
 BooksOwned.deleteBooks = function(body) {
-    return mysql.query(getQuery("deleteBook"), [body.book_id]);
+    return mysql.query(getQuery("deleteBook"), [body.user_id, body.book_id]);
+}
+
+BooksOwned.deleteAllBooks = function(body) {
+    return mysql.query(getQuery("deleteBooksOwned"), [body.user_id]);
 }
 
 
@@ -27,6 +31,9 @@ function getQuery(type) {
             break;
     case "deleteBook":
 	query = "DELETE from books_owned WHERE user_id = ? AND book_id = ?";
+            break;
+    case "deleteAllBooks":
+	query = "DELETE from books_owned WHERE user_id = ?";
             break;
         }
 
