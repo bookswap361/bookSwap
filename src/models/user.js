@@ -23,6 +23,19 @@ User.createUser = function(body, hash) {
 User.deleteUser = function(body) {
     return mysql.query(getQuery("deleteUser"), [body.email]);
 }
+//not sure if this will work, but when it's called by account services or swap services, maybe a number can be specificed for the points?
+//example in Account Services
+User.updatePoints = function(body) {
+    return mysql.query(getQuery("updatePoints"), [number, id]);
+}
+
+User.updateUser = function(body) {
+    return mysql.query(getQuery("updateUser"), [body.first_name, body.last_name, body.email, body.address, body.user_id]);
+}
+
+User.updateLost = function(body) {
+    return mysql.query(getQuery("updateLost"), [number, id]);
+}
 
 function getQuery(type) {
     var query = "";
@@ -47,6 +60,18 @@ function getQuery(type) {
 
         case "deleteUser":
             query = "DELETE from user WHERE email = ?";
+            break;
+
+        case "updateUser":
+            query = "UPDATE user SET first_name = ?, last_name = ?, email = ?, address = ? WHERE user_id = ?";
+            break;
+
+        case "updatePoints":
+            query = "UPDATE user SET points = ? WHERE user_id = ?";
+            break;
+
+        case "updateLost":
+            query = "UPDATE user SET lost_limit_reached = ? WHERE user_id = ?";
             break;
     }
 
