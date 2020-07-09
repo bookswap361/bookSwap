@@ -52,6 +52,11 @@ router.route("/login")
             });
     })
 
+router.route("/signup")
+    .get(function(req, res) {
+        res.render('signup');
+    })
+
 router.route("/:id")
     .get(function(req, res) {
         UserServices.getUserById(req.params.id)

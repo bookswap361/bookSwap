@@ -6,7 +6,7 @@ var path = require("path");
 
 var settings = function(app) {
     app.engine("handlebars", handlebars.engine);
-    app.use(bodyParser.urlencoded({"extended": false}));
+    app.use(bodyParser.urlencoded({"extended": true}));
     app.use(bodyParser.json());
     app.use(express.static(path.join(process.cwd(), "/public")));
     app.set("views", path.join(process.cwd(), "/public/views"));
@@ -14,6 +14,7 @@ var settings = function(app) {
     app.use("/", require("../api/pages"));
     app.use("/book", require("../api/book"));
     app.use("/user", require("../api/user"));
+    app.use("/account", require("../api/account"));
     app.use("/swap", require("../api/swap"));
 };
 
