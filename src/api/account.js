@@ -8,7 +8,6 @@ router.route("/")
         id = 1;                                //test variable until sessions are implemented
         AccountServices.getAccount(id)
             .then(function(account) {
-<<<<<<< HEAD
                 let merged = {...account[0], ...account[1], ...account[2]};
                 res.render('account', merged);
             })
@@ -39,46 +38,12 @@ router.route("/add_wish")
                 if (result) {
                     res.redirect('/account');
                 }
-=======
-                res.render('account', account);
->>>>>>> master
             })
             .catch(function(err) {
                 res.redirect('/about');
             });
     })
 
-<<<<<<< HEAD
-=======
-//add books to account
-router.route("/add_books")
-    .post(function(req, res) {
-        AccountServices.addBooks(req.body)
-            .then(function(result) {
-                if (result) {
-                    res.redirect('/account');
-                }
-            })
-            .catch(function(err) {
-                res.redirect('/about');
-            });
-    })
-
-//add books to wishlist
-router.route("/add_wish")
-    .post(function(req, res) {
-        AccountServices.addWish(req.body)
-            .then(function(result) {
-                if (result) {
-                    res.redirect('/account');
-                }
-            })
-            .catch(function(err) {
-                res.redirect('/about');
-            });
-    })
-
->>>>>>> master
 //delete account
 router.route("/delete")
     .post(function(req, res) {
