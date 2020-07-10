@@ -102,6 +102,22 @@ Swap.deleteSwap = function(id) {
     });
 }
 
+Swap.getUserCompleteSwaps = function(id) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("getUserSwaps1"), [id])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+Swap.getUserOpenSwaps = function(id) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("getUserSwaps2"), [id])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -146,6 +162,12 @@ function getQuery(type) {
             break;
         case "deleteSwap":
             query = "DELETE FROM swap WHERE swap_id = ?;"
+            break;
+        case "getUserSwaps1":
+            query = "SELECT * FROM swap WHERE traded_to = ? OR traded_by = ? AND is_complete = 1;"
+            break;
+        case "getUserSwaps2":
+            query = "SELECT * FROM swap WHERE traded_to = ? OR traded_by = ? AND is_complete = 0;"
             break;    
     }
 
