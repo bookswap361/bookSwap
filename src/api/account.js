@@ -9,7 +9,6 @@ router.route("/")
         AccountServices.getAccount(id)
             .then(function(account) {
                 let merged = {...account[0], ...account[1], ...account[2]};
-                console.log(merged);
                 res.render('account', merged);
             })
             .catch(function(err) {
