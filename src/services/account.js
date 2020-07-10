@@ -124,5 +124,19 @@ AccountServices.updateLostLimit = function(body) {
     });
 };
 
+AccountServices.getAllSwaps = function(id) {
+    var p1 = new Promise(function(resolve, reject) {
+    SwapModel.getUserCompleteSwaps(id)
+    .then(resolve)
+    .catch(reject);
+    });
+    var p2 = new Promise(function(resolve, reject) {
+    SwapModel.getUserOpenSwaps(id)
+    .then(resolve)
+    .catch(reject);
+    });
+return Promise.all([p1, p2])
+};
+
 
 module.exports = AccountServices;
