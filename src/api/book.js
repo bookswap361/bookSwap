@@ -4,9 +4,11 @@ var BookServices = require("../services/book");
 
 router.route("/")
     .get(function(req, res) {
-        BookServices.getAllBooks()
+        BookServices.getAvailableBooks()
             .then(function(result) {
-                res.json({"payload": result});
+            	console.log("Retrieving Available Books...");
+            	console.log("Result: " + result);
+                res.render("book", {"books": result});
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});

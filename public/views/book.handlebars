@@ -1,1 +1,26 @@
-BOOKS
+<div class="col-md-8 mx-auto">
+	<h2>Swap a Book</h2>
+	<table>
+		<tr>
+			<th id="book_hidden"></th>
+			<th colspan="4">Available Books</th>
+		</tr>
+		<tr>
+			<th id="book_hidden"></th>
+			<th>Title</th>
+			<th>Author</th>
+			<th>Copies</th>
+			<th></th>
+		</tr>
+
+		{{#each books}}
+		<tr>
+			<td id="book_hidden"> {{book_id}} </td>
+			<td> {{title}} </td>
+			<td> {{last_name}}, {{first_name}} </td>
+			<td> {{copies}} </td>
+			<td><button>Swap</button></td>
+		</tr>
+		{{/each}}
+	</table>
+</div>
