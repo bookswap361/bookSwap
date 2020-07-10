@@ -77,9 +77,11 @@ table, th, td {
 
 .searchResult {
   padding: 20px;
+  border-radius: 15px;
 }
 
 .searchResult:hover {
+  border-radius: 15px;
   background-color: #F8F3EA;
   box-shadow: gray 0px 1px 2px 0px;
   padding: 20px;
