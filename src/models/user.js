@@ -50,8 +50,8 @@ function getQuery(type) {
 
         case "createUser":
             query = "INSERT INTO user \
-            (first_name, last_name, email, address, points, password) \
-            VALUES (?, ?, ?, ?, 0, ?)";
+            (first_name, last_name, email, address, password) \
+            VALUES (?, ?, ?, ?, ?)";
             break;
 
         case "userByEmail":
