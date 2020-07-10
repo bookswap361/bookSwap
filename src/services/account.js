@@ -1,6 +1,7 @@
 var UserModel = require("../models/user");
     BooksOwnedModel = require("../models/books_owned");
     WishListModel = require("../models/wishlist");
+    SwapModel = require("../models/swap");
 var AccountServices = {};
 
 
@@ -27,7 +28,14 @@ AccountServices.getAccount = function(id) {
     })
     .catch(reject);
     });
-return Promise.all([p1, p2, p3])
+    var p4 = new Promise(function(resolve, reject) {
+    SwapModel.getSwapByUserId(id)
+        .then(function(swaps) {
+            resolve({"swaps": swaps});
+    })
+    .catch(reject);
+    });
+return Promise.all([p1, p2, p3, p4])
 };
 
 //add one point when user adds a book -- not sure if this works

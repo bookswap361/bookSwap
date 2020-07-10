@@ -8,7 +8,7 @@ router.route("/")
         id = 1;                                //test variable until sessions are implemented
         AccountServices.getAccount(id)
             .then(function(account) {
-                let merged = {...account[0], ...account[1], ...account[2]};
+                let merged = {...account[0], ...account[1], ...account[2], ...account[3]};
                 res.render('account', merged);
             })
             .catch(function(err) {
