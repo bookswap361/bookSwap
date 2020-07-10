@@ -21,7 +21,7 @@ function getQuery(type) {
     var query = "";
     switch(type) {
         case "wish":
-            query = "SELECT * from wishlist WHERE user_id = ?";
+            query = "SELECT * FROM book LEFT JOIN wishlist ON book.book_id = wishlist.book_id WHERE user_id = ?";
             break;
     case "newWish":
             query = "INSERT INTO wishlist \
