@@ -7,12 +7,12 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
-table, th, td {
-  border: 1px solid black;
-  padding: 5px;
+.row {
+  margin-top: 10px;
 }
 
 .topHeader {
+  margin-top: 0px;
   background-color: #F8F3EA;
   padding-bottom: 6px;
 }
@@ -64,4 +64,9 @@ table, th, td {
 #info span{
   margin-left: 5px;
   margin-right: 5px;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 5px;
 }

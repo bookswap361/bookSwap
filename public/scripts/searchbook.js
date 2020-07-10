@@ -1,8 +1,5 @@
 const loadingText = document.getElementById("loadingText"),
-      topTitle    = document.getElementById("topTitle"),
-      topAuthor   = document.getElementById("topAuthor"),
-      topGenre    = document.getElementById("topGenre"),
-      topImg      = document.getElementById("topImg");
+      resultsDiv  = document.getElementById("resultsDiv");
 
 bindSearch();
 
@@ -15,20 +12,48 @@ function bindSearch(){
 
 function makeReq() {
     var req = new XMLHttpRequest();
+    var query = document.getElementById("searchText").value;
 
     return new Promise(function(resolve, reject){        
-        var baseURL = "http://openlibrary.org/search.json?q=" + document.getElementById("searchText").value;
+        var baseURL = `http://openlibrary.org/search.json?q=${query}`;
                 
         req.onload = function(){
             if(req.status >= 200 && req.status < 400) {
-                document.getElementById("resultsDiv").classList.remove("hidden");
-                var parsedData = JSON.parse(req.responseText);
-                if (parsedData.docs[0].cover_i) makeImg(parsedData.docs[0].cover_i);
-                loadingText.innerText = `Number of results: ${parsedData.numFound} | Top Result:`;
-                topTitle.innerText   = parsedData.docs[0].title_suggest;
-                topAuthor.innerText  = parsedData.docs[0].author_name[0];
-                topGenre.innerText  = parsedData.docs[0].subject[0];
-            } else resultsDiv.innerHTML = "Error!";
+                resultsDiv.classList.remove("hidden");
+
+                new Promise(function(resolve, reject){
+
+                    resolve(JSON.parse(req.responseText))
+                
+                }).then(function(results){
+                
+                    loadingText.innerText = `${results.numFound} results found for "${query}"`;
+
+                    var allResults = [];
+                     for(var i=0; i<10; i++) {
+                        var data = {title: null, author: null, genre: null, art_id: null};
+                        
+                        if (results.docs[i].hasOwnProperty("cover_i")) data.title  = results.docs[i].title_suggest;
+                        if (results.docs[i].hasOwnProperty("cover_i")) data.author = results.docs[i].author_name[0];
+                        if (results.docs[i].hasOwnProperty("cover_i")) data.art_id = results.docs[i].cover_i;
+                        if (results.docs[i].hasOwnProperty("subject")) data.genre  = results.docs[i].subject[0];
+
+                        allResults.push(data);
+                     }
+                     
+                     return allResults;
+                
+                }).then(function(results){
+                    // makeresults
+                    console.log(results);
+                    results.forEach(function(item){
+                        showResult(item);
+                    })
+                })
+                .catch(function(){
+                    resultsDiv.innerHTML = "Error! Try search again";
+                });
+            } else resultsDiv.innerHTML = "Error! Try search again";
         }
         
         req.onerror = function() {
@@ -41,7 +66,27 @@ function makeReq() {
     })
 }
 
-function makeImg(id) {
-    var url = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
-    topImg.innerHTML = `<img src="${url}">`;
+function showResult(data) {
+    var newRow = makeRow()
+    newRow.appendChild(makeThumbnail(data.art_id));
+    
+    resultsDiv.appendChild(newRow)
 }
+
+function makeRow(){
+    var newDiv = document.createElement("div");
+    newDiv.classList.add("row");
+    return newDiv;
+}
+
+function makeThumbnail(id){
+    var newArt = document.createElement("div");
+    if (id) {
+        var url = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
+        newArt.innerHTML = `<img src="${url}">`;
+    } else {
+        newArt.innerText = "No image found";
+    }
+    return newArt;
+}
+

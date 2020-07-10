@@ -1,24 +1,20 @@
-<h2>Search OpenLibrary</h2>
-<div class="row">
-    <P>
+<div class="container">
+    <div class="row"><h2>Search For Books</h2></div>
+    <div class="row">
         <form>
-            <input type="text" name="searchText" id="searchText">
+            <input type="text" name="searchText" id="searchText" placeholder="Search Title and/or Author">
             <input type="submit" value="Submit" id="searchSubmit">
         </form>
-    </P>
+    </div>
+
+    <div class="row">
+        <span id="loadingText"></span>
+    </div>
 </div>
 
-<span id="loadingText"></span>
-<BR>
-<div class="row hidden" id="resultsDiv">
-    <div class="row">
-        <div id="topImg"></div>
-        <div>
-            <span id="info">
-                <span id="topTitle"></span> by <span id="topAuthor"></span>
-                <P><span id="topGenre"></span></P>
-            </span>
-        </div>
+<div class="container">
+    <div class="container hidden" id="resultsDiv">
+        {{!-- Insert results here --}}
     </div>
 </div>
 
