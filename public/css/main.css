@@ -74,3 +74,13 @@ table, th, td {
 #resultsDiv {
   margin-bottom: 20px;
 }
+
+.searchResult {
+  padding: 20px;
+}
+
+.searchResult:hover {
+  background-color: #F8F3EA;
+  box-shadow: gray 0px 1px 2px 0px;
+  padding: 20px;
+}

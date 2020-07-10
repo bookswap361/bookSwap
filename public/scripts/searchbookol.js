@@ -78,7 +78,13 @@ function showResult(data) {
     var newRow = makeRow()
     newRow.appendChild(makeThumbnail(data.art));
     newRow.appendChild(showBookInfo(data));
-    document.getElementById("searchResults").appendChild(newRow)
+    newRow.classList.add("searchResult")
+    document.getElementById("searchResults").appendChild(newRow);
+    document.getElementById("searchResults").appendChild(makeHr());
+}
+
+function makeHr(){
+    return document.createElement("hr");
 }
 
 function makeRow(){
@@ -89,13 +95,24 @@ function makeRow(){
 
 function showBookInfo(data){
     var divDetail = document.createElement("div");
-    divDetail.classList.add("col-6");
-    divDetail.innerHTML = `${data.title} by ${data.author} <hr> Genres: ${data.genre}`;
+    divDetail.classList.add("col-9");
+    if (data.genre.length > 10){
+        divDetail.innerHTML = `${data.title} by ${data.author} <hr> Genres: ${cutGenre(data.genre)}, and more`;
+    } else if (data.genre.length > 0) {
+        divDetail.innerHTML = `${data.title} by ${data.author} <hr> Genres: ${data.genre}`;
+    } else {
+        divDetail.innerHTML = `${data.title} by ${data.author}`;
+    }
     return divDetail;
+}
+
+function cutGenre(data){
+    return data.slice(0, 10);
 }
 
 function makeThumbnail(id){
     var newArt = document.createElement("div");
+    newArt.classList.add("col-3")
     if (id) {
         var url = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
         newArt.innerHTML = `<img src="${url}">`;
@@ -108,4 +125,5 @@ function makeThumbnail(id){
 
 function resetResults(){
     document.getElementById("searchResults").innerHTML = "";
+    resultsDiv.classList.add("hidden");
 }
