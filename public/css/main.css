@@ -70,3 +70,7 @@ table, th, td {
   border: 1px solid black;
   padding: 5px;
 }
+
+#resultsDiv {
+  margin-bottom: 20px;
+}

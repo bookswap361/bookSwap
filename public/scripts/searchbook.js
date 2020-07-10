@@ -5,8 +5,14 @@ bindSearch();
 
 function bindSearch(){
     document.getElementById("searchSubmit").addEventListener("click", function(event){        
-        loadingText.innerText = "Loading results...";
-        makeReq()
+        new Promise(function(resolve, reject){
+            resolve(resetResults())
+        }).then(function(result){
+            resultsDiv.classList.add("hidden");
+            loadingText.innerText = "Loading results...";
+        }).then(function(result){
+            makeReq()
+        })
     });
 }
 
@@ -15,7 +21,8 @@ function makeReq() {
     var query = document.getElementById("searchText").value;
 
     return new Promise(function(resolve, reject){        
-        var baseURL = `http://openlibrary.org/search.json?q=${query}`;
+        // var baseURL = `http://openlibrary.org/search.json?q=${query}`;
+        var baseURL = `https://www.googleapis.com/books/v1/volumes?q=${query}`;
                 
         req.onload = function(){
             if(req.status >= 200 && req.status < 400) {
@@ -27,16 +34,25 @@ function makeReq() {
                 
                 }).then(function(results){
                 
-                    loadingText.innerText = `${results.numFound} results found for "${query}"`;
+                    loadingText.innerText = `${results.totalItems} results found for "${query}"`;
 
                     var allResults = [];
                      for(var i=0; i<10; i++) {
-                        var data = {title: null, author: null, genre: null, art_id: null};
+                        var data = {title: null, author: [], genre: [], description: null, art: null};
                         
-                        if (results.docs[i].hasOwnProperty("cover_i")) data.title  = results.docs[i].title_suggest;
-                        if (results.docs[i].hasOwnProperty("cover_i")) data.author = results.docs[i].author_name[0];
-                        if (results.docs[i].hasOwnProperty("cover_i")) data.art_id = results.docs[i].cover_i;
-                        if (results.docs[i].hasOwnProperty("subject")) data.genre  = results.docs[i].subject[0];
+                        if (results.items[i].hasOwnProperty("volumeInfo")) data.title  = results.items[i].volumeInfo.title;
+                        if (results.items[i].volumeInfo.hasOwnProperty("authors")){
+                            results.items[i].volumeInfo.authors.forEach(function(item){
+                                data.author.push(item);
+                            });
+                        }
+                        if (results.items[i].volumeInfo.hasOwnProperty("description")) data.description = results.items[i].volumeInfo.description;
+                        if (results.items[i].volumeInfo.hasOwnProperty("imageLinks")) data.art = results.items[i].volumeInfo.imageLinks.thumbnail;
+                        if (results.items[i].volumeInfo.hasOwnProperty("categories")){
+                            results.items[i].volumeInfo.categories.forEach(function(item){
+                                data.genre.push(item);
+                            });
+                        }
 
                         allResults.push(data);
                      }
@@ -44,7 +60,6 @@ function makeReq() {
                      return allResults;
                 
                 }).then(function(results){
-                    // makeresults
                     console.log(results);
                     results.forEach(function(item){
                         showResult(item);
@@ -68,9 +83,9 @@ function makeReq() {
 
 function showResult(data) {
     var newRow = makeRow()
-    newRow.appendChild(makeThumbnail(data.art_id));
-    
-    resultsDiv.appendChild(newRow)
+    newRow.appendChild(makeThumbnail(data.art));
+    newRow.appendChild(showBookInfo(data));
+    document.getElementById("searchResults").appendChild(newRow)
 }
 
 function makeRow(){
@@ -79,14 +94,28 @@ function makeRow(){
     return newDiv;
 }
 
-function makeThumbnail(id){
-    var newArt = document.createElement("div");
-    if (id) {
-        var url = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
-        newArt.innerHTML = `<img src="${url}">`;
+function showBookInfo(data){
+    var divDetail = document.createElement("div");
+    divDetail.classList.add("col-6");
+    if (data.description.length >= 60){
+        divDetail.innerHTML = `${data.title} by ${data.author} | <strong>Recommended</strong> <hr> ${data.description} <P> Genres: ${data.genre}`;
     } else {
-        newArt.innerText = "No image found";
+        divDetail.innerHTML = `${data.title} by ${data.author} <hr> ${data.description} <P> Genres: ${data.genre}`;
     }
-    return newArt;
+    return divDetail;
 }
 
+function makeThumbnail(id){
+    var newArt = document.createElement("div");
+    newArt.classList.add("col-3");
+    
+    if (id) newArt.innerHTML = `<img src="${id}">`;
+    else newArt.innerText = "No image found";
+
+    return newArt;
+
+}
+
+function resetResults(){
+    document.getElementById("searchResults").innerHTML = "";
+}
