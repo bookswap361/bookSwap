@@ -86,3 +86,7 @@ table, th, td {
   box-shadow: gray 0px 1px 2px 0px;
   padding: 20px;
 }
+
+#book_hidden{
+  display: none;
+}

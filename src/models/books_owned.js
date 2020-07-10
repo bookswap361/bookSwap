@@ -22,7 +22,7 @@ function getQuery(type) {
     var query = "";
     switch(type) {
         case "books":
-            query = "SELECT * from books_owned WHERE user_id = ?";
+            query = "SELECT * FROM book LEFT JOIN books_owned ON book.book_id = books_owned.book_id WHERE user_id = ?";
             break;
     case "newBook":
     query = "INSERT INTO books_owned \
