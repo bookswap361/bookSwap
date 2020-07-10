@@ -12,7 +12,7 @@ router.route("/")
                 res.render('account', merged);
             })
             .catch(function(err) {
-                res.redirect('/');
+                res.redirect('/about');
             });
     })
 
@@ -50,7 +50,7 @@ router.route("/delete")
         AccountServices.deleteAccount(req.body)
             .then(function(result) {
                 if (result) {
-                    res.redirect('/home');
+                    res.redirect('/about');
                 }
             })
             .catch(function(err) {
@@ -93,7 +93,7 @@ router.route("/update")
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                res.redirect('/');
             });
     })
 //update points
@@ -106,7 +106,7 @@ router.route("/update_points")
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                res.redirect('/');
             });
     })
 //update lost limit
@@ -119,7 +119,19 @@ router.route("/update_lost")
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                res.redirect('/');
+            });
+    })
+//get swaps
+router.route("/swaps")
+    .put(function(req, res) {
+        AccountServices.getAllSwaps(id)
+                 .then(function(swaps) {
+                let merged = {...swaps[0], ...swaps[1], ...swaps[2]};
+                res.render('account', merged);
+            })
+            .catch(function(err) {
+                res.redirect('/account');
             });
     })
 
