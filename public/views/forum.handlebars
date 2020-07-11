@@ -4,7 +4,7 @@
         View: 
     </div>
     <div>
-        <button>Create Thread</button>
+        <a href="/forum/create"><button>Create Thread</button></a>
     </div>
     <div>
         <table>
@@ -19,8 +19,8 @@
             <tbody>
                 {{#each threads}}
                 <tr>
-                    <td style="display:none"> {{thread_id}}</td>
-                    <td> <a onclick=openThread({{thread_id}});>{{title}}</a></td>
+                    <td style="display:none">{{thread_id}}</td>
+                    <td><a href={{formatThreadLink thread_id}}>{{title}}</a></td>
                     <td> {{user}} </td>
                     <td> {{create_date}} </td>
                     <td> {{is_resolved}} </td>
