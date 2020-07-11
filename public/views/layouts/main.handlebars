@@ -11,8 +11,8 @@
 </head>
 <body>
     
-    <div class="container-fluid topHeader">
-        <div class="row">
+    <div class="container-fluid">
+        <div class="row topHeader">
             <div><a href="/"><img src="/imgs/forwordheader.png" id="fwLogo"></a></div>
             <div class="login">
                 <form id="loginForm" form action="user/login" method="POST">
@@ -26,18 +26,17 @@
     </div>
         
 
-    <nav class="navbar navbar-light navbar-expand-sm" id="mainNavBar">
+    <nav class="navbar navbar-light navbar-expand-sm sticky-top" id="mainNavBar">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBarText"  aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse flex-row justify-content-center" id="navBarText">
           <ul class="navbar-nav">
               <li><a href="#" class="nav-link">my account</a></li>
-              <li><a href="#" class="nav-link">swaps</a></li>
+              <li><a href="/swaps" class="nav-link">swaps</a></li>
               <li><a href="/search" class="nav-link">search books</a></li>
               <li><a href="#" class="nav-link">search users</a></li>
               <li><a href="#" class="nav-link">forum</a></li>
-              <li><a href="#" class="nav-link">about?</a></li>
           </ul>
       </div>
     </nav>
