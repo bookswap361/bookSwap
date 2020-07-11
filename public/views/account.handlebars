@@ -31,6 +31,27 @@
 
 	<div id="swaps" class="tabcontent">
 		<h2> Pending Swaps </h2>
+
+		<table>
+		    <tr>
+		        <th>SWAP ID</th>
+		        <th>IS_ACCEPTED</th>
+		        <th>REQUEST_DATE</th>
+		        <th>TITLE</th>
+		    </tr>
+
+		    {{#each swaps}}
+		    <tr>
+		        <td>{{swap_id}}</td>
+		        <td>{{is_accepted}}</td>
+		        <td>{{request_date}}</td>
+		        <td>{{title}}</td>
+		    </tr>
+		    {{/each}}
+		</table>
+
+
+
 		<h2> Previous Swaps </h2>
 	</div>
 
