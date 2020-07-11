@@ -26,18 +26,65 @@ ForumServices.getThreadById = function(id) {
         ForumModel.getThreadById(id)
             .then(function(result) {
             var messages = [];
+            var title = result ? result[0].title : "";
+            var thread_id = result ? result[0].thread_id : "";
             result.forEach(function(message) {
                 messages.push({
-                    "thread_id": message.thread_id,
                     "message_id": message.message_id,
                     "user": message.first_name + " " + message.last_name,
                     "post": message.post,
                     "date": message.date
                 });
             });
-            resolve(messages);
+            resolve({"thread_id": thread_id, "title": title, "messages": messages});
         })
         .catch(reject);
+    });
+};
+
+ForumServices.createThread = function(data) {
+    //TODO: Use user_id saved from session
+    var variables = {
+        "user_id": 1,
+        "title": data.title,
+        "date": new Date(),
+        "message": data.message
+    };
+
+    return new Promise(function(resolve, reject) {
+        ForumModel.createThread(variables)
+        .then(ForumModel.getLastInsertId)
+        .then(function(result) {
+            variables["thread_id"] = result;
+            ForumModel.insertMessage(variables)
+            .then(function() {
+                ForumServices.getThreadById(variables["thread_id"])
+                .then(function(result) {
+                    resolve(result);
+                })
+                .catch(reject);
+            })
+        })
+    })        
+};
+
+ForumServices.insertMessage = function(data) {
+    //TODO: Change user_id to the one saved in session
+    var variables = {
+        "user_id": 2,
+        "date": new Date(),
+        "message": data.post,
+        "thread_id": Number(data.thread_id)
+    };
+    return new Promise(function(resolve, reject) {
+        ForumModel.insertMessage(variables)
+        .then(function(result) {
+            ForumServices.getThreadById(variables["thread_id"])
+            .then(function(result) {
+                resolve(result);
+            })
+            .catch(reject);
+        })
     });
 };
 
