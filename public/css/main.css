@@ -90,3 +90,7 @@ table, th, td {
 #book_hidden{
   display: none;
 }
+
+.btn {
+  margin-left: 10px;
+}

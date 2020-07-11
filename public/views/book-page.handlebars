@@ -12,23 +12,36 @@
     </div>
 
     <div class="row">
-        <div>
-            Add this book to your collection of owned books:<br><button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook">Add Book!</button>
-        </div>
-        <div id="chooseCondition" class="hidden">
-            <label for="condition">Choose the condition of your book to trade:</label>
+        <button type="button" class="btn btn-primary" onclick="showAddForm()">Add this book to your collection of owned books:</button>
+        <button type="button" class="btn btn-danger" onclick="window.location.href='../search';">Search Again</button>
+    </div>
 
-            <select name="condition" id="condition">
-                <option value="excellent">Excellent condition: 15pts</option>
-                <option value="good">Good condition: 10pts</option>
-                <option value="acceptable">Acceptable condition: 5pts</option>
-            </select> 
-            <P><button type="button" class="btn btn-outline-success btn-large" id="addBookTradeBtn">Add Book For Trade</button></P>
-            <P><div id="confirm"></div></P>
+    <div class="row">
+        <div id="chooseCondition" class="container hidden">
+            <div id="addForm">
+
+                <label for="condition"><a href="#" target="_blank">Choose the condition of your book to trade:</a></label>
+                <select name="condition" id="addCondition">
+                    <option value="excellent">Excellent condition: 15pts</option>
+                    <option value="good">Good condition: 10pts</option>
+                    <option value="acceptable">Acceptable condition: 5pts</option>
+                </select> 
+
+                <input id="addOl_key" value=`{{ol_key}}` hidden>
+                <input id="addDescription" value=`{{description}}` hidden>
+                <input id="addThumbnail_url" value=`{{thumbnail_url}}` hidden>
+                <input id="addTitle" value=`{{title}}` hidden> 
+                <input id="addUser" value=`{{user}}` hidden> 
+                <input id="addAuthor" value=`{{author}}` hidden> 
+
+                <button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook()">Add Book!</button>
+
+                <P><div id="confirm"></div></P>
+            </div>
         </div>
     </div>
 
-    <hr>
+    
     <div class="row">
         <div class="col-md-8 mx-auto">
         Open Swaps for this Book: {{copies}}
@@ -37,10 +50,7 @@
 </div>
 
 {{!-- <div class="hidden">
-    <input id="ol_key" value=`{{title}}`>
-    <input id="description" value=`{{title}}`>
-    <input id="thumbnail_url" value=`{{user}}`>
-    <input id="title" value=`{{title}}`> 
+
 </div>
 
 <div class="hidden">
@@ -50,4 +60,4 @@
     <input id="title" value=`{{title}}`> 
 </div> --}}
 
-<script src="../scripts/add-book-trade.js"></script>
+<script src="../scripts/bookpage.js"></script>
