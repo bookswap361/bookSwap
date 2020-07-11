@@ -1,0 +1,30 @@
+<div>
+    Thread Contents
+    <div>
+        <a href="/forum">Go Back</a>
+    </div>
+    <div>
+        <h3> {{title}} </h3>
+    </div>
+    <div>
+        {{#each thread}}
+        <div>
+            <div style="display:inline-block">
+                {{user}}
+                <p>
+                {{date}}
+            </div>
+            <div style="display:inline-block">
+                {{post}}
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <div>
+        <form id="insert-message" action="/forum/insert" method="POST">
+            <input type="hidden" name="thread_id" value="{{id}}">
+            <input type="text" name="post" placeholder="Reply.." required>
+            <input type="submit" name="insert-message-button" value="Submit">
+        </form>
+    </div>
+</div>
