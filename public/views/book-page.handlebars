@@ -21,18 +21,18 @@
             <div id="addForm">
 
                 <label for="condition"><a href="#" target="_blank">Choose the condition of your book to trade:</a></label>
-                <select name="condition" id="addCondition">
+                <select name="condition" id="newCondition">
                     <option value="excellent">Excellent condition: 15pts</option>
                     <option value="good">Good condition: 10pts</option>
                     <option value="acceptable">Acceptable condition: 5pts</option>
                 </select> 
 
-                <input id="addOl_key" value=`{{ol_key}}` hidden>
-                <input id="addDescription" value=`{{description}}` hidden>
-                <input id="addThumbnail_url" value=`{{thumbnail_url}}` hidden>
-                <input id="addTitle" value=`{{title}}` hidden> 
-                <input id="addUser" value=`{{user}}` hidden> 
-                <input id="addAuthor" value=`{{author}}` hidden> 
+                <input id="newOl_key" value= "{{ol_key}}" hidden>
+                <input id="newDescription" value= "{{description}}" hidden>
+                <input id="newThumbnail_url" value= "{{thumbnail_url}}" hidden>
+                <input id="newTitle" value="{{title}}" hidden> 
+                <input id="newUser" value= "{{user}}" hidden> 
+                <input id="newAuthor" value= "{{author}}" hidden> 
 
                 <button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook()">Add Book!</button>
 
