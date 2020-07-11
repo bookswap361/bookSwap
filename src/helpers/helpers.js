@@ -5,4 +5,8 @@ HbsHelpers.displayResolveButton = function(userId, ownerId, domId) {
     // create button and append
 };
 
+HbsHelpers.formatThreadLink = function(threadId) {
+    return '/forum/?id=' + threadId;
+};
+
 module.exports = HbsHelpers;
