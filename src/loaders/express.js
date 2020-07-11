@@ -4,7 +4,7 @@ var helpers = require("../helpers/helpers")
 var handlebars = require("express-handlebars").create({
     "defaultLayout": "main",
     "helpers": {
-        "displayResolveButton": helpers.formatDate,
+        "displayResolveButton": helpers.displayResolveButton,
         "formatThreadLink": helpers.formatThreadLink
     }
 });

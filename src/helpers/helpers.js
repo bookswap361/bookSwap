@@ -6,7 +6,7 @@ HbsHelpers.displayResolveButton = function(userId, ownerId, domId) {
 };
 
 HbsHelpers.formatThreadLink = function(threadId) {
-    return '/forum/?id=' + threadId;
+    return "/forum/?id=" + threadId;
 };
 
 module.exports = HbsHelpers;
