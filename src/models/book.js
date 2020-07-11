@@ -18,6 +18,14 @@ Book.getAvailableBooks = function() {
     });
 }
 
+Book.getBookByOLId = function(id) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("getBookByOLId"), [id])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -33,6 +41,9 @@ function getQuery(type) {
                 INNER JOIN author a ON ba.author_id = a.author_id \
                 WHERE bo.is_available = 1 \
                 GROUP BY b.book_id;"
+            break;
+        case "getBookByOLId":
+            query = "SELECT * FROM book WHERE book_id = ?;"
             break;
     }
 

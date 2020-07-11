@@ -31,4 +31,12 @@ BookServices.getAvailableBooks = function() {
 	});
 }
 
+BookServices.getBookByOLId = function(id) {
+	return new Promise(function(resolve, reject) {
+		BookModel.getBookByOLId(id)
+			.then(resolve)
+			.catch(reject);
+	});
+};
+
 module.exports = BookServices;

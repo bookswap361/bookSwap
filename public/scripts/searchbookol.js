@@ -36,15 +36,16 @@ function makeReq() {
 
                     var allResults = [];
                      for(var i=0; i<10; i++) {
-                        var data = {title: null, author: null, genre: [], art: null};
+                        var data = {title: null, author: null, genre: [], art: null, key: null};
                         
                         if (results.docs[i].hasOwnProperty("title_suggest")) data.title  = results.docs[i].title_suggest;
                         if (results.docs[i].hasOwnProperty("author_name")) data.author = results.docs[i].author_name[0];
                         if (results.docs[i].hasOwnProperty("cover_i")) data.art = results.docs[i].cover_i;
                         if (results.docs[i].hasOwnProperty("subject")) {
                             results.docs[i].subject.forEach(function(item){
-                            data.genre.push(item);
+                                data.genre.push(item);
                             });
+                        if (results.docs[i].hasOwnProperty("key")) data.key = results.docs[i].key;
                         }
 
                         allResults.push(data);
@@ -53,16 +54,17 @@ function makeReq() {
                      return allResults;
                 
                 }).then(function(results){
-                    // makeresults
                     console.log(results);
                     results.forEach(function(item){
-                        showResult(item);
+                        if (item.key != null) {
+                            showResult(item);
+                        }
                     })
                 })
                 .catch(function(){
                     resultsDiv.innerHTML = "Error! Try search again";
                 });
-            } else resultsDiv.innerHTML = "Error! Try search again";
+            } else resultsDiv.innerHTML = "404 Error! Try search again";
         }
         req.onerror = function() {
             console.log('error')
@@ -78,6 +80,7 @@ function showResult(data) {
     var newRow = makeRow()
     newRow.appendChild(makeThumbnail(data.art));
     newRow.appendChild(showBookInfo(data));
+    newRow.appendChild(makeLink(data));
     newRow.classList.add("searchResult")
     document.getElementById("searchResults").appendChild(newRow);
     document.getElementById("searchResults").appendChild(makeHr());
@@ -122,6 +125,15 @@ function makeThumbnail(id){
     }
     return newArt;
 }
+
+function makeLink(data) {
+    var newLink = document.createElement("a");
+    var key = data.key.split("/")[2];
+    newLink.setAttribute("href", `/book/${key}`)
+    newLink.innerText = "Select Book";
+    return newLink;
+}
+
 
 function resetResults(){
     document.getElementById("searchResults").innerHTML = "";
