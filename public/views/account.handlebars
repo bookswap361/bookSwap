@@ -1,3 +1,43 @@
-    <ul>{{first_name}} {{last_name}}</ul>
-    <ul>{{email}}</ul>
-    <ul>{{address}}</ul>
+<div>
+
+	<h2>Account Details:</h2>
+
+	<div id="userDetails">
+		<ul>Name: {{first_name}} {{last_name}}</ul>
+		<ul>Email: {{email}}</ul>
+		<ul>Address: {{address}}</ul>
+	</div>
+
+	<h2>Dashboard:</h2>
+
+	<!-- Reference: https://www.w3schools.com/howto/howto_js_tabs.asp -->
+	<div id="dashboard">
+		<div class="tab">
+			<button class="tablinks" id="booksTab">
+				Book Inventory
+			</button>
+			<button class="tablinks" id="swapsTab">
+				Swaps
+			</button>
+			<button class="tablinks" id="wishlistTab">
+				Wishlist
+			</button>
+		</div>
+	</div>
+
+	<div id="booksInventory" class="tabcontent">
+		<h2> Your Books </h2>
+	</div>
+
+	<div id="swaps" class="tabcontent">
+		<h2> Pending Swaps </h2>
+		<h2> Previous Swaps </h2>
+	</div>
+
+	<div id="wishlist" class="tabcontent">
+		<h2> Wishlist </h2>
+	</div>
+
+</div>
+
+<script src="../scripts/account.js"></script>
