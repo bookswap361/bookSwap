@@ -1,14 +1,53 @@
-<div class="row">
-    <div class="col-md-3">
-        {{coverart}}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <img src="{{thumbnail_url}}">
+        </div>
+        <div class="col-md-9 mx-auto">
+            <h3>{{title}}</h3> by {{name}}
+            <hr>
+            {{description}}
+            <P>Genres: {{genres}}</P>
+        </div>
     </div>
-    <div class="col-md-9 mx-auto">
-        <h3>{{title}}</h3> by {{first_name}} {{last_name}}
+
+    <div class="row">
+        <div>
+            Add this book to your collection of owned books:<br><button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook">Add Book!</button>
+        </div>
+        <div id="chooseCondition" class="hidden">
+            <label for="condition">Choose the condition of your book to trade:</label>
+
+            <select name="condition" id="condition">
+                <option value="excellent">Excellent condition: 15pts</option>
+                <option value="good">Good condition: 10pts</option>
+                <option value="acceptable">Acceptable condition: 5pts</option>
+            </select> 
+            <P><button type="button" class="btn btn-outline-success btn-large" id="addBookTradeBtn">Add Book For Trade</button></P>
+            <P><div id="confirm"></div></P>
+        </div>
+    </div>
+
+    <hr>
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+        Open Swaps for this Book: {{copies}}
+        </div>
     </div>
 </div>
-<hr>
-<div class="row">
-    <div class="col-md-8 mx-auto">
-    Open Swaps: {{copies}}
-    </div>
+
+{{!-- <div class="hidden">
+    <input id="ol_key" value=`{{title}}`>
+    <input id="description" value=`{{title}}`>
+    <input id="thumbnail_url" value=`{{user}}`>
+    <input id="title" value=`{{title}}`> 
 </div>
+
+<div class="hidden">
+    <input id="title" value=`{{title}}`>
+    <input id="list_id" value=`{{title}}`>
+    <input id="traded_by" value=`{{user}}`>
+    <input id="title" value=`{{title}}`> 
+</div> --}}
+
+<script src="../scripts/add-book-trade.js"></script>

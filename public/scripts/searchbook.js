@@ -1,5 +1,6 @@
 const loadingText = document.getElementById("loadingText"),
-      resultsDiv  = document.getElementById("resultsDiv");
+      resultsDiv  = document.getElementById("resultsDiv"),
+      noFind  = document.getElementById("noFind");
 
 bindSearch();
 
@@ -8,7 +9,7 @@ function bindSearch(){
         new Promise(function(resolve, reject){
             resolve(resetResults())
         }).then(function(result){
-            loadingText.innerText = "Loading results...";
+            loadingText.innerText = "Loading and filtering results...";
         }).then(function(result){
             makeReq()
         })
@@ -32,7 +33,7 @@ function makeReq() {
                 
                 }).then(function(results){
                 
-                    loadingText.innerText = `${results.numFound} results found for "${query}"`;
+                    // loadingText.innerText = `${results.numFound} results found for "${query}"`;
 
                     var allResults = [];
                      for(var i=0; i<10; i++) {
@@ -40,12 +41,12 @@ function makeReq() {
                         
                         if (results.docs[i].hasOwnProperty("title_suggest")) data.title  = results.docs[i].title_suggest;
                         if (results.docs[i].hasOwnProperty("author_name")) data.author = results.docs[i].author_name[0];
+                        if (results.docs[i].hasOwnProperty("key")) data.key = results.docs[i].key;
                         if (results.docs[i].hasOwnProperty("cover_i")) data.art = results.docs[i].cover_i;
                         if (results.docs[i].hasOwnProperty("subject")) {
                             results.docs[i].subject.forEach(function(item){
                                 data.genre.push(item);
                             });
-                        if (results.docs[i].hasOwnProperty("key")) data.key = results.docs[i].key;
                         }
 
                         allResults.push(data);
@@ -55,11 +56,15 @@ function makeReq() {
                 
                 }).then(function(results){
                     console.log(results);
+                    var i = 0;
                     results.forEach(function(item){
                         if (item.key != null) {
                             showResult(item);
+                            i++;
                         }
                     })
+                    loadingText.innerText = `${i} results found for "${query}"`;
+                    noFind.classList.remove("hidden");
                 })
                 .catch(function(){
                     resultsDiv.innerHTML = "Error! Try search again";
@@ -99,11 +104,11 @@ function showBookInfo(data){
     var divDetail = document.createElement("div");
     divDetail.classList.add("col-9");
     if (data.genre.length > 10){
-        divDetail.innerHTML = `${data.title} by ${data.author} <hr> Genres: ${cutGenre(data.genre)}, and more <hr> ${makeLink(data.key)}`;
+        divDetail.innerHTML = `${data.title} by ${data.author} <hr> Genres: ${cutGenre(data.genre)}, and more <P> ${makeLink(data.key)}`;
     } else if (data.genre.length > 0) {
-        divDetail.innerHTML = `${data.title} by ${data.author} <hr> Genres: ${data.genre}`;
+        divDetail.innerHTML = `${data.title} by ${data.author} <hr> Genres: ${data.genre} <P> ${makeLink(data.key)}`;
     } else {
-        divDetail.innerHTML = `${data.title} by ${data.author}`;
+        divDetail.innerHTML = `${data.title} by ${data.author} <P> ${makeLink(data.key)}`;
     }
     return divDetail;
 }
@@ -135,4 +140,5 @@ function makeLink(data) {
 function resetResults(){
     document.getElementById("searchResults").innerHTML = "";
     resultsDiv.classList.add("hidden");
+    noFind.classList.add("hidden");
 }

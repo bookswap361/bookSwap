@@ -19,13 +19,13 @@ router.route("/:id")
     .get(function(req, res) {
         BookServices.getBookByOLId(req.params.id)
             .then(function(result) {
-                console.log("Result: " + result);
-                res.render("book", {"book-page": result});
+                console.log(result);
+                res.render("book-page", result[0]);
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});
             });
-})
+    })
 
 
 module.exports = router;

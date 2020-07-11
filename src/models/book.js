@@ -43,7 +43,7 @@ function getQuery(type) {
                 GROUP BY b.book_id;"
             break;
         case "getBookByOLId":
-            query = "SELECT * FROM book WHERE book_id = ?;"
+            query = "select * FROM book WHERE ol_key = ?;"
             break;
     }
 
