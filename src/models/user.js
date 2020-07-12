@@ -17,7 +17,8 @@ User.getUserByEmail = function(body) {
 User.createUser = function(body, hash) {
     return mysql.query(getQuery("createUser"), 
         [body.first_name, body.last_name,
-            body.email, body.address, hash]);
+            body.email, body.street, body.city,
+            body.state, body.zip, hash]);
 }
 
 User.deleteUser = function(body) {
@@ -26,15 +27,15 @@ User.deleteUser = function(body) {
 //not sure if this will work, but when it's called by account services or swap services, maybe a number can be specificed for the points?
 //example in Account Services
 User.updatePoints = function(body) {
-    return mysql.query(getQuery("updatePoints"), [number, id]);
+    return mysql.query(getQuery("updatePoints"), [body.number, body.id]);
 }
 
 User.updateUser = function(body) {
-    return mysql.query(getQuery("updateUser"), [body.first_name, body.last_name, body.email, body.address, body.user_id]);
+    return mysql.query(getQuery("updateUser"), [body.first_name, body.last_name, body.email, body.street, body.user_id]);
 }
 
 User.updateLost = function(body) {
-    return mysql.query(getQuery("updateLost"), [number, id]);
+    return mysql.query(getQuery("updateLost"), [body.number, body.id]);
 }
 
 function getQuery(type) {
@@ -50,8 +51,8 @@ function getQuery(type) {
 
         case "createUser":
             query = "INSERT INTO user \
-            (first_name, last_name, email, address, password) \
-            VALUES (?, ?, ?, ?, ?)";
+            (first_name, last_name, email, street, city, state, zip, password) \
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             break;
 
         case "userByEmail":
@@ -63,7 +64,7 @@ function getQuery(type) {
             break;
 
         case "updateUser":
-            query = "UPDATE user SET first_name = ?, last_name = ?, email = ?, address = ? WHERE user_id = ?";
+            query = "UPDATE user SET first_name = ?, last_name = ?, email = ?, street = ? WHERE user_id = ?";
             break;
 
         case "updatePoints":

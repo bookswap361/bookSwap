@@ -49,13 +49,17 @@ UserServices.verifyLogin = function(body) {
     return new Promise(function(resolve, reject) {
         UserModel.getUserByEmail(body)
             .then(function(user) {
-                bcrypt.compare(body.password, user[0].password, function( err, result) {
-                    if (result == true) {
-                        resolve(result);
-                    } else {
-                        reject();
-                    }
-                })
+                if (user[0]) {
+                    bcrypt.compare(body.password, user[0].password, function( err, result) {
+                        if (result == true) {
+                            resolve(result);
+                        } else {
+                            reject();
+                        }
+                    })
+                } else {
+                    reject();
+                }
             })
     });
 };
