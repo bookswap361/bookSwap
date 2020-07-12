@@ -45,7 +45,7 @@ function getQuery(type) {
             query = "SELECT LAST_INSERT_ID()";
             break;
         case "allThreads":
-            query = "SELECT t.thread_id, t.title, u.first_name, u.last_name, DATE_FORMAT(t.create_date,'%M-%D-%Y') as create_date, t.is_resolved FROM thread t INNER JOIN user u ON t.user_id = u.user_id GROUP BY t.thread_id ORDER BY t.thread_id;";
+            query = "SELECT t.thread_id, t.title, t.user_id, u.first_name, u.last_name, DATE_FORMAT(t.create_date,'%M-%D-%Y') as create_date, t.is_resolved FROM thread t INNER JOIN user u ON t.user_id = u.user_id GROUP BY t.thread_id ORDER BY t.thread_id;";
             break;
         case "createThread":
             query = "INSERT INTO thread (user_id, title, create_date) VALUES (?,?,?);";

@@ -6,6 +6,7 @@ ForumServices.getAllThreads = function() {
         ForumModel.getAllThreads()
             .then(function(result) {
                 var threads = [];
+                console.log(result)
                 result.forEach(function(thread) {
                     threads.push({
                         "thread_id": thread.thread_id,
