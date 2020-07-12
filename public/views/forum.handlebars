@@ -1,0 +1,34 @@
+<div>
+    <h2>Forum</h2>
+    <div>
+        View: 
+    </div>
+    <div>
+        <a href="/forum/create"><button>Create Thread</button></a>
+    </div>
+    <div>
+        <table>
+            <thead>
+                <th style="display:none"></th>
+                <th>Topic</th>
+                <th>Created By</th>
+                <th>Created Date</th>
+                <th>Resolved</th>
+                <th style="display:none"></th> //For resolve button
+            </thread>
+            <tbody>
+                {{#each threads}}
+                <tr>
+                    <td style="display:none">{{thread_id}}</td>
+                    <td><a href={{formatThreadLink thread_id}}>{{title}}</a></td>
+                    <td> {{user}} </td>
+                    <td> {{create_date}} </td>
+                    <td> {{is_resolved}} </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    
+</div>
+
+<script src="../scripts/forum.js"></script>

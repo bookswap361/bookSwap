@@ -1,6 +1,13 @@
 var express = require("express");
 var app = express();
-var handlebars = require("express-handlebars").create({"defaultLayout": "main"});
+var helpers = require("../helpers/helpers")
+var handlebars = require("express-handlebars").create({
+    "defaultLayout": "main",
+    "helpers": {
+        "displayResolveButton": helpers.displayResolveButton,
+        "formatThreadLink": helpers.formatThreadLink
+    }
+});
 var bodyParser = require("body-parser");
 var path = require("path");
 
@@ -16,6 +23,7 @@ var settings = function(app) {
     app.use("/user", require("../api/user"));
     app.use("/account", require("../api/account"));
     app.use("/swap", require("../api/swap"));
+    app.use("/forum", require("../api/forum"));
 };
 
 module.exports = settings;
