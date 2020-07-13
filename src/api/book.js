@@ -54,7 +54,8 @@ router.route("/add-owned-book")
     .post(function(req, res) {
         BookServices.addToOwn(req.body)
             .then(function(result) {
-            	console.log("Book added");
+                console.log("Book added");
+                res.send("Book added");
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});
