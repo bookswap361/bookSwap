@@ -22,17 +22,16 @@
 
                 <label for="condition"><a href="#" target="_blank">Choose the condition of your book to trade:</a></label>
                 <select name="condition" id="newCondition">
-                    <option value="excellent">Excellent condition: 15pts</option>
-                    <option value="good">Good condition: 10pts</option>
-                    <option value="acceptable">Acceptable condition: 5pts</option>
+                    <option value="3">Excellent condition: 15pts</option>
+                    <option value="2">Good condition: 10pts</option>
+                    <option value="1">Acceptable condition: 5pts</option>
                 </select> 
 
-                <input id="newOl_key" value= "{{ol_key}}" hidden>
-                <input id="newDescription" value= "{{description}}" hidden>
-                <input id="newThumbnail_url" value= "{{thumbnail_url}}" hidden>
-                <input id="newTitle" value="{{title}}" hidden> 
-                <input id="newUser" value= "{{user}}" hidden> 
-                <input id="newAuthor" value= "{{author}}" hidden> 
+{{!-- [body.user_id, body.book_id, body.condition_id, body.condition_description, body.list_date] --}}
+
+                <input id="newTitle" value="{{title}}" hidden>
+                <input id="newUser_id" value="{{user_id}}" hidden>
+                <input id="newBook_id" value="{{book_id}}" hidden>
 
                 <button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook()">Add Book!</button>
 
@@ -60,4 +59,4 @@
     <input id="title" value=`{{title}}`> 
 </div> --}}
 
-<script src="../scripts/bookpage.js"></script>
+<script src="../scripts/addbook.js"></script>

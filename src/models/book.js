@@ -26,6 +26,15 @@ Book.getBookByOLId = function(id) {
     });
 }
 
+// Update
+Book.createBook = function(info) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("createBook"), [])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -34,7 +43,7 @@ function getQuery(type) {
             break;
         case "getAvailableBooks":
             query = "select \
-                b.book_id, b.title, a.last_name, a.first_name, count(b.book_id) AS count \
+                b.book_id, b.title, a.name, count(b.book_id) AS count \
                 from book b \
                 INNER JOIN books_owned bo ON b.book_id = bo.book_id \
                 INNER JOIN book_author ba ON bo.book_id = ba.book_id \
@@ -43,7 +52,19 @@ function getQuery(type) {
                 GROUP BY b.book_id;"
             break;
         case "getBookByOLId":
-            query = "select * FROM book WHERE ol_key = ?;"
+            query = "select \
+            b.book_id, b.ol_key, b.description, b.thumbnail_url, b.title, a.name \
+            from book b \
+            INNER JOIN book_author ba ON b.book_id = ba.author_id\
+            INNER JOIN author a on ba.author_id = a.author_id \
+            WHERE b.ol_key = ?;"
+            break;
+        case "createBook":
+            query = "INSERT INTO book \
+            (list_id, traded_to, traded_by, is_accepted, request_date, \
+            approve_date, reject_date, ship_date, lost_date, received_date, \
+            refund_date, has_claim, claim_open_date, claim_settle_date, is_complete) \
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
             break;
     }
 
