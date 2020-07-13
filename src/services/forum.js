@@ -1,8 +1,8 @@
 var ForumModel = require("../models/forum");
 var ForumServices = {};
-var createDOMPurify = require('dompurify');
+var createDOMPurify = require("dompurify");
 var JSDOM = require("jsdom").JSDOM;
-var window = new JSDOM('').window;
+var window = new JSDOM("").window;
 var DOMPurify = createDOMPurify(window);
 
 
