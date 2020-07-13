@@ -7,7 +7,7 @@ router.route("/")
         if (req.query && req.query.id) {
             ForumServices.getThreadById(req.query.id)
             .then(function(result) {
-                res.render("thread", {"thread": result.messages, "title": result.title, "id": result.thread_id});
+                res.render("thread", {"isResolved": result.isResolved, "thread": result.messages, "title": result.title, "id": result.thread_id, "isOwner": result.isOwner});
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});
@@ -46,6 +46,20 @@ router.route("/insert")
             .catch(function(err) {
                 res.status(400).json({"error": err});
             })
-    })
+    });
+
+router.route("/resolve")
+    .post(function(req, res) {
+        if (req.query && req.query.id) {
+            //TODO: Make sure the ownerid matches current user-id for resolving
+            ForumServices.resolveThread(req.query)
+            .then(function() {
+                res.redirect("/forum");
+            })
+            .catch(function(err) {
+                res.status(400).json({"error": err});
+            });
+        }
+    });
 
 module.exports = router;

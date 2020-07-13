@@ -5,8 +5,6 @@ var JSDOM = require("jsdom").JSDOM;
 var window = new JSDOM("").window;
 var DOMPurify = createDOMPurify(window);
 
-
-
 ForumServices.getAllThreads = function() {
     return new Promise(function(resolve, reject) {
         ForumModel.getAllThreads()
@@ -29,11 +27,21 @@ ForumServices.getAllThreads = function() {
 
 ForumServices.getThreadById = function(id) {
     return new Promise(function(resolve, reject) {
+        //TODO: Get current user_id from session
+        var user_id = 1;
         ForumModel.getThreadById(id)
             .then(function(result) {
             var messages = [];
-            var title = result ? result[0].title : "";
-            var thread_id = result ? result[0].thread_id : "";
+            var title = "";
+            var thread_id = "";
+            var isOwner = false;
+            var isResolved = false;
+            if (result) {
+                title = result[0].title;
+                thread_id = result[0].thread_id;
+                isOwner = result[0].owner_id == user_id;
+                isResolved = Boolean(result[0].is_resolved);
+            }
             result.forEach(function(message) {
                 messages.push({
                     "message_id": message.message_id,
@@ -42,7 +50,7 @@ ForumServices.getThreadById = function(id) {
                     "date": message.date
                 });
             });
-            resolve({"thread_id": thread_id, "title": title, "messages": messages});
+            resolve({"isResolved": isResolved, "thread_id": thread_id, "title": title, "messages": messages, "isOwner": isOwner});
         })
         .catch(reject);
     });
@@ -84,12 +92,15 @@ ForumServices.insertMessage = function(data) {
     };
     return new Promise(function(resolve, reject) {
         ForumModel.insertMessage(variables)
-        .then(ForumModel.getLastInsertId)
         .then(function() {
             resolve(data.thread_id);
         })
         .catch(reject);
     });
+};
+
+ForumServices.resolveThread = function(data) {
+    return ForumModel.resolveThread(Number(data.id));        
 };
 
 module.exports = ForumServices;

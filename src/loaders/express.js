@@ -4,7 +4,7 @@ var forumHelpers = require("../helpers/forum");
 var handlebars = require("express-handlebars").create({
     "defaultLayout": "main",
     "helpers": {
-        "displayResolveButton": forumHelpers.displayResolveButton,
+        "formatResolveLink": forumHelpers.formatResolveLink,
         "formatThreadLink": forumHelpers.formatThreadLink
     }
 });

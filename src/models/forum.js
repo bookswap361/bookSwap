@@ -38,6 +38,10 @@ ForumModel.insertMessage = function(data) {
     return mysql.query(getQuery("insertMessage"), variables);
 };
 
+ForumModel.resolveThread = function(id) {
+    return mysql.query(getQuery("resolveThread"), [id]);
+};
+
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -51,7 +55,7 @@ function getQuery(type) {
             query = "INSERT INTO thread (user_id, title, create_date) VALUES (?,?,?);";
             break;
         case "getThreadById":
-            query = "SELECT m.message_id, m.user_id, m.thread_id, u.first_name, u.last_name, m.post, DATE_FORMAT(m.date, '%M-%D-%Y') as date, t.title FROM messages m INNER JOIN user u ON m.user_id = u.user_id INNER JOIN thread t ON m.thread_id = t.thread_id WHERE m.thread_id = ? ORDER BY m.date ASC;";
+            query = "SELECT m.message_id, t.user_id as owner_id, t.is_resolved, m.user_id, m.thread_id, u.first_name, u.last_name, m.post, DATE_FORMAT(m.date, '%M-%D-%Y') as date, t.title FROM messages m INNER JOIN user u ON m.user_id = u.user_id INNER JOIN thread t ON m.thread_id = t.thread_id WHERE m.thread_id = ? ORDER BY m.date ASC;";
             break;
         case "insertMessage":
             query = "INSERT INTO messages (user_id, thread_id, post, date) VALUES (?,?,?,?);";

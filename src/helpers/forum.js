@@ -1,8 +1,7 @@
 var ForumHbsHelpers = {};
 
-ForumHbsHelpers.displayResolveButton = function(userId, ownerId, domId) {
-    // if userId == ownerId
-    // create button and append
+ForumHbsHelpers.formatResolveLink = function(threadId) {
+    return "/forum/resolve/?id=" + threadId;
 };
 
 ForumHbsHelpers.formatThreadLink = function(threadId) {
