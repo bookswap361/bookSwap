@@ -15,16 +15,19 @@
                 {{date}}
             </div>
             <div style="display:inline-block">
-                {{post}}
+                {{{post}}}
             </div>
         </div>
         {{/each}}
     </div>
     <div>
         <form id="insert-message" action="/forum/insert" method="POST">
+            <div id="text-editor"></div>
+            <input type="hidden" id="post-input" name="post" required>
             <input type="hidden" name="thread_id" value="{{id}}">
-            <input type="text" name="post" placeholder="Reply.." required>
             <input type="submit" name="insert-message-button" value="Submit">
         </form>
     </div>
 </div>
+<script src="https://cdn.ckeditor.com/ckeditor5/20.0.0/classic/ckeditor.js"></script>
+<script src="../scripts/forum.js"></script>

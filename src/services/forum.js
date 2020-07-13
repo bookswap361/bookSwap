@@ -1,5 +1,11 @@
 var ForumModel = require("../models/forum");
 var ForumServices = {};
+var createDOMPurify = require('dompurify');
+var JSDOM = require("jsdom").JSDOM;
+var window = new JSDOM('').window;
+var DOMPurify = createDOMPurify(window);
+
+
 
 ForumServices.getAllThreads = function() {
     return new Promise(function(resolve, reject) {
@@ -73,18 +79,16 @@ ForumServices.insertMessage = function(data) {
     var variables = {
         "user_id": 2,
         "date": new Date(),
-        "message": data.post,
+        "message": DOMPurify.sanitize(data.post),
         "thread_id": Number(data.thread_id)
     };
     return new Promise(function(resolve, reject) {
         ForumModel.insertMessage(variables)
-        .then(function(result) {
-            ForumServices.getThreadById(variables["thread_id"])
-            .then(function(result) {
-                resolve(result);
-            })
-            .catch(reject);
+        .then(ForumModel.getLastInsertId)
+        .then(function() {
+            resolve(data.thread_id);
         })
+        .catch(reject);
     });
 };
 
