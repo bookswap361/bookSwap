@@ -98,7 +98,7 @@ ForumServices.createThread = function(data) {
         "user_id": 1,
         "title": data.title,
         "date": new Date(),
-        "message": data.message
+        "message": DOMPurify.sanitize(data.message)
     };
 
     return new Promise(function(resolve, reject) {
