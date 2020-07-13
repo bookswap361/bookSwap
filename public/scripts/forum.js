@@ -4,7 +4,7 @@ ClassicEditor
     })
     .then(function(editor) {
         editor.model.document.on("change:data", function() {
-            var input = document.getElementById("post-input");
+            var input = document.getElementById("text-input");
             input.value = editor.getData();
         })
     })
