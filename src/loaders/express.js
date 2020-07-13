@@ -5,7 +5,8 @@ var handlebars = require("express-handlebars").create({
     "defaultLayout": "main",
     "helpers": {
         "formatResolveLink": forumHelpers.formatResolveLink,
-        "formatThreadLink": forumHelpers.formatThreadLink
+        "formatThreadLink": forumHelpers.formatThreadLink,
+        "setChecked": forumHelpers.setChecked
     }
 });
 var bodyParser = require("body-parser");

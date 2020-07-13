@@ -25,6 +25,42 @@ ForumServices.getAllThreads = function() {
     });
 };
 
+ForumServices.filterThread = function(criteria) {
+    var promise;
+    // TODO: update user_id from session
+    var user_id = 1;
+    switch(criteria) {
+        case "resolved":
+            promise = ForumModel.getResolvedThreads();
+            break;
+        case "unresolved":
+            promise = ForumModel.getUnresolvedThreads();
+            break;
+        case "userId":
+            promise = ForumModel.getThreadsByUserId(user_id);
+            break;
+        default:
+            return ForumServices.getAllThreads();
+    }
+    return new Promise(function(resolve, reject) {
+        promise
+        .then(function(result) {
+            var threads = [];
+            result.forEach(function(thread) {
+                threads.push({
+                    "thread_id": thread.thread_id,
+                    "title": thread.title,
+                    "create_date": thread.create_date,
+                    "user": thread.first_name + " " + thread.last_name,
+                    "is_resolved": thread.is_resolved ? "Yes" : "No"
+                });
+            });
+            resolve(threads);
+        })
+        .catch(reject)
+    });
+}
+
 ForumServices.getThreadById = function(id) {
     return new Promise(function(resolve, reject) {
         //TODO: Get current user_id from session

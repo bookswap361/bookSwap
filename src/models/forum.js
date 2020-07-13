@@ -42,6 +42,18 @@ ForumModel.resolveThread = function(id) {
     return mysql.query(getQuery("resolveThread"), [id]);
 };
 
+ForumModel.getResolvedThreads = function() {
+    return mysql.query(getQuery("getResolvedThreads"), []);
+};
+
+ForumModel.getUnresolvedThreads = function() {
+    return mysql.query(getQuery("getUnresolvedThreads"), []);
+};
+
+ForumModel.getThreadsByUserId = function(id) {
+    return mysql.query(getQuery("getThreadsByUserId"), [id]);
+};
+
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -64,13 +76,13 @@ function getQuery(type) {
             query = "UPDATE thread SET is_resolved = 1 WHERE thread_id = ?;";
             break;
         case "getResolvedThreads":
-            query = "SELECT t.thread_id, t.title, u.first_name, u.last_name, DATE_FORMAT(t.create_date,'%M-%D-%Y') as create_date, t.is_resolved FROM thr    ead t INNER JOIN user u ON t.user_id = u.user_id WHERE t.is_resolved = 1 GROUP BY t.thread_id ORDER BY t.thread_id;";
+            query = "SELECT t.thread_id, t.title, u.first_name, u.last_name, DATE_FORMAT(t.create_date,'%M-%D-%Y') as create_date, t.is_resolved FROM thread t INNER JOIN user u ON t.user_id = u.user_id WHERE t.is_resolved = 1 GROUP BY t.thread_id ORDER BY t.thread_id;";
             break;
         case "getUnresolvedThreads":
-            query = "SELECT t.thread_id, t.title, u.first_name, u.last_name, DATE_FORMAT(t.create_date,'%M-%D-%Y') as create_date, t.is_resolved FROM thr        ead t INNER JOIN user u ON t.user_id = u.user_id WHERE t.is_resolved = 1 GROUP BY t.thread_id ORDER BY t.thread_id;";
+            query = "SELECT t.thread_id, t.title, u.first_name, u.last_name, DATE_FORMAT(t.create_date,'%M-%D-%Y') as create_date, t.is_resolved FROM thread t INNER JOIN user u ON t.user_id = u.user_id WHERE t.is_resolved = 0 GROUP BY t.thread_id ORDER BY t.thread_id;";
             break;
         case "getThreadsByUserId":
-            query = "SELECT t.thread_id, t.title, u.first_name, u.last_name, DATE_FORMAT(t.create_date,'%M-%D-%Y') as create_date, t.is_resolved FROM thr        ead t INNER JOIN user u ON t.user_id = u.user_id WHERE t.user_id = ? GROUP BY t.thread_id ORDER BY t.thread_id;";
+            query = "SELECT t.thread_id, t.title, u.first_name, u.last_name, DATE_FORMAT(t.create_date,'%M-%D-%Y') as create_date, t.is_resolved FROM thread t INNER JOIN user u ON t.user_id = u.user_id WHERE t.user_id = ? GROUP BY t.thread_id ORDER BY t.thread_id;";
             break;
     }
     return query;

@@ -12,10 +12,15 @@ router.route("/")
             .catch(function(err) {
                 res.status(400).json({"error": err});
             })
+        } else if (req.query.filter) {
+            ForumServices.filterThread(req.query.filter)
+            .then(function(result) {
+                res.render("forum", {"threads": result, "criteria": req.query.filter});
+            });
         } else {
             ForumServices.getAllThreads()
                 .then(function(result) {
-                    res.render("forum", {"threads": result});
+                    res.render("forum", {"threads": result, "criteria": "all"});
                 })
                 .catch(function(err) {
                     res.status(400).json({"error": err});
