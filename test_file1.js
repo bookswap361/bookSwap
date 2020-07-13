@@ -7,3 +7,5 @@ alert("And another one!");
 
 // Lindsey Olmstead test commit
 console.log("Test #3");
+
+console.log("Testeroni");
