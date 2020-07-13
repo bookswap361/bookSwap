@@ -30,7 +30,7 @@ router.route("/create")
     .post(function(req, res) {
          ForumServices.createThread(req.body)
             .then(function(result) {
-                res.render("thread", {"thread": result.messages, "title": result.title, "id": result.thread_id});
+                res.redirect("/forum/?id=" + result);
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});

@@ -72,12 +72,8 @@ ForumServices.createThread = function(data) {
             variables["thread_id"] = result;
             ForumModel.insertMessage(variables)
             .then(function() {
-                ForumServices.getThreadById(variables["thread_id"])
-                .then(function(result) {
-                    resolve(result);
-                })
-                .catch(reject);
-            })
+                resolve(variables["thread_id"]);
+            }).catch(reject);
         })
     })        
 };
