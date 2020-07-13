@@ -41,10 +41,24 @@ router.route("/:id")
 
 router.route("/create-book")
     .post(function(req, res) {
+        console.log(req.body);
         BookServices.createBook(req.body)
             .then(function(result) {
                 console.log("Book created");
                 res.send("Book created");
+            })
+            .catch(function(err) {
+                res.status(400).json({"error": err});
+            });
+    });
+
+router.route("/create-author")
+    .post(function(req, res) {
+        console.log(req.body);
+        BookServices.createAuthor(req.body)
+            .then(function(result) {
+                console.log("Author created");
+                res.send("Author created");
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});

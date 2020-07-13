@@ -2,10 +2,10 @@ const addBookBtn      = document.getElementById("addBookBtn"),
       chooseCondition = document.getElementById("chooseCondition"),
       confirmDiv      = document.getElementById("confirm"),
       confirmCreate   = document.getElementById("confirmCreate"),
+      newLink         = document.getElementById("newLink"),
       submitCreBtn    = document.getElementById("submitCreBtn");
 
 // Add existing book to owned books
-
 function showAddForm(){
     chooseCondition.classList.remove("hidden");
 }
@@ -93,7 +93,6 @@ function convertCondition(condition){
 }
 
 // Create Book
-
 submitCreBtn.addEventListener("click", function(event){
     createBook();
     event.preventDefault();
@@ -103,7 +102,9 @@ function createBook(){
     new Promise(function(resolve, reject){
         resolve(getDataCreate());
     }).then(function(result){
-        console.log(result);
+        makeCBReq(result);
+    }).then(function(result){
+        makeAuthReq();
     }).catch(function(){
         console.log("Error!")
     })
@@ -111,12 +112,15 @@ function createBook(){
 
 function makeCBReq(data){
     let req = new XMLHttpRequest();
+    req.open('POST', "/book/create-book", true);    
     req.setRequestHeader('Content-Type', 'application/json');
+    req.send(JSON.stringify(data));
 
     req.onload = function(){
         if(req.status >= 200 && req.status < 400) {
-            confirmCreate.innerText = "Successfully added book to system"
-            // Link
+            confirmCreate.innerText = "Successfully added book to system!"
+            newLink.setAttribute("href", `/book/${data.ol_key}`);
+            console.log(JSON.parse(response));
         }
     }
 
@@ -124,19 +128,48 @@ function makeCBReq(data){
         console.log('Error')
     }
 
-    req.open('POST', "/book/create-book", true);
-    req.send(JSON.stringify(data));
-    event.preventDefault();
 }
 
-function createOlKey(){
-    return "OL" + Math.floor(Math.random()*500+1);
+function createOlKey(id){
+    return "OL" + Math.floor(Math.random()*50000+1) + id;
 }
 
 function getDataCreate(){
-    var payload = {title: null, description: null, ol_key: null, thumbnail_url: null};
+    var payload = {ol_key: null, description: null, thumbnail_url: null, title: null};
     payload.title = document.getElementById("newTitle").value;
     payload.description = document.getElementById("newDescription").value;
-    payload.ol_key = createOlKey();
+    payload.ol_key = createOlKey("NB");
     return payload
+}
+
+function getAuthor() {
+    var payload = { ol_key: null, name: null }
+        payload.ol_key = createOlKey("NA");
+        payload.name = document.getElementById("newAuthor").value;
+    return payload
+}
+
+function makeAuthReq(){
+    new Promise(function(resolve, reject){
+        resolve(getAuthor());
+    }).then(function(result){
+        let req = new XMLHttpRequest();
+        req.open('POST', "/book/create-author", true);    
+        req.setRequestHeader('Content-Type', 'application/json');
+        req.send(JSON.stringify(result));
+        console.log(result);
+
+        req.onload = function(){
+            if(req.status >= 200 && req.status < 400) {
+                confirmCreate.innerText = "Successfully added book to system! Succesfully added author!"
+            }
+        }
+
+        req.onerror = function() {
+            console.log('Error')
+        }
+    }).catch(function(){
+        console.log("Error!")
+    })
+
 }

@@ -35,6 +35,13 @@ Book.createBook = function(info) {
             .catch(reject);
     });
 }
+Book.createAuthor = function(info) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("createAuthor"), [info.ol_key, info.name])
+            .then(resolve)
+            .catch(reject);
+    });
+}
 
 function getQuery(type) {
     var query = "";
@@ -53,9 +60,9 @@ function getQuery(type) {
                 GROUP BY b.book_id;"
             break;
         case "getBookByOLId":
-            query = "select \
+            query = "SELECT \
             b.book_id, b.ol_key, b.description, b.thumbnail_url, b.title, a.name \
-            from book b \
+            FROM book b \
             INNER JOIN book_author ba ON b.book_id = ba.author_id\
             INNER JOIN author a on ba.author_id = a.author_id \
             WHERE b.ol_key = ?;"
@@ -64,6 +71,10 @@ function getQuery(type) {
             query = "INSERT INTO book \
             (ol_key, description, thumbnail_url, title) \
             VALUES (?, ?, ?, ?);"
+            break;
+        case "createAuthor":
+            query = "INSERT INTO author \
+            (ol_key, name) VALUES (?, ?);"
             break;
     }
 

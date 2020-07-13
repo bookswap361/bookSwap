@@ -56,4 +56,12 @@ BookServices.createBook = function(info) {
 	});
 };
 
+BookServices.createAuthor = function(info) {
+	return new Promise(function(resolve, reject) {
+		BookModel.createAuthor(info)
+			.then(resolve)
+			.catch(reject);
+	});
+};
+
 module.exports = BookServices;
