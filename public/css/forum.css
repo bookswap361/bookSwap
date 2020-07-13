@@ -3,6 +3,18 @@
     width: 800px;
 }
 
+.topic-container {
+    display: flex;
+}
+
+.title {
+    width: 90%;
+}
+
+.resolve {
+    width: 21%;
+}
+
 .message-individual {
     padding: 5px;
 }
