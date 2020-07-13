@@ -1,0 +1,12 @@
+.thread-page-container {
+    margin: 0 auto;
+    width: 800px;
+}
+
+.message-individual {
+    padding: 5px;
+}
+
+.user-details {
+    font-size: 12px;
+}

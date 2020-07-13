@@ -1,32 +1,31 @@
-<div>
-    Thread Contents
+<div class="thread-page-container">
     <div>
         <a href="/forum">Go Back</a>
     </div>
-    <div>
+    <div class="topic-title">
         <h3> {{title}} </h3>
     </div>
-    <div>
-        {{#each thread}}
-        <div>
-            <div style="display:inline-block">
-                {{user}}
-                <p>
-                {{date}}
+    <div class="thread-container">
+        <div class="message-container">
+            {{#each thread}}
+            <div class="message-individual">
+                <div class="user-details">
+                    {{user}} - {{date}}
+                </div>
+                <div class="message">
+                    {{{post}}}
+                </div>
             </div>
-            <div style="display:inline-block">
-                {{{post}}}
-            </div>
+            {{/each}}
         </div>
-        {{/each}}
-    </div>
-    <div>
-        <form id="insert-message" action="/forum/insert" method="POST">
-            <div id="text-editor"></div>
-            <input type="hidden" id="post-input" name="post" required>
-            <input type="hidden" name="thread_id" value="{{id}}">
-            <input type="submit" name="insert-message-button" value="Submit">
-        </form>
+        <div class="reply-container">
+            <form id="insert-message" action="/forum/insert" method="POST">
+                <div id="text-editor"></div>
+                <input type="hidden" id="post-input" name="post" required>
+                <input type="hidden" name="thread_id" value="{{id}}">
+                <input type="submit" name="insert-message-button" value="Submit">
+            </form>
+        </div>
     </div>
 </div>
 <script src="https://cdn.ckeditor.com/ckeditor5/20.0.0/classic/ckeditor.js"></script>
