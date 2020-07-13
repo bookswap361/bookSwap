@@ -28,7 +28,7 @@ ForumServices.getAllThreads = function() {
 ForumServices.getThreadById = function(id) {
     return new Promise(function(resolve, reject) {
         //TODO: Get current user_id from session
-        var user_id = 1;
+        var user_id = 2;
         ForumModel.getThreadById(id)
             .then(function(result) {
             var messages = [];
