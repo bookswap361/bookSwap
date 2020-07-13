@@ -17,19 +17,8 @@ router.route("/")
 
 router.route("/create-book")
     .get(function(req, res) {
-    res.render("create-book")
+    res.render("createbook")
 })
-
-router.route("/create-book")
-    .post(function(req, res) {
-        BookServices.createBook(req.body)
-            .then(function(result) {
-            	console.log("Book created");
-            })
-            .catch(function(err) {
-                res.status(400).json({"error": err});
-            });
-    });
 
 router.route("/:id")
     .get(function(req, res) {
@@ -46,6 +35,18 @@ router.route("/:id")
             })
             .catch(function(err) {
                 console.error(err);
+                res.status(400).json({"error": err});
+            });
+    });
+
+router.route("/create-book")
+    .post(function(req, res) {
+        BookServices.createBook(req.body)
+            .then(function(result) {
+                console.log("Book created");
+                res.send("Book created");
+            })
+            .catch(function(err) {
                 res.status(400).json({"error": err});
             });
     });

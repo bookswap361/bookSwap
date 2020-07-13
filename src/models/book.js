@@ -29,7 +29,8 @@ Book.getBookByOLId = function(id) {
 // Update
 Book.createBook = function(info) {
     return new Promise(function(resolve, reject) {
-        mysql.query(getQuery("createBook"), [])
+        mysql.query(getQuery("createBook"), [info.ol_key, info.description,
+            info.thumbnail_url, info.title])
             .then(resolve)
             .catch(reject);
     });
@@ -61,10 +62,8 @@ function getQuery(type) {
             break;
         case "createBook":
             query = "INSERT INTO book \
-            (list_id, traded_to, traded_by, is_accepted, request_date, \
-            approve_date, reject_date, ship_date, lost_date, received_date, \
-            refund_date, has_claim, claim_open_date, claim_settle_date, is_complete) \
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+            (ol_key, description, thumbnail_url, title) \
+            VALUES (?, ?, ?, ?);"
             break;
     }
 

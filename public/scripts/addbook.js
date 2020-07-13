@@ -1,6 +1,10 @@
 const addBookBtn      = document.getElementById("addBookBtn"),
       chooseCondition = document.getElementById("chooseCondition"),
-      confirmDiv      = document.getElementById("confirm");
+      confirmDiv      = document.getElementById("confirm"),
+      confirmCreate   = document.getElementById("confirmCreate"),
+      submitCreBtn    = document.getElementById("submitCreBtn");
+
+// Add existing book to owned books
 
 function showAddForm(){
     chooseCondition.classList.remove("hidden");
@@ -8,19 +12,7 @@ function showAddForm(){
 
 function addBook(){
     new Promise(function(resolve, reject) {
-
-        var payload = {user_id: null, book_id: null, condition_id: null, condition_description: null, list_date: null};
-        // payload.user_id = document.getElementById("newUser_id").value;
-        payload.user_id = 1;
-        payload.book_id = parseInt(document.getElementById("newBook_id").value);
-        payload.condition_id = parseInt(document.getElementById("newCondition").value);
-        payload.condition_description = convertCondition(payload.condition_id).description;
-        payload.list_date = getDate();
-        
-        payload.title = document.getElementById("newTitle").value;
-        payload.condition_points = convertCondition(payload.condition_id).points;
-    
-        resolve(payload);
+        resolve(getDataOwn());
     }).then(function(result){
         makeReq(result);
     }).then(function(){
@@ -28,6 +20,21 @@ function addBook(){
         console.log('error!')
     })
 
+}
+
+function getDataOwn(){
+    var payload = {user_id: null, book_id: null, condition_id: null, condition_description: null, list_date: null};
+    // payload.user_id = document.getElementById("newUser_id").value;
+    payload.user_id = 1;
+    payload.book_id = parseInt(document.getElementById("newBook_id").value);
+    payload.condition_id = parseInt(document.getElementById("newCondition").value);
+    payload.condition_description = convertCondition(payload.condition_id).description;
+    payload.list_date = getDate();
+    
+    payload.title = document.getElementById("newTitle").value;
+    payload.condition_points = convertCondition(payload.condition_id).points;
+
+    return payload
 }
 
 function makeReq(data) {
@@ -85,44 +92,51 @@ function convertCondition(condition){
     return {points: points, description: description}
 }
 
-document.addEventListener("DOMContentLoaded", createOlKey);
+// Create Book
 
-function createOlKey(){
-    return `${Math.floor(Math.random(500)*+1)}`;
-}
+submitCreBtn.addEventListener("click", function(event){
+    createBook();
+    event.preventDefault();
+})
 
 function createBook(){
+    new Promise(function(resolve, reject){
+        resolve(getDataCreate());
+    }).then(function(result){
+        console.log(result);
+    }).catch(function(){
+        console.log("Error!")
+    })
+}
+
+function makeCBReq(data){
     let req = new XMLHttpRequest();
     req.setRequestHeader('Content-Type', 'application/json');
 
     req.onload = function(){
         if(req.status >= 200 && req.status < 400) {
-
-            new Promise(function(resolve, reject){
-                resolve(JSON.parse(req.responseText))
-
-            }).then(function(results){
-                console.log(results);
-                var i = 0;
-                results.forEach(function(item){
-                    if (item.key != null) {
-                        showResult(item);
-                        i++;
-                    }
-                })
-                loadingText.innerText = `${i} results found for "${query}"`;
-                noFind.classList.remove("hidden");
-            })
-            .catch(function(){
-                resultsDiv.innerHTML = "Error! Try search again";
-            });
-        } else resultsDiv.innerHTML = "404 Error! Try search again";
+            confirmCreate.innerText = "Successfully added book to system"
+            // Link
+        }
     }
+
     req.onerror = function() {
         console.log('Error')
     }
 
-    req.open('POST', baseURL, true);
-    req.send(JSON.stringify());
+    req.open('POST', "/book/create-book", true);
+    req.send(JSON.stringify(data));
     event.preventDefault();
+}
+
+function createOlKey(){
+    return "OL" + Math.floor(Math.random()*500+1);
+}
+
+function getDataCreate(){
+    var payload = {title: null, description: null, ol_key: null, thumbnail_url: null};
+    payload.title = document.getElementById("newTitle").value;
+    payload.description = document.getElementById("newDescription").value;
+    payload.ol_key = createOlKey();
+    return payload
 }
