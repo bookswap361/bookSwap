@@ -16,6 +16,7 @@ var settings = function(app) {
     app.use("/user", require("../api/user"));
     app.use("/account", require("../api/account"));
     app.use("/swap", require("../api/swap"));
+    app.use("/books_owned", require("../api/books_owned"));
 };
 
 module.exports = settings;

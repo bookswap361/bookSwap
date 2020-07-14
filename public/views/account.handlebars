@@ -25,8 +25,32 @@
 		</div>
 	</div>
 
-	<div id="booksInventory" class="tabcontent">
+	<div id="booksInventory" class="tabcontent active">
 		<h2> Your Books </h2>
+
+		<table>
+			<tr>
+				<th>BOOK ID</th>
+				<th>TITLE</th>
+				<th>AUTHOR</th>
+				<th>CONDITION</th>
+				<th>LIST DATE</th>
+				<th></th>
+			</tr>
+			{{#each books}}
+			<tr>
+				<td>{{book_id}}</td>
+				<td>{{title}}</td>
+				<td>{{author}}</td>
+				<td>{{condition_description}}</td>
+				<td>{{list_date}}</td>
+				<td>
+					<button>Delete
+					</button>
+				</td>
+			</tr>
+			{{/each}}
+		</table>
 	</div>
 
 	<div id="swaps" class="tabcontent">

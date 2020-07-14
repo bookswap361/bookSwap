@@ -17,6 +17,18 @@ document.getElementById("booksTab").addEventListener("click", function(event){
 
 	document.getElementById("booksInventory").style.display = "block";
 	event.currentTarget.className += " active";
+
+	var id = 1;
+	var url = "../books_owned/" + id;
+	fetch(url, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).then(function (response) {
+		console.log(response);
+		return response;
+	})
 });
 
 // Swap tab functionality.
@@ -34,13 +46,6 @@ document.getElementById("swapsTab").addEventListener("click", function(event){
 
 	document.getElementById("swaps").style.display = "block";
 	event.currentTarget.className += " active";
-
-	// Make get request to return table of swaps
-	/*var request = new XMLHttpRequest();
-	return new Promise(function(resolve, reject){
-		var id = 1;		// to be updated
-		var url = "/" + id;
-	})*/
 
 	var id = 1;
 	var url = "../swap/" + id;
