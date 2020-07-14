@@ -54,10 +54,27 @@ BookServices.createBook = function(info) {
 		resolve(info);
 	}).then(function(info) {
 		BookModel.createAuthor(info);
+		return info;
+	}).then(function(info) {
+		var data = []
+		data.push(BookModel.getAuthIdfromOlId(info))
+		data.push(BookModel.getBookIdfromOlId(info))
+		
+		Promise.all(data)
+		.then(function(result){
+			return {
+				"author_id": result[0][0].author_id,
+				"book_id": result[1][0].book_id};
+				
+		}).then(function(result){
+			return BookModel.joinAuthBook(result)
+		}).catch(function(){
+		console.log("Services error")
+		})
 	}).catch(function(){
 		console.log("Services error")
-	});
-};
+	})
+}
 
 BookServices.joinAuthBook = function(info) {
 	new Promise(function(resolve, reject) {

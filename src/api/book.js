@@ -43,15 +43,10 @@ router.route("/create-book")
     .post(function(req, res) {
         console.log(req.body);
         new Promise(function(resolve, reject){
-            BookServices.createBook(req.body)
-            resolve(req.body)
-            }).then(function(result){
-                console.log("Book and author created");
-                return result;
-            }).then(function(result){
-                BookServices.joinAuthBook(result);
-                res.send("Book/author linked");
-            })
+            resolve(BookServices.createBook(req.body));
+        }).then(function(result){
+            res.send("Successful add!");
+        })
             .catch(function(err) {
                 res.status(400).json({"error": err});
             });
