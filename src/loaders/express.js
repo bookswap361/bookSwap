@@ -1,11 +1,12 @@
 var express = require("express");
 var app = express();
-var helpers = require("../helpers/helpers")
+var forumHelpers = require("../helpers/forum");
 var handlebars = require("express-handlebars").create({
     "defaultLayout": "main",
     "helpers": {
-        "displayResolveButton": helpers.displayResolveButton,
-        "formatThreadLink": helpers.formatThreadLink
+        "formatResolveLink": forumHelpers.formatResolveLink,
+        "formatThreadLink": forumHelpers.formatThreadLink,
+        "setChecked": forumHelpers.setChecked
     }
 });
 var bodyParser = require("body-parser");

@@ -7,15 +7,20 @@ router.route("/")
         if (req.query && req.query.id) {
             ForumServices.getThreadById(req.query.id)
             .then(function(result) {
-                res.render("thread", {"thread": result.messages, "title": result.title, "id": result.thread_id});
+                res.render("thread", {"isResolved": result.isResolved, "thread": result.messages, "title": result.title, "id": result.thread_id, "isOwner": result.isOwner});
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});
             })
+        } else if (req.query.filter) {
+            ForumServices.filterThread(req.query.filter)
+            .then(function(result) {
+                res.render("forum", {"threads": result, "criteria": req.query.filter});
+            });
         } else {
             ForumServices.getAllThreads()
                 .then(function(result) {
-                    res.render("forum", {"threads": result});
+                    res.render("forum", {"threads": result, "criteria": "all"});
                 })
                 .catch(function(err) {
                     res.status(400).json({"error": err});
@@ -30,7 +35,7 @@ router.route("/create")
     .post(function(req, res) {
          ForumServices.createThread(req.body)
             .then(function(result) {
-                res.render("thread", {"thread": result.messages, "title": result.title, "id": result.thread_id});
+                res.redirect("/forum/?id=" + result);
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});
@@ -41,11 +46,25 @@ router.route("/insert")
     .post(function(req, res) {
         ForumServices.insertMessage(req.body)
             .then(function(result) {
-                res.render("thread", {"thread": result.messages, "title": result.title, "id": result.thread_id});
+                res.redirect("/forum/?id=" + result);
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});
             })
-    })
+    });
+
+router.route("/resolve")
+    .post(function(req, res) {
+        if (req.query && req.query.id) {
+            //TODO: Make sure the ownerid matches current user-id for resolving
+            ForumServices.resolveThread(req.query)
+            .then(function() {
+                res.redirect("/forum");
+            })
+            .catch(function(err) {
+                res.status(400).json({"error": err});
+            });
+        }
+    });
 
 module.exports = router;
