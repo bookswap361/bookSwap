@@ -26,6 +26,14 @@ Book.getBookByOLId = function(id) {
     });
 }
 
+Book.getOlKeys = function() {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("getOlKeys"), [])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
 Book.createBook = function(info) {
     return new Promise(function(resolve, reject) {
         mysql.query(getQuery("createBook"), [info.bol_key, info.description,
@@ -109,6 +117,11 @@ function getQuery(type) {
         case "joinAuthBook":
             query = "INSERT INTO book_author\
             (book_id, author_id) VALUES (?, ?);"
+            break;
+        case "getOlKeys":
+            query = "SELECT ol_key FROM book \
+            UNION \
+            SELECT ol_key FROM author;"
             break;
         }
 

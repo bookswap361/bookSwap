@@ -64,8 +64,8 @@ BookServices.createBook = function(info) {
 		.then(function(result){
 			return {
 				"author_id": result[0][0].author_id,
-				"book_id": result[1][0].book_id};
-				
+				"book_id": result[1][0].book_id
+			};	
 		}).then(function(result){
 			return BookModel.joinAuthBook(result)
 		}).catch(function(){
@@ -75,5 +75,13 @@ BookServices.createBook = function(info) {
 		console.log("Services error")
 	})
 }
+
+BookServices.getOlKeys = function() {
+    return new Promise(function(resolve, reject) {
+        BookModel.getOlKeys()
+            .then(resolve)
+            .catch(reject);
+    });
+};
 
 module.exports = BookServices;

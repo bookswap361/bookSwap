@@ -3,7 +3,9 @@ const addBookBtn      = document.getElementById("addBookBtn"),
       confirmDiv      = document.getElementById("confirm"),
       confirmCreate   = document.getElementById("confirmCreate"),
       newLink         = document.getElementById("newLink"),
-      submitCreBtn    = document.getElementById("submitCreBtn");
+      submitCreBtn    = document.getElementById("submitCreBtn"),
+      allOlKeys       = document.getElementById("allOlKeys").innerHTML.split(",");
+
 
 // Add existing book to owned books
 function showAddForm(){
@@ -130,7 +132,11 @@ function makeCBReq(data){
 }
 
 function createOlKey(id){
-    return "OL" + Math.floor(Math.random()*50000+1) + id;
+    var newKey = "OL" + Math.floor(Math.random()*50000+1) + id;
+    while (allOlKeys.includes(newKey)) {
+        newKey = "OL" + Math.floor(Math.random()*50000+1) + id;
+    }
+    return newKey;
 }
 
 function getDataCreate(){
@@ -159,6 +165,8 @@ function makeAuthReq(){
         req.onload = function(){
             if(req.status >= 200 && req.status < 400) {
                 confirmCreate.innerText = "Successfully added book to system! Succesfully added author!"
+            } else {
+                confirmCreate.innerText = "Hmm something went wrong. Please refesh and try again."
             }
         }
 

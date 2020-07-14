@@ -17,7 +17,19 @@ router.route("/")
 
 router.route("/create-book")
     .get(function(req, res) {
-    res.render("createbook")
+        BookServices.getOlKeys()
+            .then(function(result){
+                var keys = [];
+                result.forEach(function(element){
+                    keys.push(element.ol_key);
+                });
+                console.log(keys);
+
+                res.render("createbook", {"keys": keys});
+            })
+            .catch(function(err){
+                res.status(400).json({"error": err});
+            });
 })
 
 router.route("/:id")
