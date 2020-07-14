@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
-var helpers = require("../helpers/helpers")
+var helpers = require("../helpers/helpers");
+var session = require('express-session');
 var handlebars = require("express-handlebars").create({
     "defaultLayout": "main",
     "helpers": {
@@ -11,6 +12,7 @@ var handlebars = require("express-handlebars").create({
 var bodyParser = require("body-parser");
 var path = require("path");
 
+
 var settings = function(app) {
     app.engine("handlebars", handlebars.engine);
     app.use(bodyParser.urlencoded({"extended": true}));
@@ -18,7 +20,12 @@ var settings = function(app) {
     app.use(express.static(path.join(process.cwd(), "/public")));
     app.set("views", path.join(process.cwd(), "/public/views"));
     app.set("view engine", "handlebars");
-    app.use("/", require("../api/pages"));
+app.use(session({
+secret: 'noOneKnows',
+resave: false,
+saveUninitialized: false
+}));    
+app.use("/", require("../api/pages"));
     app.use("/book", require("../api/book"));
     app.use("/user", require("../api/user"));
     app.use("/account", require("../api/account"));
