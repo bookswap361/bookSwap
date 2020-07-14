@@ -3,6 +3,10 @@
     width: 800px;
 }
 
+.topic-cell {
+    width: 350px;
+}
+
 .topic-container {
     display: flex;
 }
@@ -44,3 +48,5 @@ blockquote p {
     display: inline;
     font-style: italic;
 }
+
+

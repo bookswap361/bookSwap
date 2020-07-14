@@ -16,7 +16,7 @@ ForumServices.getAllThreads = function() {
                         "title": thread.title,
                         "create_date": thread.create_date,
                         "user": thread.first_name + " " + thread.last_name,
-                        "is_resolved": thread.is_resolved ? "Yes" : "No"
+                        "is_resolved": thread.is_resolved ? "Resolved" : ""
                     });
                 });
                 resolve(threads);
@@ -52,7 +52,7 @@ ForumServices.filterThread = function(criteria) {
                     "title": thread.title,
                     "create_date": thread.create_date,
                     "user": thread.first_name + " " + thread.last_name,
-                    "is_resolved": thread.is_resolved ? "Yes" : "No"
+                    "is_resolved": thread.is_resolved ? "Resolved" : ""
                 });
             });
             resolve(threads);

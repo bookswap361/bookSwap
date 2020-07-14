@@ -1,5 +1,4 @@
-<div>
-    <h2>Forum</h2>
+<div class="thread-page-container">
     <div>
         View:
         <form id="filter-threads" action="/forum/" method="GET">
@@ -17,13 +16,13 @@
         <a href="/forum/create"><button>Create Thread</button></a>
     </div>
     <div>
-        <table>
+        <table class="forum-table">
             <thead>
                 <th style="display:none"></th>
-                <th>Topic</th>
+                <th class="topic-cell">Topic</th>
                 <th>Created By</th>
                 <th>Created Date</th>
-                <th>Resolved</th>
+                <th></th>
             </thread>
             <tbody>
                 {{#each threads}}
