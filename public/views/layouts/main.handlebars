@@ -15,13 +15,19 @@
         <div class="row">
             <div><img src="/imgs/forwordheader.png" id="fwLogo"></div>
             <div class="login">
-                <form id="loginForm" form action="user/login" method="POST">
+  {{#if user_id}}
+    <p>Welcome back, {{first_name}}</p>
+    <form id="logoutForm" form action ="user/logout" method="GET">
+    <input name = "logoutBtn" type="submit" value="Logout">
+  {{else}}
+   <form id="loginForm" form action="user/login" method="POST">
                     <input type="text" name="email" placeholder="email" required><input type="password" name="password" placeholder="password" required>
                     <input name="loginBtn" type="submit" value="go!">
                 </form>
                 <br>
                 not a member? <a href="user/signup">create an account!</a>
-            </div>
+  {{/if}}
+ </div>
         </div>
     </div>
         
