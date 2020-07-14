@@ -52,6 +52,8 @@ function makeReq(data) {
     req.onload = function(){
         if(req.status >= 200 && req.status < 400) {
             confirmDiv.innerText = confirmStr;
+        } else {
+            confirmDiv.innerText = "Something went wrong! Please refresh and try again.";
         }
     }
     
@@ -113,7 +115,8 @@ function createBook(){
 }
 
 function makeCBReq(data){
-    let req = new XMLHttpRequest();
+    var bol_key = data.bol_key;
+    var req = new XMLHttpRequest();
     req.open('POST', "/book/create-book", true);    
     req.setRequestHeader('Content-Type', 'application/json');
     req.send(JSON.stringify(data));
@@ -121,7 +124,9 @@ function makeCBReq(data){
     req.onload = function(){
         if(req.status >= 200 && req.status < 400) {
             confirmCreate.innerText = "Successfully added book to system!"
-            // newLink.setAttribute("href", `/book/${data.ol_key}`);
+            newLink.setAttribute("href", `/book/${bol_key}`);
+        } else {
+            confirmCreate.innerText = "Hmm something went wrong. Please refesh and try again."
         }
     }
 
@@ -150,31 +155,4 @@ function getDataCreate(){
     payload.aol_key = createOlKey("NA");
     payload.name = document.getElementById("newAuthor").value;
     return payload
-}
-
-function makeAuthReq(){
-    new Promise(function(resolve, reject){
-        resolve(getAuthor());
-    }).then(function(result){
-        let req = new XMLHttpRequest();
-        req.open('POST', "/book/create-author", true);    
-        req.setRequestHeader('Content-Type', 'application/json');
-        req.send(JSON.stringify(result));
-        console.log(result);
-
-        req.onload = function(){
-            if(req.status >= 200 && req.status < 400) {
-                confirmCreate.innerText = "Successfully added book to system! Succesfully added author!"
-            } else {
-                confirmCreate.innerText = "Hmm something went wrong. Please refesh and try again."
-            }
-        }
-
-        req.onerror = function() {
-            console.log('Error')
-        }
-    }).catch(function(){
-        console.log("Error!")
-    })
-
 }
