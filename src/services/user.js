@@ -1,5 +1,6 @@
 var UserModel = require("../models/user");
 var bcrypt = require('bcryptjs');
+var session = require('express-session');
 var UserServices = {};
 
 
@@ -50,9 +51,14 @@ UserServices.verifyLogin = function(body) {
         UserModel.getUserByEmail(body)
             .then(function(user) {
                 if (user[0]) {
+console.log(user[0]);
                     bcrypt.compare(body.password, user[0].password, function( err, result) {
                         if (result == true) {
-                            resolve(result);
+var id = user[0].user_id;
+session.authenticated = true;
+session.u_id = id;
+session.u_name = user[0].first_name;                            
+resolve(result);
                         } else {
                             reject();
                         }
