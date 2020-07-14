@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var UserServices = require("../services/user");
+vart session = require('express-session');
 
 router.route("/")
     .get(function(req, res) {
@@ -68,5 +69,18 @@ router.route("/:id")
             });
     })
 
+/*
+router.route("/logout")
+    .get(function(req, res) {
+        if (req.session.u_id)
+            {
+            req.session.destroy();
+            res.redirect('/'');
+            }
+            .catch(function(err) {
+                console.log("Could not logout session");
+            });
+    })
+*/
 
 module.exports = router;
