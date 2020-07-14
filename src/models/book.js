@@ -26,18 +26,42 @@ Book.getBookByOLId = function(id) {
     });
 }
 
-// Update
 Book.createBook = function(info) {
     return new Promise(function(resolve, reject) {
-        mysql.query(getQuery("createBook"), [info.ol_key, info.description,
+        mysql.query(getQuery("createBook"), [info.bol_key, info.description,
             info.thumbnail_url, info.title])
             .then(resolve)
             .catch(reject);
     });
 }
+
 Book.createAuthor = function(info) {
     return new Promise(function(resolve, reject) {
-        mysql.query(getQuery("createAuthor"), [info.ol_key, info.name])
+        mysql.query(getQuery("createAuthor"), [info.aol_key, info.name])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+Book.getAuthIdfromOlId = function(info) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("getAuthIdfromOlId"), [info.aol_key])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+Book.getBookIdfromOlId = function(info) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("getBookIdfromOlId"), [info.bol_key])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+Book.joinAuthBook = function(info) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("joinAuthBook"), [info.book_id, info.author_id])
             .then(resolve)
             .catch(reject);
     });
@@ -63,7 +87,7 @@ function getQuery(type) {
             query = "SELECT \
             b.book_id, b.ol_key, b.description, b.thumbnail_url, b.title, a.name \
             FROM book b \
-            INNER JOIN book_author ba ON b.book_id = ba.author_id\
+            INNER JOIN book_author ba ON b.book_id = ba.book_id\
             INNER JOIN author a on ba.author_id = a.author_id \
             WHERE b.ol_key = ?;"
             break;
@@ -76,7 +100,17 @@ function getQuery(type) {
             query = "INSERT INTO author \
             (ol_key, name) VALUES (?, ?);"
             break;
-    }
+        case "getAuthIdfromOlId":
+            query = "SELECT author_id FROM author WHERE ol_key = ?;"
+            break;
+        case "getBookIdfromOlId":
+            query = "SELECT book_id FROM book WHERE ol_key = ?;"
+            break;        
+        case "joinAuthBook":
+            query = "INSERT INTO book_author\
+            (book_id, author_id) VALUES (?, ?);"
+            break;
+        }
 
     return query;
 };

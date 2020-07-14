@@ -42,23 +42,15 @@ router.route("/:id")
 router.route("/create-book")
     .post(function(req, res) {
         console.log(req.body);
-        BookServices.createBook(req.body)
-            .then(function(result) {
-                console.log("Book created");
-                res.send("Book created");
-            })
-            .catch(function(err) {
-                res.status(400).json({"error": err});
-            });
-    });
-
-router.route("/create-author")
-    .post(function(req, res) {
-        console.log(req.body);
-        BookServices.createAuthor(req.body)
-            .then(function(result) {
-                console.log("Author created");
-                res.send("Author created");
+        new Promise(function(resolve, reject){
+            BookServices.createBook(req.body)
+            resolve(req.body)
+            }).then(function(result){
+                console.log("Book and author created");
+                return result;
+            }).then(function(result){
+                BookServices.joinAuthBook(result);
+                res.send("Book/author linked");
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});
@@ -77,5 +69,17 @@ router.route("/add-owned-book")
             });
     });
 
+router.route("/create-author")
+    .post(function(req, res) {
+        console.log(req.body);
+        BookServices.createAuthor(req.body)
+            .then(function(result) {
+                console.log("Author created");
+                res.send("Author created");
+            })
+            .catch(function(err) {
+                res.status(400).json({"error": err});
+            });
+    });
 
 module.exports = router;

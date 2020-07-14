@@ -16,6 +16,7 @@ function addBook(){
     }).then(function(result){
         makeReq(result);
     }).then(function(){
+        console.log('complete');
     }).catch(function(){
         console.log('error!')
     })
@@ -102,9 +103,8 @@ function createBook(){
     new Promise(function(resolve, reject){
         resolve(getDataCreate());
     }).then(function(result){
+        console.log(result);
         makeCBReq(result);
-    }).then(function(result){
-        makeAuthReq();
     }).catch(function(){
         console.log("Error!")
     })
@@ -119,8 +119,7 @@ function makeCBReq(data){
     req.onload = function(){
         if(req.status >= 200 && req.status < 400) {
             confirmCreate.innerText = "Successfully added book to system!"
-            newLink.setAttribute("href", `/book/${data.ol_key}`);
-            console.log(JSON.parse(response));
+            // newLink.setAttribute("href", `/book/${data.ol_key}`);
         }
     }
 
@@ -135,17 +134,15 @@ function createOlKey(id){
 }
 
 function getDataCreate(){
-    var payload = {ol_key: null, description: null, thumbnail_url: null, title: null};
+    var payload =
+        {bol_key: null, description: null, thumbnail_url: null, title: null,
+        aol_key: null, name: null};
     payload.title = document.getElementById("newTitle").value;
     payload.description = document.getElementById("newDescription").value;
-    payload.ol_key = createOlKey("NB");
-    return payload
-}
+    payload.bol_key = createOlKey("NB");
 
-function getAuthor() {
-    var payload = { ol_key: null, name: null }
-        payload.ol_key = createOlKey("NA");
-        payload.name = document.getElementById("newAuthor").value;
+    payload.aol_key = createOlKey("NA");
+    payload.name = document.getElementById("newAuthor").value;
     return payload
 }
 

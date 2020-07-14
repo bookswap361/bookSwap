@@ -50,18 +50,29 @@ BookServices.addToOwn = function(info) {
 
 BookServices.createBook = function(info) {
 	return new Promise(function(resolve, reject) {
-		BookModel.createBook(info)
-			.then(resolve)
-			.catch(reject);
+		BookModel.createBook(info);
+		resolve(info);
+	}).then(function(info) {
+		BookModel.createAuthor(info);
+	}).catch(function(){
+		console.log("Services error")
 	});
 };
 
-BookServices.createAuthor = function(info) {
-	return new Promise(function(resolve, reject) {
-		BookModel.createAuthor(info)
-			.then(resolve)
-			.catch(reject);
-	});
+BookServices.joinAuthBook = function(info) {
+	new Promise(function(resolve, reject) {
+		var data = []
+		data.push(BookModel.getAuthIdfromOlId(info))
+		data.push(BookModel.getBookIdfromOlId(info))
+		Promise.all(data)
+		.then(function(result){
+			return {
+				"author_id": result[0][0].author_id,
+				"book_id": result[1][0].book_id};
+		}).then(function(result){
+			BookModel.joinAuthBook(result)
+		})
+	})
 };
 
 module.exports = BookServices;
