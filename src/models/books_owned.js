@@ -24,16 +24,16 @@ function getQuery(type) {
         case "books":
             query = "SELECT * FROM book LEFT JOIN books_owned ON book.book_id = books_owned.book_id WHERE user_id = ?";
             break;
-    case "newBook":
-    query = "INSERT INTO books_owned \
-            (user_id, book_id, is_available, condition_id, condition_description, list_date) \
-            VALUES (?, ?, 1, ?, ?, ?)";
+        case "newBook":
+        query = "INSERT INTO books_owned \
+                (user_id, book_id, is_available, condition_id, condition_description, list_date) \
+                VALUES (?, ?, 1, ?, ?, ?)";
             break;
-    case "deleteBook":
-	query = "DELETE from books_owned WHERE user_id = ? AND book_id = ?";
+        case "deleteBook":
+	    query = "DELETE from books_owned WHERE user_id = ? AND book_id = ?";
             break;
-    case "deleteAllBooks":
-	query = "DELETE from books_owned WHERE user_id = ?";
+        case "deleteAllBooks":
+	    query = "DELETE from books_owned WHERE user_id = ?";
             break;
         }
 

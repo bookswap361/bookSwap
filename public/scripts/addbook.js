@@ -42,7 +42,7 @@ function getDataOwn(){
 
 function makeReq(data) {
     var req = new XMLHttpRequest();
-    req.open("POST", "/book/add-owned-book", true);
+    req.open("POST", "/book/add-to-account", true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.send(JSON.stringify(data))
 
@@ -97,7 +97,7 @@ function convertCondition(condition){
     return {points: points, description: description}
 }
 
-// Create Book
+// Create new Book to Library
 submitCreBtn.addEventListener("click", function(event){
     createBook();
     event.preventDefault();
@@ -124,7 +124,9 @@ function makeCBReq(data){
     req.onload = function(){
         if(req.status >= 200 && req.status < 400) {
             confirmCreate.innerText = "Successfully added book to system!"
+            newLink.classList.remove("hidden");
             newLink.setAttribute("href", `/book/${bol_key}`);
+            submitCreBtn.setAttribute("disabled", "true");
         } else {
             confirmCreate.innerText = "Hmm something went wrong. Please refesh and try again."
         }

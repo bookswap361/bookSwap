@@ -58,7 +58,7 @@ body {
 }
 
 .hidden {
-  visibility: hidden;
+  display: none;
 }
 
 #info span{

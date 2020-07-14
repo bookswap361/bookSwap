@@ -34,12 +34,14 @@ router.route("/create-book")
 
 router.route("/:id")
     .get(function(req, res) {
-        BookServices.getBookByOLId(req.params.id)
+        var data = req.body;
+        BookServices.getBookByOLId(req.body.id)
             .then(function(result) {
                 if(result.length > 0){
                     console.log(result);
                     res.render("book-page", result[0]);
                 } else {
+                    console.log(result);
                     console.log(result);
                     // To do 
                     res.render("book-page", {title: "Placeholder"})
@@ -64,7 +66,7 @@ router.route("/create-book")
             });
     });
 
-router.route("/add-owned-book")
+router.route("/add-to-account")
     .post(function(req, res) {
         BookServices.addToOwn(req.body)
             .then(function(result) {
