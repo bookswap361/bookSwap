@@ -18,6 +18,9 @@ router.route("/create")
         UserServices.createUser(req.body)
             .then(function(result) {
                 if (result) {
+                    req.session.u_id = result.user_id;
+                    req.session.u_name = result.first_name;
+                    req.session.authenticated = true;
                     res.redirect('/account');
                 }
             })

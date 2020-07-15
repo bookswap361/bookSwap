@@ -39,11 +39,12 @@ UserServices.createUser = function(body) {
  return new Promise(function(resolve, reject) {
         bcrypt.hash(body.password, 10, function(err, hash) {
             UserModel.createUser(body, hash)
-            .then(function (user) {
-                req.session.authenticated = true;
-                session.u_id = user.insertId;
-                session.u_name = body.first_name;
-                resolve(user);
+            .then(function() {
+                UserModel.getUserByEmail(body)
+                .then(function(result) {
+                    resolve(result[0]);
+                })
+                .catch(reject);
             })
                 .catch(reject);
             });
