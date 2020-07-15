@@ -11,12 +11,11 @@ function bindSearch(){
         new Promise(function(resolve, reject){
             resolve(resetResults())
         }).then(function(result){
-            loadingText.innerText = "Loading and filtering results...";
+            loadingText.innerText = "Loading and filtering results... please wait... ";
         }).then(function(result){
             makeReq()
         }).catch(function(){
             loadingText.innerText = "Hmm something went wrong, please try again.";
-            resetResults();
         })
     });
 }
@@ -38,7 +37,9 @@ function makeReq() {
                     resolve(JSON.parse(req.responseText))
                 }).then(function(results){
                     var allResults = [];
-                     for(var i=0; i<10; i++) {
+                    var max = 10;
+                    if (results.docs.length < 10) max = results.docs.length;
+                    for(var i=0; i<max; i++) {
                         var data = {title: null, name: null, genre: [], thumbnail_url: null, book_id: null, author_id: null};
                         
                         if (results.docs[i].hasOwnProperty("title_suggest")) data.title  = results.docs[i].title_suggest;
@@ -57,8 +58,8 @@ function makeReq() {
                             });
                         }
                         allResults.push(data);
-                     }
-                     return allResults;
+                    }
+                    return allResults;
                 }).then(function(results){
                     console.log(results);
                     var i = 0;
@@ -74,7 +75,6 @@ function makeReq() {
                 })
                 .catch(function(){
                     resultsDiv.innerHTML = "Error! Try search again";
-                    resetResults();
                 });
             } else resultsDiv.innerHTML = "404 Error! Try search again";
         }
@@ -169,9 +169,6 @@ function resetResults(){
     noFind.classList.add("hidden");
 }
 
-function selectBook(){
-
-}
 
 // Create post req when user clicks 'select book'
 resultsDiv.onclick = function(event) {
