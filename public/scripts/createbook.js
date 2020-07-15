@@ -124,7 +124,5 @@ function fillInAuthor(){
 
   function isSelected(item){
     return item.name == selection;
+    }
 }
-
-}
-

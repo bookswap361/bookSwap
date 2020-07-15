@@ -36,7 +36,7 @@ router.route("/create-book")
         new Promise(function(resolve, reject){
             resolve(BookServices.createBook(req.body));
         }).then(function(result){
-            res.redirect(`/book/${data.bol_key}`);
+            res.render("confirmation", {"key": data.bol_key});
         })
             .catch(function(err) {
                 res.status(400).json({"error": err});
