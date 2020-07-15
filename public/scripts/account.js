@@ -21,14 +21,69 @@ function showInventory(event) {
 		headers: {
 			'Content-Type': 'application/json'
 		}
-	}).then(function (response) {
+	}).then(function (data) {
+		return data.json();
+	}).then(function(response) {
 		console.log(response);
-		if (response.ok) {
-			document.getElementById("booksInventory").style.display = "block";
-			return response;
+
+		document.getElementById("booksInventory").style.display = "block";
+
+		var newtable = document.getElementById("inventoryTable");
+		var rowCount = newtable.rows.length - 1;
+		for (var i = rowCount; i >= 0; i--) {
+			newtable.rows[i].remove();
+		}
+		console.log("length: " + response.length);
+		var headers = ['Title', 'Author', 'Condition', 'List Date',''];
+		var tableHead = document.createElement('tr');
+		if (response.length > 0) {
+			for (var i = 0; i < headers.length; i++){
+		        var th = document.createElement('th');
+		        th.innerText = headers[i];
+		        tableHead.appendChild(th);
+		    }
+		    newtable.appendChild(tableHead);
+
+			for (var i = 0; i < response.length; i++) {
+				var row = document.createElement('tr');
+
+				// List_id
+				row.id = response[i].list_id;
+
+				// Title
+				var title = document.createElement('td');
+				title.innerText = response[i].title;
+				row.appendChild(title);
+
+				// Author
+				var author = document.createElement('td');
+				author.innerText = response[i].author;
+				row.appendChild(author);
+
+				// condition_description
+				var condition = document.createElement('td');
+				condition.innerText = response[i].condition_description;
+				row.appendChild(condition);
+
+				// list_date
+				var date = document.createElement('td');
+				date.innerText = response[i].list_date;
+				row.appendChild(date);
+
+				var td = document.createElement('td');
+				var delButton = document.createElement('button');
+				delButton.className = "delete";
+				delButton.innerText = "Delete";
+				delButton.onclick = deleteInventory;
+				td.appendChild(delButton);
+				row.appendChild(td);
+
+				newtable.appendChild(row);
+			}
 		}
 	}).catch(function (err){
-		console.log("Inventory table empty.");
+		console.log(err);
+	}).catch(function(err){
 		console.log(err);
 	});
 }
@@ -156,6 +211,9 @@ function showSwaps(event){
 		if (response.length > 0) {
 			return response;
 		}
+		else {
+			console.log("Swaps table empty.");
+		}
 	})
 }
 
@@ -187,3 +245,4 @@ document.getElementById("booksTab").addEventListener("click", showInventory);
 document.getElementById("swapsTab").addEventListener("click", showSwaps);
 document.getElementById("wishlistTab").addEventListener("click", showWishList);
 
+window.onload = document.getElementById("booksTab").click();

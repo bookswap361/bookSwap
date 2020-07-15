@@ -7,7 +7,7 @@ router.get("/:id", function(req, res){
         .then(function(books) {
             console.log("Processing result in api/books_owned...");
             console.log(books[0].author);
-            res.render("account", books);
+            res.send(books);
         }).catch(function(err) {
             res.status(400).json({"error": err});
         });
