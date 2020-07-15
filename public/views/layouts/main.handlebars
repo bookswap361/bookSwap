@@ -26,6 +26,9 @@
                     <input name="loginBtn" type="submit" value="go!">
                 </form>
                 <br>
+                {{#if bad_login}}
+                <p>Invalid login credentials</p>
+                {{/if}}
                 not a member? <a href="user/signup">create an account!</a>
             {{/if}}
  </div>

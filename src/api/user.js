@@ -51,6 +51,7 @@ router.route("/login")
                 }
             })
             .catch(function(err) {
+                req.session.bad_login = true;
                 res.redirect('/');
             });
     })
