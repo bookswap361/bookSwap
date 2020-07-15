@@ -21,6 +21,7 @@ router.route("/create")
                     req.session.u_id = result.user_id;
                     req.session.u_name = result.first_name;
                     req.session.authenticated = true;
+                    req.session.save();
                     res.redirect('/account');
                 }
             })
@@ -50,6 +51,7 @@ router.route("/login")
                     req.session.u_id = result.user_id;
                     req.session.u_name = result.first_name;
                     req.session.authenticated = true;
+                    req.session.save();
                     res.redirect('/account');
                 }
             })
