@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 var UserServices = require("../services/user");
-var session = require('express-session');
 
 router.route("/")
     .get(function(req, res) {
@@ -45,6 +44,9 @@ router.route("/login")
         UserServices.verifyLogin(req.body)
             .then(function(result) {
                 if (result) {
+                    req.session.u_id = result.user_id;
+                    req.session.u_name = result.first_name;
+                    req.session.authenticated = true;
                     res.redirect('/account');
                 }
             })
@@ -71,7 +73,7 @@ router.route("/:id")
 
 router.route("/logout")
     .post(function(req, res) {
-        if (session.u_id)
+        if (req.session.u_id)
             {
             req.session.destroy();
             console.log("You've been logged out.");            

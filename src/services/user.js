@@ -1,6 +1,5 @@
 var UserModel = require("../models/user");
 var bcrypt = require('bcryptjs');
-var session = require('express-session');
 var UserServices = {};
 
 
@@ -41,7 +40,7 @@ UserServices.createUser = function(body) {
         bcrypt.hash(body.password, 10, function(err, hash) {
             UserModel.createUser(body, hash)
             .then(function (user) {
-                session.authenticated = true;
+                req.session.authenticated = true;
                 session.u_id = user.insertId;
                 session.u_name = body.first_name;
                 resolve(user);
@@ -58,11 +57,8 @@ UserServices.verifyLogin = function(body) {
             .then(function(user) {
                 if (user[0]) {
                     bcrypt.compare(body.password, user[0].password, function( err, result) {
-                        if (result == true) {
-                            session.authenticated = true;
-                            session.u_id = user[0].user_id;
-                            session.u_name = user[0].first_name;                            
-                            resolve(result);
+                        if (result == true) {                       
+                            resolve(user[0]);
                         } else {
                             reject();
                         }
