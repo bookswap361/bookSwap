@@ -30,14 +30,21 @@ var settings = function(app) {
     app.use("/user", require("../api/user"));
     app.use("/account", require("../api/account"));
     app.use("/swap", require("../api/swap"));
-    app.use("/forum", sessionCheck, require("../api/forum"));
+    app.use("/forum", sessionCheck, userDetails, require("../api/forum"));
 };
+
+function userDetails(req, res, next) {
+    if (req.session.u_id) {
+        res.locals.first_name = req.session.u_name;
+    }
+    next();
+}
 
 function sessionCheck(req, res, next) {
     if (req.session.authenticated) {
         next();
     } else {
-        res.redirect("/account");
+        res.redirect("/signup");
     }
 }
 
