@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var UserServices = require("../services/user");
+var session = require('express-session');
 
 router.route("/")
     .get(function(req, res) {
