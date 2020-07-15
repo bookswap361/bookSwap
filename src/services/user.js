@@ -35,15 +35,21 @@ UserServices.deleteUser = function(body) {
     });
 };
 
-UserServices.createUser = function(body) {
-    return new Promise(function(resolve, reject) {
+UserServices.createUser = function(body) {    
+ return new Promise(function(resolve, reject) {
         bcrypt.hash(body.password, 10, function(err, hash) {
             UserModel.createUser(body, hash)
-                .then(resolve)
+            .then(function (user) {
+                session.authenticated = true;
+                session.u_id = user.insertId;
+                session.u_name = body.first_name;
+                resolve(user);
+            })
                 .catch(reject);
-        });
-    });
+            });
+});
 };
+
 
 UserServices.verifyLogin = function(body) {
     return new Promise(function(resolve, reject) {
@@ -52,6 +58,9 @@ UserServices.verifyLogin = function(body) {
                 if (user[0]) {
                     bcrypt.compare(body.password, user[0].password, function( err, result) {
                         if (result == true) {
+                            session.authenticated = true;
+                            session.u_id = user[0].user_id;
+                            session.u_name = user[0].first_name;                            
                             resolve(result);
                         } else {
                             reject();
