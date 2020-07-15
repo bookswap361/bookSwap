@@ -12,6 +12,7 @@ var handlebars = require("express-handlebars").create({
 });
 var bodyParser = require("body-parser");
 var path = require("path");
+var config = require("../config/config.js");
 
 var settings = function(app) {
     app.engine("handlebars", handlebars.engine);
@@ -21,7 +22,7 @@ var settings = function(app) {
     app.set("views", path.join(process.cwd(), "/public/views"));
     app.set("view engine", "handlebars");
     app.use(session({
-        secret: 'noOneKnows',
+        secret: config.secret,
         resave: false,
         saveUninitialized: false
     }));    
