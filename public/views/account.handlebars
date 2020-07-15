@@ -26,27 +26,25 @@
 	</div>
 
 	<div id="booksInventory" class="tabcontent active">
-		<h2> Your Books </h2>
+		<button> Add Book </button>
+		<br/>
 
-		<table>
+		<table id="inventoryTable">
 			<tr>
-				<th>BOOK ID</th>
-				<th>TITLE</th>
-				<th>AUTHOR</th>
-				<th>CONDITION</th>
-				<th>LIST DATE</th>
+				<th>Title</th>
+				<th>Author</th>
+				<th>Condition</th>
+				<th>List Date</th>
 				<th></th>
 			</tr>
 			{{#each books}}
-			<tr>
-				<td>{{book_id}}</td>
+			<tr id={{list_id}}>
 				<td>{{title}}</td>
 				<td>{{author}}</td>
 				<td>{{condition_description}}</td>
 				<td>{{list_date}}</td>
 				<td>
-					<button>Delete
-					</button>
+					<button class="delete"> Delete </button>
 				</td>
 			</tr>
 			{{/each}}
