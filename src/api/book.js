@@ -23,8 +23,8 @@ router.route("/create-book")
                 result.forEach(function(element){
                     keys.push(element.ol_key);
                 });
+                console.log("Keys found:");
                 console.log(keys);
-
                 res.render("createbook", {"keys": keys});
             })
             .catch(function(err){
@@ -36,12 +36,12 @@ router.route("/create-book")
         new Promise(function(resolve, reject){
             resolve(BookServices.createBook(req.body));
         }).then(function(result){
-            res.send("Successful add!");
+            res.redirect('/search');
         })
             .catch(function(err) {
                 res.status(400).json({"error": err});
             });
-    });
+        });
 
 router.route("/add-to-account")
     .post(function(req, res) {
@@ -57,11 +57,12 @@ router.route("/add-to-account")
 
 router.route("/:id")
     .get(function(req, res) {
-        console.log(req.params);
+        console.log("Searching for: " + req.params.id)
         BookServices.getBookByOLId(req.params.id)
             .then(function(result) {
                 if(result.length > 0){
                     result[0].exists = 1;
+                    console.log("Result found");
                     console.log(result);
                     res.render("book-page", result[0]);
                 } else {
@@ -79,10 +80,12 @@ router.route("/:id")
             .then(function(result) {
                 if(result.length > 0){
                     result[0].exists = 1;
+                    console.log("Result found");
                     console.log(result);
                     res.render("book-page", result[0]);
                 } else {
                     data.new = 1;
+                    console.log("No book found");
                     console.log(data);
                     res.render("book-page", data);
                 }

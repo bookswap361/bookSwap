@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/css/book.css">
 <div class="container">
     <div class="row">
         <div class="col-md-3">
@@ -13,12 +14,12 @@
 
     {{#if new}}
         <div class="row justify-content-center align-items-center mt-2 mb-4">
-            <div class="col-md-6 addLibrary">
+            <div class="col-md-6 info">
                 This book hasn't been added to our library yet! Would you like to add?<BR>
                 <em>Note: This book must be added to library in order to trade this book.</em>
             </div>
-            <div class="col-md-2">
-                <form method="PUT" action="/book/create-book">
+            <div class="col-md-2 text-center">
+                <form method="POST" action="/book/create-book">
                     <input name="title"         value="{{title}}"         hidden="true">
                     <input name="thumbnail_url" value="{{thumbnail_url}}" hidden="true">
                     <input name="bol_key"       value="{{book_id}}"       hidden="true"> 
@@ -27,13 +28,16 @@
                     <input type="submit"        value="Add Book"          class="btn btn-primary">
                 </form>
             </div>
+            <div class="col-md-2 text-center">
+            <button type="button" class="btn btn-danger" onclick="window.location.href='/search';">Search Again</button>
+            </div>
         </div>
     {{/if}}
 
     {{#if exists}}
     <div class="row">
         <button type="button" class="btn btn-primary" onclick="showAddForm()">Add this book to your collection of owned books:</button>
-        <button type="button" class="btn btn-danger" onclick="window.location.href='../search';">Search Again</button>
+        <button type="button" class="btn btn-danger" onclick="window.location.href='/search';">Search Again</button>
     </div>
     {{/if}}
 <hr>

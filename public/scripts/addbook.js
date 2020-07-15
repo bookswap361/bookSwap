@@ -1,10 +1,7 @@
 const addBookBtn      = document.getElementById("addBookBtn"),
       chooseCondition = document.getElementById("chooseCondition"),
       confirmDiv      = document.getElementById("confirm"),
-      confirmCreate   = document.getElementById("confirmCreate"),
-      newLink         = document.getElementById("newLink"),
-      submitCreBtn    = document.getElementById("submitCreBtn"),
-      allOlKeys       = document.getElementById("allOlKeys").innerHTML.split(",");
+      newLink         = document.getElementById("newLink");
 
 
 // Add existing book to owned books
@@ -93,66 +90,4 @@ function convertCondition(condition){
             break;
     }
     return {points: points, description: description}
-}
-
-// Create new Book to Library
-submitCreBtn.addEventListener("click", function(event){
-    createBook();
-    event.preventDefault();
-})
-
-function createBook(){
-    new Promise(function(resolve, reject){
-        resolve(getDataCreate());
-    }).then(function(result){
-        console.log(result);
-        makeCBReq(result);
-    }).catch(function(){
-        console.log("Error!")
-    })
-}
-
-function makeCBReq(data){
-    var bol_key = data.bol_key;
-    var req = new XMLHttpRequest();
-    req.open('POST', "/book/create-book", true);    
-    req.setRequestHeader('Content-Type', 'application/json');
-    req.send(JSON.stringify(data));
-
-    req.onload = function(){
-        if(req.status >= 200 && req.status < 400) {
-            confirmCreate.innerText = "Successfully added book to system!"
-            newLink.classList.remove("hidden");
-            newLink.setAttribute("href", `/book/${bol_key}`);
-            submitCreBtn.setAttribute("disabled", "true");
-        } else {
-            confirmCreate.innerText = "Hmm something went wrong. Please refesh and try again."
-        }
-    }
-
-    req.onerror = function() {
-        console.log('Error')
-    }
-
-}
-
-function createOlKey(id){
-    var newKey = "OL" + Math.floor(Math.random()*50000+1) + id;
-    while (allOlKeys.includes(newKey)) {
-        newKey = "OL" + Math.floor(Math.random()*50000+1) + id;
-    }
-    return newKey;
-}
-
-function getDataCreate(){
-    var payload =
-        {bol_key: null, description: null, thumbnail_url: null, title: null,
-        aol_key: null, name: null};
-    payload.title = document.getElementById("newTitle").value;
-    payload.description = document.getElementById("newDescription").value;
-    payload.bol_key = createOlKey("NB");
-
-    payload.aol_key = createOlKey("NA");
-    payload.name = document.getElementById("newAuthor").value;
-    return payload
 }

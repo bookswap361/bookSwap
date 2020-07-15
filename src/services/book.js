@@ -70,11 +70,12 @@ BookServices.createBook = function(info) {
 			return BookModel.joinAuthBook(result)
 		}).catch(function(){
 		console.log("Services error")
-		})
+		});
 	}).catch(function(){
 		console.log("Services error")
 	})
 }
+
 
 BookServices.getOlKeys = function() {
     return new Promise(function(resolve, reject) {

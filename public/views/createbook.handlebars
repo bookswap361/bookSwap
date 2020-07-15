@@ -1,22 +1,20 @@
+<link rel="stylesheet" href="/css/book.css">
+
 <div class="container">
     <h2>Didn't find your book?</h2>
     Add it to our library here:
     <div class="row">
-        <form action="">
-            <input type="text" name="title" id="newTitle" placeholder="Book Title" required>
-            <input type="text" name="author" id="newAuthor" placeholder="Author" required>
-            <input type="text" name="description" id="newDescription" placeholder="Book Description">
-            <input type="submit" value="Submit New Book" id="submitCreBtn">
+        <form action="/book/create-book" action="POST">
+            <input type="text" name="title" placeholder="Book Title" required>
+            <input type="text" name="author" placeholder="Author" required>
+            <input type="text" name="description" placeholder="Book Description">
+            <input id="bol_key" name="bol_key" hidden="true">
+            <input id="aol_key" name="aol_key" hidden="true">
+            <button type="submit" formmethod="post" formaction="/book/create-book" class="btn btn-primary">Add New Book</button>
         </form>
-    </div>
-    <div class="row">
-        <span id="confirmCreate"></span>
-    </div>
-    <div class="row">
-        <a href="#" id="newLink" class="hidden">Click here to see new book</a>
     </div>
 </div>
 
 <span class="hidden" id="allOlKeys">{{keys}}</span>
 
-<script src="../scripts/addbook.js"></script>
+<script src="../scripts/createbook.js"></script>
