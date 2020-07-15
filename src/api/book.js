@@ -34,17 +34,31 @@ router.route("/create-book")
 
 router.route("/:id")
     .get(function(req, res) {
-        var data = req.body;
-        BookServices.getBookByOLId(req.body.id)
+        BookServices.getBookByOLId(req.param.book_id)
             .then(function(result) {
                 if(result.length > 0){
                     console.log(result);
                     res.render("book-page", result[0]);
                 } else {
-                    console.log(result);
-                    console.log(result);
-                    // To do 
                     res.render("book-page", {title: "Placeholder"})
+                }
+            })
+            .catch(function(err) {
+                console.error(err);
+                res.status(400).json({"error": err});
+            });
+    })
+    .post(function(req, res) {
+        var data = req.body;
+        BookServices.getBookByOLId(req.body.book_id)
+            .then(function(result) {
+                if(result.length > 0){
+                    console.log(result);
+                    res.render("book-page", result[0]);
+                } else {
+                    data.new = 1;
+                    console.log(data);
+                    res.render("book-page", data);
                 }
             })
             .catch(function(err) {

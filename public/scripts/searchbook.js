@@ -1,6 +1,7 @@
 const loadingText = document.getElementById("loadingText"),
       resultsDiv  = document.getElementById("resultsDiv"),
       noFind  = document.getElementById("noFind");
+var resultData = [];
 
 bindSearch();
 
@@ -13,6 +14,9 @@ function bindSearch(){
             loadingText.innerText = "Loading and filtering results...";
         }).then(function(result){
             makeReq()
+        }).catch(function(){
+            loadingText.innerText = "Hmm something went wrong, please try again.";
+            resetResults();
         })
     });
 }
@@ -35,13 +39,18 @@ function makeReq() {
                 }).then(function(results){
                     var allResults = [];
                      for(var i=0; i<10; i++) {
-                        var data = {title: null, author: null, genre: [], art: null, book_key: null, author_key: null};
+                        var data = {title: null, name: null, genre: [], thumbnail_url: null, book_id: null, author_id: null};
                         
                         if (results.docs[i].hasOwnProperty("title_suggest")) data.title  = results.docs[i].title_suggest;
-                        if (results.docs[i].hasOwnProperty("author_name")) data.author = results.docs[i].author_name[0];
-                        if (results.docs[i].hasOwnProperty("key")) data.book_key = results.docs[i].key;
-                        if (results.docs[i].hasOwnProperty("author-key")) data.book_key = results.docs[i]["author-key"][0];
-                        if (results.docs[i].hasOwnProperty("cover_i")) data.art = results.docs[i].cover_i;
+                        if (results.docs[i].hasOwnProperty("author_name")) data.name = results.docs[i].author_name[0];
+                        if (results.docs[i].hasOwnProperty("key")) {
+                            var key = results.docs[i].key;
+                            data.book_id = key.split("/")[2];
+                        }
+                        if (results.docs[i].hasOwnProperty("author_key")) data.author_id = results.docs[i]["author_key"][0];
+                        if (results.docs[i].hasOwnProperty("cover_i")){
+                            data.thumbnail_url = `https://covers.openlibrary.org/b/id/${results.docs[i].cover_i}-M.jpg`
+                        }
                         if (results.docs[i].hasOwnProperty("subject")) {
                             results.docs[i].subject.forEach(function(item){
                                 data.genre.push(item);
@@ -54,8 +63,9 @@ function makeReq() {
                     console.log(results);
                     var i = 0;
                     results.forEach(function(item){
-                        if (item.book_key != null) {
-                            showResult(item);
+                        if (item.book_id != null) {
+                            showResult(item, i);
+                            resultData.push(item)
                             i++;
                         }
                     })
@@ -64,6 +74,7 @@ function makeReq() {
                 })
                 .catch(function(){
                     resultsDiv.innerHTML = "Error! Try search again";
+                    resetResults();
                 });
             } else resultsDiv.innerHTML = "404 Error! Try search again";
         }
@@ -73,12 +84,11 @@ function makeReq() {
     })
 }
 
-function showResult(data) {
+function showResult(data, num) {
     var newRow = makeRow()
-    newRow.appendChild(makeThumbnail(data.art));
-    newRow.appendChild(showBookInfo(data));
+    newRow.appendChild(makeThumbnail(data.thumbnail_url));
+    newRow.appendChild(showBookInfo(data, num));
     newRow.classList.add("searchResult");
-    document.getElementById("searchResults").appendChild(makeData(JSON.stringify(data)));
     document.getElementById("searchResults").appendChild(newRow);
     document.getElementById("searchResults").appendChild(makeHr());
 }
@@ -93,16 +103,19 @@ function makeRow(){
     return newDiv;
 }
 
-function showBookInfo(data){
+function showBookInfo(data, num){
     var divDetail = document.createElement("div");
     divDetail.classList.add("col-9");
-    if (data.genre.length > 10){
-        divDetail.innerHTML = `${data.title} by ${data.author} <hr> Genres: ${cutGenre(data.genre)}, and more <P> ${makeLink(data.book_key)}`;
-    } else if (data.genre.length > 0) {
-        divDetail.innerHTML = `${data.title} by ${data.author} <hr> Genres: ${data.genre} <P> ${makeLink(data.book_key)}`;
-    } else {
-        divDetail.innerHTML = `${data.title} by ${data.author} <P> ${makeLink(data.book_key)}`;
-    }
+    divDetail.setAttribute("id", num);
+
+    var length = data.genre.length;
+    var genreStr;
+    if (length > 0) genreStr = `<hr> Genres: ${data.genre}`;
+    if (length > 10) genreStr = `<hr> Genres: ${cutGenre(data.genre)}, and more`;
+    else genreStr = "";
+    divDetail.innerHTML = `${data.title} by ${data.name} ${genreStr} <P>`;
+    divDetail.appendChild(makeLink(data));
+
     return divDetail;
 }
 
@@ -111,22 +124,43 @@ function cutGenre(data){
 }
 
 function makeThumbnail(id){
-    var newArt = document.createElement("div");
-    newArt.classList.add("col-3")
+    var newthumbnail_url = document.createElement("div");
+    newthumbnail_url.classList.add("col-3")
     if (id) {
-        var url = `https://covers.openlibrary.org/b/id/${id}-M.jpg`;
-        newArt.innerHTML = `<img src="${url}">`;
+        newthumbnail_url.innerHTML = `<img src="${id}">`;
     } else {
-        newArt.innerText = "No image found";
-        newArt.style.width = "180px";
+        newthumbnail_url.innerText = "No image found";
+        newthumbnail_url.style.width = "180px";
     }
-    return newArt;
+    return newthumbnail_url;
 }
 
 function makeLink(data) {
-    var key = data.split("/")[2];
-    var newLink = `<a href="/book/${key}">Select Book</a>`;
-    return newLink;
+    var newForm = document.createElement("form");
+    newForm.setAttribute("action", "/book/" + data.book_id);
+    newForm.setAttribute("method", "POST");
+    
+    for (var [key, value] of Object.entries(data)){
+        newForm.appendChild(makeInput(key, value));
+    }    
+    
+    newForm.appendChild(makeSubmit())
+    return newForm
+}
+
+function makeSubmit(){
+    var submit = document.createElement("input");
+    submit.type = "submit";
+    submit.value = "Select Book";
+    return submit;
+}
+
+function makeInput(name, data){
+    var newInput = document.createElement("input");
+    newInput.setAttribute("value", data);
+    newInput.name = name;
+    newInput.setAttribute("hidden", "true");
+    return newInput;
 }
 
 function resetResults(){
@@ -135,9 +169,36 @@ function resetResults(){
     noFind.classList.add("hidden");
 }
 
-function makeData(data){
-    var newSpan = document.createElement("span");
-    newSpan.classList.add("hidden");
-    newSpan.innerHTML = data;
-    return newSpan;
+function selectBook(){
+
+}
+
+// Create post req when user clicks 'select book'
+resultsDiv.onclick = function(event) {
+    var a = event.target.closest('a');
+    if (!a) return;
+    if (!resultsDiv.contains(a)) return;
+    
+    var i = a.closest("div").id;
+    var sendData = resultData[i];
+    renderBook(sendData);
+    event.preventDefault();
+  };
+
+function renderBook(data){
+    var id = data.book_id;
+    
+    var req = new XMLHttpRequest();
+    req.open("POST", `/book/${id}`, true);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.send(JSON.stringify(data))
+
+    req.onload = function(){
+        if(req.status >= 200 && req.status < 400) {
+            window.open(`/book/${id}`, "_self");
+        } else resultsDiv.innerHTML = "Hmm something went wrong. Please refresh and try again.";
+    }
+    req.onerror = function() {
+        console.log("error")
+    }
 }
