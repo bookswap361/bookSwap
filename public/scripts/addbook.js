@@ -47,6 +47,7 @@ function makeReq(data) {
     req.onload = function(){
         if(req.status >= 200 && req.status < 400) {
             confirmDiv.innerText = confirmStr;
+            addBookBtn.setAttribute("disabled", "true");
         } else {
             confirmDiv.innerText = "Something went wrong! Please refresh and try again.";
         }

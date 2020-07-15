@@ -74,7 +74,13 @@ function makeReq(data) {
                         }
                     })
                     loadingText.innerText = `${i} results found for "${data}"`;
-                    resultsDiv.classList.remove("hidden");
+                    if (i > 0){
+                        resultsDiv.classList.remove("hidden");
+                    } else {
+                        loadingText.innerText = "No results found- enter details below:"
+                        document.getElementById("iAuthor").value = data;
+                    }
+                    document.getElementById("addBook").classList.remove("hidden");
                 })
                 .catch(function(){
                     resultsDiv.innerHTML = "Error! Try search again";

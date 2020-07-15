@@ -32,11 +32,11 @@ router.route("/create-book")
             });
     })
     .post(function(req, res) {
-        console.log(req.body);
+        var data = req.body
         new Promise(function(resolve, reject){
             resolve(BookServices.createBook(req.body));
         }).then(function(result){
-            res.redirect('/search');
+            res.redirect(`/book/${data.bol_key}`);
         })
             .catch(function(err) {
                 res.status(400).json({"error": err});
@@ -66,7 +66,7 @@ router.route("/:id")
                     console.log(result);
                     res.render("book-page", result[0]);
                 } else {
-                    res.render("book-page", {title: "Placeholder"})
+                    res.send("404 Error - Try refreshing or go home")
                 }
             })
             .catch(function(err) {
