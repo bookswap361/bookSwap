@@ -4,7 +4,11 @@
 <div>
     <form id="create-thread" action="/forum/create" method="POST">
         <input type="text" name="title" placeholder="Enter thread title.." required><p>
-        <input type="text" name="message" placeholder="Enter message.." required><p>
+        <div id="text-editor"></div>
+        <input type="hidden" id="text-input" name="message" required><p>
         <input type="submit" name="create-thread-button" value="Create">
     </form>
 </div>
+
+<script src="https://cdn.ckeditor.com/ckeditor5/20.0.0/classic/ckeditor.js"></script>
+<script src="../scripts/thread.js">

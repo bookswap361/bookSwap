@@ -1,30 +1,47 @@
-<div>
-    Thread Contents
+<div class="thread-page-container">
     <div>
         <a href="/forum">Go Back</a>
     </div>
-    <div>
-        <h3> {{title}} </h3>
-    </div>
-    <div>
-        {{#each thread}}
-        <div>
-            <div style="display:inline-block">
-                {{user}}
-                <p>
-                {{date}}
-            </div>
-            <div style="display:inline-block">
-                {{post}}
-            </div>
+    <div class="topic-container">
+        <div class="title"><h3> {{title}} </h3></div>
+        <div class="resolve">
+            {{#if isOwner}}
+                {{#if isResolved}}Resolved{{/if}}
+                {{#unless isResolved}}
+                    <form action={{formatResolveLink id}} method="POST">
+                        <input type="hidden" name"thread_id" value="{{id}}">
+                        <input type="submit" name="resolve-button" value="Mark as Resolved">
+                    </form>
+                {{/unless}}
+            {{/if}}
+            {{#unless isOwner}}
+                {{#if isResolved}}Resolved{{/if}}
+                {{#unless isResolved}}Not Resolved{{/unless}}
+            {{/unless}}
         </div>
-        {{/each}}
     </div>
-    <div>
-        <form id="insert-message" action="/forum/insert" method="POST">
-            <input type="hidden" name="thread_id" value="{{id}}">
-            <input type="text" name="post" placeholder="Reply.." required>
-            <input type="submit" name="insert-message-button" value="Submit">
-        </form>
+    <div class="thread-container">
+        <div class="message-container">
+            {{#each thread}}
+            <div class="message-individual">
+                <div class="user-details">
+                    {{user}} - {{date}}
+                </div>
+                <div class="message">
+                    {{{post}}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        <div class="reply-container">
+            <form id="insert-message" action="/forum/insert" method="POST">
+                <div id="text-editor"></div>
+                <input type="hidden" id="text-input" name="post" required>
+                <input type="hidden" name="thread_id" value="{{id}}">
+                <input type="submit" name="insert-message-button" value="Submit">
+            </form>
+        </div>
     </div>
 </div>
+<script src="https://cdn.ckeditor.com/ckeditor5/20.0.0/classic/ckeditor.js"></script>
+<script src="../scripts/thread.js"></script>
