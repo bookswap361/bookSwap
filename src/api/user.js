@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 var UserServices = require("../services/user");
-var session = require('express-session');
 
 router.route("/")
     .get(function(req, res) {
@@ -16,7 +15,7 @@ router.route("/")
 
 router.route("/create")
     .post(function(req, res) {
-        UserServices.createUser(req.body)
+        UserServices.createUser(req.body, req.session)
             .then(function(result) {
                 if (result) {
                     res.redirect('/account');
@@ -42,7 +41,7 @@ router.route("/delete")
 
 router.route("/login")
     .post(function(req, res) {
-        UserServices.verifyLogin(req.body)
+        UserServices.verifyLogin(req.body, req.session)
             .then(function(result) {
                 if (result) {
                     res.redirect('/account');
@@ -51,11 +50,6 @@ router.route("/login")
             .catch(function(err) {
                 res.redirect('/');
             });
-    })
-
-router.route("/signup")
-    .get(function(req, res) {
-        res.render('signup');
     })
 
 router.route("/:id")
@@ -71,7 +65,7 @@ router.route("/:id")
 
 router.route("/logout")
     .post(function(req, res) {
-        if (session.u_id)
+        if (req.session.u_id)
             {
             req.session.destroy();
             console.log("You've been logged out.");            

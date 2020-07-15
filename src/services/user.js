@@ -1,6 +1,5 @@
 var UserModel = require("../models/user");
 var bcrypt = require('bcryptjs');
-var session = require('express-session');
 var UserServices = {};
 
 
@@ -36,7 +35,7 @@ UserServices.deleteUser = function(body) {
     });
 };
 
-UserServices.createUser = function(body) {    
+UserServices.createUser = function(body, session) {    
  return new Promise(function(resolve, reject) {
         bcrypt.hash(body.password, 10, function(err, hash) {
             UserModel.createUser(body, hash)
@@ -44,6 +43,7 @@ UserServices.createUser = function(body) {
                 session.authenticated = true;
                 session.u_id = user.insertId;
                 session.u_name = body.first_name;
+                session.save();
                 resolve(user);
             })
                 .catch(reject);
@@ -52,7 +52,7 @@ UserServices.createUser = function(body) {
 };
 
 
-UserServices.verifyLogin = function(body) {
+UserServices.verifyLogin = function(body, session) {
     return new Promise(function(resolve, reject) {
         UserModel.getUserByEmail(body)
             .then(function(user) {
@@ -61,7 +61,8 @@ UserServices.verifyLogin = function(body) {
                         if (result == true) {
                             session.authenticated = true;
                             session.u_id = user[0].user_id;
-                            session.u_name = user[0].first_name;                            
+                            session.u_name = user[0].first_name;
+                            session.save();
                             resolve(result);
                         } else {
                             reject();

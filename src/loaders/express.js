@@ -24,14 +24,22 @@ var settings = function(app) {
         secret: 'noOneKnows',
         resave: false,
         saveUninitialized: false
-    }));    
-    app.use("/", require("../api/pages"));
+    }));
+    app.use("/", require("../api/pages")); //Save routes here that don't require the session middleware
     app.use("/book", require("../api/book"));
     app.use("/user", require("../api/user"));
     app.use("/account", require("../api/account"));
     app.use("/swap", require("../api/swap"));
-    app.use("/forum", require("../api/forum"));
+    app.use("/forum", sessionCheck, require("../api/forum"));
 };
+
+function sessionCheck(req, res, next) {
+    if (req.session.authenticated) {
+        next();
+    } else {
+        res.redirect("/account");
+    }
+}
 
 module.exports = settings;
 
