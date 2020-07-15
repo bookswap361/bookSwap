@@ -30,44 +30,7 @@ router.route("/create-book")
             .catch(function(err){
                 res.status(400).json({"error": err});
             });
-})
-
-router.route("/:id")
-    .get(function(req, res) {
-        BookServices.getBookByOLId(req.param.book_id)
-            .then(function(result) {
-                if(result.length > 0){
-                    console.log(result);
-                    res.render("book-page", result[0]);
-                } else {
-                    res.render("book-page", {title: "Placeholder"})
-                }
-            })
-            .catch(function(err) {
-                console.error(err);
-                res.status(400).json({"error": err});
-            });
     })
-    .post(function(req, res) {
-        var data = req.body;
-        BookServices.getBookByOLId(req.body.book_id)
-            .then(function(result) {
-                if(result.length > 0){
-                    console.log(result);
-                    res.render("book-page", result[0]);
-                } else {
-                    data.new = 1;
-                    console.log(data);
-                    res.render("book-page", data);
-                }
-            })
-            .catch(function(err) {
-                console.error(err);
-                res.status(400).json({"error": err});
-            });
-    });
-
-router.route("/create-book")
     .post(function(req, res) {
         console.log(req.body);
         new Promise(function(resolve, reject){
@@ -88,6 +51,44 @@ router.route("/add-to-account")
                 res.send("Book added");
             })
             .catch(function(err) {
+                res.status(400).json({"error": err});
+            });
+    });
+
+    router.route("/:id")
+    .get(function(req, res) {
+        console.log(req.param);
+        BookServices.getBookByOLId(req.param.book_id)
+            .then(function(result) {
+                if(result.length > 0){
+                    console.log("Result Found!")
+                    console.log(result);
+                    res.render("book-page", result[0]);
+                } else {
+                    res.render("book-page", {title: "Placeholder"})
+                }
+            })
+            .catch(function(err) {
+                console.error(err);
+                res.status(400).json({"error": err});
+            });
+    })
+    .post(function(req, res) {
+        var data = req.body;
+        BookServices.getBookByOLId(req.body.book_id)
+            .then(function(result) {
+                if(result.length > 0){
+                    console.log("Result Found!")
+                    console.log(result);
+                    res.render("book-page", result[0]);
+                } else {
+                    // data.new = 1;
+                    console.log(data);
+                    res.render("book-page", data);
+                }
+            })
+            .catch(function(err) {
+                console.error(err);
                 res.status(400).json({"error": err});
             });
     });
