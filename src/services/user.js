@@ -1,6 +1,6 @@
 var UserModel = require("../models/user");
 var bcrypt = require('bcryptjs');
-var session - require('express-session');
+var session = require('express-session');
 var UserServices = {};
 
 
