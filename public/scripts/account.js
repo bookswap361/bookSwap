@@ -24,7 +24,6 @@ function showInventory(event) {
 	}).then(function (response) {
 		console.log(response);
 		if (response.ok) {
-
 			document.getElementById("booksInventory").style.display = "block";
 			return response;
 		}
@@ -71,11 +70,6 @@ function updateInventory() {
 
 				// List_id
 				row.id = response[i].list_id;
-//				var id = document.createElement('td');
-//				id.innerText = response[i].list_id;
-//				console.log("id: " + response[i].list_id);
-//				id.className = "hidden";
-//				row.appendChild(id);
 
 				// Title
 				var title = document.createElement('td');
@@ -161,9 +155,6 @@ function showSwaps(event){
 		console.log(response);
 		if (response.length > 0) {
 			return response;
-		}
-		else {
-			console.log("Swaps table empty.")
 		}
 	})
 }
