@@ -40,7 +40,7 @@ function makeReq() {
                     var max = 10;
                     if (results.docs.length < 10) max = results.docs.length;
                     for(var i=0; i<max; i++) {
-                        var data = {title: null, name: null, genre: [], thumbnail_url: null, book_id: null, author_id: null};
+                        var data = {title: null, name: null, genre: [], thumbnail_url: null, book_id: null, author_id: null, description: null};
                         
                         if (results.docs[i].hasOwnProperty("title_suggest")) data.title  = results.docs[i].title_suggest;
                         if (results.docs[i].hasOwnProperty("author_name")) data.name = results.docs[i].author_name[0];
@@ -52,6 +52,7 @@ function makeReq() {
                         if (results.docs[i].hasOwnProperty("cover_i")){
                             data.thumbnail_url = `https://covers.openlibrary.org/b/id/${results.docs[i].cover_i}-M.jpg`
                         }
+                        if (results.docs[i].hasOwnProperty("first_sentence")) data.description = results.docs[i]["first_sentence"][0];
                         if (results.docs[i].hasOwnProperty("subject")) {
                             results.docs[i].subject.forEach(function(item){
                                 data.genre.push(item);
@@ -179,7 +180,6 @@ resultsDiv.onclick = function(event) {
     var i = a.closest("div").id;
     var sendData = resultData[i];
     renderBook(sendData);
-    event.preventDefault();
   };
 
 function renderBook(data){
