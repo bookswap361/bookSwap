@@ -94,3 +94,10 @@ table, th, td {
 .btn {
   margin-left: 10px;
 }
+
+.addLibrary {
+  border-radius: 15px;
+  background-color: #ffdecf;
+  padding: 10px;
+  text-align: center;
+}

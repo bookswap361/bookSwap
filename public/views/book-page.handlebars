@@ -11,11 +11,32 @@
         </div>
     </div>
 
+    {{#if new}}
+        <div class="row justify-content-center align-items-center mt-2 mb-4">
+            <div class="col-md-6 addLibrary">
+                This book hasn't been added to our library yet! Would you like to add?<BR>
+                <em>Note: This book must be added to library in order to trade this book.</em>
+            </div>
+            <div class="col-md-2">
+                <form method="PUT" action="/book/create-book">
+                    <input name="title"         value="{{title}}"         hidden="true">
+                    <input name="thumbnail_url" value="{{thumbnail_url}}" hidden="true">
+                    <input name="bol_key"       value="{{book_id}}"       hidden="true"> 
+                    <input name="name"          value="{{name}}"          hidden="true">
+                    <input name="aol_key"       value="{{author_id}}"     hidden="true"> 
+                    <input type="submit"        value="Add Book"          class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    {{/if}}
+
+    {{#if exists}}
     <div class="row">
         <button type="button" class="btn btn-primary" onclick="showAddForm()">Add this book to your collection of owned books:</button>
         <button type="button" class="btn btn-danger" onclick="window.location.href='../search';">Search Again</button>
     </div>
-
+    {{/if}}
+<hr>
     <div class="row">
         <div id="chooseCondition" class="container hidden">
             <div id="addForm">
@@ -26,8 +47,6 @@
                     <option value="2">Good condition: 10pts</option>
                     <option value="1">Acceptable condition: 5pts</option>
                 </select> 
-
-{{!-- [body.user_id, body.book_id, body.condition_id, body.condition_description, body.list_date] --}}
 
                 <input id="newTitle" value="{{title}}" hidden>
                 <input id="newUser_id" value="{{user_id}}" hidden>
@@ -47,16 +66,5 @@
         </div>
     </div>
 </div>
-
-{{!-- <div class="hidden">
-
-</div>
-
-<div class="hidden">
-    <input id="title" value=`{{title}}`>
-    <input id="list_id" value=`{{title}}`>
-    <input id="traded_by" value=`{{user}}`>
-    <input id="title" value=`{{title}}`> 
-</div> --}}
 
 <script src="../scripts/addbook.js"></script>

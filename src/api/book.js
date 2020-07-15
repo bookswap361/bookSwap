@@ -55,13 +55,13 @@ router.route("/add-to-account")
             });
     });
 
-    router.route("/:id")
+router.route("/:id")
     .get(function(req, res) {
-        console.log(req.param);
-        BookServices.getBookByOLId(req.param.book_id)
+        console.log(req.params);
+        BookServices.getBookByOLId(req.params.id)
             .then(function(result) {
                 if(result.length > 0){
-                    console.log("Result Found!")
+                    result[0].exists = 1;
                     console.log(result);
                     res.render("book-page", result[0]);
                 } else {
@@ -78,11 +78,11 @@ router.route("/add-to-account")
         BookServices.getBookByOLId(req.body.book_id)
             .then(function(result) {
                 if(result.length > 0){
-                    console.log("Result Found!")
+                    result[0].exists = 1;
                     console.log(result);
                     res.render("book-page", result[0]);
                 } else {
-                    // data.new = 1;
+                    data.new = 1;
                     console.log(data);
                     res.render("book-page", data);
                 }

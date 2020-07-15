@@ -17,8 +17,6 @@ function addBook(){
         resolve(getDataOwn());
     }).then(function(result){
         makeReq(result);
-    }).then(function(){
-        console.log('complete');
     }).catch(function(){
         console.log('error!')
     })
