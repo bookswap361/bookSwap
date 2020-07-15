@@ -25,7 +25,7 @@ var settings = function(app) {
         resave: false,
         saveUninitialized: false
     }));
-    app.use("/", require("../api/pages")); //Save routes here that don't require the session middleware
+    app.use("/", userDetails, require("../api/pages")); //Save routes here that don't require the session middleware
     app.use("/book", require("../api/book"));
     app.use("/user", require("../api/user"));
     app.use("/account", require("../api/account"));
@@ -38,7 +38,7 @@ function userDetails(req, res, next) {
         res.locals.first_name = req.session.u_name;
     }
     next();
-}
+};
 
 function sessionCheck(req, res, next) {
     if (req.session.authenticated) {
@@ -46,7 +46,7 @@ function sessionCheck(req, res, next) {
     } else {
         res.redirect("/signup");
     }
-}
+};
 
 module.exports = settings;
 
