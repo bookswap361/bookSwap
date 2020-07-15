@@ -1,11 +1,11 @@
 var express = require("express");
 var router = express.Router();
 var AccountServices = require("../services/account");
-
+var session = require('express-session');
 
 router.route("/")
     .get(function(req, res) {
-        id = 1;                                //test variable until sessions are implemented
+        var id = session.u_id;                               //links session to user
         AccountServices.getAccount(id)
             .then(function(account) {
                 let merged = {...account[0], ...account[1], ...account[2], ...account[3]};
