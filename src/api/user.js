@@ -68,5 +68,18 @@ router.route("/:id")
             });
     })
 
+router.route("/logout")
+    .post(function(req, res) {
+        if (session.u_id)
+            {
+            req.session.destroy();
+            console.log("You've been logged out.");            
+            res.redirect('/');
+            }
+            else {
+            console.log("Could not logout");
+            }
+            })
+
 
 module.exports = router;
