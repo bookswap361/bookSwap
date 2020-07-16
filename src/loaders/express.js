@@ -25,14 +25,21 @@ var settings = function(app) {
         secret: config.secret,
         resave: false,
         saveUninitialized: false
-    }));    
-    app.use("/", require("../api/pages"));
-    app.use("/book", require("../api/book"));
-    app.use("/user", require("../api/user"));
-    app.use("/account", require("../api/account"));
-    app.use("/swap", require("../api/swap"));
-    app.use("/books_owned", require("../api/books_owned"));
-    app.use("/forum", require("../api/forum"));
+    }));
+    app.use("/", userDetails, require("../api/pages"));
+    app.use("/book", userDetails, require("../api/book"));
+    app.use("/user", userDetails, require("../api/user"));
+    app.use("/account", userDetails, require("../api/account"));
+    app.use("/swap", userDetails, require("../api/swap"));
+    app.use("/books_owned", userDetails, require("../api/books_owned"));
+    app.use("/forum", userDetails, require("../api/forum"));
+};
+
+function userDetails(req, res, next) {
+    if (req.session.authenticated) {
+        res.locals.first_name = req.session.u_name;
+    }
+    next();
 };
 
 module.exports = settings;

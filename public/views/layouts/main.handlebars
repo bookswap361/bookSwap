@@ -17,7 +17,7 @@
         <div class="row">
             <div><img src="/imgs/forwordheader.png" id="fwLogo"></div>
             <div class="login">
-            {{#if user_id}}
+            {{#if first_name}}
             <p>Welcome back, {{first_name}}</p>
             <form id="logoutForm" form action ="/user/logout" method="POST">
             <input name = "logoutBtn" type="submit" value="Logout"></form>
@@ -30,7 +30,7 @@
                 {{#if bad_login}}
                 <p>Invalid login credentials</p>
                 {{/if}}
-                not a member? <a href="user/signup">create an account!</a>
+                not a member? <a href="/user/signup">create an account!</a>
             {{/if}}
  </div>
         </div>
