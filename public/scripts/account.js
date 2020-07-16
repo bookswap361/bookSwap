@@ -291,15 +291,11 @@ function showWishList(event) {
 	event.currentTarget.className += " active";
 }
 
-// add event listeners to all 'delete' buttons
-var num_buttons = document.getElementsByClassName('delete').length;
-var buttons = document.getElementsByClassName('delete');
-for (var i = 0; i < num_buttons; i++) {
-    buttons[i].addEventListener("click", deleteInventory);
-}
-
 document.getElementById("booksTab").addEventListener("click", showInventory);
 document.getElementById("swapsTab").addEventListener("click", showSwaps);
 document.getElementById("wishlistTab").addEventListener("click", showWishList);
+document.getElementById('addInventory').addEventListener("click", function(event) {
+    location.href = "/search"});
+
 
 window.onload = document.getElementById("booksTab").click();
