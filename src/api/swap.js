@@ -12,14 +12,30 @@ router.get("/", function(req, res){
         });
 })
 
-router.get("/:id", function(req, res){
+/*router.get("/:id", function(req, res){
     SwapServices.getSwapById(req.params.id)
         .then(function(result) {
+            console.log("Processing result in api/swap...");
+            for (var i = 0; i < result.length; i++) {
+                console.log("result " + result[i]);
+            }
+            console.log(result);
             res.render("swap", {"payload": result});
         }).catch(function(err) {
             res.status(400).json({"error": err});
         });
+})*/
+
+router.get("/:id", function(req, res){
+    SwapServices.getSwapByUserId(req.params.id)
+        .then(function(swaps) {
+            console.log("Processing result in api/swap...");
+            res.render("account", {"payload": swaps});
+        }).catch(function(err) {
+            res.status(400).json({"error": err});
+        });
 })
+
 
 router.put("/:id", function(req, res){
     SwapServices.updateSwap()

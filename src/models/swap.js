@@ -45,6 +45,7 @@ Swap.getSwapByTradedBy = function(user_id) {
 
 Swap.getSwapByUserId = function(user_id) {
     return new Promise(function(resolve, reject) {
+        console.log("Processing in models/swap...");
         mysql.query(getQuery("getSwapByUserId"), [user_id, user_id])
             .then(resolve)
             .catch(reject);
@@ -121,7 +122,7 @@ function getQuery(type) {
             query = "SELECT traded_to, status_id FROM swap WHERE traded_to = ?;"
             break;
         case "getSwapByUserId":
-            query = "SELECT * FROM swap \
+            query = "SELECT swap.swap_id, swap.is_accepted, swap.request_date, b.title FROM swap \
             INNER JOIN books_owned AS bo ON swap.list_id=bo.list_id \
             INNER JOIN book AS b ON bo.book_id=b.book_id \
             WHERE swap.traded_to = ? OR swap.traded_by = ?;"
