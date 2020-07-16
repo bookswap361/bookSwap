@@ -3,7 +3,7 @@ var router = express.Router();
 
 router.route("/")
     .get(function(req, res) {
-        res.render("about");
+        res.render("about", req.session);
     });
 
 router.route("/search")

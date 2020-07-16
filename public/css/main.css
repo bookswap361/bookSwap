@@ -66,6 +66,11 @@ body {
   margin-right: 5px;
 }
 
+.btn-primary{
+  background-color: #0C4482;
+  border-color: #0C4482;
+}
+
 #book_hidden{
   display: none;
 }

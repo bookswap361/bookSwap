@@ -18,6 +18,10 @@ router.route("/create")
         UserServices.createUser(req.body)
             .then(function(result) {
                 if (result) {
+                    req.session.u_id = result.user_id;
+                    req.session.u_name = result.first_name;
+                    req.session.authenticated = true;
+                    req.session.save();
                     res.redirect('/account');
                 }
             })
@@ -44,10 +48,15 @@ router.route("/login")
         UserServices.verifyLogin(req.body)
             .then(function(result) {
                 if (result) {
+                    req.session.u_id = result.user_id;
+                    req.session.u_name = result.first_name;
+                    req.session.authenticated = true;
+                    req.session.save();
                     res.redirect('/account');
                 }
             })
             .catch(function(err) {
+                req.session.bad_login = true;
                 res.redirect('/');
             });
     })
@@ -67,6 +76,19 @@ router.route("/:id")
                 res.status(400).json({"error": err});
             });
     })
+
+router.route("/logout")
+    .post(function(req, res) {
+        if (req.session.u_id)
+            {
+            req.session.destroy();
+            console.log("You've been logged out.");            
+            res.redirect('/');
+            }
+            else {
+            console.log("Could not logout");
+            }
+            })
 
 
 module.exports = router;

@@ -31,6 +31,28 @@ SwapServices.getSwapById = function(id) {
     });
 }
 
+SwapServices.getSwapByUserId = function(user_id) {
+    return new Promise(function(resolve, reject){
+        SwapModel.getSwapByUserId(user_id)
+            .then(function(results){
+                console.log("Processing in services/swap...");
+                var swaps = [];
+                results.forEach(function(item) {
+                    swaps.push({
+                      "swap_id": item.swap_id,
+                      "is_accepted": item.is_accepted,
+                      "request_date": item.request_date,
+                      "title": item.title
+                  });
+                })
+                console.log(swaps);
+                return swaps;
+            })
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
 SwapServices.getCompletedSwaps = function(id) {
     return new Promise(function(resolve, reject){
         SwapModel.getCompletedSwaps()
