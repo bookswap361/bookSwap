@@ -78,3 +78,34 @@ body {
 .btn {
   margin-left: 10px;
 }
+
+#container {
+width:100%;
+}
+
+/*styling for top bar */
+#top-bar {
+padding:10px;
+background-color: #2A4185;
+width:100%;
+}
+
+h3 {
+color:white;
+}
+
+#info {
+max-width:20%;
+position:fixed;
+top:50%;
+left:15%;
+font-size:16pt;
+text-align:center;
+}
+
+#infographic {
+max-height: 60%;
+position:fixed;
+top:35%;
+left:40%;
+} 
