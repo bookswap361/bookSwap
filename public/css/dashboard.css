@@ -1,0 +1,23 @@
+body{
+    color: #184d47;
+}
+.smallHeader{
+    color: grey;
+    text-transform: uppercase;
+    font-size: smaller;
+    color: #7e97a6;
+}
+
+.largeHeader{
+    color: blue;
+    font-size: 175%;
+    color: #1b6ca8;
+}
+
+table, th {
+    text-align: center;
+    border: none;
+    padding: 5px;
+}
+
+/* #71a0a5 */

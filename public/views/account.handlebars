@@ -1,20 +1,20 @@
-<div>
+<link rel="stylesheet" href="/css/dashboard.css">
+	<div class="row mt-4 ml-1"><h2><i class="far fa-heart"></i>&#32;Manage your account</h2></div>
 
-	<h2>Account Details:</h2>
-
-	<div id="userDetails">
-		<ul>Name: {{first_name}} {{last_name}}</ul>
-		<ul>Email: {{email}}</ul>
-		<ul>Address: {{address}}</ul>
+	<div id="userDetails" class="row justify-content-around mb-4">
+		<div class="col-md-2"><div class="row smallHeader">Name:</div><div class="row largeHeader">{{first_name}} {{last_name}}</div></div>
+		<div class="col-md-2"><div class="row smallHeader">Email:</div><div class="row largeHeader">{{email}}</div></div>
+		<div class="col-md-2"><div class="row smallHeader">Address:</div><div class="row largeHeader">{{address}}</div></div>
+		<div class="col-md-2"><div class="row smallHeader">Points</div><div class="row largeHeader">7</div></div>
 	</div>
 
-	<h2>Dashboard:</h2>
+	{{!-- <h2>Dashboard:</h2> --}}
 
 	<!-- Reference: https://www.w3schools.com/howto/howto_js_tabs.asp -->
 	<div id="dashboard">
 		<div class="tab">
 			<button class="tablinks" id="booksTab">
-				Book Inventory
+				<i class="fas fa-book"></i> Book Inventory
 			</button>
 			<button class="tablinks" id="swapsTab">
 				Swaps
@@ -26,11 +26,12 @@
 	</div>
 
 	<div id="booksInventory" class="tabcontent" style="display: block">
-		<button> Add Book </button>
-		<br/>
+		<div class="row mx-2 text-center"><button class="btn btn-primary"> Add Book </button></div>
 
-		<table id="inventoryTable">
-		</table>
+		<div class="row mx-2">
+			<table id="inventoryTable">
+			</table>
+		</div>
 	</div>
 
 	<div id="swaps" class="tabcontent">
@@ -63,6 +64,5 @@
 		<h2> Wishlist </h2>
 	</div>
 
-</div>
 
 <script src="../scripts/account.js"></script>

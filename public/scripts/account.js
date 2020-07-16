@@ -67,7 +67,8 @@ function showInventory(event) {
 
 				// list_date
 				var date = document.createElement('td');
-				date.innerText = response[i].list_date;
+				var formattedDate = response[i].list_date.slice(0, 10);
+				date.innerText = formattedDate;
 				row.appendChild(date);
 
 				var td = document.createElement('td');
@@ -75,6 +76,8 @@ function showInventory(event) {
 				delButton.className = "delete";
 				delButton.innerText = "Delete";
 				delButton.onclick = deleteInventory;
+				delButton.classList.add("btn")
+				delButton.classList.add("btn-outline-danger")
 				td.appendChild(delButton);
 				row.appendChild(td);
 
