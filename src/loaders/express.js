@@ -27,7 +27,7 @@ var settings = function(app) {
         saveUninitialized: false
     }));
     app.use("/", userDetails, require("../api/public"));
-    app.use("/book", userDetails, require("../api/book"));
+    app.use("/book", checkAuth, userDetails, require("../api/book"));
     app.use("/user", checkAuth, userDetails, require("../api/user"));
     app.use("/account", checkAuth, userDetails, require("../api/account"));
     app.use("/swap", checkAuth, userDetails, require("../api/swap"));
