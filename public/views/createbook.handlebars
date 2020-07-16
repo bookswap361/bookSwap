@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="/css/book.css">
+
+<div class="container">
+    <div class="row"><h2>Didn't find your book?</h2></div>
+    <div class="row">Add it to our library here!</div>
+    <div class="row"><h4>Find the author:</h4></div>
+    <div class="row">
+        <form>
+            <input type="text" name="author" id="qAuthor" placeholder="Author" required>
+            <input type="submit" id="findAuthBtn" value="Find Author">
+        </form>
+    </div>
+    <div class="row" id="loadingText"></div>
+    <div class="row hidden" id="resultsDiv">
+        <label for="author">Choose an author:</label>
+        <select name="author" id="authorRes" onchange="fillInAuthor()">
+        <option value=""></option>
+        <option value="" id="other">Other- type in author name below</option>
+        </select> 
+    </div>
+
+    <div class="row hidden" id="addBook">
+        <form action="/book/create-book" action="POST">
+            <input type="text" name="title" placeholder="Book Title" required>
+            <input id="iAuthor" type="text" name="name" placeholder="Author" required>
+            <input type="text" name="description" placeholder="Book Description">
+            <input id="bol_key" name="bol_key" hidden="true">
+            <input id="aol_key" name="aol_key" hidden="true">
+            <button type="submit" formmethod="post" formaction="/book/create-book" class="btn btn-primary">Add New Book</button>
+        </form>
+    </div>
+</div>
+
+<span class="hidden" id="allOlKeys">{{keys}}</span>
+
+<script src="../scripts/createbook.js"></script>

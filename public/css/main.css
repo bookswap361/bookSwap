@@ -7,12 +7,12 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
-table, th, td {
-  border: 1px solid black;
-  padding: 5px;
+.row {
+  margin-top: 10px;
 }
 
 .topHeader {
+  margin-top: 0px;
   background-color: #F8F3EA;
   padding-bottom: 6px;
 }
@@ -58,7 +58,7 @@ table, th, td {
 }
 
 .hidden {
-  visibility: hidden;
+  display: none;
 }
 
 #info span{
@@ -73,4 +73,8 @@ table, th, td {
 
 #book_hidden{
   display: none;
+}
+
+.btn {
+  margin-left: 10px;
 }
