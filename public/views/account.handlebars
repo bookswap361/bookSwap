@@ -1,35 +1,35 @@
 <link rel="stylesheet" href="/css/dashboard.css">
-	<div class="row mt-4 ml-1"><h2><i class="far fa-heart"></i>&#32;Manage your account</h2></div>
+	<div class="row mt-4 mb-2"><h2 class="mx-auto"><i class="fas fa-user-circle"></i>&#32;Manage your account</h2></div>
 
-	<div id="userDetails" class="row justify-content-around mb-4">
+	<div id="userDetails" class="row justify-content-around mb-4 mx-auto">
 		<div class="col-md-2"><div class="row smallHeader">Name:</div><div class="row largeHeader">{{first_name}} {{last_name}}</div></div>
 		<div class="col-md-2"><div class="row smallHeader">Email:</div><div class="row largeHeader">{{email}}</div></div>
 		<div class="col-md-2"><div class="row smallHeader">Address:</div><div class="row largeHeader">{{address}}</div></div>
-		<div class="col-md-2"><div class="row smallHeader">Points</div><div class="row largeHeader">7</div></div>
+		<div class="col-md-2"><div class="row smallHeader">Points</div><div class="row largeHeader points">{{points}}</div></div>
 	</div>
 
 	{{!-- <h2>Dashboard:</h2> --}}
 
 	<!-- Reference: https://www.w3schools.com/howto/howto_js_tabs.asp -->
-	<div id="dashboard">
+	<div id="dashboard" class="dashboard-top">
 		<div class="tab">
 			<button class="tablinks" id="booksTab">
 				<i class="fas fa-book"></i> Book Inventory
 			</button>
 			<button class="tablinks" id="swapsTab">
-				Swaps
+				<i class="far fa-handshake"></i> Swaps
 			</button>
 			<button class="tablinks" id="wishlistTab">
-				Wishlist
+				<i class="far fa-heart"></i> Wishlist
 			</button>
 		</div>
 	</div>
 
 	<div id="booksInventory" class="tabcontent" style="display: block">
-		<div class="row mx-2 text-center"><button class="btn btn-primary"> Add Book </button></div>
+		<div class="row mx-2 text-center"><button class="btn mt-2 mb-4 btn-primary mx-auto"> Add New Book </button></div>
 
 		<div class="row mx-2">
-			<table id="inventoryTable">
+			<table id="inventoryTable" class="mx-auto">
 			</table>
 		</div>
 	</div>
