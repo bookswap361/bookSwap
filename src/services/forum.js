@@ -25,10 +25,8 @@ ForumServices.getAllThreads = function() {
     });
 };
 
-ForumServices.filterThread = function(criteria) {
+ForumServices.filterThread = function(criteria, userId) {
     var promise;
-    // TODO: update user_id from session
-    var user_id = 1;
     switch(criteria) {
         case "resolved":
             promise = ForumModel.getResolvedThreads();
@@ -37,7 +35,7 @@ ForumServices.filterThread = function(criteria) {
             promise = ForumModel.getUnresolvedThreads();
             break;
         case "userId":
-            promise = ForumModel.getThreadsByUserId(user_id);
+            promise = ForumModel.getThreadsByUserId(userId);
             break;
         default:
             return ForumServices.getAllThreads();
@@ -57,15 +55,13 @@ ForumServices.filterThread = function(criteria) {
             });
             resolve(threads);
         })
-        .catch(reject)
+        .catch(reject);
     });
 }
 
-ForumServices.getThreadById = function(id) {
+ForumServices.getThreadById = function(threadId, userId) {
     return new Promise(function(resolve, reject) {
-        //TODO: Get current user_id from session
-        var user_id = 2;
-        ForumModel.getThreadById(id)
+        ForumModel.getThreadById(threadId)
             .then(function(result) {
             var messages = [];
             var title = "";
@@ -75,7 +71,7 @@ ForumServices.getThreadById = function(id) {
             if (result) {
                 title = result[0].title;
                 thread_id = result[0].thread_id;
-                isOwner = result[0].owner_id == user_id;
+                isOwner = result[0].owner_id == userId;
                 isResolved = Boolean(result[0].is_resolved);
             }
             result.forEach(function(message) {
@@ -92,10 +88,9 @@ ForumServices.getThreadById = function(id) {
     });
 };
 
-ForumServices.createThread = function(data) {
-    //TODO: Use user_id saved from session
+ForumServices.createThread = function(data, userId) {
     var variables = {
-        "user_id": 1,
+        "user_id": userId,
         "title": data.title,
         "date": new Date(),
         "message": DOMPurify.sanitize(data.message)
@@ -114,10 +109,9 @@ ForumServices.createThread = function(data) {
     })        
 };
 
-ForumServices.insertMessage = function(data) {
-    //TODO: Change user_id to the one saved in session
+ForumServices.insertMessage = function(data, userId) {
     var variables = {
-        "user_id": 2,
+        "user_id": userId,
         "date": new Date(),
         "message": DOMPurify.sanitize(data.post),
         "thread_id": Number(data.thread_id)
