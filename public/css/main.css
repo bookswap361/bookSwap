@@ -71,3 +71,6 @@ table, th, td {
   border-color: #0C4482;
 }
 
+#book_hidden{
+  display: none;
+}

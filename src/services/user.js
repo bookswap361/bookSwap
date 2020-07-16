@@ -35,27 +35,38 @@ UserServices.deleteUser = function(body) {
     });
 };
 
-UserServices.createUser = function(body) {
-    return new Promise(function(resolve, reject) {
+UserServices.createUser = function(body) {    
+ return new Promise(function(resolve, reject) {
         bcrypt.hash(body.password, 10, function(err, hash) {
             UserModel.createUser(body, hash)
-                .then(resolve)
+            .then(function() {
+                UserModel.getUserByEmail(body)
+                .then(function(result) {
+                    resolve(result[0]);
+                })
                 .catch(reject);
-        });
-    });
+            })
+                .catch(reject);
+            });
+});
 };
+
 
 UserServices.verifyLogin = function(body) {
     return new Promise(function(resolve, reject) {
         UserModel.getUserByEmail(body)
             .then(function(user) {
-                bcrypt.compare(body.password, user[0].password, function( err, result) {
-                    if (result == true) {
-                        resolve(result);
-                    } else {
-                        reject();
-                    }
-                })
+                if (user[0]) {
+                    bcrypt.compare(body.password, user[0].password, function( err, result) {
+                        if (result == true) {                       
+                            resolve(user[0]);
+                        } else {
+                            reject();
+                        }
+                    })
+                } else {
+                    reject();
+                }
             })
     });
 };
