@@ -26,7 +26,7 @@ router.route("/create")
                 }
             })
             .catch(function(err) {
-                res.redirect('/');
+                res.render('signup', err);
             });
     })
 
