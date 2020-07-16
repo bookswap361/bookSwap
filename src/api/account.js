@@ -2,13 +2,11 @@ var express = require("express");
 var router = express.Router();
 var AccountServices = require("../services/account");
 
-
 router.route("/")
     .get(function(req, res) {
-        id = 1;                                //test variable until sessions are implemented
-        AccountServices.getAccount(id)
+        AccountServices.getAccount(req.session.u_id)
             .then(function(account) {
-                let merged = {...account[0], ...account[1], ...account[2]};
+                let merged = {...account[0], ...account[1], ...account[2], ...account[3]};
                 res.render('account', merged);
             })
             .catch(function(err) {

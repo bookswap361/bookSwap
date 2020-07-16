@@ -1,0 +1,42 @@
+<div class="thread-page-container">
+    <div>
+        View:
+        <form id="filter-threads" action="/forum/" method="GET">
+            <input type="radio" form="filter-threads" id="view-all" name="filter" value="all" onclick="filterSubmit(this)" {{{setChecked "all" criteria}}}>
+            <label for="view-all">All</label>
+            <input type="radio" form="filter-threads" id="view-resolved" name="filter" value="resolved" onclick="filterSubmit(this)" {{{setChecked "resolved" criteria}}}>
+            <label for="view-resolved">Resolved</label>
+            <input type="radio" form="filter-threads" id="view-unresolved" name="filter" value="unresolved" onclick="filterSubmit(this)" {{{setChecked "unresolved" criteria}}}>
+            <label for="view-unresolved">Unresolved</label>
+            <input type="radio" form="filter-threads" id="view-userId" name="filter" value="userId" onclick="filterSubmit(this)" {{{setChecked "userId"criteria}}}>
+            <label for="view-userId">My Threads</label>
+        </form>
+    </div>
+    <div>
+        <a href="/forum/create"><button>Create Thread</button></a>
+    </div>
+    <div>
+        <table class="forum-table">
+            <thead>
+                <th style="display:none"></th>
+                <th class="topic-cell">Topic</th>
+                <th>Created By</th>
+                <th>Created Date</th>
+                <th></th>
+            </thread>
+            <tbody>
+                {{#each threads}}
+                <tr>
+                    <td style="display:none">{{thread_id}}</td>
+                    <td><a href={{formatThreadLink thread_id}}>{{title}}</a></td>
+                    <td> {{user}} </td>
+                    <td> {{create_date}} </td>
+                    <td> {{is_resolved}} </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    
+</div>
+
+<script src="../scripts/forum.js"></script>
