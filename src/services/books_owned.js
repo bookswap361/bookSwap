@@ -47,6 +47,16 @@ BooksOwnedServices.updateInventory = function(user_id) {
     });
 }
 
+BooksOwnedServices.updateCondition = function(info) {
+  return new Promise(function(resolve, reject){
+    console.log("Updating Inventory in services/books_owned..");
+    console.log(info);
+    BooksOwnedModel.updateCondition(info)
+      .then(resolve)
+      .catch(reject);
+  });
+}
+
 BooksOwnedServices.deleteInventory = function(list_id) {
 	return new Promise(function(resolve, reject){
     console.log("Deleting Inventory in services/books_owned..");
