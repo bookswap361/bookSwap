@@ -23,14 +23,26 @@ BooksOwned.deleteInventory = function(list_id) {
     })
 }
 
+BooksOwned.updateCondition = function(info) {
+    return new Promise(function(resolve, reject) {
+        console.log("Updating list_id: " + info.list_id + " to " + info.condition_description + " with condition_id " + info.condition_id);
+        mysql.query(getQuery("updateCondition"), [info.condition_description, info.condition_id, info.list_id])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+// Is this being used?
 BooksOwned.addBooks = function(body) {
     return mysql.query(getQuery("newBook"), [body.user_id, body.book_id, body.condition_id, body.condition_description, body.list_date]);
 }
 
+// Is this being used?
 BooksOwned.deleteBooks = function(body) {
     return mysql.query(getQuery("deleteBook"), [body.user_id, body.book_id]);
 }
 
+// Is this being used?
 BooksOwned.deleteAllBooks = function(body) {
     return mysql.query(getQuery("deleteBooksOwned"), [body.user_id]);
 }
@@ -62,6 +74,9 @@ function getQuery(type) {
             break;
         case "deleteInventory":
             query = "DELETE from books_owned WHERE list_id = ?;"
+            break;
+        case "updateCondition":
+            query = "UPDATE books_owned SET condition_description = ?, condition_id = ? WHERE list_id = ?;"
             break;
         case "newBook":
         query = "INSERT INTO books_owned \
