@@ -37,9 +37,15 @@ UserServices.deleteUser = function(body) {
 
 UserServices.createUser = function(body) {    
  return new Promise(function(resolve, reject) {
-    if (!UserModel.getUserByEmail(body.email)) {
-        bcrypt.hash(body.password, 10, function(err, hash) {
-            UserModel.createUser(body, hash)
+    UserModel.getUserByEmail(body)
+        .then(function(result) {
+            if (result[0]) {
+                let error = {"error": "User already exists under that email"};
+                reject(error);
+            }
+        })
+    bcrypt.hash(body.password, 10, function(err, hash) {
+        UserModel.createUser(body, hash)
             .then(function() {
                 UserModel.getUserByEmail(body)
                 .then(function(result) {
@@ -49,11 +55,7 @@ UserServices.createUser = function(body) {
             })
                 .catch(reject);
             });
-    } else {
-        let err = {error: "User already exists under that email."}
-        reject(err);
-    }
-});
+    });
 };
 
 
