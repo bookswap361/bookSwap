@@ -28,6 +28,7 @@ var settings = function(app) {
     }));
     app.use("/", userDetails, require("../api/pages"));
     app.use("/book", userDetails, require("../api/book"));
+    app.use("/books_available", userDetails, require("../api/books_available"));
     app.use("/user", userDetails, require("../api/user"));
     app.use("/account", userDetails, require("../api/account"));
     app.use("/swap", userDetails, require("../api/swap"));

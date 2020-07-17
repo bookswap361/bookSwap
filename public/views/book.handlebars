@@ -1,12 +1,12 @@
+<link rel="stylesheet" href="/css/books_available.css">
+
 <div class="col-md-8 mx-auto">
 	<h2>Swap a Book</h2>
 	<table>
 		<tr>
 			<th id="book_hidden"></th>
-			<th colspan="4">Available Books</th>
 		</tr>
 		<tr>
-			<th id="book_hidden"></th>
 			<th>Title</th>
 			<th>Author</th>
 			<th>Copies</th>
@@ -14,13 +14,36 @@
 		</tr>
 
 		{{#each books}}
-		<tr>
-			<td id="book_hidden"> {{book_id}} </td>
-			<td> {{title}} </td>
-			<td> {{last_name}}, {{first_name}} </td>
-			<td> {{copies}} </td>
-			<td><button>Swap</button></td>
+		<tr id={{this.book_id}}>
+			<td> {{this.title}} </td>
+			<td> {{this.name}} </td>
+			<td class="center"> {{this.copies}} </td>
+			<td>
+				<button type="button" data-toggle="modal" data-target="#conditionModal" class="details">Details
+				</button>
+			</td>
 		</tr>
 		{{/each}}
 	</table>
+
+<!-- Modal for book conditions/add a swap -->
+<div id="conditionModal" class="modal bd-example-modal-lg" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            	<h5>Request a Swap</h5>
+            	<button id="exitButton" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <p>Available Book Details</p>
+            <table id=conditionTable>
+
+            </table
+            </div>
+        </div>
+    </div>
 </div>
+
+<script src="../scripts/books_available.js"></script>
