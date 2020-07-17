@@ -26,7 +26,7 @@ function makeReq() {
     return new Promise(function(resolve, reject){        
         resultsDiv.classList.remove("hidden");            
         var req = new XMLHttpRequest();
-        var baseURL = `http://openlibrary.org/search.json?q=${query}`;
+        var baseURL = `https://openlibrary.org/search.json?q=${query}`;
         req.open("GET", baseURL, true);
         req.send(null);
 

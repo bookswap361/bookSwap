@@ -32,9 +32,12 @@ router.route("/create-book")
 
 router.route("/add-to-account")
     .post(function(req, res) {
-        BookServices.addToOwn(req.body)
+        var data = req.body;
+        data.user_id = req.session.u_id;
+        BookServices.addToOwn(data)
             .then(function(result) {
-                console.log("Book added");
+                console.log("Book added to account:");
+                console.log(data);
                 res.send("Book added");
             })
             .catch(function(err) {

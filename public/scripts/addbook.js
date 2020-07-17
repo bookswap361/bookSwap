@@ -42,7 +42,7 @@ function makeReq(data) {
     req.send(JSON.stringify(data))
 
     console.log(data);
-    var confirmStr = `You have successfully added ${data.title} in ${data.condition_description} condition (asking for ${data.condition_points} points) to your collection!`;
+    var confirmStr = `You have successfully added ${data.title} in ${data.condition_description} condition (asking for ${data.condition_points} points) to your collection! View your account to see it.`;
 
     req.onload = function(){
         if(req.status >= 200 && req.status < 400) {

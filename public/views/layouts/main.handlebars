@@ -22,7 +22,7 @@
             <form id="logoutForm" form action ="/user/logout" method="POST">
             <input name = "logoutBtn" type="submit" value="Logout"></form>
             {{else}}
-            <form id="loginForm" form action="/user/login" method="POST">
+            <form id="loginForm" form action="/login" method="POST">
                     <input type="text" name="email" placeholder="email" required><input type="password" name="password" placeholder="password" required>
                     <input name="loginBtn" type="submit" value="go!">
                 </form>
@@ -30,7 +30,7 @@
                 {{#if bad_login}}
                 <p>Invalid login credentials</p>
                 {{/if}}
-                not a member? <a href="/user/signup">create an account!</a>
+                not a member? <a href="/signup">create an account!</a>
             {{/if}}
  </div>
         </div>
@@ -43,18 +43,22 @@
       </button>
       <div class="collapse navbar-collapse flex-row justify-content-center" id="navBarText">
           <ul class="navbar-nav">
+             {{#if first_name}}
               <li><a href="/account" class="nav-link">my account</a></li>
               <li><a href="/books_available" class="nav-link">available books</a></li>
               <li><a href="/swap" class="nav-link">swaps</a></li>
               <li><a href="/search" class="nav-link">search books</a></li>
               <li><a href="#" class="nav-link">search users</a></li>
               <li><a href="/forum" class="nav-link">forum</a></li>
-              <li><a href="#" class="nav-link">about?</a></li>
+              {{else}}
+              <li><a href="#" class="nav-link">available books</a></li>
+              {{/if}}
+              <li><a href="/" class="nav-link">about?</a></li>
           </ul>
       </div>
     </nav>
 
-    <div class="container">
+    <div id="container">
         {{{body}}}
     </div>
 
