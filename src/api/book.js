@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
-var BookServices = require("../services/book");
+var BookServices = require("../services/book"),
+    UserServices = require("../services/user");
 
 router.route("/")
     .get(function(req, res) {
@@ -50,8 +51,15 @@ router.route("/add-to-account")
         BookServices.addToOwn(data)
             .then(function(result) {
                 console.log("Book added to account:");
+            })
+            .then(function(result){
+                console.log({"number": 1, "user_id": data.user_id});
+                UserServices.updatePoints({"number": 1, "user_id": data.user_id})
+            })
+            .then(function(result) {
+                console.log("1 Point added to account:");
                 console.log(data);
-                res.send("Book added");
+                res.send("Success");
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});
