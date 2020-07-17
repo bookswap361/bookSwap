@@ -78,3 +78,39 @@ body {
 .btn {
   margin-left: 10px;
 }
+
+#container {
+width:100%;
+}
+
+
+/*styling for top bar */
+#top-bar {
+  padding:10px;
+  background-color: #2A4185;
+  width:100%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  }
+
+#top-bar h3 {
+color:white;
+}
+
+#info {
+  font-size:1.5em;
+  text-align:center;
+  background-color: #F8F3EA;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  box-shadow: grey 2px 2px 2px;
+}
+
+#info span{
+  color:#084177;
+  font-weight: bolder;
+}
+
+#infographic {
+  max-width: 85%;
+} 
