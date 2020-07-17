@@ -35,6 +35,14 @@ UserServices.deleteUser = function(body) {
     });
 };
 
+UserServices.updatePoints = function(body) {
+    return new Promise(function(resolve, reject) {
+        UserModel.updatePoints(body)
+            .then(resolve)
+            .catch(reject);
+    });
+};
+
 UserServices.createUser = function(body) {    
  return new Promise(function(resolve, reject) {
     UserModel.getUserByEmail(body)

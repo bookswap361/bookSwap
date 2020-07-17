@@ -27,7 +27,7 @@ User.deleteUser = function(body) {
 //not sure if this will work, but when it's called by account services or swap services, maybe a number can be specificed for the points?
 //example in Account Services
 User.updatePoints = function(body) {
-    return mysql.query(getQuery("updatePoints"), [body.number, body.id]);
+    return mysql.query(getQuery("updatePoints"), [body.number, body.user_id]);
 }
 
 User.updateUser = function(body) {
@@ -68,7 +68,7 @@ function getQuery(type) {
             break;
 
         case "updatePoints":
-            query = "UPDATE user SET points = ? WHERE user_id = ?";
+            query = "UPDATE user SET points = points + ? WHERE user_id = ?";
             break;
 
         case "updateLost":
