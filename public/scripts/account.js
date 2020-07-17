@@ -149,6 +149,7 @@ function updateInventory(event) {
 		"condition_description": condition,
 		"condition_id": condition_id
 	};
+	
 	fetch("../books_owned/update", {
 		method: 'POST',
 		headers: {
@@ -161,6 +162,7 @@ function updateInventory(event) {
 	})
 }
 
+// Makes a book's condition editable.
 function makeEditable(event) {
 	var choices = ['Acceptable', 'Good', 'Excellent'];
 	var td = event.target.parentNode;
@@ -218,8 +220,7 @@ function deleteInventory(event) {
 	})
 }
 
-
-// Add too this..
+// Cancels the update.
 function cancelUpdate(event){
 	var td = event.target.parentNode;
 	var tr = td.parentNode;

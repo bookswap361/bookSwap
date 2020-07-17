@@ -52,6 +52,8 @@ table, th {
     text-align: center;
     border: none;
     padding: 5px;
+    border-collapse: separate;
+    border-spacing: 1em .5em;
 }
 
 .dashboard-top{
