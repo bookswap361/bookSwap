@@ -13,23 +13,6 @@ router.route("/")
             });
     })
 
-router.route("/create")
-    .post(function(req, res) {
-        UserServices.createUser(req.body)
-            .then(function(result) {
-                if (result) {
-                    req.session.u_id = result.user_id;
-                    req.session.u_name = result.first_name;
-                    req.session.authenticated = true;
-                    req.session.save();
-                    res.redirect('/account');
-                }
-            })
-            .catch(function(err) {
-                res.render('signup', err);
-            });
-    })
-
 router.route("/delete")
     .post(function(req, res) {
         UserServices.deleteUser(req.body)
@@ -41,29 +24,6 @@ router.route("/delete")
             .catch(function(err) {
                 res.redirect('/');
             });
-    })
-
-router.route("/login")
-    .post(function(req, res) {
-        UserServices.verifyLogin(req.body)
-            .then(function(result) {
-                if (result) {
-                    req.session.u_id = result.user_id;
-                    req.session.u_name = result.first_name;
-                    req.session.authenticated = true;
-                    req.session.save();
-                    res.redirect('/account');
-                }
-            })
-            .catch(function(err) {
-                req.session.bad_login = true;
-                res.redirect('/');
-            });
-    })
-
-router.route("/signup")
-    .get(function(req, res) {
-        res.render('signup');
     })
 
 router.route("/:id")

@@ -26,13 +26,13 @@ var settings = function(app) {
         resave: false,
         saveUninitialized: false
     }));
-    app.use("/", userDetails, require("../api/pages"));
-    app.use("/book", userDetails, require("../api/book"));
-    app.use("/user", userDetails, require("../api/user"));
-    app.use("/account", userDetails, require("../api/account"));
-    app.use("/swap", userDetails, require("../api/swap"));
-    app.use("/books_owned", userDetails, require("../api/books_owned"));
-    app.use("/forum", userDetails, require("../api/forum"));
+    app.use("/", userDetails, require("../api/public"));
+    app.use("/book", checkAuth, userDetails, require("../api/book"));
+    app.use("/user", checkAuth, userDetails, require("../api/user"));
+    app.use("/account", checkAuth, userDetails, require("../api/account"));
+    app.use("/swap", checkAuth, userDetails, require("../api/swap"));
+    app.use("/books_owned", checkAuth, userDetails, require("../api/books_owned"));
+    app.use("/forum", checkAuth, userDetails, require("../api/forum"));
 };
 
 function userDetails(req, res, next) {
@@ -40,6 +40,14 @@ function userDetails(req, res, next) {
         res.locals.first_name = req.session.u_name;
     }
     next();
+};
+
+function checkAuth(req, res, next) {
+    if (req.session.authenticated) {
+        next();
+    } else {
+        res.redirect("/");
+    }
 };
 
 module.exports = settings;
