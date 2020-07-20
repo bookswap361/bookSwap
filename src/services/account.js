@@ -18,21 +18,20 @@ AccountServices.getAccount = function(id) {
     var p2 = new Promise(function(resolve, reject) {
     BooksOwnedModel.getBooks(id)
     .then(function(books) {
-        resolve({"books": books});
+        resolve({"books": books[0]});
     })
     .catch(reject);
     });
     var p3 = new Promise(function(resolve, reject) {
     WishListModel.getWishList(id)
     .then(function(wishlist) {
-        resolve({"wishlist": wishlist});
+        resolve({"wishlist": wishlist[0]});
     })
     .catch(reject);
     });
     var p4 = new Promise(function(resolve, reject) {
     SwapServices.getSwapByUserId(id)
         .then(function(swaps) {
-            console.log('FINALLY HERE', swaps)
             resolve({"swaps": swaps});
     })
     .catch(reject);
