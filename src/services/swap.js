@@ -40,12 +40,21 @@ SwapServices.getSwapByUserId = function(user_id) {
                 results.forEach(function(item) {
                     swaps.push({
                       "swap_id": item.swap_id,
+                      "traded_by": item.first_name + " " + item.last_name,
+                      "claim_settle_date": item.claim_settle_date,
+                      "claim_open_date": item.claim_open_date,
+                      "has_claim": item.has_claim,
+                      "approve_date": item.approve_date,
+                      "reject_date": item.reject_date,
+                      "received_date": item.received_date,
+                      "refund_date": item.refund_date,
+                      "ship_date": item.ship_date,
+                      "lost_date": item.lost_date,
                       "is_accepted": item.is_accepted,
                       "request_date": item.request_date,
                       "title": item.title
                   });
                 })
-                console.log(swaps);
                 return swaps;
             })
             .then(resolve)
