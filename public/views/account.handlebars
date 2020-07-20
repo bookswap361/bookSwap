@@ -40,18 +40,26 @@
 
 		<table>
 		    <tr>
-		        <th>SWAP ID</th>
-		        <th>IS_ACCEPTED</th>
-		        <th>REQUEST_DATE</th>
-		        <th>TITLE</th>
+		        <th style="display:none">SWAP ID</th>
+		        <th>Request Date</th>
+		        <th>Title</th>
+                <th>Traded By</th>
+                <th>Approve Date</th>
+                <th>Reject Date</th>
+                <th>Status</th>
+                <th></th>
 		    </tr>
 
 		    {{#each swaps}}
 		    <tr>
-		        <td>{{swap_id}}</td>
-		        <td>{{is_accepted}}</td>
+		        <td style="display:none">{{swap_id}}</td>
 		        <td>{{request_date}}</td>
 		        <td>{{title}}</td>
+                <td>{{traded_by}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
 		    </tr>
 		    {{/each}}
 		</table>
