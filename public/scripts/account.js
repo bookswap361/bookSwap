@@ -20,7 +20,6 @@ function showInventory(event) {
 			'Content-Type': 'application/json'
 		}
 	}).then(function (data) {
-        console.log('returning data', data)
 		return data.json();
 	}).then(function(response) {
 		console.log(response);
