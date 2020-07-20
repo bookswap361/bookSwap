@@ -29,13 +29,24 @@ AccountServices.getAccount = function(id) {
     .catch(reject);
     });
     var p4 = new Promise(function(resolve, reject) {
-    SwapModel.getSwapByUserId(id)
+    SwapModel.getSwapsTradedBy(id)
         .then(function(swaps) {
-            resolve({"swaps": swaps});
+            resolve({"swapsByMe": swaps});
     })
     .catch(reject);
     });
-return Promise.all([p1, p2, p3, p4])
+    var p5 = new Promise(function(resolve, reject) {
+    SwapModel.getSwapsTradedTo(id)
+        .then(function(swaps) {
+            var newReqs = 0;
+            swaps.forEach(function(book) {
+                if (!book.is_accepted) { newReqs += 1 }; 
+            });
+            resolve({"swapsToMe": swaps, "newReqs": newReqs});
+        })
+        .catch(reject);
+        });
+return Promise.all([p1, p2, p3, p4, p5])
 };
 
 //add one point when user adds a book -- not sure if this works
