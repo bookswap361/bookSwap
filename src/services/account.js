@@ -1,7 +1,8 @@
 var UserModel = require("../models/user");
+
     BooksOwnedModel = require("../models/books_owned");
     WishListModel = require("../models/wishlist");
-    SwapModel = require("../models/swap");
+    SwapServices = require("./swap");
 var AccountServices = {};
 
 
@@ -29,8 +30,9 @@ AccountServices.getAccount = function(id) {
     .catch(reject);
     });
     var p4 = new Promise(function(resolve, reject) {
-    SwapModel.getSwapByUserId(id)
+    SwapServices.getSwapByUserId(id)
         .then(function(swaps) {
+            console.log('FINALLY HERE', swaps)
             resolve({"swaps": swaps});
     })
     .catch(reject);
