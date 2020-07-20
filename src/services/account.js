@@ -18,14 +18,14 @@ AccountServices.getAccount = function(id) {
     var p2 = new Promise(function(resolve, reject) {
     BooksOwnedModel.getBooks(id)
     .then(function(books) {
-        resolve({"books": books[0]});
+        resolve({"books": books});
     })
     .catch(reject);
     });
     var p3 = new Promise(function(resolve, reject) {
     WishListModel.getWishList(id)
     .then(function(wishlist) {
-        resolve({"wishlist": wishlist[0]});
+        resolve({"wishlist": wishlist});
     })
     .catch(reject);
     });
