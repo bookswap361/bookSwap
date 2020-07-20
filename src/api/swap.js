@@ -26,8 +26,8 @@ router.get("/", function(req, res){
         });
 })*/
 
-router.get("/:id", function(req, res){
-    SwapServices.getSwapByUserId(req.params.id)
+router.get("/userId", function(req, res){
+    SwapServices.getSwapByUserId(req.session.u_id)
         .then(function(swaps) {
             console.log("Processing result in api/swap...");
             res.render("account", {"payload": swaps});
