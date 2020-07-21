@@ -3,7 +3,6 @@ var router = express.Router()
 var BooksOwnedServices = require("../services/books_owned");
 
 router.get("/", function(req, res){
-    console.log(req.session.u_id);
     BooksOwnedServices.getInventoryByUserId(req.session.u_id)
         .then(function(books) {
             console.log("Processing result in api/books_owned...");
