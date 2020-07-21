@@ -3,7 +3,6 @@ var BooksAvailable = {};
 
 BooksAvailable.getAvailableBooks = function(user_id) {
     return new Promise(function(resolve, reject) {
-        console.log("Retrieving Books from Database...");
         mysql.query(getQuery("getAvailableBooks"), [user_id])
             .then(resolve)
             .catch(reject);
@@ -12,8 +11,15 @@ BooksAvailable.getAvailableBooks = function(user_id) {
 
 BooksAvailable.getCondition = function(book_id, user_id) {
     return new Promise(function(resolve, reject) {
-        console.log("Retrieving book conditions from models/book...");
         mysql.query(getQuery("getCondition"), [book_id.book_id, user_id])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+BooksAvailable.getPoints = function(user_id) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("getPoints"), [user_id])
             .then(resolve)
             .catch(reject);
     });
@@ -21,7 +27,6 @@ BooksAvailable.getCondition = function(book_id, user_id) {
 
 BooksAvailable.addSwap = function(info, user_id) {
     return new Promise(function(resolve, reject) {
-        console.log("Add swap list_id: " + info.list_id + " traded_to: " + user_id + " date: " + info.date + " in models/books_owned..");
         mysql.query(getQuery("addSwap"), [info.list_id, user_id, info.list_id, info.date])
         .then(resolve)
         .catch(reject);
@@ -50,8 +55,10 @@ function getQuery(type) {
                 INNER JOIN book_condition bc ON bo.condition_id = bc.condition_id \
                 WHERE bo.is_available = 1 AND bo.book_id = ? AND bo.user_id != ?;"
             break;
+        case "getPoints":
+            query = "SELECT points FROM user WHERE user_id = ?;"
+            break;
         case "addSwap":
-            console.log("before 1st query");
             query = "INSERT INTO swap (list_id, traded_to, traded_by, is_accepted, request_date) \
                 VALUES (?, ?, (SELECT user_id FROM books_owned WHERE list_id = ?), 0, ?);"
             break;

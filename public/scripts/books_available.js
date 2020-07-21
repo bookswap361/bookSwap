@@ -1,3 +1,4 @@
+// Gets the conditions of selected book.
 function getCondition(event) {
 
 	// Get book_id for row.
@@ -13,63 +14,7 @@ function getCondition(event) {
 		return data.json();
 	}).then(function(response) {
 		console.log(response);
-
-		var newtable = document.getElementById("conditionTable");
-		var rowCount = newtable.rows.length - 1;
-		for (var i = rowCount; i >= 0; i--) {
-			newtable.rows[i].remove();
-		}
-		console.log("length: " + response.length);
-		var headers = ['Title', 'Author', 'Condition', 'Cost',''];
-		var tableHead = document.createElement('tr');
-		if (response.length > 0) {
-			for (var i = 0; i < headers.length; i++){
-		        var th = document.createElement('th');
-		        th.innerText = headers[i];
-		        tableHead.appendChild(th);
-		    }
-		    newtable.appendChild(tableHead);
-
-			for (var i = 0; i < response.length; i++) {
-				var row = document.createElement('tr');
-
-				// List_id
-				row.id = response[i].list_id;
-
-				// Title
-				var title = document.createElement('td');
-				title.innerText = response[i].title;
-				row.appendChild(title);
-
-				// Author
-				var author = document.createElement('td');
-				author.innerText = response[i].author;
-				row.appendChild(author);
-
-				// condition_description
-				var condition = document.createElement('td');
-				condition.innerText = response[i].condition_description;
-				row.appendChild(condition);
-
-				// cost
-				var cost = document.createElement('td');
-				cost.innerText = response[i].cost;
-				cost.className = "center";
-				row.appendChild(cost);
-
-				// Create update button
-				var swap = document.createElement('td');
-				var swapButton = document.createElement('button');
-				swapButton.className = "swap";
-				swapButton.innerText = "Swap";
-				swapButton.onclick = createSwap;
-				swapButton.type = "button";
-				swap.appendChild(swapButton);
-				row.appendChild(swap);
-
-				newtable.appendChild(row);
-			}
-		}
+		buildTable(response);
 	}).catch(function (err){
 		console.log(err);
 	}).catch(function(err){
@@ -77,6 +22,113 @@ function getCondition(event) {
 	});
 }
 
+// Builds a table displaying conditions and costs of available books.
+function buildTable(response) {
+	var newtable = document.getElementById("conditionTable");
+	var rowCount = newtable.rows.length - 1;
+	for (var i = rowCount; i >= 0; i--) {
+		newtable.rows[i].remove();
+	}
+
+	var headers = ['Title', 'Author', 'Condition', 'Cost',''];
+	var tableHead = document.createElement('tr');
+	if (response.length > 0) {
+		for (var i = 0; i < headers.length; i++){
+	        var th = document.createElement('th');
+	        th.innerText = headers[i];
+	        tableHead.appendChild(th);
+	    }
+	    newtable.appendChild(tableHead);
+
+		for (var i = 0; i < response.length; i++) {
+			var row = document.createElement('tr');
+
+			// List_id
+			row.id = response[i].list_id;
+
+			// Title
+			var title = document.createElement('td');
+			title.innerText = response[i].title;
+			row.appendChild(title);
+
+			// Author
+			var author = document.createElement('td');
+			author.innerText = response[i].author;
+			row.appendChild(author);
+
+			// condition_description
+			var condition = document.createElement('td');
+			condition.innerText = response[i].condition_description;
+			row.appendChild(condition);
+
+			// cost
+			var cost = document.createElement('td');
+			cost.innerText = response[i].cost;
+			cost.className = "center";
+			row.appendChild(cost);
+
+			// Create swap button
+			var swap = document.createElement('td');
+			var swapButton = document.createElement('button');
+			swapButton.className = "swap";
+			swapButton.innerText = "Swap";
+			swapButton.onclick = createSwap;
+			swapButton.type = "button";
+			swap.appendChild(swapButton);
+			row.appendChild(swap);
+
+			newtable.appendChild(row);
+
+			getPoints();
+		}
+	}
+}
+
+// Gets the amount of points that the current user has.
+function getPoints() {
+	return fetch("../books_available/get-points", {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	}).then(function(data) {
+		return data.json();
+	}).then(function(response) {
+		var userPoints = response.points;
+		checkPoints(userPoints);
+	})
+}
+
+
+// Checks whether the user has enough points to make a swap 
+// and updates the table accordingly.
+function checkPoints(userPoints) {
+	var table = document.getElementById("conditionTable");
+	var rowCount = table.rows.length
+
+	for (var i = 1; i < rowCount; i++) {
+		var row = table.rows.item(i);
+		var cost = row.cells[3].innerHTML;
+		var button = row.cells[4].childNodes[0];
+
+		if (userPoints < cost) {
+			for (var j = 0; j < row.cells.length; j++){
+				var cell = row.cells[j];
+				cell.classList.add('inactive');
+			}
+			button.disabled = true;
+		}
+		else {
+			for (var j = 0; j < row.cells.length; j++){
+				var cell = row.cells[j];
+				cell.classList.remove('inactive');
+			}
+			button.disabled = false;
+		}
+	}
+}
+
+// Creates a new swap and adds it to the database.
 function createSwap(event) {
 	// Reference: m. castillo
     var today = new Date();
@@ -86,12 +138,10 @@ function createSwap(event) {
 
     today = `${yyyy}-${mm}-${dd}`;
 
-    var list_id = event.target.parentNode.parentNode.id;
-
-    console.log("list_id: " + list_id + "\ndate: " + today);
+	var id = event.target.parentNode.parentNode.id;
 
     var info = {
-    	"list_id": list_id,
+    	"list_id": id,
     	"date": today
     };
 
@@ -111,7 +161,6 @@ function createSwap(event) {
 
 // add event listeners to all 'details' buttons
  var num_buttons = document.getElementsByClassName('details').length;
- console.log("details buttons #: " + num_buttons);
  var buttons = document.getElementsByClassName('details');
  for (var i = 0; i < num_buttons; i++) {
      buttons[i].addEventListener("click", getCondition);
