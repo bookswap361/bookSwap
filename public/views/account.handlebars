@@ -8,17 +8,17 @@
 			</div>
 		{{/if}}
 
-	<div id="userDetails" class="row justify-content-around mb-4 mx-auto">
-		<div class="col-md-2"><div class="row smallHeader">Name:</div><div class="row largeHeader">{{first_name}} {{last_name}}</div></div>
-		<div class="col-md-2"><div class="row smallHeader">Email:</div><div class="row largeHeader">{{email}}</div></div>
-		<div class="col-md-2"><div class="row smallHeader">Address:</div><div class="row largeHeader">{{address}}</div></div>
-		<div class="col-md-2"><div class="row smallHeader">Points</div><div class="row largeHeader points">{{points}}</div></div>
+	<div id="userDetails" class="row justify-content-center mb-4 mx-auto">
+		<div class="col-md-3"><div class="row smallHeader">Name:</div><div class="row largeHeader">{{first_name}} {{last_name}}</div></div>
+		<div class="col-md-4"><div class="row smallHeader">Email:</div><div class="row largeHeader">{{email}}</div></div>
+		<div class="col-md-4"><div class="row smallHeader">Address:</div><div class="row largeHeader">{{street}} {{zip}}</div></div>
+		<div class="col-md-1"><div class="row smallHeader">Points</div><div class="row largeHeader points">{{points}}</div></div>
 	</div>
 
-	<div class="container mx-4">
+	<div class="row mx-auto">
 
 	<!-- Reference: https://www.w3schools.com/howto/howto_js_tabs.asp -->
-	<div id="dashboard" class="dashboard-top px-4">
+	<div id="dashboard" class="dashboard-top mx-auto">
 		<div class="tab">
 			<button class="tablinks" id="booksTab">
 				<i class="fas fa-book"></i> Book Inventory
@@ -32,7 +32,7 @@
 		</div>
 	</div>
 
-	<div id="booksInventory" class="tabcontent" style="display: block">
+	<div id="booksInventory" class="tabcontent mx-auto" style="display: block">
 		<div class="row mx-2 text-center"><button id="addInventory" class="btn mt-2 mb-4 btn-primary mx-auto"> Add New Book </button></div>
 
 		<div class="row mx-2">
@@ -41,7 +41,7 @@
 		</div>
 	</div>
 
-	<div id="swaps" class="tabcontent px-4 mx-4">
+	<div id="swaps" class="tabcontent mx-auto">
 		
 		<div class="section-top"><h2> Pending Swaps </h2></div>
 		<div class="section">
@@ -108,8 +108,10 @@
 		</div>
 	</div>
 
-	<div id="wishlist" class="tabcontent">
-		<h2> Wishlist </h2>
+	<div id="wishlist" class="tabcontent mx-auto">
+		<div>
+			<h2> Wishlist </h2>
+		</div>
 	</div>
 
 	</div>
