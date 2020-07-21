@@ -72,10 +72,10 @@ router.route("/:id")
         BookServices.getBookByOLId(req.params.id)
             .then(function(result) {
                 if(result.length > 0){
-                    result[0].exists = 1;
                     console.log("Result found");
+                    result[0][0].exists = 1;
                     console.log(result);
-                    res.render("book-page", result[0]);
+                    res.render("book-page", {"book-info": result[0][0], "copies": result[1]});
                 } else {
                     res.send("404 Error - Try refreshing or go home")
                 }
@@ -90,10 +90,10 @@ router.route("/:id")
         BookServices.getBookByOLId(req.body.book_id)
             .then(function(result) {
                 if(result.length > 0){
-                    result[0].exists = 1;
                     console.log("Result found");
+                    result[0][0].exists = 1;
                     console.log(result);
-                    res.render("book-page", result[0]);
+                    res.render("book-page", {"book-info": result[0][0], "copies": result[1]});
                 } else {
                     data.new = 1;
                     console.log("No book found");

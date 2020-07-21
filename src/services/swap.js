@@ -25,7 +25,7 @@ SwapServices.getAllSwaps = function() {
 
 SwapServices.getSwapById = function(id) {
     return new Promise(function(resolve, reject){
-        SwapModel.getSwapById()
+        SwapModel.getSwapById(id)
             .then(resolve)
             .catch(reject);
     });

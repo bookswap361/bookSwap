@@ -3,6 +3,14 @@ const addBookBtn      = document.getElementById("addBookBtn"),
       confirmDiv      = document.getElementById("confirm"),
       newLink         = document.getElementById("newLink");
 
+<<<<<<< Updated upstream
+=======
+window.onload = function(event){
+    if (description.innerHTML === "null"){
+        description.innerHTML = `<em>Description for this book is unavailable</em>`;
+    }
+}
+>>>>>>> Stashed changes
 
 // Add existing book to owned books
 function showAddForm(){

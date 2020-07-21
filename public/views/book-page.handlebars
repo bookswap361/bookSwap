@@ -2,12 +2,17 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <img src="{{thumbnail_url}}">
+            <img src="{{book-info.thumbnail_url}}">
         </div>
         <div class="col-md-9 mx-auto">
-            <h3>{{title}}</h3> by {{name}}
+            <h3>{{book-info.title}}</h3> by {{book-info.name}}
             <hr>
+<<<<<<< Updated upstream
             {{description}}
+=======
+            <span id="description">{{book-info.description}}</span>
+            
+>>>>>>> Stashed changes
             {{!-- <P>Genres: {{genre}}</P> --}}
         </div>
     </div>
@@ -35,7 +40,7 @@
         </div>
     {{/if}}
 
-    {{#if exists}}
+    {{#if book-info.exists}}
     <div class="row">
         <button type="button" class="btn btn-primary" onclick="showAddForm()">Add this book to your collection of owned books:</button>
         <button type="button" class="btn btn-danger" onclick="window.location.href='/search';">Search Again</button>
@@ -67,9 +72,20 @@
     
     <div class="row">
         <div class="col-md-8 mx-auto">
-        Open Swaps for this Book: {{copies}}
+        Open Swaps for this Book:
+            <div class="row">
+                {{#each copies}}
+                    <ul>
+                    <li>{{list_date}}</li>
+                    <li>{{condition_description}}</li>
+                    </ul>
+                    <hr>
+                {{/each}}
+
+            </div>
         </div>
     </div>
+
 </div>
 
 {{/if}}
