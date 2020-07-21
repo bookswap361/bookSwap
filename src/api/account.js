@@ -6,7 +6,8 @@ router.route("/")
     .get(function(req, res) {
         AccountServices.getAccount(req.session.u_id)
             .then(function(account) {
-                let merged = {...account[0], ...account[1], ...account[2], ...account[3]};
+                let merged = {...account[0], ...account[1], ...account[2], ...account[3], ...account[4]};
+                console.log(merged);
                 res.render('account', merged);
             })
             .catch(function(err) {

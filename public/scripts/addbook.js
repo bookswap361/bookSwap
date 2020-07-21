@@ -1,16 +1,14 @@
 const addBookBtn      = document.getElementById("addBookBtn"),
       chooseCondition = document.getElementById("chooseCondition"),
       confirmDiv      = document.getElementById("confirm"),
-      newLink         = document.getElementById("newLink");
+      newLink         = document.getElementById("newLink"),
+      description     = document.getElementById("description");
 
-<<<<<<< Updated upstream
-=======
 window.onload = function(event){
     if (description.innerHTML === "null"){
         description.innerHTML = `<em>Description for this book is unavailable</em>`;
     }
 }
->>>>>>> Stashed changes
 
 // Add existing book to owned books
 function showAddForm(){
@@ -30,7 +28,6 @@ function addBook(){
 
 function getDataOwn(){
     var payload = {user_id: null, book_id: null, condition_id: null, condition_description: null, list_date: null};
-    // payload.user_id = document.getElementById("newUser_id").value;
     payload.user_id = 1;
     payload.book_id = parseInt(document.getElementById("newBook_id").value);
     payload.condition_id = parseInt(document.getElementById("newCondition").value);

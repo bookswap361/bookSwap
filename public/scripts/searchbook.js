@@ -37,8 +37,8 @@ function makeReq() {
                     resolve(JSON.parse(req.responseText))
                 }).then(function(results){
                     var allResults = [];
-                    var max = 10;
-                    if (results.docs.length < 10) max = results.docs.length;
+                    var max = 20;
+                    if (results.docs.length < 20) max = results.docs.length;
                     for(var i=0; i<max; i++) {
                         var data = {title: null, name: null, genre: [], thumbnail_url: null, book_id: null, author_id: null, description: null};
                         
