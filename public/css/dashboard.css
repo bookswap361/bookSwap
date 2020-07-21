@@ -65,5 +65,9 @@ table, th {
     font-weight: bolder;
 }
 
+#cover{
+max-width: 100px;
+}
+
 /* #71a0a5 */
 /* #018383 */
