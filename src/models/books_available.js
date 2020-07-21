@@ -68,6 +68,7 @@ function getQuery(type) {
             b.book_id, b.ol_key, bo.condition_description, bo.list_date \
             FROM books_owned bo INNER JOIN book b ON b.book_id = bo.book_id \
             WHERE bo.is_available = 1 AND b.ol_key = ?;"
+            // add group by condition
             break;
         }
 

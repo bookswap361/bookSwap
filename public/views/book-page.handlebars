@@ -22,12 +22,12 @@
             </div>
             <div class="col-md-2 text-center">
                 <form method="POST" action="/book/create-book">
-                    <input name="title"         value="{{title}}"         hidden="true">
-                    <input name="thumbnail_url" value="{{thumbnail_url}}" hidden="true">
-                    <input name="bol_key"       value="{{book_id}}"       hidden="true"> 
-                    <input name="name"          value="{{name}}"          hidden="true">
-                    <input name="aol_key"       value="{{author_id}}"     hidden="true"> 
-                    <input name="description"   value="{{description}}"   hidden="true"> 
+                    <input name="title"         value="{{book-info.title}}"         hidden="true">
+                    <input name="thumbnail_url" value="{{book-info.thumbnail_url}}" hidden="true">
+                    <input name="bol_key"       value="{{book-info.book_id}}"       hidden="true"> 
+                    <input name="name"          value="{{book-info.name}}"          hidden="true">
+                    <input name="aol_key"       value="{{book-info.author_id}}"     hidden="true"> 
+                    <input name="description"   value="{{book-info.description}}"   hidden="true"> 
                     <input type="submit"        value="Add Book"          class="btn btn-primary">
                 </form>
             </div>
@@ -55,9 +55,9 @@
                     <option value="1">Acceptable condition: 5pts</option>
                 </select> 
 
-                <input id="newTitle" value="{{title}}" hidden>
-                <input id="newUser_id" value="{{user_id}}" hidden>
-                <input id="newBook_id" value="{{book_id}}" hidden>
+                <input id="newTitle" value="{{book-info.title}}" hidden>
+                <input id="newUser_id" value="{{book-info.user_id}}" hidden>
+                <input id="newBook_id" value="{{book-info.book_id}}" hidden>
 
                 <button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook()">Add Book!</button>
 
@@ -72,10 +72,7 @@
         Open Swaps for this Book:
             <div class="row">
                 {{#each copies}}
-                    <ul>
-                    <li>{{list_date}}</li>
-                    <li>{{condition_description}}</li>
-                    </ul>
+                    <ul>A copy in {{condition_description}} condition listed on {{list_date}}</ul>
                     <hr>
                 {{/each}}
 
