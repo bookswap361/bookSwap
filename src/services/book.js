@@ -10,14 +10,14 @@ BookServices.getAllBooks = function() {
     });
 };
 
-BookServices.getBookByOLId = function(id) {
+BookServices.getBookByOLId = function(id, user_id) {
 	var p1 = new Promise(function(resolve, reject) {
 		BookModel.getBookByOLId(id)
 			.then(resolve)
 			.catch(reject);
 	});
 	var p2 = new Promise(function(resolve, reject) {
-		BooksOwnedModel.getAvailableBooksByOLId(id)
+		BooksOwnedModel.getAvailableBooksByOLId(id, user_id)
 			.then(resolve)
 			.catch(reject);
 	});

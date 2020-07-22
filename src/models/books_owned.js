@@ -5,8 +5,8 @@ BooksOwned.getBooks = function(id) {
     return mysql.query(getQuery("books"), [id]);
 }
 
-BooksOwned.getAvailableBooksByOLId = function(id) {
-    return mysql.query(getQuery("getAvailableBooksByOLId"), [id]);
+BooksOwned.getAvailableBooksByOLId = function(id, user_id) {
+    return mysql.query(getQuery("getAvailableBooksByOLId"), [id, user_id]);
 }
 
 BooksOwned.getInventoryByUserId = function(user_id) {
@@ -98,8 +98,8 @@ function getQuery(type) {
             query = "SELECT \
             b.book_id, b.ol_key, bo.condition_description, bo.list_date \
             FROM books_owned bo INNER JOIN book b ON b.book_id = bo.book_id \
-            WHERE bo.is_available = 1 AND b.ol_key = ?;"
-            // add group by condition
+            WHERE bo.is_available = 1 AND b.ol_key = ? AND bo.user_id != ? \
+            GROUP BY bo.condition_id;"
             break;
     }
 
