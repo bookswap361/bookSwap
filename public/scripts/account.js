@@ -208,7 +208,7 @@ function deleteInventory(event) {
 	var list_id = event.target.parentNode.parentNode.id;
 	console.log('Delete book with list id: ', list_id);
 
-	fetch("../books_owned/delete", {
+	fetch("../account/delete_books", {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -216,6 +216,7 @@ function deleteInventory(event) {
 		body: JSON.stringify({"list_id": list_id})
 	}).then(function() {
 		console.log('Inventory deleted.');
+		window.location.reload();
 		var event = document.getElementById("booksTab").click();
 	})
 }
