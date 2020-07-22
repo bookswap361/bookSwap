@@ -11,6 +11,7 @@ router.route("/")
                 res.render('account', merged);
             })
             .catch(function(err) {
+                console.log(err);
                 res.redirect('/');
             });
     })

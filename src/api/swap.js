@@ -26,6 +26,8 @@ router.get("/", function(req, res){
         });
 })*/
 
+
+// REMOVE
 router.get("/:id", function(req, res){
     SwapServices.getSwapByUserId(req.params.id)
         .then(function(swaps) {
@@ -34,7 +36,7 @@ router.get("/:id", function(req, res){
         }).catch(function(err) {
             res.status(400).json({"error": err});
         });
-})
+});
 
 
 router.put("/:id", function(req, res){
@@ -55,6 +57,8 @@ router.put("/completed-swaps", function(req, res){
     });
 })
 
+
+//TODO: Change to GET
 router.put("/swap-by-traded-to", function(req, res){
     SwapServices.getSwapByTradedTo()
     .then(function(result) {
@@ -65,6 +69,7 @@ router.put("/swap-by-traded-to", function(req, res){
 })
 
 /* Will need updated once page layout is finished */
+// TODO: Change to GET
 router.route("/get_swap_by_traded_by")
     .post(function(req, res) {
         console.log("Retrieving swap information...");
