@@ -8,49 +8,49 @@ var AccountServices = {};
 
 AccountServices.getAccount = function(id) {
     var p1 = new Promise(function(resolve, reject) {
-    UserModel.getUserById(id)
-    .then(function(user) {
-        resolve(user[0]);
-    })
-    .catch(reject);
-    });
-    var p2 = new Promise(function(resolve, reject) {
-    BooksOwnedModel.getBooks(id)
-    .then(function(books) {
-        resolve({"books": books});
-    })
-    .catch(reject);
-    });
+        UserModel.getUserById(id)
+            .then(function(user) {
+                resolve(user[0]);
+            })
+            .catch(reject);
+             });
+     var p2 = new Promise(function(resolve, reject) {
+        BooksOwnedModel.getBooks(id)
+            .then(function(books) {
+            resolve({"books": books});
+            })
+            .catch(reject);
+            });
     var p3 = new Promise(function(resolve, reject) {
-    WishListModel.getWishList(id)
-    .then(function(wishlist) {
-        resolve({"wishlist": wishlist});
-    })
-    .catch(reject);
-    });
+        WishListModel.getWishList(id)
+            .then(function(wishlist) {
+                resolve({"wishlist": wishlist});
+            })
+            .catch(reject);
+            });
     var p4 = new Promise(function(resolve, reject) {
     SwapModel.getSwapByUserId(id)
-        .then(function(swaps) {
-            resolve({"swaps": swaps});
-    })
-    .catch(reject);
-    });
-return Promise.all([p1, p2, p3, p4])
+            .then(function(swaps) {
+                resolve({"swaps": swaps});
+             })
+            .catch(reject);
+            });
+    return Promise.all([p1, p2, p3, p4])
 };
 
 //add one point when user adds a book -- not sure if this works
 AccountServices.addBook = function(body, id) {
     var p1 = new Promise(function(resolve, reject) {
-    BooksOwnedModel.addBook(body)
-    .then(resolve)
-    .catch(reject);
-    });
+        BooksOwnedModel.addBook(body)
+            .then(resolve)
+            .catch(reject);
+            });
     var p2 = new Promise(function(resolve, reject) {
-    UserModel.updatePoints(id, 1)
-    .then(resolve)
-    .catch(reject);
-    });
-return Promise.all([p1, p2])
+            UserModel.updatePoints(id, 1)
+            .then(resolve)
+            .catch(reject);
+            });
+    return Promise.all([p1, p2])
 };
 
 
@@ -65,37 +65,36 @@ AccountServices.addWish = function(body) {
 
 AccountServices.deleteAccount = function(body) {
     var p1 = new Promise(function(resolve, reject) {
-    BooksOwnedModel.deleteAllBooks(body)
-    .then(resolve)
-    .catch(reject);
-    });
+        BooksOwnedModel.deleteAllBooks(body)
+            .then(resolve)
+            .catch(reject);
+            });
     var p2 = new Promise(function(resolve, reject) {
-    WishListModel.deleteAllWish(body)
-    .then(resolve)
-    .catch(reject);
-    });
+        WishListModel.deleteAllWish(body)
+            .then(resolve)
+            .catch(reject);
+            });
     var p3 = new Promise(function(resolve, reject) {
-    UserModel.deleteUser(body)
-    .then(resolve)
-    .catch(reject);
-    });
-return Promise.all([p1, p2, p3])
+        UserModel.deleteUser(body)
+            .then(resolve)
+            .catch(reject);
+             });
+    return Promise.all([p1, p2, p3])
 };
 
 
 AccountServices.deleteBooks = function(body) {
-    return new Promise(function(resolve, reject) {
-        var p1 = new Promise(function(resolve, reject) {
-    BooksOwnedModel.deleteBooks(body)
-    .then(resolve)
-    .catch(reject);
-    });
+    var p1 = new Promise(function(resolve, reject) {
+        BooksOwnedModel.deleteBooks(body)
+            .then(resolve)
+            .catch(reject);
+             });
     var p2 = new Promise(function(resolve, reject) {
-    UserModel.deletePoints(id, 1)
-    .then(resolve)
-    .catch(reject);
-    });
-return Promise.all([p1, p2])
+        UserModel.deletePoints(id, 1)
+            .then(resolve)
+            .catch(reject);
+             });
+    return Promise.all([p1, p2])
 };
 
 AccountServices.deleteWish = function(body) {
