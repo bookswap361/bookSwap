@@ -98,7 +98,7 @@ function getQuery(type) {
             query = "SELECT * FROM swap WHERE swap_id = ?;"
             break;
         case "acceptSwap":
-            query = "UPDATE swap SET accept_date = ?, is_accepted = 1 WHERE swap_id = ?";
+            query = "UPDATE swap SET approve_date = ?, is_accepted = 1 WHERE swap_id = ?";
             break;
         case "rejectSwap":
             query = "UPDATE swap SET reject_date = ?, is_complete = 1 WHERE swap_id = ?";

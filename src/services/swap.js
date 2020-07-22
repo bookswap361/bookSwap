@@ -50,7 +50,7 @@ SwapServices.getSwapsByUserId = function(userId, isTradedToCase) {
                 swaps.push({
                     "swap_id": item.swap_id,
                     "is_complete": item.is_complete,
-                    "traded_by": item.first_name + " " + item.last_name,
+                    "name": item.first_name + " " + item.last_name,
                     "claim_settle_date": item.claim_settle_date,
                     "claim_open_date": item.claim_open_date,
                     "has_claim": item.has_claim,

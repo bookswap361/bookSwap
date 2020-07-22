@@ -57,7 +57,7 @@ router.put("/completed-swaps", function(req, res){
     });
 })
 
-
+/*
 //TODO: Change to GET
 router.put("/swap-by-traded-to", function(req, res){
     SwapServices.getSwapByTradedTo()
@@ -67,9 +67,10 @@ router.put("/swap-by-traded-to", function(req, res){
         res.status(400).json({"error": err});
     });
 })
-
+*/
 /* Will need updated once page layout is finished */
 // TODO: Change to GET
+/*
 router.route("/get_swap_by_traded_by")
     .post(function(req, res) {
         console.log("Retrieving swap information...");
@@ -84,7 +85,7 @@ router.route("/get_swap_by_traded_by")
                 res.status(400).json({ "error": err });
             });
 })
-
+*/
 router.route("/create_swap")
     .post(function(req, res) {
         console.log("Creating swap...");
@@ -103,7 +104,7 @@ router.route("/create_swap")
 router.route("/accept")
     .post(function(req, res) {
         console.log("Updating swap information...", req.body);
-        SwapServices.acceptSwap(req.body.swapId)
+        SwapServices.acceptSwap(Number(req.body.swapId))
             .then(function(result) {
                 res.redirect("/account");
             })
@@ -114,7 +115,7 @@ router.route("/accept")
 
 router.route("/reject")
     .post(function(req, res) {
-        SwapServices.rejectSwap(req.body.swapId)
+        SwapServices.rejectSwap(Number(req.body.swapId))
             .then(function(result) {
                 res.redirect("/account");
             })
