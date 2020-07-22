@@ -23,7 +23,8 @@ router.route("/create-book")
         var data = req.body;
         BookServices.createBook(req.body)
             .then(function(result) {
-                res.redirect("/book/" + req.body.bol_key);
+                console.log('post new book??')
+                res.redirect("/book/" + req.body.bol_key + "?new=1");
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});
@@ -59,14 +60,13 @@ router.route("/add-to-account")
 
 router.route("/:id")
     .get(function(req, res) {
-        console.log("Searching for: " + req.params.id)
+        console.log("Searching for: ", req.params, req.query)
         BookServices.getBookByOLId(req.params.id)
             .then(function(result) {
                 if(result.length > 0){
                     result[0].exists = 1;
                     console.log("Result found");
-                    console.log(result);
-                    res.render("book-page", result[0]);
+                    res.render("book-page", req.query && req.query.new ? {"result": result[0], "isNew": true} : {"result": result[0]});
                 } else {
                     res.send("404 Error - Try refreshing or go home")
                 }
@@ -84,12 +84,12 @@ router.route("/:id")
                     result[0].exists = 1;
                     console.log("Result found");
                     console.log(result);
-                    res.render("book-page", result[0]);
+                    res.render("book-page", {"result": result[0]});
                 } else {
                     data.new = 1;
                     console.log("No book found");
                     console.log(data);
-                    res.render("book-page", data);
+                    res.render("book-page", {"result": data});
                 }
             })
             .catch(function(err) {
