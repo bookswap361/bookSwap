@@ -22,7 +22,7 @@ BooksAvailableServices.getAvailableBooks = function(user_id) {
 }
 
 BooksAvailableServices.getCondition = function(book_id, user_id) {
-    return new Promise(function(resolve, reject){
+    var books = new Promise(function(resolve, reject){
         BooksAvailableModel.getCondition(book_id, user_id)
             .then(function(results){
                 var books = [];
@@ -35,24 +35,20 @@ BooksAvailableServices.getCondition = function(book_id, user_id) {
                       "cost": item.cost
                   });
                 })
-                return books;
+                resolve(books);
             })
-            .then(resolve)
             .catch(reject);
     });
-}
+    var points = new Promise(function(resolve, reject){
+        BooksAvailableModel.getPoints(user_id)
+            .then(function(results){
+                resolve({"points": results[0].points});
+            })
+            .catch(reject);
+    });
 
-BooksAvailableServices.getPoints = function(user_id) {
-     return new Promise(function(resolve, reject){
-         BooksAvailableModel.getPoints(user_id)
-             .then(function(results){
-                 var points = {"points": results[0].points};
-                 return points;
-             })
-             .then(resolve)
-             .catch(reject);
-     });
- }
+    return Promise.all([books, points]);
+}
 
 BooksAvailableServices.addSwap = function(info, user_id) {
 	return new Promise(function(resolve, reject){

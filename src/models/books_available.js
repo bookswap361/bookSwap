@@ -2,35 +2,19 @@ var mysql = require("../loaders/mysql");
 var BooksAvailable = {};
 
 BooksAvailable.getAvailableBooks = function(user_id) {
-    return new Promise(function(resolve, reject) {
-        mysql.query(getQuery("getAvailableBooks"), [user_id])
-            .then(resolve)
-            .catch(reject);
-    });
+    return mysql.query(getQuery("getAvailableBooks"), [user_id])
 }
 
 BooksAvailable.getCondition = function(book_id, user_id) {
-    return new Promise(function(resolve, reject) {
-        mysql.query(getQuery("getCondition"), [book_id.book_id, user_id])
-            .then(resolve)
-            .catch(reject);
-    });
+    return mysql.query(getQuery("getCondition"), [book_id, user_id]);
 }
 
 BooksAvailable.getPoints = function(user_id) {
-     return new Promise(function(resolve, reject) {
-         mysql.query(getQuery("getPoints"), [user_id])
-             .then(resolve)
-             .catch(reject);
-     });
+     return mysql.query(getQuery("getPoints"), [user_id]);
  }
 
 BooksAvailable.addSwap = function(info, user_id) {
-    return new Promise(function(resolve, reject) {
-        mysql.query(getQuery("addSwap"), [info.list_id, user_id, info.list_id, info.date])
-        .then(resolve)
-        .catch(reject);
-    })
+    return mysql.query(getQuery("addSwap"), [info.list_id, user_id, info.list_id, info.date]);
 }
 
 function getQuery(type) {

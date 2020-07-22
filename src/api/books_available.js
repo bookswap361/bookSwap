@@ -12,24 +12,14 @@ router.get("/", function(req, res) {
         });
 });
 
-router.post("/condition", function(req, res) {
-    BooksAvailableServices.getCondition(req.body, req.session.u_id)
+router.get("/condition/:id", function(req, res) {
+    BooksAvailableServices.getCondition(req.params.id, req.session.u_id)
         .then(function(books) {
             res.send(books);
         }).catch(function(err) {
             res.status(400).json({"error": err});
         });
 });
-
-router.get("/get-points", function(req, res) {
-     BooksAvailableServices.getPoints(req.session.u_id)
-         .then(function(result) {
-             res.send(result);
-         })
-         .catch(function(err) {
-             res.status(400).json({"error": err});
-         });
- });
 
 router.post("/add-swap", function(req, res) {
     BooksAvailableServices.addSwap(req.body, req.session.u_id)

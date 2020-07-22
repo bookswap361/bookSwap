@@ -3,13 +3,13 @@ function getCondition(event) {
 
 	// Get book_id for row.
 	var book_id = event.target.parentNode.parentNode.id;
+	var url = "../books_available/condition/" + book_id;
 
-	fetch("../books_available/condition/", {
-		method: 'POST',
+	fetch(url, {
+		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({"book_id": book_id})
+		}
 	}).then(function (data) {
 		return data.json();
 	}).then(function(response) {
@@ -20,17 +20,18 @@ function getCondition(event) {
 		console.log(err);
 	});
 }
+
 // Builds a table displaying conditions and costs of available books.
  function buildTable(response) {
+ 	var books = response[0];
+ 	var userPoints = response[1].points;
+
  	var newtable = document.getElementById("conditionTable");
- 	var rowCount = newtable.rows.length - 1;
- 	for (var i = rowCount; i >= 0; i--) {
- 		newtable.rows[i].remove();
- 	}
+ 	newtable.innerHTML = "";
 
  	var headers = ['Title', 'Author', 'Condition', 'Cost',''];
  	var tableHead = document.createElement('tr');
- 	if (response.length > 0) {
+ 	if (books.length > 0) {
  		for (var i = 0; i < headers.length; i++){
  	        var th = document.createElement('th');
  	        th.innerText = headers[i];
@@ -38,30 +39,30 @@ function getCondition(event) {
  	    }
  	    newtable.appendChild(tableHead);
 
- 		for (var i = 0; i < response.length; i++) {
+ 		for (var i = 0; i < books.length; i++) {
  			var row = document.createElement('tr');
 
  			// List_id
- 			row.id = response[i].list_id;
+ 			row.id = books[i].list_id;
 
  			// Title
  			var title = document.createElement('td');
- 			title.innerText = response[i].title;
+ 			title.innerText = books[i].title;
  			row.appendChild(title);
 
  			// Author
  			var author = document.createElement('td');
- 			author.innerText = response[i].author;
+ 			author.innerText = books[i].author;
  			row.appendChild(author);
 
  			// condition_description
  			var condition = document.createElement('td');
- 			condition.innerText = response[i].condition_description;
+ 			condition.innerText = books[i].condition_description;
  			row.appendChild(condition);
 
  			// cost
  			var cost = document.createElement('td');
- 			cost.innerText = response[i].cost;
+ 			cost.innerText = books[i].cost;
  			cost.className = "center";
  			row.appendChild(cost);
 
@@ -75,53 +76,12 @@ function getCondition(event) {
  			swap.appendChild(swapButton);
  			row.appendChild(swap);
 
+ 			if (userPoints < books[i].cost) {
+ 				row.classList.add("inactive");
+ 				swapButton.disabled = true;
+ 			}
+
  			newtable.appendChild(row);
-
- 			getPoints();
- 		}
- 	}
- }
-
- // Gets the amount of points that the current user has.
- function getPoints() {
- 	return fetch("../books_available/get-points", {
- 		method: 'GET',
- 		headers: {
- 			'Content-Type': 'application/json'
- 		}
- 	}).then(function(data) {
- 		return data.json();
- 	}).then(function(response) {
- 		var userPoints = response.points;
- 		checkPoints(userPoints);
- 	})
- }
-
-
- // Checks whether the user has enough points to make a swap 
- // and updates the table accordingly.
- function checkPoints(userPoints) {
- 	var table = document.getElementById("conditionTable");
- 	var rowCount = table.rows.length
-
- 	for (var i = 1; i < rowCount; i++) {
- 		var row = table.rows.item(i);
- 		var cost = row.cells[3].innerHTML;
- 		var button = row.cells[4].childNodes[0];
-
- 		if (userPoints < cost) {
- 			for (var j = 0; j < row.cells.length; j++){
- 				var cell = row.cells[j];
- 				cell.classList.add('inactive');
- 			}
- 			button.disabled = true;
- 		}
- 		else {
- 			for (var j = 0; j < row.cells.length; j++){
- 				var cell = row.cells[j];
- 				cell.classList.remove('inactive');
- 			}
- 			button.disabled = false;
  		}
  	}
  }
