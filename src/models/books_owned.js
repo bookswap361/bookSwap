@@ -70,6 +70,7 @@ function getQuery(type) {
             break;
         case "deleteAllBooks":
 	        query = "DELETE from books_owned WHERE user_id = ?";
+            break;
         case "getInventoryByUserId":
             query = "SELECT books_owned.list_id, book.title, author.name, books_owned.condition_description, books_owned.list_date \
                     FROM book \

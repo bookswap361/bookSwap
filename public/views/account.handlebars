@@ -57,7 +57,7 @@
                     <th>Reject Date</th>
                     <th>Shipped Date</th>
                     <th>Received Date</th>
-					<th>Status</th>
+                    <th>Status</th>
 				</tr>
 
 				{{#each swapsToMe}}
@@ -71,7 +71,7 @@
                             <td>{{#if reject_date}} {{reject_date}} {{/if}}</td>
                             <td>{{#if ship_date}} {{ship_date}} {{/if}}</td>
                             <td>{{#if received_date}} {{received_date}} {{/if}}</td>
-					        <td>{{getStatus approve_date reject_date ship_date}}</td>
+                            <td>{{getStatus approve_date reject_date ship_date}}</td>
 				        </tr>
                     {{/unless}}
 				{{/each}}
