@@ -33,27 +33,5 @@ router.post("/delete", function(req, res){
         });
 })
 
-router.route("/add-to-account")
-    .post(function(req, res) {
-        var data = req.body;
-        data.user_id = req.session.u_id;
-        BooksOwnedServices.addToOwn(data)
-            .then(function(result) {
-                console.log("Book added to account:");
-            })
-            .then(function(result){
-                console.log({"number": 1, "user_id": data.user_id});
-                UserServices.updatePoints({"number": 1, "user_id": data.user_id})
-            })
-            .then(function(result) {
-                console.log("1 Point added to account:");
-                console.log(data);
-                res.send("Success");
-            })
-            .catch(function(err) {
-                res.status(400).json({"error": err});
-            });
-    });
-
 
 module.exports = router;
