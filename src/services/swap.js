@@ -1,6 +1,7 @@
-var BookModel = require("../models/book");
-    UserModel = require("../models/user");
-    SwapModel = require("../models/swap");
+var BookModel = require("../models/book"),
+    UserModel = require("../models/user"),
+    SwapModel = require("../models/swap"),
+    BooksOwnedModel = require("../models/books_owned")
 var SwapServices = {};
 
 SwapServices.getAllSwaps = function() {
@@ -98,8 +99,17 @@ SwapServices.acceptSwap = function(swapId) {
 };
 
 SwapServices.rejectSwap = function(swapId) {
-    // TODO: Update book availability to true
-    return SwapModel.rejectSwap(swapId);
+    return new Promise(function(resolve, reject) {
+        SwapModel.getListId(swapId)
+        .then(function(result) {
+            var listId = result[0].list_id;
+            SwapModel.rejectSwap(swapId)
+            .then(BooksOwnedModel.updateAvailability.bind(null, listId, true))
+            .then(resolve)
+            .catch(reject);
+        })
+        .catch(reject);
+    });
 };
 
 SwapServices.updateSwapShipDate = function(info) {

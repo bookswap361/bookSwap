@@ -33,7 +33,6 @@ BooksOwned.updateCondition = function(info) {
 }
 
 BooksOwned.updateAvailability = function(id, isAvailable) {
-    console.log('not here at all?', id, isAvailable)
     return mysql.query(getQuery("updateAvailability"), [isAvailable ? 1 : 0, id]);
 };
 

@@ -56,6 +56,10 @@ Swap.rejectSwap = function(swapId, date) {
     return mysql.query(getQuery("rejectSwap"), [new Date(), swapId]);
 };
 
+Swap.getListId = function(swapId) {
+    return mysql.query(getQuery("getListId"), [swapId]);
+};
+
 Swap.updateSwapShipDate = function(info) {
     return new Promise(function(resolve, reject) {
         mysql.query(getQuery("updateSwapShipDate"), [info.ship_date, info.swap_id])
@@ -102,6 +106,9 @@ function getQuery(type) {
             break;
         case "rejectSwap":
             query = "UPDATE swap SET reject_date = ?, is_complete = 1 WHERE swap_id = ?";
+            break;
+        case "getListId":
+            query = "SELECT list_id FROM swap WHERE swap_id = ?";
             break;
         case "completedSwaps":
             query = "SELECT * FROM swap WHERE is_complete = 1;"
