@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    {{#if new}}
+    {{#if book-info.new}}
         <div class="row justify-content-center align-items-center mt-2 mb-4">
             <div class="col-md-8 info">
                 This book hasn't been added to our library yet! Would you like to add it?<BR>
@@ -43,7 +43,7 @@
         <button type="button" class="btn btn-danger" onclick="window.location.href='/search';">Search Again</button>
     </div>
 
-<hr>
+    <hr>
     <div class="row">
         <div id="chooseCondition" class="container hidden">
             <div id="addForm">
@@ -69,15 +69,19 @@
     
     <div class="row">
         <div class="col-md-8 mx-auto">
+        {{#if copies}}
         Open Swaps for this Book:
             <div class="row">
                 {{#each copies}}
                     <ul>A copy in {{condition_description}} condition listed on {{list_date}}</ul>
                     <hr>
                 {{/each}}
-
             </div>
         </div>
+        {{/if}}
+        {{#unless copies}}
+        There are no available copies of this book for trade.
+        {{/unless}}
     </div>
 
 </div>

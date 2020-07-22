@@ -31,34 +31,12 @@ router.route("/create-book")
             });
         });
 
-router.route("/add-to-account")
-    .post(function(req, res) {
-        var data = req.body;
-        data.user_id = req.session.u_id;
-        BookServices.addToOwn(data)
-            .then(function(result) {
-                console.log("Book added to account:");
-            })
-            .then(function(result){
-                console.log({"number": 1, "user_id": data.user_id});
-                UserServices.updatePoints({"number": 1, "user_id": data.user_id})
-            })
-            .then(function(result) {
-                console.log("1 Point added to account:");
-                console.log(data);
-                res.send("Success");
-            })
-            .catch(function(err) {
-                res.status(400).json({"error": err});
-            });
-    });
-
 router.route("/:id")
     .get(function(req, res) {
         console.log("Searching for: " + req.params.id)
         BookServices.getBookByOLId(req.params.id)
             .then(function(result) {
-                if(result.length > 0){
+                if(result[0].length > 0){
                     console.log("Result found");
                     result[0][0].exists = 1;
                     console.log(result);
@@ -76,16 +54,16 @@ router.route("/:id")
         var data = req.body;
         BookServices.getBookByOLId(req.body.book_id)
             .then(function(result) {
-                if(result.length > 0){
+                if(result[0].length > 0){
                     console.log("Result found");
-                    result[0][0].exists = 1;
                     console.log(result);
+                    result[0][0].exists = 1;
                     res.render("book-page", {"book-info": result[0][0], "copies": result[1]});
                 } else {
                     data.new = 1;
                     console.log("No book found");
                     console.log(data);
-                    res.render("book-page", data);
+                    res.render("book-page", {"book-info": data});
                 }
             })
             .catch(function(err) {

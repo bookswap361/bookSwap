@@ -1,5 +1,4 @@
 var BookModel = require("../models/book"),
-    BooksOwnedModel = require("../models/books_owned");
     BooksAvailableModel = require("../models/books_available");
 var BookServices = {};
 
@@ -23,14 +22,6 @@ BookServices.getBookByOLId = function(id) {
 			.catch(reject);
 	});
 	return Promise.all([p1, p2])
-};
-
-BookServices.addToOwn = function(info) {
-	return new Promise(function(resolve, reject) {
-		BooksOwnedModel.addBooks(info)
-			.then(resolve)
-			.catch(reject);
-	});
 };
 
 BookServices.createBook = function(info) {
