@@ -100,20 +100,28 @@ router.route("/create_swap")
             });
 })
 
-router.route("/update_swap_accepted")
+router.route("/accept")
     .post(function(req, res) {
-        console.log("Updating swap information...");
-        SwapServices.updateSwapAccepted(req.body)
+        console.log("Updating swap information...", req.body);
+        SwapServices.acceptSwap(req.body.swapId)
             .then(function(result) {
-                if (result) {
-                    res.redirect('/account');
-                    console.log("Success: Swap Accepted");
-                }
+                res.redirect("/account");
+            })
+            .catch(function(err) {
+                res.status(400).json({"error": err});
+            })
+    });
+
+router.route("/reject")
+    .post(function(req, res) {
+        SwapServices.rejectSwap(req.body.swapId)
+            .then(function(result) {
+                res.redirect("/account");
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});
             });
-})
+    });
 
 router.route("/update_swap_ship_date")
     .post(function(req, res) {

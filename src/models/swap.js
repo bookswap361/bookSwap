@@ -43,27 +43,18 @@ Swap.getSwapsTradedBy = function(user_id) {
     });
 }
 
-Swap.getSwapByUserId = function(user_id) {
-    return new Promise(function(resolve, reject) {
-        console.log("Processing in models/swap...");
-        mysql.query(getQuery("getSwapByUserId"), [user_id, user_id])
-            .then(resolve)
-            .catch(reject);
-    });
-}
-
 Swap.createSwap = function(info) {
     return mysql.query(getQuery("createSwap"), [info.list_id, info.traded_to, info.traded_by, info.request_date]);
-}
+};
 
 
-Swap.updateSwapAccepted = function(info) {
-    return new Promise(function(resolve, reject) {
-        mysql.query(getQuery("updateSwapAccepted"), [info.is_accepted, info.approve_date, info.reject_date, info.swap_id])
-            .then(resolve)
-            .catch(reject);
-    });
-}
+Swap.acceptSwap = function(swapId, date) {
+    return mysql.query(getQuery("acceptSwap"), [date, swapId]);
+};
+
+Swap.rejectSwap = function(swapId, date) {
+    return mysql.query(getQuery("rejectSwap"), [date, swapId]);
+};
 
 Swap.updateSwapShipDate = function(info) {
     return new Promise(function(resolve, reject) {
@@ -106,18 +97,24 @@ function getQuery(type) {
         case "swapById":
             query = "SELECT * FROM swap WHERE swap_id = ?;"
             break;
+        case "acceptSwap":
+            query = "UPDATE swap SET accept_date = ?, is_accepted = 1 WHERE swap_id = ?";
+            break;
+        case "rejectSwap":
+            query = "UPDATE swap SET reject_date = ?, is_complete = 1 WHERE swap_id = ?";
+            break;
         case "completedSwaps":
             query = "SELECT * FROM swap WHERE is_complete = 1;"
             break;
         case "getSwapsTradedBy":
-            query = "SELECT swap.swap_id, swap.is_accepted, DATE_FORMAT(swap.request_date,'%M-%D-%Y') as request_date, DATE_FORMAT(swap.approve_date,'%M-%D-%Y') as approve_date, DATE_FORMAT(swap.reject_date,'%M-%D-%Y') as reject_date, DATE_FORMAT(swap.ship_date,'%M-%D-%Y') as ship_date, DATE_FORMAT(swap.lost_date,'%M-%D-%Y') as lost_date, DATE_FORMAT(swap.received_date,'%M-%D-%Y') as received_date, DATE_FORMAT(swap.refund_date,'%M-%D-%Y') as refund_date, swap.has_claim, DATE_FORMAT(swap.claim_open_date,'%M-%D-%Y') as claim_open_date, DATE_FORMAT(swap.claim_settle_date,'%M-%D-%Y') as claim_settle_date, u.first_name, u.last_name, b.title FROM swap \
+            query = "SELECT swap.swap_id, swap.is_accepted, swap.is_complete, DATE_FORMAT(swap.request_date,'%M-%D-%Y') as request_date, DATE_FORMAT(swap.approve_date,'%M-%D-%Y') as approve_date, DATE_FORMAT(swap.reject_date,'%M-%D-%Y') as reject_date, DATE_FORMAT(swap.ship_date,'%M-%D-%Y') as ship_date, DATE_FORMAT(swap.lost_date,'%M-%D-%Y') as lost_date, DATE_FORMAT(swap.received_date,'%M-%D-%Y') as received_date, DATE_FORMAT(swap.refund_date,'%M-%D-%Y') as refund_date, swap.has_claim, DATE_FORMAT(swap.claim_open_date,'%M-%D-%Y') as claim_open_date, DATE_FORMAT(swap.claim_settle_date,'%M-%D-%Y') as claim_settle_date, u.first_name, u.last_name, b.title FROM swap \
             INNER JOIN books_owned AS bo ON swap.list_id=bo.list_id \
             INNER JOIN book AS b ON bo.book_id=b.book_id \
             INNER JOIN user AS u ON swap.traded_to = u.user_id \
             WHERE swap.traded_by = ?;"
             break;
         case "getSwapsTradedTo":
-            query = "SELECT swap.swap_id, swap.is_accepted, DATE_FORMAT(swap.request_date,'%M-%D-%Y') as request_date, DATE_FORMAT(swap.approve_date,'%M-%D-%Y') as approve_date, DATE_FORMAT(swap.reject_date,'%M-%D-%Y') as reject_date, DATE_FORMAT(swap.ship_date,'%M-%D-%Y') as ship_date, DATE_FORMAT(swap.lost_date,'%M-%D-%Y') as lost_date, DATE_FORMAT(swap.received_date,'%M-%D-%Y') as received_date, DATE_FORMAT(swap.refund_date,'%M-%D-%Y') as refund_date, swap.has_claim, DATE_FORMAT(swap.claim_open_date,'%M-%D-%Y') as claim_open_date, DATE_FORMAT(swap.claim_settle_date,'%M-%D-%Y') as claim_settle_date, u.first_name, u.last_name, b.title FROM swap \
+            query = "SELECT swap.swap_id, swap.is_accepted, swap.is_complete, DATE_FORMAT(swap.request_date,'%M-%D-%Y') as request_date, DATE_FORMAT(swap.approve_date,'%M-%D-%Y') as approve_date, DATE_FORMAT(swap.reject_date,'%M-%D-%Y') as reject_date, DATE_FORMAT(swap.ship_date,'%M-%D-%Y') as ship_date, DATE_FORMAT(swap.lost_date,'%M-%D-%Y') as lost_date, DATE_FORMAT(swap.received_date,'%M-%D-%Y') as received_date, DATE_FORMAT(swap.refund_date,'%M-%D-%Y') as refund_date, swap.has_claim, DATE_FORMAT(swap.claim_open_date,'%M-%D-%Y') as claim_open_date, DATE_FORMAT(swap.claim_settle_date,'%M-%D-%Y') as claim_settle_date, u.first_name, u.last_name, b.title FROM swap \
             INNER JOIN books_owned AS bo ON swap.list_id=bo.list_id \
             INNER JOIN book AS b ON bo.book_id=b.book_id \
             INNER JOIN user AS u ON swap.traded_by = u.user_id \

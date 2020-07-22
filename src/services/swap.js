@@ -49,6 +49,7 @@ SwapServices.getSwapsByUserId = function(userId, isTradedToCase) {
                 }
                 swaps.push({
                     "swap_id": item.swap_id,
+                    "is_complete": item.is_complete,
                     "traded_by": item.first_name + " " + item.last_name,
                     "claim_settle_date": item.claim_settle_date,
                     "claim_open_date": item.claim_open_date,
@@ -90,13 +91,13 @@ SwapServices.createSwap = function(info) {
     });
 }
 
-SwapServices.updateSwapAccepted = function(info) {
-    return new Promise(function(resolve, reject) {
-        SwapModel.updateSwapAccepted(info)
-            .then(resolve)
-            .catch(reject);
-    });
-}
+SwapServices.acceptSwap = function(swapId) {
+    return SwapModel.acceptSwap(swapId, new Date());
+};
+
+SwapServices.rejectSwap = function(swapId) {
+    return SwapModel.rejectSwap(swapId, new Date());
+};
 
 SwapServices.updateSwapShipDate = function(info) {
     return new Promise(function(resolve, reject) {

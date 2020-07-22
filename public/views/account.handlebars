@@ -74,6 +74,8 @@
 			</table>
 
 			<h4> Requested Swaps Sent to Me </h4>
+            <form id="accept-trade" action="/swap/accept" method="POST"></form>
+            <form id="reject-trade" action="/swap/reject" method="POST"></form>
 			<table>
 				<tr>
 					<th class="hidden">Swap ID</th>
@@ -94,8 +96,8 @@
 					{{/if}}
 
 					{{#unless is_accepted}}
-					<td><button class="btn btn-outline-primary">Accept Trade</button></td>
-					<td><button class="btn btn-outline-danger">Reject Trade</button></td>
+					<td><button type="submit" form="accept-trade" name="swapId" value={{swap_id}} class="btn btn-outline-primary">Accept Trade</button></td>
+					<td><button type="submit" form="reject-trade" name="swapId" value={{swap_id}} class="btn btn-outline-danger">Reject Trade</button></td>
 					{{/unless}}
 
 				</tr>
