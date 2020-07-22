@@ -20,7 +20,7 @@ function getCondition(event) {
 			newtable.rows[i].remove();
 		}
 		console.log("length: " + response.length);
-		var headers = ['Title', 'Author', 'Condition', 'Cost',''];
+		var headers = ['Title', 'Author', 'Traded By', 'Condition', 'Cost',''];
 		var tableHead = document.createElement('tr');
 		if (response.length > 0) {
 			for (var i = 0; i < headers.length; i++){
@@ -45,6 +45,11 @@ function getCondition(event) {
 				var author = document.createElement('td');
 				author.innerText = response[i].author;
 				row.appendChild(author);
+
+                // Traded By
+                var owner = document.createElement("td");
+                owner.innerText = response[i].name;
+                row.appendChild(owner);
 
 				// condition_description
 				var condition = document.createElement('td');

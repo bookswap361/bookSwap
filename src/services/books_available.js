@@ -26,7 +26,6 @@ BooksAvailableServices.getCondition = function(book_id, user_id) {
     return new Promise(function(resolve, reject){
         BooksAvailableModel.getCondition(book_id, user_id)
             .then(function(results){
-                console.log("Processing in services/books...");
                 var books = [];
                 results.forEach(function(item) {
                     books.push({
@@ -35,10 +34,10 @@ BooksAvailableServices.getCondition = function(book_id, user_id) {
                       "author": item.name,
                       "condition_description": item.condition_description,
                       "cost": item.cost,
-                      "user_id": item.user_id
+                      "user_id": item.user_id,
+                      "name": item.first_name + " " + item.last_name
                   });
                 })
-                console.log(books);
                 return books;
             })
             .then(resolve)
