@@ -27,7 +27,7 @@ router.route("/create-book")
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});
-            })
+            });
     });
 
 router.route("/add-to-account")

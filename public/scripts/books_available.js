@@ -83,11 +83,9 @@ function getCondition(event) {
 }
 
 function createSwap(userId, event) {
-    console.log(userId, event);
     var info = {
     	"list_id": event.target.parentNode.parentNode.id,
-        "owner_id": userId,
-    	"date": new Date()
+        "owner_id": userId
     };
 
 	fetch("../swap/create", {

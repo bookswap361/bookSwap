@@ -36,25 +36,24 @@ AccountServices.getAccount = function(id) {
     var p5 = new Promise(function(resolve, reject) {
         SwapServices.getSwapsByUserId(id, true)
         .then(function(swaps) {
-            console.log(swaps)
             resolve(swaps);
         })
         .catch(reject);
     });
-    return Promise.all([p1, p2, p3, p4, p5])
+    return Promise.all([p1, p2, p3, p4, p5]);
 };
 
 //add one point when user adds a book -- not sure if this works
 AccountServices.addBook = function(body, id) {
     var p1 = new Promise(function(resolve, reject) {
-    BooksOwnedModel.addBook(body)
-    .then(resolve)
-    .catch(reject);
+        BooksOwnedModel.addBook(body)
+        .then(resolve)
+        .catch(reject);
     });
     var p2 = new Promise(function(resolve, reject) {
-    UserModel.updatePoints(id, 1)
-    .then(resolve)
-    .catch(reject);
+        UserModel.updatePoints(id, 1)
+        .then(resolve)
+        .catch(reject);
     });
 return Promise.all([p1, p2])
 };

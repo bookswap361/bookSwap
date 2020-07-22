@@ -93,28 +93,28 @@
 				</tr>
 
 				{{#each swapsByMe}}
-                {{#unless is_complete}}
-                <tr>
-					<td class="hidden">{{swap_id}}</td>
-					<td>{{request_date}}</td>
-                    <td>{{name}}</td>
-					<td>{{title}}</td>
-                    <td>{{#if approve_date}} {{approve_date}} {{/if}}</td>
-                    <td>{{#if ship_date}} {{ship_date}} {{/if}}</td>
-                    <td>{{#if received_date}} {{received_date}} {{/if}}</td>
+                    {{#unless is_complete}}
+                        <tr>
+					        <td class="hidden">{{swap_id}}</td>
+					        <td>{{request_date}}</td>
+                            <td>{{name}}</td>
+					        <td>{{title}}</td>
+                            <td>{{#if approve_date}} {{approve_date}} {{/if}}</td>
+                            <td>{{#if ship_date}} {{ship_date}} {{/if}}</td>
+                            <td>{{#if received_date}} {{received_date}} {{/if}}</td>
                     
-                    {{#if is_accepted}}
-                    <td>{{getStatus approve_date reject_date ship_date}}</td>
-                    {{/if}}
-					{{#unless is_accepted}}
-					<td>
-                        <button type="submit" form="accept-trade" name="swapId" value={{swap_id}} class="btn btn-outline-primary">Accept Trade</button>
-					    <button type="submit" form="reject-trade" name="swapId" value={{swap_id}} class="btn btn-outline-danger">Reject Trade</button>
-                    </td>
-					{{/unless}}
+                            {{#if is_accepted}}
+                                <td>{{getStatus approve_date reject_date ship_date}}</td>
+                            {{/if}}
+					        {{#unless is_accepted}}
+					            <td>
+                                    <button type="submit" form="accept-trade" name="swapId" value={{swap_id}} class="btn btn-outline-primary">Accept Trade</button>
+					                <button type="submit" form="reject-trade" name="swapId" value={{swap_id}} class="btn btn-outline-danger">Reject Trade</button>
+                                </td>
+					        {{/unless}}
 
-				</tr>
-                {{/unless}}
+				        </tr>
+                    {{/unless}}
 				{{/each}}
 			</table>
 		</div>
@@ -135,19 +135,19 @@
                     <th>Status</th>
                 </tr>
                 {{#each swapsToMe}}
-                {{#if is_complete}}
-                <tr>
-                    <td class="hidden">{{swap_id}}</td>
-                    <td>{{request_date}}</td>
-                    <td>{{name}}</td>
-                    <td>{{title}}</td>
-                    <td>{{#if approve_date}} {{approve_date}} {{/if}}</td>
-                    <td>{{#if reject_date}} {{reject_date}} {{/if}}</td>
-                    <td>{{#if ship_date}} {{ship_date}} {{/if}}</td>
-                    <td>{{#if received_date}} {{received_date}} {{/if}}</td>
-                    <td>{{getStatus approve_date reject_date ship_date}}</td>
-                </tr>
-                {{/if}}
+                    {{#if is_complete}}
+                        <tr>
+                            <td class="hidden">{{swap_id}}</td>
+                            <td>{{request_date}}</td>
+                            <td>{{name}}</td>
+                            <td>{{title}}</td>
+                            <td>{{#if approve_date}} {{approve_date}} {{/if}}</td>
+                            <td>{{#if reject_date}} {{reject_date}} {{/if}}</td>
+                            <td>{{#if ship_date}} {{ship_date}} {{/if}}</td>
+                            <td>{{#if received_date}} {{received_date}} {{/if}}</td>
+                            <td>{{getStatus approve_date reject_date ship_date}}</td>
+                        </tr>
+                    {{/if}}
                 {{/each}}
             </table>
 		</div>

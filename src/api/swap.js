@@ -37,7 +37,6 @@ router.route("/create")
             .then(function(result) {
                 if (result) {
                     res.redirect('/account');
-                    console.log("Success: Swap Created");
                 }
             })
             .catch(function(err) {
@@ -53,7 +52,7 @@ router.route("/accept")
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});
-            })
+            });
     });
 
 router.route("/reject")
