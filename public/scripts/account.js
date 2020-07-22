@@ -279,7 +279,7 @@ document.getElementById("booksTab").addEventListener("click", showInventory);
 document.getElementById("swapsTab").addEventListener("click", showSwaps);
 document.getElementById("wishlistTab").addEventListener("click", showWishList);
 document.getElementById('addInventory').addEventListener("click", function(event) {
-    location.href = "/search"});
+    location.href = "/book/search"});
 
 
 window.onload = document.getElementById("booksTab").click();
