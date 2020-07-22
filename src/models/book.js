@@ -28,7 +28,7 @@ Book.getOlKeys = function() {
 Book.createBook = function(info) {
     return new Promise(function(resolve, reject) {
         mysql.query(getQuery("createBook"), [info.bol_key, info.description,
-            info.thumbnail_url, info.title])
+            info.thumbnail_url, info.title, info.bol_key])
             .then(resolve)
             .catch(reject);
     });
@@ -36,23 +36,23 @@ Book.createBook = function(info) {
 
 Book.createAuthor = function(info) {
     return new Promise(function(resolve, reject) {
-        mysql.query(getQuery("createAuthor"), [info.aol_key, info.name])
+        mysql.query(getQuery("createAuthor"), [info.aol_key, info.name, info.aol_key])
             .then(resolve)
             .catch(reject);
     });
 }
 
-Book.getAuthIdfromOlId = function(info) {
+Book.getAuthIdFromOlId = function(info) {
     return new Promise(function(resolve, reject) {
-        mysql.query(getQuery("getAuthIdfromOlId"), [info.aol_key])
+        mysql.query(getQuery("getAuthIdFromOlId"), [info.aol_key])
             .then(resolve)
             .catch(reject);
     });
 }
 
-Book.getBookIdfromOlId = function(info) {
+Book.getBookIdFromOlId = function(info) {
     return new Promise(function(resolve, reject) {
-        mysql.query(getQuery("getBookIdfromOlId"), [info.bol_key])
+        mysql.query(getQuery("getBookIdFromOlId"), [info.bol_key])
             .then(resolve)
             .catch(reject);
     });
@@ -81,18 +81,15 @@ function getQuery(type) {
             WHERE b.ol_key = ?;"
             break;
         case "createBook":
-            query = "INSERT INTO book \
-            (ol_key, description, thumbnail_url, title) \
-            VALUES (?, ?, ?, ?);"
+            query = "INSERT INTO book (ol_key, description, thumbnail_url, title) SELECT ?,?,?,? FROM book WHERE NOT EXISTS (SELECT ol_key FROM book WHERE ol_key = ?) LIMIT 1;";
             break;
         case "createAuthor":
-            query = "INSERT INTO author \
-            (ol_key, name) VALUES (?, ?);"
+            query = "INSERT INTO author (ol_key, name) SELECT ?, ? FROM author WHERE NOT EXISTS (SELECT ol_key FROM author WHERE ol_key = ?) LIMIT 1;";           
             break;
-        case "getAuthIdfromOlId":
+        case "getAuthIdFromOlId":
             query = "SELECT author_id FROM author WHERE ol_key = ?;"
             break;
-        case "getBookIdfromOlId":
+        case "getBookIdFromOlId":
             query = "SELECT book_id FROM book WHERE ol_key = ?;"
             break;        
         case "joinAuthBook":

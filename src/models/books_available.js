@@ -9,14 +9,6 @@ BooksAvailable.getCondition = function(book_id, user_id) {
     return mysql.query(getQuery("getCondition"), [book_id, user_id]);
 }
 
-BooksAvailable.getPoints = function(user_id) {
-     return mysql.query(getQuery("getPoints"), [user_id]);
- }
-
-BooksAvailable.addSwap = function(info, user_id) {
-    return mysql.query(getQuery("addSwap"), [info.list_id, user_id, info.list_id, info.date]);
-}
-
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -31,20 +23,14 @@ function getQuery(type) {
                 GROUP BY b.book_id;"
             break;
         case "getCondition":
-            query = "SELECT bo.list_id, b.title, a.name, bo.condition_description, bc.cost\
+            query = "SELECT bo.list_id, b.title, a.name, u.first_name, u.last_name, u.user_id, bo.condition_description, bc.cost\
                 from book b \
                 INNER JOIN books_owned bo ON b.book_id = bo.book_id \
                 INNER JOIN book_author ba ON bo.book_id = ba.book_id \
                 INNER JOIN author a ON ba.author_id = a.author_id \
                 INNER JOIN book_condition bc ON bo.condition_id = bc.condition_id \
+                INNER JOIN user u ON bo.user_id = u.user_id \
                 WHERE bo.is_available = 1 AND bo.book_id = ? AND bo.user_id != ?;"
-            break;
-        case "getPoints":
-             query = "SELECT points FROM user WHERE user_id = ?;"
-             break;
-        case "addSwap":
-            query = "INSERT INTO swap (list_id, traded_to, traded_by, is_accepted, request_date) \
-                VALUES (?, ?, (SELECT user_id FROM books_owned WHERE list_id = ?), 0, ?);"
             break;
         }
 

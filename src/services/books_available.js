@@ -1,4 +1,5 @@
 var BooksAvailableModel = require("../models/books_available"),
+    UserModel = require("../models/user"),
 	BooksAvailableServices = {};
 
 BooksAvailableServices.getAvailableBooks = function(user_id) {
@@ -32,7 +33,9 @@ BooksAvailableServices.getCondition = function(book_id, user_id) {
                       "title": item.title,
                       "author": item.name,
                       "condition_description": item.condition_description,
-                      "cost": item.cost
+                      "cost": item.cost,
+                      "user_id": item.user_id,
+                      "name": item.first_name + " " + item.last_name
                   });
                 })
                 resolve(books);
@@ -40,7 +43,7 @@ BooksAvailableServices.getCondition = function(book_id, user_id) {
             .catch(reject);
     });
     var points = new Promise(function(resolve, reject){
-        BooksAvailableModel.getPoints(user_id)
+        UserModel.getPoints(user_id)
             .then(function(results){
                 resolve({"points": results[0].points});
             })
@@ -48,14 +51,6 @@ BooksAvailableServices.getCondition = function(book_id, user_id) {
     });
 
     return Promise.all([books, points]);
-}
-
-BooksAvailableServices.addSwap = function(info, user_id) {
-	return new Promise(function(resolve, reject){
-		BooksAvailableModel.addSwap(info, user_id)
-			.then(resolve)
-			.catch(reject);
-	});
 }
 
 module.exports = BooksAvailableServices;

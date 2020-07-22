@@ -43,70 +43,116 @@
 
 	<div id="swaps" class="tabcontent mx-auto">
 		
-		<div class="section-top"><h2> Pending Swaps </h2></div>
-		<div class="section">
+        <div class="section-top"><h2> Pending Swaps </h2></div>
+        <div class="section">
 
-			<h4>Swaps I've Requested</h4>
-			<table>
-				<tr>
-					<th class="hidden">Swap ID</th>
-					<th>Request Date</th>
-					<th>Title</th>
-					<th>Accepted</th>
-				</tr>
+            <h4>Swaps I've Requested (I am traded_to)</h4>
+            <table>
+                <tr>
+                    <th class="hidden">Swap ID</th>
+                    <th>Request Date</th>
+                    <th>Traded By</th>
+                    <th>Title</th>
+                    <th>Approve Date</th>
+                    <th>Reject Date</th>
+                    <th>Shipped Date</th>
+                    <th>Received Date</th>
+                    <th>Status</th>
+                </tr>
 
-				{{#each swapsByMe}}
-				<tr>
-					<td class="hidden">{{swap_id}}</td>
-					<td>{{request_date}}</td>
-					<td>{{title}}</td>
-										
-					{{#if is_accepted}}
-					<td>User has accepted trade!</td>
-					{{/if}}
+                {{#each swapsToMe}}
+                    {{#unless is_complete}}
+                        <tr>
+                            <td class="hidden">{{swap_id}}</td>
+                            <td>{{request_date}}</td>
+                            <td>{{name}}</td>
+                            <td>{{title}}</td>
+                            <td>{{#if approve_date}} {{approve_date}} {{/if}}</td>
+                            <td>{{#if reject_date}} {{reject_date}} {{/if}}</td>
+                            <td>{{#if ship_date}} {{ship_date}} {{/if}}</td>
+                            <td>{{#if received_date}} {{received_date}} {{/if}}</td>
+                            <td>{{getStatus approve_date reject_date ship_date}}</td>
+                        </tr>
+                    {{/unless}}
+                {{/each}}
+            </table>
 
-					{{#unless is_accepted}}
-					<td>User has not accepted trade! Or User has not made a decision?</td>
-					{{/unless}}
+            <h4> Requested Swaps Sent to Me (I am traded_by)</h4>
+            <form id="accept-trade" action="/swap/accept" method="POST"></form>
+            <form id="reject-trade" action="/swap/reject" method="POST"></form>
+            <table>
+                <tr>
+                    <th class="hidden">Swap ID</th>
+                    <th>Request Date</th>
+                    <th>Trade To</th>
+                    <th>Title</th>
+                    <th>Approve Date</th>
+                    <th>Ship Date</th>
+                    <th>Received Date</th>
+                    <th>Status</th>
+                </tr>
 
-				</tr>
-				{{/each}}
-			</table>
+                {{#each swapsByMe}}
+                    {{#unless is_complete}}
+                        <tr>
+                            <td class="hidden">{{swap_id}}</td>
+                            <td>{{request_date}}</td>
+                            <td>{{name}}</td>
+                            <td>{{title}}</td>
+                            <td>{{#if approve_date}} {{approve_date}} {{/if}}</td>
+                            <td>{{#if ship_date}} {{ship_date}} {{/if}}</td>
+                            <td>{{#if received_date}} {{received_date}} {{/if}}</td>
+                    
+                            {{#if is_accepted}}
+                                <td>
+                                    {{getStatus approve_date reject_date ship_date}}
+                                </td>
+                            {{/if}}
+                            {{#unless is_accepted}}
+                                <td>
+                                    <button type="submit" form="accept-trade" name="swapId" value={{swap_id}} class="btn btn-outline-primary">Accept Trade</button>
+                                    <button type="submit" form="reject-trade" name="swapId" value={{swap_id}} class="btn btn-outline-danger">Reject Trade</button>
+                                </td>
+                            {{/unless}}
+                        </tr>
+                    {{/unless}}
+                {{/each}}
+            </table>
+        </div>
 
-			<h4> Requested Swaps Sent to Me </h4>
-			<table>
-				<tr>
-					<th class="hidden">Swap ID</th>
-					<th>Request Date</th>
-					<th>Title</th>
-					<th></th>
-					<th></th>
-				</tr>
-
-				{{#each swapsToMe}}
-				<tr>
-					<td class="hidden">{{swap_id}}</td>
-					<td>{{request_date}}</td>
-					<td>{{title}}</td>
-
-					{{#if is_accepted}}
-					<td>Trade Accepted</td>
-					{{/if}}
-
-					{{#unless is_accepted}}
-					<td><button class="btn btn-outline-primary">Accept Trade</button></td>
-					<td><button class="btn btn-outline-danger">Reject Trade</button></td>
-					{{/unless}}
-
-				</tr>
-				{{/each}}
-			</table>
-		</div>
-
-		<div class="section-top"><h2> Previous/Completed Swaps </h2></div>
-		<div class="section">
-		</div>
-	</div>
+        <div class="section-top"><h2> Previous/Completed Swaps </h2></div>
+        <div class="section">
+            <h4>Swaps Requested By Me</h4>
+            <table>
+                <tr>
+                    <th class="hidden">Swap ID</th>
+                    <th>Request Date</th>
+                    <th>Name</th>
+                    <th>Title</th>
+                    <th>Approve Date</th>
+                    <th>Reject Date</th>
+                    <th>Shipped Date</th>
+                    <th>Received Date</th>
+                    <th>Status</th>
+                </tr>
+                {{#each swapsToMe}}
+                    {{#if is_complete}}
+                        <tr>
+                            <td class="hidden">{{swap_id}}</td>
+                            <td>{{request_date}}</td>
+                            <td>{{name}}</td>
+                            <td>{{title}}</td>
+                            <td>{{#if approve_date}} {{approve_date}} {{/if}}</td>
+                            <td>{{#if reject_date}} {{reject_date}} {{/if}}</td>
+                            <td>{{#if ship_date}} {{ship_date}} {{/if}}</td>
+                            <td>{{#if received_date}} {{received_date}} {{/if}}</td>
+                            <td>{{getStatus approve_date reject_date ship_date}}</td>
+                        </tr>
+                    {{/if}}
+                {{/each}}
+            </table>
+        </div>
+    </div>
 
 	<div id="wishlist" class="tabcontent mx-auto">
 		<div>

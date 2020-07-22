@@ -21,13 +21,4 @@ router.get("/condition/:id", function(req, res) {
         });
 });
 
-router.post("/add-swap", function(req, res) {
-    BooksAvailableServices.addSwap(req.body, req.session.u_id)
-        .then(function(result) {
-            res.redirect('/');
-        }).catch(function(err) {
-            res.status(400).json({"error": err});
-        });
-})
-
 module.exports = router;

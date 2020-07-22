@@ -256,23 +256,6 @@ function showSwaps(event){
 
 	document.getElementById("swaps").style.display = "block";
 	event.currentTarget.className += " active";
-
-	var id = 1;
-	var url = "../swap/" + id;
-	fetch(url, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).then(function (response) {
-		console.log(response);
-		if (response.length > 0) {
-			return response;
-		}
-		else {
-			console.log("Swaps table empty.");
-		}
-	})
 }
 
 // Wish List functionality.
@@ -296,7 +279,7 @@ document.getElementById("booksTab").addEventListener("click", showInventory);
 document.getElementById("swapsTab").addEventListener("click", showSwaps);
 document.getElementById("wishlistTab").addEventListener("click", showWishList);
 document.getElementById('addInventory').addEventListener("click", function(event) {
-    location.href = "/search"});
+    location.href = "/book/search"});
 
 
 window.onload = document.getElementById("booksTab").click();

@@ -98,7 +98,7 @@ ForumServices.createThread = function(data, userId) {
 
     return new Promise(function(resolve, reject) {
         ForumModel.createThread(variables)
-        .then(ForumModel.getLastInsertId)
+        .then(ForumModel.getLastInsertId.bind(null, userId))
         .then(function(result) {
             variables["thread_id"] = result;
             ForumModel.insertMessage(variables)
