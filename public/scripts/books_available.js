@@ -76,7 +76,7 @@ function getCondition(event) {
  			var swapButton = document.createElement('button');
  			swapButton.className = "swap";
  			swapButton.innerText = "Swap";
- 			swapButton.onclick = createSwap.bind(this, response[i].user_id);
+ 			swapButton.onclick = createSwap.bind(this, books[i].user_id);
  			swapButton.type = "button";
  			swap.appendChild(swapButton);
  			row.appendChild(swap);
