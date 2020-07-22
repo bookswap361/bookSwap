@@ -30,6 +30,11 @@ router.route("/create-book")
             });
     });
 
+router.route("/search")
+    .get(function(req, res) {
+        res.render("search");
+    });
+
 router.route("/add-to-account")
     .post(function(req, res) {
         var data = req.body;
