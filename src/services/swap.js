@@ -68,14 +68,11 @@ SwapServices.getSwapsByUserId = function(userId, isTradedToCase) {
                     "title": item.title
                 });
             });
-            console.log('swaps made in new service', swaps);
-
             if (isTradedToCase) {
                 returnObj.swapsToMe = swaps;
             } else {
                 returnObj.swapsByMe = swaps;
             }
-            console.log(returnObj)
             return returnObj;
         })
         .then(resolve)
@@ -88,8 +85,12 @@ SwapServices.getCompletedSwaps = function() {
 };
 
 SwapServices.createSwap = function(info) {
-    console.log(info);
-    return SwapModel.createSwap(info);
+    return new Promise(function(resolve, reject) {
+        SwapModel.createSwap(info)
+        .then(BooksOwnedModel.updateAvailability.bind(null, Number(info.list_id), false))
+        .then(resolve)
+        .catch(reject)
+    })
 }
 
 SwapServices.acceptSwap = function(swapId) {
@@ -97,7 +98,7 @@ SwapServices.acceptSwap = function(swapId) {
 };
 
 SwapServices.rejectSwap = function(swapId) {
-    console.log('rehject', swapId)
+    // TODO: Update book availability to true
     return SwapModel.rejectSwap(swapId);
 };
 

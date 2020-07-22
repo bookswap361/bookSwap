@@ -1,7 +1,7 @@
 var SwapHbsHelpers = {};
 
+// TODO: Add additional status and button rendering
 SwapHbsHelpers.getStatus = function(approveDate, rejectDate, shipDate) {
-    console.log(approveDate, rejectDate, shipDate)
     if (!(approveDate || rejectDate)) {
         return "Approval Pending";
     } else if (rejectDate) {

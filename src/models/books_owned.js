@@ -32,6 +32,11 @@ BooksOwned.updateCondition = function(info) {
     });
 }
 
+BooksOwned.updateAvailability = function(id, isAvailable) {
+    console.log('not here at all?', id, isAvailable)
+    return mysql.query(getQuery("updateAvailability"), [isAvailable ? 1 : 0, id]);
+};
+
 // Is this being used?
 BooksOwned.addBooks = function(body) {
     return mysql.query(getQuery("newBook"), [body.user_id, body.book_id, body.condition_id, body.condition_description, body.list_date]);
@@ -58,6 +63,9 @@ function getQuery(type) {
                 (user_id, book_id, is_available, condition_id, condition_description, list_date) \
                 VALUES (?, ?, 1, ?, ?, ?)";
             break;
+        case "updateAvailability":
+            query = "UPDATE books_owned SET is_available = ? WHERE list_id = ?;";
+            break;
         case "deleteBook":
 	        query = "DELETE from books_owned WHERE user_id = ? AND book_id = ?";
             break;
@@ -69,7 +77,7 @@ function getQuery(type) {
                     JOIN book_author ON book.book_id = book_author.book_id \
                     JOIN author ON book_author.author_id = author.author_id \
                     LEFT JOIN books_owned ON book.book_id = books_owned.book_id \
-                    WHERE user_id = ?;"
+                    WHERE user_id = ? AND books_owned.is_available = 1;"
             break;
         case "deleteInventory":
             query = "DELETE from books_owned WHERE list_id = ?;"
