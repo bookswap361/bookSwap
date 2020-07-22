@@ -57,7 +57,7 @@ function getCondition(event) {
 
             // Traded By
             var owner = document.createElement("td");
-            owner.innerText = response[i].name;
+            owner.innerText = books[i].name;
             row.appendChild(owner);
 
  			// condition_description
