@@ -62,7 +62,7 @@ function getCondition(event) {
 				var swapButton = document.createElement('button');
 				swapButton.className = "swap";
 				swapButton.innerText = "Swap";
-				swapButton.onclick = createSwap;
+				swapButton.onclick = createSwap.bind(this, response[i].user_id);
 				swapButton.type = "button";
 				swap.appendChild(swapButton);
 				row.appendChild(swap);
@@ -77,25 +77,15 @@ function getCondition(event) {
 	});
 }
 
-function createSwap(event) {
-	// Reference: m. castillo
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
-
-    today = `${yyyy}-${mm}-${dd}`;
-
-    var list_id = event.target.parentNode.parentNode.id;
-
-    console.log("list_id: " + list_id + "\ndate: " + today);
-
+function createSwap(userId, event) {
+    console.log(userId, event);
     var info = {
-    	"list_id": list_id,
-    	"date": today
+    	"list_id": event.target.parentNode.parentNode.id,
+        "owner_id": userId,
+    	"date": new Date()
     };
 
-	fetch("../books_available/add-swap", {
+	fetch("../swap/create", {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'

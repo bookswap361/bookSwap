@@ -31,6 +31,8 @@ SwapServices.getSwapById = function(id) {
     });
 }
 
+
+// tradedTo means to me, tradedBy means by owner
 SwapServices.getSwapsByUserId = function(userId, isTradedToCase) {
     var promise;
     if (isTradedToCase) {
@@ -41,10 +43,11 @@ SwapServices.getSwapsByUserId = function(userId, isTradedToCase) {
     return new Promise(function(resolve, reject) {
         promise(userId)
         .then(function(results) {
-            var returnObj = isTradedToCase ? {"newReqs": 0} : {};
+            // Get requests only if book is traded by you
+            var returnObj = !isTradedToCase ? {"newReqs": 0} : {};
             var swaps = [];
             results.forEach(function(item) {
-                if (isTradedToCase && !item.is_accepted) {
+                if (!isTradedToCase && !item.is_accepted && !item.is_complete) {
                     returnObj.newReqs++;
                 }
                 swaps.push({
@@ -72,6 +75,7 @@ SwapServices.getSwapsByUserId = function(userId, isTradedToCase) {
             } else {
                 returnObj.swapsByMe = swaps;
             }
+            console.log(returnObj)
             return returnObj;
         })
         .then(resolve)
@@ -84,19 +88,17 @@ SwapServices.getCompletedSwaps = function() {
 };
 
 SwapServices.createSwap = function(info) {
-    return new Promise(function(resolve, reject) {
-        SwapModel.createSwap(info)
-            .then(resolve)
-            .catch(reject);
-    });
+    console.log(info);
+    return SwapModel.createSwap(info);
 }
 
 SwapServices.acceptSwap = function(swapId) {
-    return SwapModel.acceptSwap(swapId, new Date());
+    return SwapModel.acceptSwap(swapId);
 };
 
 SwapServices.rejectSwap = function(swapId) {
-    return SwapModel.rejectSwap(swapId, new Date());
+    console.log('rehject', swapId)
+    return SwapModel.rejectSwap(swapId);
 };
 
 SwapServices.updateSwapShipDate = function(info) {

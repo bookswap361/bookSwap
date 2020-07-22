@@ -34,7 +34,8 @@ BooksAvailableServices.getCondition = function(book_id, user_id) {
                       "title": item.title,
                       "author": item.name,
                       "condition_description": item.condition_description,
-                      "cost": item.cost
+                      "cost": item.cost,
+                      "user_id": item.user_id
                   });
                 })
                 console.log(books);
@@ -43,15 +44,6 @@ BooksAvailableServices.getCondition = function(book_id, user_id) {
             .then(resolve)
             .catch(reject);
     });
-}
-
-BooksAvailableServices.addSwap = function(info, user_id) {
-	return new Promise(function(resolve, reject){
-    console.log("Adding swap in services/books_available..");
-		BooksAvailableModel.addSwap(info, user_id)
-			.then(resolve)
-			.catch(reject);
-	});
 }
 
 module.exports = BooksAvailableServices;

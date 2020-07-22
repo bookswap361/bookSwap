@@ -12,32 +12,6 @@ router.get("/", function(req, res){
         });
 })
 
-/*router.get("/:id", function(req, res){
-    SwapServices.getSwapById(req.params.id)
-        .then(function(result) {
-            console.log("Processing result in api/swap...");
-            for (var i = 0; i < result.length; i++) {
-                console.log("result " + result[i]);
-            }
-            console.log(result);
-            res.render("swap", {"payload": result});
-        }).catch(function(err) {
-            res.status(400).json({"error": err});
-        });
-})*/
-
-
-// REMOVE
-router.get("/:id", function(req, res){
-    SwapServices.getSwapByUserId(req.params.id)
-        .then(function(swaps) {
-            console.log("Processing result in api/swap...");
-            res.render("account", {"payload": swaps});
-        }).catch(function(err) {
-            res.status(400).json({"error": err});
-        });
-});
-
 
 router.put("/:id", function(req, res){
     SwapServices.updateSwap()
@@ -86,10 +60,11 @@ router.route("/get_swap_by_traded_by")
             });
 })
 */
-router.route("/create_swap")
+router.route("/create")
     .post(function(req, res) {
         console.log("Creating swap...");
-        SwapServices.createSwap(req.body)
+        console.log(req.body)
+        SwapServices.createSwap({"list_id": Number(req.body.list_id), "traded_by": req.body.owner_id, "traded_to": req.session.u_id})
             .then(function(result) {
                 if (result) {
                     res.redirect('/account');

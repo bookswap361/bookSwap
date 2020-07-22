@@ -44,16 +44,16 @@ Swap.getSwapsTradedBy = function(user_id) {
 }
 
 Swap.createSwap = function(info) {
-    return mysql.query(getQuery("createSwap"), [info.list_id, info.traded_to, info.traded_by, info.request_date]);
+    return mysql.query(getQuery("createSwap"), [info.list_id, info.traded_to, info.traded_by, new Date()]);
 };
 
 
 Swap.acceptSwap = function(swapId, date) {
-    return mysql.query(getQuery("acceptSwap"), [date, swapId]);
+    return mysql.query(getQuery("acceptSwap"), [new Date(), swapId]);
 };
 
 Swap.rejectSwap = function(swapId, date) {
-    return mysql.query(getQuery("rejectSwap"), [date, swapId]);
+    return mysql.query(getQuery("rejectSwap"), [new Date(), swapId]);
 };
 
 Swap.updateSwapShipDate = function(info) {

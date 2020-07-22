@@ -36,6 +36,7 @@ AccountServices.getAccount = function(id) {
     var p5 = new Promise(function(resolve, reject) {
         SwapServices.getSwapsByUserId(id, true)
         .then(function(swaps) {
+            console.log(swaps)
             resolve(swaps);
         })
         .catch(reject);
