@@ -37,7 +37,7 @@ BooksOwned.updateAvailability = function(id, isAvailable) {
 };
 
 // Is this being used?
-BooksOwned.addBooks = function(body) {
+BooksOwned.addBook = function(body) {
     return mysql.query(getQuery("newBook"), [body.user_id, body.book_id, body.condition_id, body.condition_description, body.list_date]);
 }
 
@@ -84,11 +84,6 @@ function getQuery(type) {
             break;
         case "updateCondition":
             query = "UPDATE books_owned SET condition_description = ?, condition_id = ? WHERE list_id = ?;"
-            break;
-        case "newBook":
-            query = "INSERT INTO books_owned \
-                (user_id, book_id, is_available, condition_id, condition_description, list_date) \
-                VALUES (?, ?, 1, ?, ?, ?);"
             break;
         case "deleteBook":
     	    query = "DELETE from books_owned WHERE user_id = ? AND book_id = ?";

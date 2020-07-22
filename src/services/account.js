@@ -46,14 +46,14 @@ AccountServices.getAccount = function(id) {
 //add one point when user adds a book -- not sure if this works
 AccountServices.addBook = function(body, id) {
     var p1 = new Promise(function(resolve, reject) {
-        BooksOwnedModel.addBook(body)
-        .then(resolve)
-        .catch(reject);
+    BooksOwnedModel.addBook(body)
+    .then(resolve)
+    .catch(reject);
     });
     var p2 = new Promise(function(resolve, reject) {
-        UserModel.updatePoints(id, 1)
-        .then(resolve)
-        .catch(reject);
+    UserModel.updatePoints(1, id)
+    .then(resolve)
+    .catch(reject);
     });
 return Promise.all([p1, p2])
 };

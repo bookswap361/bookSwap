@@ -36,28 +36,6 @@ router.route("/search")
         res.render("search");
     });
 
-router.route("/add-to-account")
-    .post(function(req, res) {
-        var data = req.body;
-        data.user_id = req.session.u_id;
-        BookServices.addToOwn(data)
-            .then(function(result) {
-                console.log("Book added to account:");
-            })
-            .then(function(result){
-                console.log({"number": 1, "user_id": data.user_id});
-                UserServices.updatePoints({"number": 1, "user_id": data.user_id})
-            })
-            .then(function(result) {
-                console.log("1 Point added to account:");
-                console.log(data);
-                res.send("Success");
-            })
-            .catch(function(err) {
-                res.status(400).json({"error": err});
-            });
-    });
-
 router.route("/:id")
     .get(function(req, res) {
         console.log("Searching for: ", req.params, req.query)

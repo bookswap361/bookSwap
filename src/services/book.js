@@ -18,14 +18,6 @@ BookServices.getBookByOLId = function(id) {
 	});
 };
 
-BookServices.addToOwn = function(info) {
-	return new Promise(function(resolve, reject) {
-		BooksOwnedModel.addBooks(info)
-			.then(resolve)
-			.catch(reject);
-	});
-};
-
 BookServices.createBook = function(info) {
     return new Promise(function(resolve, reject) {
         BookModel.createBook(info)
