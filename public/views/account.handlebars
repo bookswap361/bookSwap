@@ -61,28 +61,28 @@
 
 	        <div id="wishlist" class="tabcontent">
                 <h2> Wishlist </h2>
-{{#if wishlist}}
-{{#each wishlist}}
-<div id="carousel">
-<table>
-<tr>
-<td rowspan="2">
-<img id="cover" src="{{thumbnail_url}}">
-</td>
-<td>
-{{title}}
-</td>
-<tr>
-<td>
-{{description}}<br>
-<input name="remove-btn" type="submit" value="remove from wishlist">
-</td></tr>
-</table>
-</div>
-{{/each}}
-{{else}}
-There's nothing in your wishlist. <a href="/search">Search here</a> to add books.
-{{/if}}
+			{{#if wishlist}}
+			{{#each wishlist}}
+			<div id="carousel">
+				<table>
+					<tr>
+					<td rowspan="2">
+						<img id="cover" src="{{thumbnail_url}}">
+					</td>
+					<td>
+					{{title}}
+					</td>
+					<tr>
+					<td>
+					{{description}}<br>
+					<input name="remove-btn" type="submit" value="remove from wishlist">
+					</td></tr>
+				</table>
+				</div>
+				{{/each}}
+			{{else}}
+				There's nothing in your wishlist. <a href="/search">Search here</a> to add books.
+			{{/if}}
         </div>
 
 
