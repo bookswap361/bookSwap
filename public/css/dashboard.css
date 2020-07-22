@@ -33,6 +33,7 @@ body{
     padding: 6px 12px;
     /* border: 1px solid #ccc; */
     border-top: none;
+    text-align: center;
   }
   
 .smallHeader{
@@ -63,6 +64,44 @@ table, th {
 .points{
     color: #007944;
     font-weight: bolder;
+}
+
+.section {
+  border: 1px solid #71a0a5;
+  border-top: none;
+  padding: 5px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.section-top{
+  padding: 5px;
+  padding-bottom: 1px;
+  margin-top: 15px;
+  background-color: #1b6ca8;
+  color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#swap-notifications {
+  background-color: #b8e9c0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-radius: 5px;
+  font-size: 105%;
+  margin-bottom: 10px;
+  color: black;
+  letter-spacing: 1.1px;
+  max-width: 50%;
+  box-shadow: 3px 3px gray;
+  text-align: center;
+}
+
+#notify {
+  margin-left: 5px;
+  color: red;
+  font-weight: bold;
 }
 
 /* #71a0a5 */

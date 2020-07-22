@@ -25,9 +25,9 @@ Swap.getCompletedSwaps = function(id) {
     });
 }
 
-Swap.getSwapByTradedTo = function(id) {
+Swap.getSwapsTradedTo = function(user_id) {
     return new Promise(function(resolve, reject) {
-        mysql.query(getQuery("getSwapByTradedTo"), [id])
+        mysql.query(getQuery("getSwapsTradedTo"), [user_id])
             .then(resolve)
             .catch(reject);
     });
@@ -35,9 +35,9 @@ Swap.getSwapByTradedTo = function(id) {
 
 /* To be used to pull swap information for a particular 'traded_by' user 
 in order to check whether the user has multiple "lost in mail" statuses */
-Swap.getSwapByTradedBy = function(user_id) {
+Swap.getSwapsTradedBy = function(user_id) {
     return new Promise(function(resolve, reject) {
-        mysql.query(getQuery("getSwapByTradedBy"), [user_id])
+        mysql.query(getQuery("getSwapsTradedBy"), [user_id])
             .then(resolve)
             .catch(reject);
     });
@@ -117,11 +117,17 @@ function getQuery(type) {
         case "completedSwaps":
             query = "SELECT * FROM swap WHERE is_complete = ?;"
             break;
-        case "getSwapByTradedBy":
-            query = "SELECT traded_by, is_complete FROM swap WHERE traded_by = ?;"
+        case "getSwapsTradedBy":
+            query = "SELECT swap.swap_id, swap.is_accepted, swap.request_date, b.title FROM swap \
+            INNER JOIN books_owned AS bo ON swap.list_id=bo.list_id \
+            INNER JOIN book AS b ON bo.book_id=b.book_id \
+            WHERE swap.traded_by = ?;"
             break;
-        case "getSwapByTradedTo":
-            query = "SELECT traded_to, is_complete FROM swap WHERE traded_to = ?;"
+        case "getSwapsTradedTo":
+            query = "SELECT swap.swap_id, swap.is_accepted, swap.request_date, b.title FROM swap \
+            INNER JOIN books_owned AS bo ON swap.list_id=bo.list_id \
+            INNER JOIN book AS b ON bo.book_id=b.book_id \
+            WHERE swap.traded_to = ?"
             break;
         case "getSwapByUserId":
             query = "SELECT swap.swap_id, swap.is_accepted, swap.request_date, b.title FROM swap \
