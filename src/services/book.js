@@ -11,11 +11,17 @@ BookServices.getAllBooks = function() {
 };
 
 BookServices.getBookByOLId = function(id) {
-	return new Promise(function(resolve, reject) {
+	var p1 = new Promise(function(resolve, reject) {
 		BookModel.getBookByOLId(id)
 			.then(resolve)
 			.catch(reject);
 	});
+	var p2 = new Promise(function(resolve, reject) {
+		BooksOwnedModel.getAvailableBooksByOLId(id)
+			.then(resolve)
+			.catch(reject);
+	});
+	return Promise.all([p1, p2])
 };
 
 BookServices.createBook = function(info) {

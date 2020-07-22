@@ -44,6 +44,7 @@ AccountServices.getAccount = function(id) {
 };
 
 //add one point when user adds a book -- not sure if this works
+// MC: it does
 AccountServices.addBook = function(body, id) {
     var p1 = new Promise(function(resolve, reject) {
     BooksOwnedModel.addBook(body)

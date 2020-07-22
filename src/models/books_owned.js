@@ -5,6 +5,10 @@ BooksOwned.getBooks = function(id) {
     return mysql.query(getQuery("books"), [id]);
 }
 
+BooksOwned.getAvailableBooksByOLId = function(id) {
+    return mysql.query(getQuery("getAvailableBooksByOLId"), [id]);
+}
+
 BooksOwned.getInventoryByUserId = function(user_id) {
     return new Promise(function(resolve, reject) {
         console.log("Processing in models/books_owned...");
@@ -36,7 +40,6 @@ BooksOwned.updateAvailability = function(id, isAvailable) {
     return mysql.query(getQuery("updateAvailability"), [isAvailable ? 1 : 0, id]);
 };
 
-// Is this being used?
 BooksOwned.addBook = function(body) {
     return mysql.query(getQuery("newBook"), [body.user_id, body.book_id, body.condition_id, body.condition_description, body.list_date]);
 }
@@ -90,6 +93,13 @@ function getQuery(type) {
             break;
         case "deleteAllBooks":
     	    query = "DELETE from books_owned WHERE user_id = ?";
+            break;
+        case "getAvailableBooksByOLId":
+            query = "SELECT \
+            b.book_id, b.ol_key, bo.condition_description, bo.list_date \
+            FROM books_owned bo INNER JOIN book b ON b.book_id = bo.book_id \
+            WHERE bo.is_available = 1 AND b.ol_key = ?;"
+            // add group by condition
             break;
     }
 
