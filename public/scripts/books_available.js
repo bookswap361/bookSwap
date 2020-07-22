@@ -97,7 +97,8 @@ function createSwap(userId, event) {
 		},
 		body: JSON.stringify(info)
 	}).then(function(result) {
-		document.getElementById('exitButton').click();
+        document.getElementById('exitButton').click();
+        document.location.href = '../account';
 		console.log('Swap added.');
 	}).catch(function(err){
 		console.log(err);
