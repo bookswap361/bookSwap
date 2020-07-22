@@ -27,6 +27,23 @@ BookServices.addToOwn = function(info) {
 };
 
 BookServices.createBook = function(info) {
+    return new Promise(function(resolve, reject) {
+        BookModel.createBook(info)
+            .then(BookModel.createAuthor.bind(null, info))
+            .then(BookModel.getAuthIdFromOlId.bind(null, info))
+            .then(function(result) {
+                var resultObj = {"author_id": result[0].author_id};
+                BookModel.getBookIdFromOlId(info)
+                .then(function(result) {
+                    resultObj.book_id = result[0].book_id;
+                    BookModel.joinAuthBook(resultObj)
+                    .then(resolve)
+                    .catch(reject);
+                })
+                .catch(reject);
+            })
+            .catch(reject);
+    })/*
 	return new Promise(function(resolve, reject) {
 		BookModel.createBook(info);
 		resolve(info);
@@ -51,8 +68,8 @@ BookServices.createBook = function(info) {
 		});
 	}).catch(function(){
 		console.log("Services error")
-	})
-}
+	})*/
+};
 
 
 BookServices.getOlKeys = function() {

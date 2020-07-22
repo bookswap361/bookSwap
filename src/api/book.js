@@ -20,16 +20,15 @@ router.route("/create-book")
             });
     })
     .post(function(req, res) {
-        var data = req.body
-        new Promise(function(resolve, reject){
-            resolve(BookServices.createBook(req.body));
-        }).then(function(result){
-            res.render("confirmation", {"key": data.bol_key});
-        })
+        var data = req.body;
+        BookServices.createBook(req.body)
+            .then(function(result) {
+                res.redirect("/book/" + req.body.bol_key);
+            })
             .catch(function(err) {
                 res.status(400).json({"error": err});
-            });
-        });
+            })
+    });
 
 router.route("/add-to-account")
     .post(function(req, res) {
