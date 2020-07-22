@@ -5,7 +5,6 @@ BooksAvailableServices.getAvailableBooks = function(user_id) {
 	return new Promise(function(resolve, reject) {
 		BooksAvailableModel.getAvailableBooks(user_id)
 			.then(function(results) {
-				console.log("Processing Books in BookServices...");
 				var availableBooks = []
 				results.forEach(function(book) {
 					availableBooks.push({
@@ -23,7 +22,7 @@ BooksAvailableServices.getAvailableBooks = function(user_id) {
 }
 
 BooksAvailableServices.getCondition = function(book_id, user_id) {
-    return new Promise(function(resolve, reject){
+    var books = new Promise(function(resolve, reject){
         BooksAvailableModel.getCondition(book_id, user_id)
             .then(function(results){
                 var books = [];
@@ -38,11 +37,19 @@ BooksAvailableServices.getCondition = function(book_id, user_id) {
                       "name": item.first_name + " " + item.last_name
                   });
                 })
-                return books;
+                resolve(books);
             })
-            .then(resolve)
             .catch(reject);
     });
+    var points = new Promise(function(resolve, reject){
+        BooksAvailableModel.getPoints(user_id)
+            .then(function(results){
+                resolve({"points": results[0].points});
+            })
+            .catch(reject);
+    });
+
+    return Promise.all([books, points]);
 }
 
 module.exports = BooksAvailableServices;

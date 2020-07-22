@@ -2,21 +2,11 @@ var mysql = require("../loaders/mysql");
 var BooksAvailable = {};
 
 BooksAvailable.getAvailableBooks = function(user_id) {
-    return new Promise(function(resolve, reject) {
-        console.log("Retrieving Books from Database...");
-        mysql.query(getQuery("getAvailableBooks"), [user_id])
-            .then(resolve)
-            .catch(reject);
-    });
+    return mysql.query(getQuery("getAvailableBooks"), [user_id])
 }
 
 BooksAvailable.getCondition = function(book_id, user_id) {
-    return new Promise(function(resolve, reject) {
-        console.log("Retrieving book conditions from models/book...");
-        mysql.query(getQuery("getCondition"), [book_id.book_id, user_id])
-            .then(resolve)
-            .catch(reject);
-    });
+    return mysql.query(getQuery("getCondition"), [book_id, user_id]);
 }
 
 function getQuery(type) {

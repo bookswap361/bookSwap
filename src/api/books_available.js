@@ -12,11 +12,9 @@ router.get("/", function(req, res) {
         });
 });
 
-router.post("/condition", function(req, res) {
-    BooksAvailableServices.getCondition(req.body, req.session.u_id)
+router.get("/condition/:id", function(req, res) {
+    BooksAvailableServices.getCondition(req.params.id, req.session.u_id)
         .then(function(books) {
-            console.log("api/books condition: ");
-            console.log(books);
             res.send(books);
         }).catch(function(err) {
             res.status(400).json({"error": err});

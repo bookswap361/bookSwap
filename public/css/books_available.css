@@ -10,3 +10,8 @@ table {
 .center {
 	text-align: center;
 }
+
+.inactive {
+ 	color: #ff0000;
+ }
+ 
