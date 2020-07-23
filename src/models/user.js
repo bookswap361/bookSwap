@@ -38,6 +38,11 @@ User.updateUser = function(body) {
     return mysql.query(getQuery("updateUser"), [body.first_name, body.last_name, body.email, body.street, body.user_id]);
 }
 
+User.deletePoints = function(number, user_id) {
+    console.log("deleting " + number + " from user_id " + user_id + ".");
+    return mysql.query(getQuery("deletePoints"), [number, user_id]);
+}
+
 User.updateLost = function(body) {
     return mysql.query(getQuery("updateLost"), [body.number, body.id]);
 }
@@ -82,6 +87,10 @@ function getQuery(type) {
         case "deletePoints":
             query = "UPDATE user SET points = points - ? WHERE user_id = ?";
             break;
+
+        case "deletePoints":
+             query = "UPDATE user SET points = points - ? WHERE user_id = ?";
+             break;
 
         case "updateLost":
             query = "UPDATE user SET lost_limit_reached = ? WHERE user_id = ?";

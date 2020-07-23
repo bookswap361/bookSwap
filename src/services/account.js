@@ -89,17 +89,18 @@ AccountServices.deleteAccount = function(body) {
 };
 
 
-AccountServices.deleteBooks = function(body) {
+AccountServices.deleteBooks = function(list_id, user_id) {
     var p1 = new Promise(function(resolve, reject) {
-        BooksOwnedModel.deleteBooks(body)
+        BooksOwnedModel.deleteInventory(list_id)
             .then(resolve)
             .catch(reject);
-             });
+        });
     var p2 = new Promise(function(resolve, reject) {
-        UserModel.deletePoints(id, 1)
+        UserModel.deletePoints(1, user_id)
             .then(resolve)
             .catch(reject);
-             });
+        });
+
     return Promise.all([p1, p2])
 };
 
@@ -118,7 +119,6 @@ AccountServices.updateAccount = function(body) {
             .catch(reject);
     });
 };
-
 
 AccountServices.updatePoints = function(body) {
     return new Promise(function(resolve, reject) {
