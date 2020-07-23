@@ -18,10 +18,11 @@ router.route("/")
 //add books to account
 router.route("/add_books")
     .post(function(req, res) {
-        AccountServices.addBooks(req.body)
+        req.body.user_id = req.session.u_id;
+        AccountServices.addBook(req.body, req.session.u_id)
             .then(function(result) {
                 if (result) {
-                    res.redirect('/account');
+                    res.send('Book successfully added');
                 }
             })
             .catch(function(err) {

@@ -10,20 +10,18 @@ BookServices.getAllBooks = function() {
     });
 };
 
-BookServices.getBookByOLId = function(id) {
-	return new Promise(function(resolve, reject) {
+BookServices.getBookByOLId = function(id, user_id) {
+	var p1 = new Promise(function(resolve, reject) {
 		BookModel.getBookByOLId(id)
 			.then(resolve)
 			.catch(reject);
 	});
-};
-
-BookServices.addToOwn = function(info) {
-	return new Promise(function(resolve, reject) {
-		BooksOwnedModel.addBooks(info)
+	var p2 = new Promise(function(resolve, reject) {
+		BooksOwnedModel.getAvailableBooksByOLId(id, user_id)
 			.then(resolve)
 			.catch(reject);
 	});
+	return Promise.all([p1, p2])
 };
 
 BookServices.createBook = function(info) {

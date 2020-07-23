@@ -42,7 +42,7 @@ function getDataOwn(){
 
 function makeReq(data) {
     var req = new XMLHttpRequest();
-    req.open("POST", "/book/add-to-account", true);
+    req.open("POST", "../account/add_books", true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.send(JSON.stringify(data))
 

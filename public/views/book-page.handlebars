@@ -45,7 +45,7 @@
         <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
     </div>
 
-<hr>
+    <hr>
     <div class="row">
         <div id="chooseCondition" class="container hidden">
             <div id="addForm">
@@ -70,12 +70,21 @@
 
     
     <div class="row">
-        <div class="col-md-8 mx-auto">
-        Open Swaps for this Book: {{copies}}
-        </div>
-    </div>
-</div>
+        {{#if copies}}
+        Open Swaps for this Book:
+            <div class="row">
+                {{#each copies}}
+                    <ul>A copy in {{condition_description}} condition was listed on {{list_date}}</ul>
+                    <hr>
+                {{/each}}
+            </div>
+        {{/if}}
 
-{{/if}}
+        {{#unless copies}}
+        There are no available copies of this book for trade.
+        {{/unless}}
+
+    {{/if}}
+    </div>
 
 <script src="../scripts/addbook.js"></script>

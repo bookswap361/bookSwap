@@ -20,7 +20,6 @@ router.route("/create-book")
             });
     })
     .post(function(req, res) {
-        var data = req.body;
         BookServices.createBook(req.body)
             .then(function(result) {
                 console.log('post new book??')
@@ -36,37 +35,16 @@ router.route("/search")
         res.render("search");
     });
 
-router.route("/add-to-account")
-    .post(function(req, res) {
-        var data = req.body;
-        data.user_id = req.session.u_id;
-        BookServices.addToOwn(data)
-            .then(function(result) {
-                console.log("Book added to account:");
-            })
-            .then(function(result){
-                console.log({"number": 1, "user_id": data.user_id});
-                UserServices.updatePoints({"number": 1, "user_id": data.user_id})
-            })
-            .then(function(result) {
-                console.log("1 Point added to account:");
-                console.log(data);
-                res.send("Success");
-            })
-            .catch(function(err) {
-                res.status(400).json({"error": err});
-            });
-    });
-
 router.route("/:id")
     .get(function(req, res) {
         console.log("Searching for: ", req.params, req.query)
-        BookServices.getBookByOLId(req.params.id)
+        BookServices.getBookByOLId(req.params.id, req.session.u_id)
             .then(function(result) {
-                if(result.length > 0){
-                    result[0].exists = 1;
+                if(result[0].length > 0){
                     console.log("Result found");
-                    res.render("book-page", req.query && req.query.new ? {"result": result[0], "isNew": true} : {"result": result[0]});
+                    result[0][0].exists = 1;
+                    console.log(result);
+                    res.render("book-page", req.query && req.query.new ? {"result": result[0][0], "isNew": true} : {"result": result[0][0], "copies": result[1]});
                 } else {
                     res.send("404 Error - Try refreshing or go home")
                 }
@@ -78,13 +56,13 @@ router.route("/:id")
     })
     .post(function(req, res) {
         var data = req.body;
-        BookServices.getBookByOLId(req.body.book_id)
+        BookServices.getBookByOLId(req.body.book_id, req.session.u_id)
             .then(function(result) {
-                if(result.length > 0){
-                    result[0].exists = 1;
+                if(result[0].length > 0){
                     console.log("Result found");
+                    result[0][0].exists = 1;
                     console.log(result);
-                    res.render("book-page", {"result": result[0]});
+                    res.render("book-page", {"result": result[0][0], "copies": result[1]});
                 } else {
                     data.new = 1;
                     console.log("No book found");
