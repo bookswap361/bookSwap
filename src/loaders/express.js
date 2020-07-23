@@ -1,11 +1,13 @@
 var express = require("express");
 var app = express();
+var generalHelpers = require("../helpers/general");
 var forumHelpers = require("../helpers/forum");
 var swapHelpers = require("../helpers/swap");
 var session = require('express-session');
 var handlebars = require("express-handlebars").create({
     "defaultLayout": "main",
     "helpers": {
+        "formatDate": generalHelpers.formatDate,
         "formatResolveLink": forumHelpers.formatResolveLink,
         "formatThreadLink": forumHelpers.formatThreadLink,
         "setChecked": forumHelpers.setChecked,

@@ -64,14 +64,14 @@
                     {{#unless is_complete}}
                         <tr>
                             <td class="hidden">{{swap_id}}</td>
-                            <td>{{request_date}}</td>
+                            <td>{{formatDate request_date}}</td>
                             <td>{{name}}</td>
                             <td>{{title}}</td>
-                            <td>{{#if approve_date}} {{approve_date}} {{/if}}</td>
-                            <td>{{#if reject_date}} {{reject_date}} {{/if}}</td>
-                            <td>{{#if ship_date}} {{ship_date}} {{/if}}</td>
-                            <td>{{#if received_date}} {{received_date}} {{/if}}</td>
-                            <td>{{getStatus approve_date reject_date ship_date}}</td>
+                            <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
+                            <td>{{#if reject_date}} {{formatDate reject_date}} {{/if}}</td>
+                            <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
+                            <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
+                            <td>{{{getStatus user_id swap_id traded_to traded_by approve_date reject_date ship_date received_date}}}</td>
                         </tr>
                     {{/unless}}
                 {{/each}}
@@ -80,6 +80,9 @@
             <h4> Requested Swaps Sent to Me (I am traded_by)</h4>
             <form id="accept-trade" action="/swap/accept" method="POST"></form>
             <form id="reject-trade" action="/swap/reject" method="POST"></form>
+            <form id="shipped" action="/swap/shipped" method="POST"></form>
+            <form id="received" action="/swap/received" method="POST"></form>
+            <form id="lost" action="/swap/lost" method="POST"></form>
             <table>
                 <tr>
                     <th class="hidden">Swap ID</th>
@@ -96,16 +99,16 @@
                     {{#unless is_complete}}
                         <tr>
                             <td class="hidden">{{swap_id}}</td>
-                            <td>{{request_date}}</td>
+                            <td>{{formatDate request_date}}</td>
                             <td>{{name}}</td>
                             <td>{{title}}</td>
-                            <td>{{#if approve_date}} {{approve_date}} {{/if}}</td>
-                            <td>{{#if ship_date}} {{ship_date}} {{/if}}</td>
-                            <td>{{#if received_date}} {{received_date}} {{/if}}</td>
+                            <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
+                            <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
+                            <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
                     
                             {{#if is_accepted}}
                                 <td>
-                                    {{getStatus approve_date reject_date ship_date}}
+                                    {{{getStatus user_id swap_id traded_to traded_by approve_date reject_date ship_date received_date}}}
                                 </td>
                             {{/if}}
                             {{#unless is_accepted}}
@@ -139,13 +142,13 @@
                     {{#if is_complete}}
                         <tr>
                             <td class="hidden">{{swap_id}}</td>
-                            <td>{{request_date}}</td>
+                            <td>{{formatDate request_date}}</td>
                             <td>{{name}}</td>
                             <td>{{title}}</td>
-                            <td>{{#if approve_date}} {{approve_date}} {{/if}}</td>
-                            <td>{{#if reject_date}} {{reject_date}} {{/if}}</td>
-                            <td>{{#if ship_date}} {{ship_date}} {{/if}}</td>
-                            <td>{{#if received_date}} {{received_date}} {{/if}}</td>
+                            <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
+                            <td>{{#if reject_date}} {{formatDate reject_date}} {{/if}}</td>
+                            <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
+                            <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
                             <td>{{getStatus approve_date reject_date ship_date}}</td>
                         </tr>
                     {{/if}}

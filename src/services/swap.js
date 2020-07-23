@@ -66,7 +66,10 @@ SwapServices.getSwapsByUserId = function(userId, isTradedToCase) {
                     "lost_date": item.lost_date,
                     "is_accepted": item.is_accepted,
                     "request_date": item.request_date,
-                    "title": item.title
+                    "title": item.title,
+                    "traded_to": item.traded_to,
+                    "traded_by": item.traded_by,
+                    "user_id": userId
                 });
             });
             if (isTradedToCase) {
@@ -112,13 +115,9 @@ SwapServices.rejectSwap = function(swapId) {
     });
 };
 
-SwapServices.updateSwapShipDate = function(info) {
-    return new Promise(function(resolve, reject) {
-        SwapModel.updateSwapShipDate(info)
-            .then(resolve)
-            .catch(reject);
-    });
-}
+SwapServices.updateShipDate = function(swapId) {
+    return SwapModel.updateShipDate(swapId);
+};
 
 SwapServices.updateSwapReceivedDate = function(info) {
     return new Promise(function(resolve, reject) {

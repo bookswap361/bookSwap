@@ -66,10 +66,10 @@ router.route("/reject")
             });
     });
 
-router.route("/update_swap_ship_date")
+router.route("/shipped")
     .post(function(req, res) {
-        console.log("Updating Shipped Date of swap...");
-        SwapServices.updateSwapShipDate(req.body)
+        console.log("Updating Shipped Date of swap...", req.body);
+        SwapServices.updateShipDate(Number(req.body.swapId))
             .then(function(result) {
                 if (result) {
                     res.redirect('/account');
@@ -81,7 +81,7 @@ router.route("/update_swap_ship_date")
             });
 })
 
-router.route("/update_swap_received_date")
+router.route("/received")
     .post(function(req, res) {
         console.log("Updating Received Date of swap...");
         SwapServices.updateSwapReceivedDate(req.body)
