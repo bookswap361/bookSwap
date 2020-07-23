@@ -1,16 +1,9 @@
 var SwapHbsHelpers = {};
 
-// TODO: Add additional status and button rendering
 SwapHbsHelpers.getStatus = function(userId, swapId, tradedToId, tradedById, approveDate, rejectDate, shipDate, receiveDate, notReceived, lostLimit, refundDate, isComplete, hasClaim) {
     var returnHtml = "";
-    console.log({
-        "isComplete": isComplete,
-        "lostLimit": lostLimit,
-        "refundDate": refundDate
-    })
 
-    // I am the owner of the swap - the shipper
-    if (userId == tradedById) {
+    if (userId == tradedById) { // For the shipper
         if (isComplete) {
             returnHtml += (rejectDate ? "Rejected" : refundDate ? "Refunded" : "Complete");
         } else if (!(approveDate || rejectDate)) {
@@ -25,7 +18,7 @@ SwapHbsHelpers.getStatus = function(userId, swapId, tradedToId, tradedById, appr
         } else if (hasClaim) {
             returnHtml += "Open Claim";
         }
-    } else {
+    } else { // For the receiver
         if (isComplete) {
             returnHtml += (rejectDate ? "Rejected" : refundDate ? "Refunded" : "Complete");
         } else if (!(approveDate || rejectDate)) {
@@ -40,8 +33,7 @@ SwapHbsHelpers.getStatus = function(userId, swapId, tradedToId, tradedById, appr
             var milliseconds = today - ship;
             var dayDiff = parseInt(milliseconds / (1000 * 60 * 60 * 24));
             var minuteDiff = parseInt(milliseconds / (1000 * 60)); // For test
-            console.log(minuteDiff)
-            if (minuteDiff > 4) {
+            if (minuteDiff > 4) { // 'Show Not Received' button after 4 minutes for test, change to use dayDiff later
                 if (lostLimit) {
                     returnHtml += "<button type='submit' form='lost' name='swapId' value=" + swapId + " class='btn btn-outline-primary'>Not Received</button>";
                 } else {
