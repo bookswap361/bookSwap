@@ -1,55 +1,50 @@
 var UserModel = require("../models/user");
     BooksOwnedModel = require("../models/books_owned");
     WishListModel = require("../models/wishlist");
-    SwapModel = require("../models/swap");
+    SwapServices = require("./swap");
 var AccountServices = {};
-
-
 
 AccountServices.getAccount = function(id) {
     var p1 = new Promise(function(resolve, reject) {
-    UserModel.getUserById(id)
-    .then(function(user) {
-        resolve(user[0]);
-    })
-    .catch(reject);
-    });
-    var p2 = new Promise(function(resolve, reject) {
-    BooksOwnedModel.getBooks(id)
-    .then(function(books) {
-        resolve({"books": books});
-    })
-    .catch(reject);
-    });
-    var p3 = new Promise(function(resolve, reject) {
-    WishListModel.getWishList(id)
-    .then(function(wishlist) {
-        resolve({"wishlist": wishlist});
-    })
-    .catch(reject);
-    });
-    var p4 = new Promise(function(resolve, reject) {
-    SwapModel.getSwapsTradedBy(id)
-        .then(function(swaps) {
-            resolve({"swapsByMe": swaps});
-    })
-    .catch(reject);
-    });
-    var p5 = new Promise(function(resolve, reject) {
-    SwapModel.getSwapsTradedTo(id)
-        .then(function(swaps) {
-            var newReqs = 0;
-            swaps.forEach(function(book) {
-                if (!book.is_accepted) { newReqs += 1 }; 
-            });
-            resolve({"swapsToMe": swaps, "newReqs": newReqs});
+        UserModel.getUserById(id)
+        .then(function(user) {
+            resolve(user[0]);
         })
         .catch(reject);
-        });
-return Promise.all([p1, p2, p3, p4, p5])
+    });
+    var p2 = new Promise(function(resolve, reject) {
+        BooksOwnedModel.getBooks(id)
+        .then(function(books) {
+            resolve({"books": books});
+        })
+        .catch(reject);
+    });
+    var p3 = new Promise(function(resolve, reject) {
+        WishListModel.getWishList(id)
+        .then(function(wishlist) {
+            resolve({"wishlist": wishlist});
+        })
+        .catch(reject);
+    });
+    var p4 = new Promise(function(resolve, reject) {
+        SwapServices.getSwapsByUserId(id, false)
+        .then(function(swaps) {
+            resolve(swaps);
+        })
+        .catch(reject);
+    });
+    var p5 = new Promise(function(resolve, reject) {
+        SwapServices.getSwapsByUserId(id, true)
+        .then(function(swaps) {
+            resolve(swaps);
+        })
+        .catch(reject);
+    });
+    return Promise.all([p1, p2, p3, p4, p5]);
 };
 
 //add one point when user adds a book -- not sure if this works
+// MC: it does
 AccountServices.addBook = function(body, id) {
     var p1 = new Promise(function(resolve, reject) {
     BooksOwnedModel.addBook(body)
@@ -57,7 +52,7 @@ AccountServices.addBook = function(body, id) {
     .catch(reject);
     });
     var p2 = new Promise(function(resolve, reject) {
-    UserModel.updatePoints(id, 1)
+    UserModel.updatePoints(1, id)
     .then(resolve)
     .catch(reject);
     });
@@ -76,22 +71,23 @@ AccountServices.addWish = function(body) {
 
 AccountServices.deleteAccount = function(body) {
     var p1 = new Promise(function(resolve, reject) {
-    BooksOwnedModel.deleteAllBooks(body)
-    .then(resolve)
-    .catch(reject);
-    });
+        BooksOwnedModel.deleteAllBooks(body)
+            .then(resolve)
+            .catch(reject);
+            });
     var p2 = new Promise(function(resolve, reject) {
-    WishListModel.deleteAllWish(body)
-    .then(resolve)
-    .catch(reject);
-    });
+        WishListModel.deleteAllWish(body)
+            .then(resolve)
+            .catch(reject);
+            });
     var p3 = new Promise(function(resolve, reject) {
-    UserModel.deleteUser(body)
-    .then(resolve)
-    .catch(reject);
-    });
-return Promise.all([p1, p2, p3])
+        UserModel.deleteUser(body)
+            .then(resolve)
+            .catch(reject);
+             });
+    return Promise.all([p1, p2, p3])
 };
+
 
 AccountServices.deleteBooks = function(list_id, user_id) {
     var p1 = new Promise(function(resolve, reject) {
@@ -104,6 +100,7 @@ AccountServices.deleteBooks = function(list_id, user_id) {
             .then(resolve)
             .catch(reject);
         });
+
     return Promise.all([p1, p2])
 };
 

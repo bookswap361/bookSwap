@@ -23,100 +23,94 @@ function getCondition(event) {
 
 // Builds a table displaying conditions and costs of available books.
  function buildTable(response) {
- 	var books = response[0];
- 	var userPoints = response[1].points;
+    var books = response[0];
+    var userPoints = response[1].points;
 
- 	var newtable = document.getElementById("conditionTable");
- 	newtable.innerHTML = "";
+    var newtable = document.getElementById("conditionTable");
+    newtable.innerHTML = "";
 
- 	var headers = ['Title', 'Author', 'Condition', 'Cost',''];
- 	var tableHead = document.createElement('tr');
- 	if (books.length > 0) {
- 		for (var i = 0; i < headers.length; i++){
- 	        var th = document.createElement('th');
- 	        th.innerText = headers[i];
- 	        tableHead.appendChild(th);
- 	    }
- 	    newtable.appendChild(tableHead);
+    var headers = ['Title', 'Author', 'Traded By', 'Condition', 'Cost',''];
+    var tableHead = document.createElement('tr');
+    if (books.length > 0) {
+        for (var i = 0; i < headers.length; i++){
+            var th = document.createElement('th');
+            th.innerText = headers[i];
+            tableHead.appendChild(th);
+        }
+        newtable.appendChild(tableHead);
 
- 		for (var i = 0; i < books.length; i++) {
- 			var row = document.createElement('tr');
+        for (var i = 0; i < books.length; i++) {
+            var row = document.createElement('tr');
 
- 			// List_id
- 			row.id = books[i].list_id;
+            // List_id
+            row.id = books[i].list_id;
 
- 			// Title
- 			var title = document.createElement('td');
- 			title.innerText = books[i].title;
- 			row.appendChild(title);
+            // Title
+            var title = document.createElement('td');
+            title.innerText = books[i].title;
+            row.appendChild(title);
 
- 			// Author
- 			var author = document.createElement('td');
- 			author.innerText = books[i].author;
- 			row.appendChild(author);
+            // Author
+            var author = document.createElement('td');
+            author.innerText = books[i].author;
+            row.appendChild(author);
 
- 			// condition_description
- 			var condition = document.createElement('td');
- 			condition.innerText = books[i].condition_description;
- 			row.appendChild(condition);
+            // Traded By
+            var owner = document.createElement("td");
+            owner.innerText = books[i].name;
+            row.appendChild(owner);
 
- 			// cost
- 			var cost = document.createElement('td');
- 			cost.innerText = books[i].cost;
- 			cost.className = "center";
- 			row.appendChild(cost);
+            // condition_description
+            var condition = document.createElement('td');
+            condition.innerText = books[i].condition_description;
+            row.appendChild(condition);
 
- 			// Create swap button
- 			var swap = document.createElement('td');
- 			var swapButton = document.createElement('button');
- 			swapButton.className = "swap";
- 			swapButton.innerText = "Swap";
- 			swapButton.onclick = createSwap;
- 			swapButton.type = "button";
- 			swap.appendChild(swapButton);
- 			row.appendChild(swap);
+            // cost
+            var cost = document.createElement('td');
+            cost.innerText = books[i].cost;
+            cost.className = "center";
+            row.appendChild(cost);
 
- 			if (userPoints < books[i].cost) {
- 				row.classList.add("inactive");
- 				swapButton.disabled = true;
- 			}
+            // Create swap button
+            var swap = document.createElement('td');
+            var swapButton = document.createElement('button');
+            swapButton.className = "swap";
+            swapButton.innerText = "Swap";
+            swapButton.onclick = createSwap.bind(this, books[i].user_id);
+            swapButton.type = "button";
+            swap.appendChild(swapButton);
+            row.appendChild(swap);
 
- 			newtable.appendChild(row);
- 		}
- 	}
- }
+            if (userPoints < books[i].cost) {
+                row.classList.add("inactive");
+                swapButton.disabled = true;
+            }
+
+            newtable.appendChild(row);
+        }
+    }
+}
 
  // Creates a new swap and adds it to the database.
-function createSwap(event) {
-	// Reference: m. castillo
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
-
-    today = `${yyyy}-${mm}-${dd}`;
-
-    var list_id = event.target.parentNode.parentNode.id;
-
-    console.log("list_id: " + list_id + "\ndate: " + today);
-
+function createSwap(userId, event) {
     var info = {
-    	"list_id": list_id,
-    	"date": today
+        "list_id": event.target.parentNode.parentNode.id,
+        "owner_id": userId
     };
 
-	fetch("../books_available/add-swap", {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
+    fetch("../swap/create", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
 		body: JSON.stringify(info)
-	}).then(function(result) {
-		document.getElementById('exitButton').click();
-		console.log('Swap added.');
-	}).catch(function(err){
-		console.log(err);
-	});
+    }).then(function(result) {
+        document.getElementById('exitButton').click();
+        document.location.href = '../books_available';
+        console.log('Swap added.');
+    }).catch(function(err){
+        console.log(err);
+    });
 }
 
 // add event listeners to all 'details' buttons

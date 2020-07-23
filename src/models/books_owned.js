@@ -5,6 +5,10 @@ BooksOwned.getBooks = function(id) {
     return mysql.query(getQuery("books"), [id]);
 }
 
+BooksOwned.getAvailableBooksByOLId = function(id, user_id) {
+    return mysql.query(getQuery("getAvailableBooksByOLId"), [id, user_id]);
+}
+
 BooksOwned.getInventoryByUserId = function(user_id) {
     return new Promise(function(resolve, reject) {
         console.log("Processing in models/books_owned...");
@@ -32,8 +36,11 @@ BooksOwned.updateCondition = function(info) {
     });
 }
 
-// Is this being used?
-BooksOwned.addBooks = function(body) {
+BooksOwned.updateAvailability = function(id, isAvailable) {
+    return mysql.query(getQuery("updateAvailability"), [isAvailable ? 1 : 0, id]);
+};
+
+BooksOwned.addBook = function(body) {
     return mysql.query(getQuery("newBook"), [body.user_id, body.book_id, body.condition_id, body.condition_description, body.list_date]);
 }
 
@@ -47,7 +54,6 @@ BooksOwned.deleteAllBooks = function(body) {
     return mysql.query(getQuery("deleteBooksOwned"), [body.user_id]);
 }
 
-
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -55,22 +61,26 @@ function getQuery(type) {
             query = "SELECT * FROM book LEFT JOIN books_owned ON book.book_id = books_owned.book_id WHERE user_id = ?";
             break;
         case "newBook":
-        query = "INSERT INTO books_owned \
+            query = "INSERT INTO books_owned \
                 (user_id, book_id, is_available, condition_id, condition_description, list_date) \
                 VALUES (?, ?, 1, ?, ?, ?)";
             break;
+        case "updateAvailability":
+            query = "UPDATE books_owned SET is_available = ? WHERE list_id = ?;";
+            break;
         case "deleteBook":
-	    query = "DELETE from books_owned WHERE user_id = ? AND book_id = ?";
+	        query = "DELETE from books_owned WHERE user_id = ? AND book_id = ?";
             break;
         case "deleteAllBooks":
-	    query = "DELETE from books_owned WHERE user_id = ?";
+	        query = "DELETE from books_owned WHERE user_id = ?";
+            break;
         case "getInventoryByUserId":
             query = "SELECT books_owned.list_id, book.title, author.name, books_owned.condition_description, books_owned.list_date \
                     FROM book \
                     JOIN book_author ON book.book_id = book_author.book_id \
                     JOIN author ON book_author.author_id = author.author_id \
                     LEFT JOIN books_owned ON book.book_id = books_owned.book_id \
-                    WHERE user_id = ?;"
+                    WHERE user_id = ? AND books_owned.is_available = 1;"
             break;
         case "deleteInventory":
             query = "DELETE from books_owned WHERE list_id = ?;"
@@ -78,18 +88,20 @@ function getQuery(type) {
         case "updateCondition":
             query = "UPDATE books_owned SET condition_description = ?, condition_id = ? WHERE list_id = ?;"
             break;
-        case "newBook":
-        query = "INSERT INTO books_owned \
-                (user_id, book_id, is_available, condition_id, condition_description, list_date) \
-                VALUES (?, ?, 1, ?, ?, ?);"
-                break;
         case "deleteBook":
-    	query = "DELETE from books_owned WHERE user_id = ? AND book_id = ?";
-                break;
+    	    query = "DELETE from books_owned WHERE user_id = ? AND book_id = ?";
+            break;
         case "deleteAllBooks":
-    	query = "DELETE from books_owned WHERE user_id = ?";
-                break;
-            }
+    	    query = "DELETE from books_owned WHERE user_id = ?";
+            break;
+        case "getAvailableBooksByOLId":
+            query = "SELECT \
+            b.book_id, b.ol_key, bo.condition_description, bo.list_date \
+            FROM books_owned bo INNER JOIN book b ON b.book_id = bo.book_id \
+            WHERE bo.is_available = 1 AND b.ol_key = ? AND bo.user_id != ? \
+            GROUP BY bo.condition_id;"
+            break;
+    }
 
     return query;
 };

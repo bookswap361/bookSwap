@@ -18,11 +18,11 @@ ForumModel.createThread = function(data) {
     return mysql.query(getQuery("createThread"), variables);
 };
 
-ForumModel.getLastInsertId = function() {
+ForumModel.getLastInsertId = function(id) {
     return new Promise(function(resolve, reject) {
-        mysql.query(getQuery("getLastInsertId"), [])
+        mysql.query(getQuery("getLastInsertedThread"), [id])
         .then(function(result) {
-            resolve(result[0]["LAST_INSERT_ID()"]);
+            resolve(result[0]["thread_id"]);
         })
         .catch(reject);
     });
@@ -57,8 +57,8 @@ ForumModel.getThreadsByUserId = function(id) {
 function getQuery(type) {
     var query = "";
     switch(type) {
-        case "getLastInsertId":
-            query = "SELECT LAST_INSERT_ID()";
+        case "getLastInsertedThread":
+            query = "SELECT t.thread_id FROM thread as t WHERE t.user_id = ? ORDER BY t.thread_id DESC;";
             break;
         case "allThreads":
             query = "SELECT t.thread_id, t.title, u.first_name, u.last_name, DATE_FORMAT(t.create_date,'%M-%D-%Y') as create_date, t.is_resolved FROM thread t INNER JOIN user u ON t.user_id = u.user_id GROUP BY t.thread_id ORDER BY t.thread_id;";

@@ -42,7 +42,7 @@ function getDataOwn(){
 
 function makeReq(data) {
     var req = new XMLHttpRequest();
-    req.open("POST", "/book/add-to-account", true);
+    req.open("POST", "../account/add_books", true);
     req.setRequestHeader('Content-Type', 'application/json');
     req.send(JSON.stringify(data))
 
@@ -84,15 +84,15 @@ function convertCondition(condition){
     switch(condition) {
         case 3:
             points = 15;
-            description = "excellent";
+            description = "Excellent";
             break;
         case 2:
             points = 10;
-            description = "good";
+            description = "Good";
             break;
         case 1:
             points = 5;
-            description = "acceptable";
+            description = "Acceptable";
             break;
     }
     return {points: points, description: description}

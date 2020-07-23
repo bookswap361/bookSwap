@@ -12,30 +12,6 @@ router.get("/", function(req, res){
         });
 })
 
-/*router.get("/:id", function(req, res){
-    SwapServices.getSwapById(req.params.id)
-        .then(function(result) {
-            console.log("Processing result in api/swap...");
-            for (var i = 0; i < result.length; i++) {
-                console.log("result " + result[i]);
-            }
-            console.log(result);
-            res.render("swap", {"payload": result});
-        }).catch(function(err) {
-            res.status(400).json({"error": err});
-        });
-})*/
-
-router.get("/:id", function(req, res){
-    SwapServices.getSwapByUserId(req.params.id)
-        .then(function(swaps) {
-            console.log("Processing result in api/swap...");
-            res.render("account", {"payload": swaps});
-        }).catch(function(err) {
-            res.status(400).json({"error": err});
-        });
-})
-
 
 router.put("/:id", function(req, res){
     SwapServices.updateSwap()
@@ -55,60 +31,40 @@ router.put("/completed-swaps", function(req, res){
     });
 })
 
-router.put("/swap-by-traded-to", function(req, res){
-    SwapServices.getSwapByTradedTo()
-    .then(function(result) {
-        res.render("swap", {"payload": result});
-    }).catch(function(err) {
-        res.status(400).json({"error": err});
+router.route("/create")
+    .post(function(req, res) {
+        SwapServices.createSwap({"list_id": Number(req.body.list_id), "traded_by": req.body.owner_id, "traded_to": req.session.u_id})
+            .then(function(result) {
+                if (result) {
+                    res.redirect('/account');
+                }
+            })
+            .catch(function(err) {
+                res.status(400).json({"error": err});
+            });
     });
-})
 
-/* Will need updated once page layout is finished */
-router.route("/get_swap_by_traded_by")
+router.route("/accept")
     .post(function(req, res) {
-        console.log("Retrieving swap information...");
-        SwapServices.getSwapByTradedBy(req.body)
+        SwapServices.acceptSwap(Number(req.body.swapId))
             .then(function(result) {
-                if (result) {
-                    res.redirect('/account');
-                    console.log("Success: Swap Information Retrieved");
-                }
-            })
-            .catch(function(err) {
-                res.status(400).json({ "error": err });
-            });
-})
-
-router.route("/create_swap")
-    .post(function(req, res) {
-        console.log("Creating swap...");
-        SwapServices.createSwap(req.body)
-            .then(function(result) {
-                if (result) {
-                    res.redirect('/account');
-                    console.log("Success: Swap Created");
-                }
+                res.redirect("/account");
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});
             });
-})
+    });
 
-router.route("/update_swap_accepted")
+router.route("/reject")
     .post(function(req, res) {
-        console.log("Updating swap information...");
-        SwapServices.updateSwapAccepted(req.body)
+        SwapServices.rejectSwap(Number(req.body.swapId))
             .then(function(result) {
-                if (result) {
-                    res.redirect('/account');
-                    console.log("Success: Swap Accepted");
-                }
+                res.redirect("/account");
             })
             .catch(function(err) {
                 res.status(400).json({"error": err});
             });
-})
+    });
 
 router.route("/update_swap_ship_date")
     .post(function(req, res) {
