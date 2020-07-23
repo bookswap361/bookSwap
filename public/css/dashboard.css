@@ -66,6 +66,11 @@ table, th {
     font-weight: bolder;
 }
 
+
+#cover{
+max-width: 100px;
+}
+
 .section {
   border: 1px solid #71a0a5;
   border-top: none;
