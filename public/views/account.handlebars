@@ -2,23 +2,29 @@
 <link rel="stylesheet" href="/css/dashboard.css">
 	<div class="row mt-4 mb-2"><h2 class="mx-auto"><i class="fas fa-user-circle"></i>&#32;Manage your account</h2></div>
 
-	<div id="userDetails" class="row justify-content-around mb-4 mx-auto">
-		<div class="col-md-2"><div class="row smallHeader">Name:</div><div class="row largeHeader">{{first_name}} {{last_name}}</div></div>
-		<div class="col-md-2"><div class="row smallHeader">Email:</div><div class="row largeHeader">{{email}}</div></div>
-		<div class="col-md-2"><div class="row smallHeader">Address:</div><div class="row largeHeader">{{address}}</div></div>
-		<div class="col-md-2"><div class="row smallHeader">Points</div><div class="row largeHeader points">{{points}}</div></div>
+		{{#if newReqs}}
+			<div id="swap-notifications" class="mx-auto">
+				<i class="fas fa-user-clock"></i> You have {{newReqs}} new requests for trade!
+			</div>
+		{{/if}}
+
+	<div id="userDetails" class="row justify-content-center mb-4 mx-auto">
+		<div class="col-md-3"><div class="row smallHeader">Name:</div><div class="row largeHeader">{{first_name}} {{last_name}}</div></div>
+		<div class="col-md-4"><div class="row smallHeader">Email:</div><div class="row largeHeader">{{email}}</div></div>
+		<div class="col-md-4"><div class="row smallHeader">Address:</div><div class="row largeHeader">{{street}} {{zip}}</div></div>
+		<div class="col-md-1"><div class="row smallHeader">Points</div><div class="row largeHeader points">{{points}}</div></div>
 	</div>
 
-	{{!-- <h2>Dashboard:</h2> --}}
+	<div class="row mx-auto">
 
 	<!-- Reference: https://www.w3schools.com/howto/howto_js_tabs.asp -->
-	<div id="dashboard" class="dashboard-top px-4">
+	<div id="dashboard" class="dashboard-top mx-auto">
 		<div class="tab">
 			<button class="tablinks" id="booksTab">
 				<i class="fas fa-book"></i> Book Inventory
 			</button>
 			<button class="tablinks" id="swapsTab">
-				<i class="far fa-handshake"></i> Swaps
+				<i class="far fa-handshake"></i> Swaps {{#if newReqs}} <span id="notify">{{newReqs}}</span> {{/if}}
 			</button>
 			<button class="tablinks" id="wishlistTab">
 				<i class="far fa-heart"></i> Wishlist
@@ -26,7 +32,7 @@
 		</div>
 	</div>
 
-	<div id="booksInventory" class="tabcontent" style="display: block">
+	<div id="booksInventory" class="tabcontent mx-auto" style="display: block">
 		<div class="row mx-2 text-center"><button id="addInventory" class="btn mt-2 mb-4 btn-primary mx-auto"> Add New Book </button></div>
 
 		<div class="row mx-2">
@@ -35,31 +41,120 @@
 		</div>
 	</div>
 
-	<div id="swaps" class="tabcontent">
-		<h2> Pending Swaps </h2>
+	<div id="swaps" class="tabcontent mx-auto">
+		
+        <div class="section-top"><h2> Pending Swaps </h2></div>
+        <div class="section">
 
-		<table>
-		    <tr>
-		        <th>SWAP ID</th>
-		        <th>IS_ACCEPTED</th>
-		        <th>REQUEST_DATE</th>
-		        <th>TITLE</th>
-		    </tr>
+            <h4>Swaps I've Requested (I am traded_to)</h4>
+            <table>
+                <tr>
+                    <th class="hidden">Swap ID</th>
+                    <th>Request Date</th>
+                    <th>Traded By</th>
+                    <th>Title</th>
+                    <th>Approve Date</th>
+                    <th>Reject Date</th>
+                    <th>Shipped Date</th>
+                    <th>Received Date</th>
+                    <th>Status</th>
+                </tr>
 
-		    {{#each swaps}}
-		    <tr>
-		        <td>{{swap_id}}</td>
-		        <td>{{is_accepted}}</td>
-		        <td>{{request_date}}</td>
-		        <td>{{title}}</td>
-		    </tr>
-		    {{/each}}
-		</table>
+                {{#each swapsToMe}}
+                    {{#unless is_complete}}
+                        <tr>
+                            <td class="hidden">{{swap_id}}</td>
+                            <td>{{request_date}}</td>
+                            <td>{{name}}</td>
+                            <td>{{title}}</td>
+                            <td>{{#if approve_date}} {{approve_date}} {{/if}}</td>
+                            <td>{{#if reject_date}} {{reject_date}} {{/if}}</td>
+                            <td>{{#if ship_date}} {{ship_date}} {{/if}}</td>
+                            <td>{{#if received_date}} {{received_date}} {{/if}}</td>
+                            <td>{{getStatus approve_date reject_date ship_date}}</td>
+                        </tr>
+                    {{/unless}}
+                {{/each}}
+            </table>
 
-		<h2> Previous Swaps </h2>
-	</div>
+            <h4> Requested Swaps Sent to Me (I am traded_by)</h4>
+            <form id="accept-trade" action="/swap/accept" method="POST"></form>
+            <form id="reject-trade" action="/swap/reject" method="POST"></form>
+            <table>
+                <tr>
+                    <th class="hidden">Swap ID</th>
+                    <th>Request Date</th>
+                    <th>Trade To</th>
+                    <th>Title</th>
+                    <th>Approve Date</th>
+                    <th>Ship Date</th>
+                    <th>Received Date</th>
+                    <th>Status</th>
+                </tr>
 
-	        <div id="wishlist" class="tabcontent">
+                {{#each swapsByMe}}
+                    {{#unless is_complete}}
+                        <tr>
+                            <td class="hidden">{{swap_id}}</td>
+                            <td>{{request_date}}</td>
+                            <td>{{name}}</td>
+                            <td>{{title}}</td>
+                            <td>{{#if approve_date}} {{approve_date}} {{/if}}</td>
+                            <td>{{#if ship_date}} {{ship_date}} {{/if}}</td>
+                            <td>{{#if received_date}} {{received_date}} {{/if}}</td>
+                    
+                            {{#if is_accepted}}
+                                <td>
+                                    {{getStatus approve_date reject_date ship_date}}
+                                </td>
+                            {{/if}}
+                            {{#unless is_accepted}}
+                                <td>
+                                    <button type="submit" form="accept-trade" name="swapId" value={{swap_id}} class="btn btn-outline-primary">Accept Trade</button>
+                                    <button type="submit" form="reject-trade" name="swapId" value={{swap_id}} class="btn btn-outline-danger">Reject Trade</button>
+                                </td>
+                            {{/unless}}
+                        </tr>
+                    {{/unless}}
+                {{/each}}
+            </table>
+        </div>
+
+        <div class="section-top"><h2> Previous/Completed Swaps </h2></div>
+        <div class="section">
+            <h4>Swaps Requested By Me</h4>
+            <table>
+                <tr>
+                    <th class="hidden">Swap ID</th>
+                    <th>Request Date</th>
+                    <th>Name</th>
+                    <th>Title</th>
+                    <th>Approve Date</th>
+                    <th>Reject Date</th>
+                    <th>Shipped Date</th>
+                    <th>Received Date</th>
+                    <th>Status</th>
+                </tr>
+                {{#each swapsToMe}}
+                    {{#if is_complete}}
+                        <tr>
+                            <td class="hidden">{{swap_id}}</td>
+                            <td>{{request_date}}</td>
+                            <td>{{name}}</td>
+                            <td>{{title}}</td>
+                            <td>{{#if approve_date}} {{approve_date}} {{/if}}</td>
+                            <td>{{#if reject_date}} {{reject_date}} {{/if}}</td>
+                            <td>{{#if ship_date}} {{ship_date}} {{/if}}</td>
+                            <td>{{#if received_date}} {{received_date}} {{/if}}</td>
+                            <td>{{getStatus approve_date reject_date ship_date}}</td>
+                        </tr>
+                    {{/if}}
+                {{/each}}
+            </table>
+        </div>
+    </div>
+
+	<div id="wishlist" class="tabcontent mx-auto">
                 <h2> Wishlist </h2>
 			{{#if wishlist}}
 			{{#each wishlist}}
@@ -84,6 +179,9 @@
 				There's nothing in your wishlist. <a href="/search">Search here</a> to add books.
 			{{/if}}
         </div>
+		</div>
 
+
+	</div>
 
 <script src="../scripts/account.js"></script>

@@ -42,6 +42,10 @@ User.updateLost = function(body) {
     return mysql.query(getQuery("updateLost"), [body.number, body.id]);
 }
 
+User.getPoints = function(id) {
+    return mysql.query(getQuery("getPoints"), [id]);
+};
+
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -81,6 +85,9 @@ function getQuery(type) {
 
         case "updateLost":
             query = "UPDATE user SET lost_limit_reached = ? WHERE user_id = ?";
+            break;
+        case "getPoints":
+            query = "SELECT points FROM user WHERE user_id = ?";
             break;
     }
 

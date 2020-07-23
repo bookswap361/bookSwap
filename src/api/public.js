@@ -7,11 +7,6 @@ router.route("/")
         res.render("about", req.session);
     });
 
-router.route("/search")
-    .get(function(req, res) {
-        res.render("search");
-    });
-
 router.route("/signup")
     .get(function(req, res) {
         res.render("signup");

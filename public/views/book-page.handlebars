@@ -1,18 +1,22 @@
 <link rel="stylesheet" href="/css/book.css">
 <div class="container">
+    {{#if isNew}}
+    <div>The book has been successfully added to our database!</div>
+    {{/if}}
     <div class="row">
         <div class="col-md-3">
-            <img src="{{thumbnail_url}}">
+            <img src="{{result.thumbnail_url}}">
         </div>
         <div class="col-md-9 mx-auto">
-            <h3>{{title}}</h3> by {{name}}
+            <h3>{{result.title}}</h3> by {{result.name}}
             <hr>
-            {{description}}
-            {{!-- <P>Genres: {{genre}}</P> --}}
+            <span id="description">{{result.description}}</span>
+            
+            {{!-- <P>Genres: {{result.genre}}</P> --}}
         </div>
     </div>
 
-    {{#if new}}
+    {{#if result.new}}
         <div class="row justify-content-center align-items-center mt-2 mb-4">
             <div class="col-md-8 info">
                 This book hasn't been added to our library yet! Would you like to add it?<BR>
@@ -20,25 +24,25 @@
             </div>
             <div class="col-md-2 text-center">
                 <form method="POST" action="/book/create-book">
-                    <input name="title"         value="{{title}}"         hidden="true">
-                    <input name="thumbnail_url" value="{{thumbnail_url}}" hidden="true">
-                    <input name="bol_key"       value="{{book_id}}"       hidden="true"> 
-                    <input name="name"          value="{{name}}"          hidden="true">
-                    <input name="aol_key"       value="{{author_id}}"     hidden="true"> 
-                    <input name="description"   value="{{description}}"   hidden="true"> 
+                    <input name="title"         value="{{result.title}}"         hidden="true">
+                    <input name="thumbnail_url" value="{{result.thumbnail_url}}" hidden="true">
+                    <input name="bol_key"       value="{{result.book_id}}"       hidden="true"> 
+                    <input name="name"          value="{{result.name}}"          hidden="true">
+                    <input name="aol_key"       value="{{result.author_id}}"     hidden="true"> 
+                    <input name="description"   value="{{result.description}}"   hidden="true"> 
                     <input type="submit"        value="Add Book"          class="btn btn-primary">
                 </form>
             </div>
             <div class="col-md-2 text-center">
-            <button type="button" class="btn btn-danger" onclick="window.location.href='/search';">Search Again</button>
+            <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
             </div>
         </div>
     {{/if}}
 
-    {{#if exists}}
+    {{#if result.exists}}
     <div class="row">
         <button type="button" class="btn btn-primary" onclick="showAddForm()">Add this book to your collection of owned books:</button>
-        <button type="button" class="btn btn-danger" onclick="window.location.href='/search';">Search Again</button>
+        <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
     </div>
 
 <hr>
@@ -53,9 +57,9 @@
                     <option value="1">Acceptable condition: 5pts</option>
                 </select> 
 
-                <input id="newTitle" value="{{title}}" hidden>
+                <input id="newTitle" value="{{result.title}}" hidden>
                 <input id="newUser_id" value="{{user_id}}" hidden>
-                <input id="newBook_id" value="{{book_id}}" hidden>
+                <input id="newBook_id" value="{{result.book_id}}" hidden>
 
                 <button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook()">Add Book!</button>
 

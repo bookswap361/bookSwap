@@ -56,7 +56,6 @@ router.route("/insert")
 router.route("/resolve")
     .post(function(req, res) {
         if (req.query && req.query.id) {
-            //TODO: Make sure the ownerid matches current user-id for resolving
             ForumServices.resolveThread(req.query)
             .then(function() {
                 res.redirect("/forum");

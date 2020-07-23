@@ -1,11 +1,11 @@
 var BooksAvailableModel = require("../models/books_available"),
+    UserModel = require("../models/user"),
 	BooksAvailableServices = {};
 
 BooksAvailableServices.getAvailableBooks = function(user_id) {
 	return new Promise(function(resolve, reject) {
 		BooksAvailableModel.getAvailableBooks(user_id)
 			.then(function(results) {
-				console.log("Processing Books in BookServices...");
 				var availableBooks = []
 				results.forEach(function(book) {
 					availableBooks.push({
@@ -23,10 +23,9 @@ BooksAvailableServices.getAvailableBooks = function(user_id) {
 }
 
 BooksAvailableServices.getCondition = function(book_id, user_id) {
-    return new Promise(function(resolve, reject){
+    var books = new Promise(function(resolve, reject){
         BooksAvailableModel.getCondition(book_id, user_id)
             .then(function(results){
-                console.log("Processing in services/books...");
                 var books = [];
                 results.forEach(function(item) {
                     books.push({
@@ -34,24 +33,24 @@ BooksAvailableServices.getCondition = function(book_id, user_id) {
                       "title": item.title,
                       "author": item.name,
                       "condition_description": item.condition_description,
-                      "cost": item.cost
+                      "cost": item.cost,
+                      "user_id": item.user_id,
+                      "name": item.first_name + " " + item.last_name
                   });
                 })
-                console.log(books);
-                return books;
+                resolve(books);
             })
-            .then(resolve)
             .catch(reject);
     });
-}
+    var points = new Promise(function(resolve, reject){
+        UserModel.getPoints(user_id)
+            .then(function(results){
+                resolve({"points": results[0].points});
+            })
+            .catch(reject);
+    });
 
-BooksAvailableServices.addSwap = function(info, user_id) {
-	return new Promise(function(resolve, reject){
-    console.log("Adding swap in services/books_available..");
-		BooksAvailableModel.addSwap(info, user_id)
-			.then(resolve)
-			.catch(reject);
-	});
+    return Promise.all([books, points]);
 }
 
 module.exports = BooksAvailableServices;
