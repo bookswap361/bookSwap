@@ -56,6 +56,10 @@ Swap.updateLostDate = function(swapId) {
     return mysql.query(getQuery("updateLostDate"), [new Date(), swapId]);
 };
 
+Swap.updateClaimDate = function(swapId) {
+    return mysql.query(getQuery("updateClaimDate"), [new Date(), new Date(), swapId]);
+};
+
 Swap.deleteSwap = function(id) {
     return mysql.query(getQuery("deleteSwap"), [id]);
 };
@@ -112,6 +116,9 @@ function getQuery(type) {
             break;
         case "updateLostDate":
             query = "UPDATE swap SET lost_date = ? WHERE swap_id = ?";
+            break;
+        case "updateClaimDate":
+            query = "UPDATE swap SET has_claim = 1, received_date = ?, claim_open_date = ? WHERE swap_id = ?;";
             break;
         case "deleteSwap":
             query = "DELETE FROM swap WHERE swap_id = ?;";

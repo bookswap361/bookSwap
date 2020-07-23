@@ -1,7 +1,7 @@
 var SwapHbsHelpers = {};
 
 // TODO: Add additional status and button rendering
-SwapHbsHelpers.getStatus = function(userId, swapId, tradedToId, tradedById, approveDate, rejectDate, shipDate, receiveDate, notReceived, lostLimit, refundDate, isComplete) {
+SwapHbsHelpers.getStatus = function(userId, swapId, tradedToId, tradedById, approveDate, rejectDate, shipDate, receiveDate, notReceived, lostLimit, refundDate, isComplete, hasClaim) {
     var returnHtml = "";
     console.log({
         "isComplete": isComplete,
@@ -22,6 +22,8 @@ SwapHbsHelpers.getStatus = function(userId, swapId, tradedToId, tradedById, appr
             returnHtml += "In Transit";
         } else if (shipDate && notReceived && !lostLimit) {
             returnHtml += "<button type='submit' form='lost' name='swapId' value=" + swapId + " class='btn btn-outline-primary'>Lost in Transit</button>";
+        } else if (hasClaim) {
+            returnHtml += "Open Claim";
         }
     } else {
         if (isComplete) {
@@ -47,8 +49,10 @@ SwapHbsHelpers.getStatus = function(userId, swapId, tradedToId, tradedById, appr
                 }
             } else {
                 returnHtml += "<button type='submit' form='received' name='swapId' value=" + swapId + " class='btn btn-outline-primary'>Received</button>";
-                returnHtml += "<button type='submit' form='received' name='swapId' value=" + swapId + " class='btn btn-outline-primary'>Received in Poor Condition</button>";
+                returnHtml += "<button type='submit' form='claim' name='swapId' value=" + swapId + " class='btn btn-outline-danger'>Received in Poor Condition</button>";
            }
+        } else if (hasClaim) {
+            returnHtml += "Open Claim";
         }
     }
 

@@ -109,6 +109,17 @@ router.route("/not_received")
         })
     });
 
+router.route("/claim")
+    .post(function(req, res) {
+        SwapServices.updateClaimDate(Number(req.body.swapId))
+        .then(function() {
+            res.redirect("/account");
+        })
+        .catch(function(err) {
+            res.status(400).json({"error": err});
+        })
+    });
+
 router.post("/confirm-delete", function(req, res){
     SwapServices.deleteSwap(req.params.id)
     .then(function(result) {

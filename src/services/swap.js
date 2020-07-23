@@ -142,6 +142,10 @@ SwapServices.updateLostDate = function(swapId, userId) {
     });
 };
 
+SwapServices.updateClaimDate = function(swapId) {
+    return SwapModel.updateClaimDate(swapId);
+};
+
 SwapServices.deleteSwap = function(id) {
     return new Promise(function(resolve, reject){
         SwapModel.deleteSwap(id)

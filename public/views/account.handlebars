@@ -55,6 +55,7 @@
                     <th>Title</th>
                     <th>Approve Date</th>
                     <th>Shipped Date</th>
+                    <th>Claim Date</th>
                     <th>Status</th>
                 </tr>
 
@@ -67,7 +68,8 @@
                             <td>{{title}}</td>
                             <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
                             <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
-                            <td>{{{getStatus user_id swap_id traded_to traded_by approve_date reject_date ship_date received_date not_received lost_limit refund_date is_complete}}}</td>
+                            <td>{{#if claim_open_date}} {{formatDate claim_open_date}} {{/if}}</td>
+                            <td>{{{getStatus user_id swap_id traded_to traded_by approve_date reject_date ship_date received_date not_received lost_limit refund_date is_complete has_claim}}}</td>
                         </tr>
                     {{/unless}}
                 {{/each}}
@@ -80,6 +82,7 @@
             <form id="received" action="/swap/received" method="POST"></form>
             <form id="lost" action="/swap/lost" method="POST"></form>
             <form id="not-received" action="/swap/not_received" method="POST"></form>
+            <form id="claim" action="/swap/claim" method="POST"></form>
             <table>
                 <tr>
                     <th class="hidden">Swap ID</th>
@@ -87,7 +90,8 @@
                     <th>Trade To</th>
                     <th>Title</th>
                     <th>Approve Date</th>
-                    <th>Ship Date</th>
+                    <th>Shipped Date</th>
+                    <th>Claim Date</th>
                     <th>Status</th>
                 </tr>
 
@@ -100,10 +104,11 @@
                             <td>{{title}}</td>
                             <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
                             <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
-                    
+                            <td>{{#if claim_open_date}} {{formatDate claim_open_date}} {{/if}}</td>
+
                             {{#if is_accepted}}
                                 <td>
-                                    {{{getStatus user_id swap_id traded_to traded_by approve_date reject_date ship_date received_date not_received lost_limit refund_date is_complete}}}
+                                    {{{getStatus user_id swap_id traded_to traded_by approve_date reject_date ship_date received_date not_received lost_limit refund_date is_complete has_claim}}}
                                 </td>
                             {{/if}}
                             {{#unless is_accepted}}
