@@ -69,7 +69,9 @@ SwapServices.getSwapsByUserId = function(userId, isTradedToCase) {
                     "title": item.title,
                     "traded_to": item.traded_to,
                     "traded_by": item.traded_by,
-                    "user_id": userId
+                    "user_id": userId,
+                    "not_received": item.is_not_received,
+                    "lost_limit": item.lost_limit_reached
                 });
             });
             if (isTradedToCase) {
@@ -119,21 +121,26 @@ SwapServices.updateShipDate = function(swapId) {
     return SwapModel.updateShipDate(swapId);
 };
 
-SwapServices.updateSwapReceivedDate = function(info) {
-    return new Promise(function(resolve, reject) {
-        SwapModel.updateSwapReceivedDate(info)
-            .then(resolve)
-            .catch(reject);
-    });
-}
+SwapServices.updateReceivedDate = function(swapId) {
+    return SwapModel.updateReceivedDate(swapId);
+};
 
-SwapServices.updateSwapStatusId = function(info) {
-    return new Promise(function(resolve, reject) {
-        SwapModel.updateSwapStatusId(info)
-            .then(resolve)
-            .catch(reject);
+// TODO: Process refund points here, database refund already updated in query
+SwapServices.notReceived = function(swapId) {
+    return SwapModel.updateNotReceived(swapId);
+};
+
+// This happens when the shipper has not reached lost limit
+SwapServices.updateLostDate = function(swapId, userId) {
+    return new Promise (function(resolve, reject) {
+        SwapModel.updateLostDate(swapId)
+        .then(SwapModel.updateNotReceived.bind(null, swapId))
+        .then(UserModel.updateLostLimit.bind(null, userId))
+        // TODO: Process refund here
+        .then(resolve)
+        .catch(reject)
     });
-}
+};
 
 SwapServices.deleteSwap = function(id) {
     return new Promise(function(resolve, reject){
