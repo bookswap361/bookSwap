@@ -9,6 +9,7 @@ SwapHbsHelpers.getStatus = function(userId, swapId, tradedToId, tradedById, appr
             returnHtml += "<button type='submit' form='accept-trade' name='swapId' value=" + swapId + " class='btn btn-outline-primary'>Accept Trade</button>";
             returnHtml += "<button type='submit' form='reject-trade' name='swapId' value=" + swapId + " class='btn btn-outline-danger'>Reject Trade</button>";
         } else if (approveDate && !shipDate) {
+            returnHtml += "<button type='submit' form='get-shipping' name='swapId' value=" + swapId + " class='btn btn-outline-danger'>Get Shipping Address</button>";
             returnHtml += "<button type='submit' form='shipped' name='swapId' value=" + swapId + " class='btn btn-outline-primary'>Mark Shipped</button>";
         } else if (shipDate && !receiveDate && !notReceived) {
             returnHtml += "In Transit";

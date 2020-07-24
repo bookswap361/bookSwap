@@ -121,6 +121,16 @@ SwapServices.updateShipDate = function(swapId) {
     return SwapModel.updateShipDate(swapId);
 };
 
+SwapServices.getShippingAddress = function(swapId) {
+    return new Promise(function(resolve, reject) {
+        SwapModel.getShippingAddress(swapId)
+        .then(function(result) {
+            resolve(result[0]);
+        })
+        .catch(reject);
+    });
+}
+
 SwapServices.updateReceivedDate = function(swapId) {
     return SwapModel.updateReceivedDate(swapId);
     return new Promise(function(resolve, reject) {
