@@ -50,19 +50,20 @@ UserServices.createUser = function(body) {
             if (result[0]) {
                 let error = {"error": "User already exists under that email"};
                 reject(error);
+            } else {
+                bcrypt.hash(body.password, 10, function(err, hash) {
+                    UserModel.createUser(body, hash)
+                        .then(function() {
+                            UserModel.getUserByEmail(body)
+                            .then(function(result) {
+                                resolve(result[0]);
+                            })
+                            .catch(reject);
+                        })
+                            .catch(reject);
+                        });
             }
         })
-    bcrypt.hash(body.password, 10, function(err, hash) {
-        UserModel.createUser(body, hash)
-            .then(function() {
-                UserModel.getUserByEmail(body)
-                .then(function(result) {
-                    resolve(result[0]);
-                })
-                .catch(reject);
-            })
-                .catch(reject);
-            });
     });
 };
 
