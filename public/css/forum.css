@@ -51,3 +51,64 @@ blockquote p {
 }
 
 
+.forum-card {
+    background-color: white;
+    width: 100%;
+    border: 1px solid #e4e3e3;
+    box-shadow: 1px 1px 2px #979797,
+                1px 0px 1px white;
+    border-radius: 5px;
+    margin-bottom: -5px;
+}
+
+.section {
+    border: 1px solid #588da8;
+    border-top: none;
+    padding: 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: #f9f9f9;
+    color: #204051;
+}
+  
+.section-top{
+    margin-top: 15px;
+    padding-top: 12px;
+    padding-bottom: 6px;
+    background-color: #588da8;
+    color: white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.title {
+    font-size: 133%;
+}
+
+.title-icon {
+    font-size: 150%;
+    color: #8ccbbe;
+}
+
+
+a {
+    color: #4a6185;
+}
+
+.date {
+    color: #84a9ac;
+}
+
+.user {
+    color: #127681;
+}
+
+.thread-page-container h1{
+    padding-top: 20px;
+    font-weight: bold;
+    font-size: 275%;
+}
+
+.fa-columns {
+    font-size: 150%;
+}

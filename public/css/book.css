@@ -19,4 +19,6 @@
     background-color: #dcedc1;
     padding: 10px;
     text-align: center;
-  }
+    border: double white;
+    box-shadow: 2px 2px #cfe5cf;
+}
