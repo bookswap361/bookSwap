@@ -49,7 +49,7 @@ Swap.updateReceivedDate = function(swapId) {
 };
 
 Swap.updateNotReceived = function(swapId) {
-    return mysql.query(getQuery("updateNotReceived"), [new Date(), swapId]);
+    return mysql.query(getQuery("updateNotReceived"), [swapId]);
 };
 
 Swap.updateLostDate = function(swapId) {
@@ -58,6 +58,18 @@ Swap.updateLostDate = function(swapId) {
 
 Swap.updateClaimDate = function(swapId) {
     return mysql.query(getQuery("updateClaimDate"), [new Date(), new Date(), swapId]);
+};
+
+Swap.updateRefundDate = function(swapId) {
+    return mysql.query(getQuery("updateRefundDate"), [new Date(), swapId]);
+};
+
+Swap.updateClaimSettleDate = function(swapId) {
+    return mysql.query(getQuery("updateClaimSettleDate", [new Date(), swapId]));
+};
+
+Swap.completeSwap = function(swapId) {
+    return mysql.query(getQuery("completeSwap"), [swapId]);
 };
 
 Swap.deleteSwap = function(id) {
@@ -90,14 +102,14 @@ function getQuery(type) {
             INNER JOIN books_owned AS bo ON swap.list_id=bo.list_id \
             INNER JOIN book AS b ON bo.book_id=b.book_id \
             INNER JOIN user AS u ON swap.traded_to = u.user_id \
-            WHERE swap.traded_by = ?;";
+            WHERE swap.traded_by = ? ORDER BY swap.swap_id;";
             break;
         case "getSwapsTradedTo":
             query = "SELECT swap.swap_id, swap.is_not_received, u.lost_limit_reached, swap.traded_to, swap.traded_by, swap.is_accepted, swap.is_complete, swap.request_date, swap.approve_date, swap.reject_date, swap.ship_date, swap.lost_date, swap.received_date, swap.refund_date, swap.has_claim, swap.claim_open_date, swap.claim_settle_date, u.first_name, u.last_name, b.title FROM swap \
             INNER JOIN books_owned AS bo ON swap.list_id=bo.list_id \
             INNER JOIN book AS b ON bo.book_id=b.book_id \
             INNER JOIN user AS u ON swap.traded_by = u.user_id \
-            WHERE swap.traded_to = ?";
+            WHERE swap.traded_to = ? ORDER BY swap.swap_id;";
             break;
         case "createSwap":
             query = "INSERT INTO swap (list_id, traded_to, traded_by, request_date) VALUES (?, ?, ?, ?);";
@@ -112,13 +124,22 @@ function getQuery(type) {
             query = "UPDATE swap SET received_date = ?, is_complete = 1 WHERE swap_id = ?;";
             break;
         case "updateNotReceived":
-            query = "UPDATE swap SET is_not_received = 1, is_complete = 1, refund_date = ? WHERE swap_id = ?;";
+            query = "UPDATE swap SET is_not_received = 1 WHERE swap_id = ?;";
             break;
         case "updateLostDate":
-            query = "UPDATE swap SET lost_date = ? WHERE swap_id = ?";
+            query = "UPDATE swap SET lost_date = ? WHERE swap_id = ?;";
             break;
         case "updateClaimDate":
             query = "UPDATE swap SET has_claim = 1, received_date = ?, claim_open_date = ? WHERE swap_id = ?;";
+            break;
+        case "updateClaimSettleDate":
+            query = "UPDATE swap SET has_claim = 0, claim_settle_date = ? WHERE swap_id = ?;";
+            break;
+        case "updateRefundDate":
+            query = "UPDATE swap SET refund_date = ? WHERE swap_id = ?;";
+            break;
+        case "completeSwap":
+            query = "UPDATE swap SET is_complete = 1 WHERE swap_id = ?;";
             break;
         case "deleteSwap":
             query = "DELETE FROM swap WHERE swap_id = ?;";
