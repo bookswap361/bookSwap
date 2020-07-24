@@ -1,7 +1,7 @@
 var mysql = require("../loaders/mysql");
 var WishList = {};
 
-WishList.addWish = function(id, body) {
+WishList.addWish = function(body) {
     return mysql.query(getQuery("newWish"), [body.user_id, body.book_id]);
 }
 
