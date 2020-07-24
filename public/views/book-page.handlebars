@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/css/book.css">
 <div class="container">
     {{#if isNew}}
-    <div id="addedNotice">The book has been successfully added to our database!</div>
+    <div>The book has been successfully added to our database!</div>
     {{/if}}
     <div class="row">
         <div class="col-md-3">
@@ -41,13 +41,12 @@
 
     {{#if result.exists}}
     <div class="row">
-        <button type="button" class="btn btn-primary" onclick="showAddForm()">Add this book to your collection of owned books:</button>
         <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
     </div>
 
     <hr>
     <div class="row">
-        <div id="chooseCondition" class="container hidden">
+        <div id="chooseCondition">
             <div id="addForm">
 
                 <label for="condition"><a href="#" target="_blank">Choose the condition of your book to trade:</a></label>
@@ -61,7 +60,8 @@
                 <input id="newUser_id" value="{{user_id}}" hidden>
                 <input id="newBook_id" value="{{result.book_id}}" hidden>
 
-                <button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook()">Add Book!</button>
+                <button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook()">Add to my book list</button>&nbsp:
+                <button type="button" class="btn btn-outline-primary btn-large" id="addWishBtn" onclick="addWish()">Add to my wishlist</button>
 
                 <P><div id="confirm"></div></P>
             </div>
