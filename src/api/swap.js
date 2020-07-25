@@ -141,4 +141,14 @@ router.post("/confirm-delete", function(req, res){
     });
 })
 
+router.route("/get-shipping")
+    .post(function(req, res) {
+        SwapServices.getShippingAddress(Number(req.body.swapId))
+            .then(function(result) {
+                res.render("shipping", result);
+            })
+            .catch(function(err) {
+                res.status(400).json({"error": err});
+            });
+})
 module.exports = router;

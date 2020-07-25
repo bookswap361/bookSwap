@@ -40,6 +40,10 @@ Swap.getListId = function(swapId) {
     return mysql.query(getQuery("getListId"), [swapId]);
 };
 
+Swap.getShippingAddress = function(swapId) {
+    return mysql.query(getQuery("getShippingAddress"), [swapId]);
+}
+
 Swap.updateShipDate = function(swapId) {
     return mysql.query(getQuery("updateShipDate"), [new Date(), swapId]);
 };
@@ -110,6 +114,10 @@ function getQuery(type) {
             INNER JOIN book AS b ON bo.book_id=b.book_id \
             INNER JOIN user AS u ON swap.traded_by = u.user_id \
             WHERE swap.traded_to = ? ORDER BY swap.swap_id;";
+            break;
+        case "getShippingAddress":
+            query = "SELECT user.first_name, user.last_name, user.street, user.city, user.state, user.zip FROM swap \
+            INNER JOIN user ON swap.traded_to = user.user_id WHERE swap.swap_id = ?;"
             break;
         case "createSwap":
             query = "INSERT INTO swap (list_id, traded_to, traded_by, request_date) VALUES (?, ?, ?, ?);";
