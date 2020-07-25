@@ -13,8 +13,6 @@ window.onload = function(event){
 
 // Add existing book to owned books
 function showAddForm(){
-    confirmDiv.innerHTML = "";
-    addBookBtn.disabled = false;
     chooseCondition.classList.remove("hidden");
 }
 
@@ -22,7 +20,6 @@ function addBook(){
     new Promise(function(resolve, reject) {
         resolve(getDataOwn());
     }).then(function(result){
-        addedNotice.innerHTML = "";
         makeReq(result);
     }).catch(function(){
         console.log('error!')
