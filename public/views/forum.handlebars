@@ -1,42 +1,51 @@
 <div class="thread-page-container">
-    <div>
-        View:
-        <form id="filter-threads" action="/forum/" method="GET">
-            <input type="radio" form="filter-threads" id="view-all" name="filter" value="all" onclick="filterSubmit(this)" {{{setChecked "all" criteria}}}>
-            <label for="view-all">All</label>
-            <input type="radio" form="filter-threads" id="view-resolved" name="filter" value="resolved" onclick="filterSubmit(this)" {{{setChecked "resolved" criteria}}}>
-            <label for="view-resolved">Resolved</label>
-            <input type="radio" form="filter-threads" id="view-unresolved" name="filter" value="unresolved" onclick="filterSubmit(this)" {{{setChecked "unresolved" criteria}}}>
-            <label for="view-unresolved">Unresolved</label>
-            <input type="radio" form="filter-threads" id="view-userId" name="filter" value="userId" onclick="filterSubmit(this)" {{{setChecked "userId"criteria}}}>
-            <label for="view-userId">My Threads</label>
-        </form>
+    <div class="justify-content-center row mb-3" style="border-bottom: 1px solid #3b6978; color: #184d47">
+        <div class="col-sm-1 align-self-end"><h1><i class="fas fa-columns"></i></h1></div>
+        <div class="col-sm-5"><h1 style="margin-bottom: -5px">The Forum</h1>&emsp;&emsp;seek answers <span style="color: #d8345f">for</span> your <span style="color: #d8345f">ums</span></div>
     </div>
-    <div>
-        <a href="/forum/create"><button>Create Thread</button></a>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-sm-9">
+                <div class="row">
+                    View:	&emsp;
+                    <form id="filter-threads" action="/forum/" method="GET">
+                        <input type="radio" form="filter-threads" id="view-all" name="filter" value="all" onclick="filterSubmit(this)" {{{setChecked "all" criteria}}}>
+                        <label for="view-all">All	&emsp;</label>
+                        <input type="radio" form="filter-threads" id="view-resolved" name="filter" value="resolved" onclick="filterSubmit(this)" {{{setChecked "resolved" criteria}}}>
+                        <label for="view-resolved">Resolved	&emsp;</label>
+                        <input type="radio" form="filter-threads" id="view-unresolved" name="filter" value="unresolved" onclick="filterSubmit(this)" {{{setChecked "unresolved" criteria}}}>
+                        <label for="view-unresolved">Unresolved	&emsp;</label>
+                        <input type="radio" form="filter-threads" id="view-userId" name="filter" value="userId" onclick="filterSubmit(this)" {{{setChecked "userId"criteria}}}>
+                        <label for="view-userId">My Threads	&emsp;</label>
+                    </form> 
+                </div>
+            </div>
+            <div class="col-sm-3 text-right">
+                <a href="/forum/create"><button type="button" class="btn btn-info"><i class="fas fa-plus-square"></i>&emsp;Create Thread</button></a>
+            </div>
+        </div>
+
+        <div class="section-top px-4">
+            <h3>{{criteria}} threads</h3>
+        </div>
+        <div class="section">
+            {{#each threads}}
+                <div class="forum-card row mx-1 py-3 px-2">
+                    <span style="display:none">{{thread_id}}</span>
+                    <div class="col-sm-1 title-icon my-auto text-right"><i class="fas fa-comment-alt"></i></div>
+                    <div class="col-sm-7 title my-auto pl-0">
+                        <a href={{formatThreadLink thread_id}}>{{title}}</a>
+                    </div>
+                    <div class="col-sm-4 text-right my-auto">
+                        <span class="resolved">{{is_resolved}}</span>
+                        <br>by <span class="user">{{user}}&emsp;>></span>
+                        <br> on <span class="date">{{create_date}}</span>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+
     </div>
-    <div>
-        <table class="forum-table">
-            <thead>
-                <th style="display:none"></th>
-                <th class="topic-cell">Topic</th>
-                <th>Created By</th>
-                <th>Created Date</th>
-                <th></th>
-            </thread>
-            <tbody>
-                {{#each threads}}
-                <tr>
-                    <td style="display:none">{{thread_id}}</td>
-                    <td><a href={{formatThreadLink thread_id}}>{{title}}</a></td>
-                    <td> {{user}} </td>
-                    <td> {{create_date}} </td>
-                    <td> {{is_resolved}} </td>
-                </tr>
-                {{/each}}
-            </tbody>
-        </table>
-    
 </div>
 
 <script src="../scripts/forum.js"></script>
