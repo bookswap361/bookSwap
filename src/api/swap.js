@@ -89,7 +89,7 @@ router.route("/received")
 
 router.route("/lost")
     .post(function(req, res) {
-        SwapServices.updateLostDate(Number.req.body.swapId, req.session.u_id)
+        SwapServices.updateLostDate(Number(req.body.swapId), req.session.u_id)
             .then(function() {
                 res.redirect("/account");
             })
@@ -108,6 +108,18 @@ router.route("/not_received")
             res.status(400).json({"error": err});
         })
     });
+
+router.route("/not_received_refund")
+    .post(function(req, res) {
+        SwapServices.notReceived(Number(req.body.swapId))
+        .then(SwapServices.refundSwap.bind(null, Number(req.body.swapId)))
+        .then(function() {
+            res.redirect("/account");
+        })
+        .catch(function(err) {
+            res.status(400).json({"error": err});
+        })
+    })
 
 router.route("/claim")
     .post(function(req, res) {
@@ -129,4 +141,14 @@ router.post("/confirm-delete", function(req, res){
     });
 })
 
+router.route("/get-shipping")
+    .post(function(req, res) {
+        SwapServices.getShippingAddress(Number(req.body.swapId))
+            .then(function(result) {
+                res.render("shipping", result);
+            })
+            .catch(function(err) {
+                res.status(400).json({"error": err});
+            });
+})
 module.exports = router;

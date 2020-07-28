@@ -2,7 +2,8 @@ const addBookBtn      = document.getElementById("addBookBtn"),
       chooseCondition = document.getElementById("chooseCondition"),
       confirmDiv      = document.getElementById("confirm"),
       newLink         = document.getElementById("newLink"),
-      description     = document.getElementById("description");
+      description     = document.getElementById("description"),
+      addedNotice     = document.getElementById("addedNotice");
 
 window.onload = function(event){
     if (description.innerHTML === "null"){
@@ -12,6 +13,8 @@ window.onload = function(event){
 
 // Add existing book to owned books
 function showAddForm(){
+    confirmDiv.innerHTML = "";
+    addBookBtn.disabled = false;
     chooseCondition.classList.remove("hidden");
 }
 
@@ -19,6 +22,7 @@ function addBook(){
     new Promise(function(resolve, reject) {
         resolve(getDataOwn());
     }).then(function(result){
+        addedNotice.innerHTML = "";
         makeReq(result);
     }).catch(function(){
         console.log('error!')

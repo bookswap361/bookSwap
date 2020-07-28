@@ -121,22 +121,53 @@ SwapServices.updateShipDate = function(swapId) {
     return SwapModel.updateShipDate(swapId);
 };
 
+SwapServices.getShippingAddress = function(swapId) {
+    return new Promise(function(resolve, reject) {
+        SwapModel.getShippingAddress(swapId)
+        .then(function(result) {
+            resolve(result[0]);
+        })
+        .catch(reject);
+    });
+}
+
 SwapServices.updateReceivedDate = function(swapId) {
     return SwapModel.updateReceivedDate(swapId);
+    return new Promise(function(resolve, reject) {
+        SwapModel.updateReceivedDate(swapId)
+        .then(SwapServices.completeSwap.bind(null, swapId))
+        .then(resolve)
+        .catch(reject);
+    });
 };
 
-// TODO: Process refund points here, database refund already updated in query
+
 SwapServices.notReceived = function(swapId) {
-    return SwapModel.updateNotReceived(swapId);
+    return new Promise (function(resolve, reject) {
+        SwapModel.updateNotReceived(swapId)
+        .then(resolve)
+        .catch(reject);
+    })
 };
 
-// This happens when the shipper has not reached lost limit
+SwapServices.refundSwap = function(swapId) {
+    return new Promise(function(resolve, reject) {
+        SwapModel.updateRefundDate(swapId)
+        .then(SwapServices.completeSwap.bind(null, swapId))
+        .then(resolve)
+        .catch(reject);
+    });
+};
+
+SwapServices.completeSwap = function(swapId) {
+    return SwapModel.completeSwap(swapId);
+};
+
 SwapServices.updateLostDate = function(swapId, userId) {
     return new Promise (function(resolve, reject) {
         SwapModel.updateLostDate(swapId)
-        .then(SwapModel.updateNotReceived.bind(null, swapId))
         .then(UserModel.updateLostLimit.bind(null, userId))
-        // TODO: Process refund here
+        .then(SwapModel.completeSwap.bind(null, swapId))
         .then(resolve)
         .catch(reject)
     });
