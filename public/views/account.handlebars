@@ -7,6 +7,11 @@
 				<i class="fas fa-user-clock"></i> You have {{newReqs}} new requests for trade!
 			</div>
 		{{/if}}
+        {{#each alerts}}
+            <div id="swap-notifications" class="mx-auto">
+                {{alert}}
+            </div>
+        {{/each}}
 
 	<div id="userDetails" class="row justify-content-center mb-4 mx-auto">
 		<div class="col-md-3"><div class="row smallHeader">Name:</div><div class="row largeHeader">{{first_name}} {{last_name}}</div></div>
