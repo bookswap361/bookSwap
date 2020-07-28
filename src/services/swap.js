@@ -91,13 +91,19 @@ SwapServices.getCompletedSwaps = function() {
 };
 
 SwapServices.createSwap = function(info) {
-    return new Promise(function(resolve, reject) {
+    var newSwap = new Promise(function(resolve, reject) {
         SwapModel.createSwap(info)
         .then(BooksOwnedModel.updateAvailability.bind(null, Number(info.list_id), false))
         .then(resolve)
         .catch(reject)
-    })
-}
+    });
+    var deletePoints = new Promise(function(resolve, reject){
+        UserModel.deletePoints(info.cost, info.traded_to)
+            .then(resolve)
+            .catch(reject)
+        });
+    return Promise.all([newSwap, deletePoints]);
+};
 
 SwapServices.acceptSwap = function(swapId) {
     return SwapModel.acceptSwap(swapId);

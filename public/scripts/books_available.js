@@ -93,9 +93,12 @@ function getCondition(event) {
 
  // Creates a new swap and adds it to the database.
 function createSwap(userId, event) {
+    var cost = event.target.parentNode.parentNode.cells[4].innerText;
+    console.log(cost);
     var info = {
         "list_id": event.target.parentNode.parentNode.id,
-        "owner_id": userId
+        "owner_id": userId,
+        "cost": cost
     };
 
     fetch("../swap/create", {
