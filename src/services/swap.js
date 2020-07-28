@@ -1,7 +1,8 @@
 var BookModel = require("../models/book"),
     UserModel = require("../models/user"),
     SwapModel = require("../models/swap"),
-    BooksOwnedModel = require("../models/books_owned")
+    BooksOwnedModel = require("../models/books_owned"),
+    AlertModel = require("../models/alert");
 var SwapServices = {};
 
 SwapServices.getAllSwaps = function() {
@@ -99,18 +100,38 @@ SwapServices.createSwap = function(info) {
     })
 }
 
-SwapServices.acceptSwap = function(swapId) {
-    return SwapModel.acceptSwap(swapId);
+SwapServices.acceptSwap = function(swapId, tradedBy) {
+    //return SwapModel.acceptSwap(swapId);
+    return new Promise(function(resolve, reject) {
+        SwapModel.acceptSwap(swapId)
+        .then(function() {
+            SwapModel.getTradedToId(swapId)
+            .then(function(result) {
+                AlertModel.addAlert(result[0]["traded_to"], "Your swap with " + tradedBy + " has been accepted!")
+                .then(resolve)
+                .catch(reject)
+            })
+        })
+        .catch(reject)
+    })
 };
 
-SwapServices.rejectSwap = function(swapId) {
+SwapServices.rejectSwap = function(swapId, tradedBy) {
     return new Promise(function(resolve, reject) {
         SwapModel.getListId(swapId)
         .then(function(result) {
             var listId = result[0].list_id;
             SwapModel.rejectSwap(swapId)
             .then(BooksOwnedModel.updateAvailability.bind(null, listId, true))
-            .then(resolve)
+            .then(function() {
+                SwapModel.getTradedToId(swapId)
+                .then(function(result) {
+                    AlertModel.addAlert(result[0]["traded_to"], "Your swap with " + tradedBy + " has been rejected!")
+                    .then(resolve)
+                    .catch(reject)
+                })
+                .catch(reject)
+            })
             .catch(reject);
         })
         .catch(reject);

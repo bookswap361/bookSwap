@@ -80,6 +80,10 @@ Swap.deleteSwap = function(id) {
     return mysql.query(getQuery("deleteSwap"), [id]);
 };
 
+Swap.getTradedToId = function(id) {
+    return mysql.query(getQuery("getTradedToId"), [id]);
+};
+
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -151,6 +155,9 @@ function getQuery(type) {
             break;
         case "deleteSwap":
             query = "DELETE FROM swap WHERE swap_id = ?;";
+            break;
+        case "getTradedToId":
+            query = "SELECT swap.traded_to FROM swap WHERE swap_id = ?;";
             break;
     }
 
