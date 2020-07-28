@@ -109,20 +109,16 @@ router.route("/update_points")
                 res.redirect('/about');
             });
     })
-//update lost limit
-router.route("/update_lost")
-    .put(function(req, res) {
-        AccountServices.updateLostLimit(req.body)
-            .then(function(result) {
-                if (result) {
-                    res.redirect('/account');
-                }
-            })
-            .catch(function(err) {
-                res.redirect('/about');
-            });
+
+router.route("/delete_alert")
+    .post(function(req, res) {
+        AlertServices.deleteByAlertId(req.body.alertId)
+        .then(function() {
+            res.redirect("/account");
+        })
+        .catch(function(err) {
+            res.status(500).json({"error": err})
+        })
     })
-
-
 
 module.exports = router;
