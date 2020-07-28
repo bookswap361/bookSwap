@@ -66,7 +66,7 @@ router.route("/reject")
 
 router.route("/shipped")
     .post(function(req, res) {
-        SwapServices.updateShipDate(Number(req.body.swapId))
+        SwapServices.updateShipDate(Number(req.body.swapId), req.session.u_name + " " + req.session.u_name_last)
             .then(function(result) {
                 res.redirect("/account");
             })

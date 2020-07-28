@@ -101,7 +101,6 @@ SwapServices.createSwap = function(info) {
 }
 
 SwapServices.acceptSwap = function(swapId, tradedBy) {
-    //return SwapModel.acceptSwap(swapId);
     return new Promise(function(resolve, reject) {
         SwapModel.acceptSwap(swapId)
         .then(function() {
@@ -128,9 +127,9 @@ SwapServices.rejectSwap = function(swapId, tradedBy) {
                 .then(function(result) {
                     AlertModel.addAlert(result[0]["traded_to"], "Your swap with " + tradedBy + " has been rejected!")
                     .then(resolve)
-                    .catch(reject)
+                    .catch(reject);
                 })
-                .catch(reject)
+                .catch(reject);
             })
             .catch(reject);
         })
@@ -138,8 +137,19 @@ SwapServices.rejectSwap = function(swapId, tradedBy) {
     });
 };
 
-SwapServices.updateShipDate = function(swapId) {
-    return SwapModel.updateShipDate(swapId);
+SwapServices.updateShipDate = function(swapId, tradedBy) {
+    return new Promise(function(resolve, reject) {
+        SwapModel.updateShipDate(swapId)
+        .then(function() {
+            SwapModel.getTradedToId(swapId)
+            .then(function(result) {
+                AlertModel.addAlert(result[0]["traded_to"], "Your swap with " + tradedBy + " has been shipped!")
+                .then(resolve)
+                .catch(reject);
+            })
+            .catch(reject);
+        })
+    })
 };
 
 SwapServices.getShippingAddress = function(swapId) {
