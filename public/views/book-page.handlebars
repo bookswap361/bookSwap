@@ -1,28 +1,63 @@
 <link rel="stylesheet" href="/css/book.css">
 <div class="container">
+    
     {{#if isNew}}
-    <div id="addedNotice">The book has been successfully added to our database!</div>
+    <div id="addedNotice" class="text-center">The book has been successfully added to our database!</div>
     {{/if}}
+
     <div class="row text-center text-sm-left">
-        <div class="col-12 col-sm-5 col-md-4">
+        <div class="col-12 col-sm-4 text-sm-right">
             <img src="{{result.thumbnail_url}}" style="border-radius: 3px;">
         </div>
-        <div class="col-12 col-sm-7 col-md-8 pt-2">
+        <div class="col-12 col-sm-8 pt-2 pl-4 pl-md-0">
             <h3>{{result.title}}</h3> by {{result.name}}
             <hr>
             <span id="description">{{result.description}}</span>
-            
             {{!-- <P>Genres: {{result.genre}}</P> --}}
+
+            {{#if result.exists}}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-md-7  text-center text-md-left">
+                            <button type="button" class="btn btn-primary" onclick="showAddForm()">Add this book to your collection of owned books:</button>
+                        </div>
+                        <div class="col-12 col-md-5 text-center mt-2 mt-md-0 text-md-left">
+                            <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="chooseCondition" class="container hidden">
+                            <div id="addForm">
+
+                                <label for="condition"><a href="#" target="_blank">Choose the condition of your book to trade:</a></label>
+                                <select name="condition" id="newCondition">
+                                    <option value="3">Excellent condition: 15pts</option>
+                                    <option value="2">Good condition: 10pts</option>
+                                    <option value="1">Acceptable condition: 5pts</option>
+                                </select> 
+
+                                <input id="newTitle" value="{{result.title}}" hidden>
+                                <input id="newUser_id" value="{{user_id}}" hidden>
+                                <input id="newBook_id" value="{{result.book_id}}" hidden>
+
+                                <button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook()">Add Book!</button>
+
+                                <P><div id="confirm"></div></P>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
         </div>
     </div>
 
     {{#if result.new}}
         <div class="row justify-content-center align-items-center mt-2 mb-4 text-center text-sm-left">
-            <div class="col-md-8 info">
-                This book hasn't been added to our library yet! Would you like to add it?<BR>
+            <div class="col-12 col-md-8 info">
+                This book hasn't been added to our library yet! Would you like to add it? &nbsp;
                 <em>Note: This book must be added to the library in order to trade this book.</em>
             </div>
-            <div class="col-md-2 text-center">
+            <div class="col-6 col-md-2 text-center py-2 py-md-0">
                 <form method="POST" action="/book/create-book">
                     <input name="title"         value="{{result.title}}"         hidden="true">
                     <input name="thumbnail_url" value="{{result.thumbnail_url}}" hidden="true">
@@ -33,58 +68,29 @@
                     <input type="submit"        value="Add Book"          class="btn btn-primary">
                 </form>
             </div>
-            <div class="col-md-2 text-center">
+            <div class="col-6 col-md-2 text-center">
             <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
             </div>
         </div>
     {{/if}}
 
     {{#if result.exists}}
-    <div class="row">
-        <button type="button" class="btn btn-primary mx-auto" onclick="showAddForm()">Add this book to your collection of owned books:</button>
-        <button type="button" class="btn btn-danger mx-auto" onclick="window.location.href='/book/search';">Search Again</button>
-    </div>
+        <div class="row container mt-4">
+            {{#if copies}}
+                <h5>Open Swaps for this Book:</h5>
+                <div class="row py-3">
+                    {{#each copies}}
+                        <ul>A copy in {{condition_description}} condition was listed on {{formatDate list_date}}</ul>
+                        <hr>
+                    {{/each}}
+                </div>
+            {{/if}}
 
-    <hr>
-    <div class="row">
-        <div id="chooseCondition" class="container hidden">
-            <div id="addForm">
+            {{#unless copies}}
+            There are no available copies of this book for trade.
+            {{/unless}}
 
-                <label for="condition"><a href="#" target="_blank">Choose the condition of your book to trade:</a></label>
-                <select name="condition" id="newCondition">
-                    <option value="3">Excellent condition: 15pts</option>
-                    <option value="2">Good condition: 10pts</option>
-                    <option value="1">Acceptable condition: 5pts</option>
-                </select> 
-
-                <input id="newTitle" value="{{result.title}}" hidden>
-                <input id="newUser_id" value="{{user_id}}" hidden>
-                <input id="newBook_id" value="{{result.book_id}}" hidden>
-
-                <button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook()">Add Book!</button>
-
-                <P><div id="confirm"></div></P>
-            </div>
         </div>
-    </div>
-
-    
-    <div class="row">
-        {{#if copies}}
-        Open Swaps for this Book:
-            <div class="row">
-                {{#each copies}}
-                    <ul>A copy in {{condition_description}} condition was listed on {{list_date}}</ul>
-                    <hr>
-                {{/each}}
-            </div>
-        {{/if}}
-
-        {{#unless copies}}
-        There are no available copies of this book for trade.
-        {{/unless}}
-
     {{/if}}
-    </div>
 
 <script src="../scripts/addbook.js"></script>
