@@ -12,4 +12,8 @@ ForumHbsHelpers.setChecked = function(value, currentValue) {
     return value == currentValue ? "checked" : "";
 };
 
+ForumHbsHelpers.ifUser = function(criteria) {
+    return criteria == "userId" ? true : false;
+};
+
 module.exports = ForumHbsHelpers;

@@ -11,7 +11,8 @@ var handlebars = require("express-handlebars").create({
         "formatResolveLink": forumHelpers.formatResolveLink,
         "formatThreadLink": forumHelpers.formatThreadLink,
         "setChecked": forumHelpers.setChecked,
-        "getStatus": swapHelpers.getStatus
+        "getStatus": swapHelpers.getStatus,
+        "ifUser": forumHelpers.ifUser
     }
 });
 var bodyParser = require("body-parser");
