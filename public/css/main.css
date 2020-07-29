@@ -18,8 +18,7 @@ body {
 }
 
 #fwLogo {
-  margin-left: 10px;
-  height: 125px;
+  max-width: 100%;
 }
 
 .login {
