@@ -39,6 +39,8 @@ var settings = function(app) {
     app.use("/swap", checkAuth, userDetails, require("../api/swap"));
     app.use("/books_owned", checkAuth, userDetails, require("../api/books_owned"));
     app.use("/forum", checkAuth, userDetails, require("../api/forum"));
+    app.use(handle404);
+    app.use(handle500);
 };
 
 function userDetails(req, res, next) {
@@ -54,6 +56,17 @@ function checkAuth(req, res, next) {
     } else {
         res.redirect("/");
     }
+};
+
+function handle404(req, res) {
+    res.status(404);
+    res.render("error", {"error": "400: Page Not Found"});
+};
+
+function handle500(error, req, res, next) {
+    console.error(error.stack);
+    res.status(500);
+    res.render("error", {"error": "500: Internal Server Error"});
 };
 
 module.exports = settings;
