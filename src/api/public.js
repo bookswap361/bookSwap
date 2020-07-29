@@ -19,6 +19,7 @@ router.route("/login")
                 if (result) {
                     req.session.u_id = result.user_id;
                     req.session.u_name = result.first_name;
+                    req.session.u_name_last = result.last_name;
                     req.session.authenticated = true;
                     req.session.save();
                     res.redirect("/account");
@@ -37,6 +38,7 @@ router.route("/create")
                 if (result) {
                     req.session.u_id = result.user_id;
                     req.session.u_name = result.first_name;
+                    req.session.u_name_last = result.last_name;
                     req.session.authenticated = true;
                     req.session.save();
                     res.redirect("/account");

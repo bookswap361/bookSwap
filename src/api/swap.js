@@ -44,7 +44,7 @@ router.route("/create")
 
 router.route("/accept")
     .post(function(req, res) {
-        SwapServices.acceptSwap(Number(req.body.swapId))
+        SwapServices.acceptSwap(Number(req.body.swapId), req.session.u_name + " " + req.session.u_name_last)
             .then(function() {
                 res.redirect("/account");
             })
@@ -55,7 +55,7 @@ router.route("/accept")
 
 router.route("/reject")
     .post(function(req, res) {
-        SwapServices.rejectSwap(Number(req.body.swapId))
+        SwapServices.rejectSwap(Number(req.body.swapId), req.session.u_name + " " + req.session.u_name_last)
             .then(function() {
                 res.redirect("/account");
             })
@@ -66,7 +66,7 @@ router.route("/reject")
 
 router.route("/shipped")
     .post(function(req, res) {
-        SwapServices.updateShipDate(Number(req.body.swapId))
+        SwapServices.updateShipDate(Number(req.body.swapId), req.session.u_name + " " + req.session.u_name_last)
             .then(function(result) {
                 res.redirect("/account");
             })
