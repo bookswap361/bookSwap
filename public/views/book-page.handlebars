@@ -3,11 +3,11 @@
     {{#if isNew}}
     <div id="addedNotice">The book has been successfully added to our database!</div>
     {{/if}}
-    <div class="row">
-        <div class="col-md-3">
-            <img src="{{result.thumbnail_url}}">
+    <div class="row text-center text-sm-left">
+        <div class="col-12 col-sm-5 col-md-4">
+            <img src="{{result.thumbnail_url}}" style="border-radius: 3px;">
         </div>
-        <div class="col-md-9 mx-auto">
+        <div class="col-12 col-sm-7 col-md-8 pt-2">
             <h3>{{result.title}}</h3> by {{result.name}}
             <hr>
             <span id="description">{{result.description}}</span>
@@ -17,7 +17,7 @@
     </div>
 
     {{#if result.new}}
-        <div class="row justify-content-center align-items-center mt-2 mb-4">
+        <div class="row justify-content-center align-items-center mt-2 mb-4 text-center text-sm-left">
             <div class="col-md-8 info">
                 This book hasn't been added to our library yet! Would you like to add it?<BR>
                 <em>Note: This book must be added to the library in order to trade this book.</em>
@@ -41,8 +41,8 @@
 
     {{#if result.exists}}
     <div class="row">
-        <button type="button" class="btn btn-primary" onclick="showAddForm()">Add this book to your collection of owned books:</button>
-        <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
+        <button type="button" class="btn btn-primary mx-auto" onclick="showAddForm()">Add this book to your collection of owned books:</button>
+        <button type="button" class="btn btn-danger mx-auto" onclick="window.location.href='/book/search';">Search Again</button>
     </div>
 
     <hr>
