@@ -111,13 +111,13 @@ router.route("/update_points")
     })
 
 router.route("/delete_alert")
-    .post(function(req, res) {
+    .post(function(req, res, next) {
         AlertServices.deleteByAlertId(req.body.alertId)
         .then(function() {
             res.redirect("/account");
         })
         .catch(function(err) {
-            res.status(500).json({"error": err})
+            next(err);
         })
     })
 
