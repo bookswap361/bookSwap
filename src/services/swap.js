@@ -106,7 +106,6 @@ SwapServices.createSwap = function(info) {
 };
 
 SwapServices.acceptSwap = function(swapId) {
-    console.log("Accept swap in services.");
     var accept = new Promise(function(resolve, reject) {
         SwapModel.acceptSwap(swapId)
             .then(resolve)
@@ -117,8 +116,6 @@ SwapServices.acceptSwap = function(swapId) {
         .then(function(result) {
             var cost = result[0].cost;
             var traded_by = result[0].traded_by;
-            console.log("cost: ", cost);
-            console.log("traded_by: ", traded_by);
             resolve(UserModel.updatePoints(cost, traded_by))
             })
         .catch(reject)
@@ -127,7 +124,7 @@ SwapServices.acceptSwap = function(swapId) {
 };
 
 SwapServices.rejectSwap = function(swapId) {
-    return new Promise(function(resolve, reject) {
+    var reject = new Promise(function(resolve, reject) {
         SwapModel.getListId(swapId)
         .then(function(result) {
             var listId = result[0].list_id;
@@ -138,6 +135,16 @@ SwapServices.rejectSwap = function(swapId) {
         })
         .catch(reject);
     });
+    var addPoints = new Promise(function(resolve, reject) {
+        SwapModel.getTradedToId(swapId)
+        .then(function(result) {
+            var cost = result[0].cost;
+            var traded_to = result[0].traded_to;
+            resolve(UserModel.updatePoints(cost, traded_to))
+            })
+        .catch(reject)
+    });
+    return Promise.all([reject, addPoints]);
 };
 
 SwapServices.updateShipDate = function(swapId) {
