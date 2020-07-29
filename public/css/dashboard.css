@@ -109,5 +109,17 @@ max-width: 100px;
   font-weight: bold;
 }
 
+#delete-alert {
+    background: none;
+    border: none;
+    display: inline;
+    float: right;
+    margin-right: 10px;
+}
+
+#delete-alert:focus {
+    outline: none !important;
+}
+
 /* #71a0a5 */
 /* #018383 */

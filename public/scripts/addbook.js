@@ -22,10 +22,12 @@ function addBook(){
     new Promise(function(resolve, reject) {
         resolve(getDataOwn());
     }).then(function(result){
-        addedNotice.innerHTML = "";
+        if (addedNotice) {
+            addedNotice.innerHTML = "";
+        }
         makeReq(result);
-    }).catch(function(){
-        console.log('error!')
+    }).catch(function(err){
+        console.log('error!', err)
     })
 
 }

@@ -1,12 +1,20 @@
 
 <link rel="stylesheet" href="/css/dashboard.css">
 	<div class="row mt-4 mb-2"><h2 class="mx-auto"><i class="fas fa-user-circle"></i>&#32;Manage your account</h2></div>
-
+        <form id="delete-alert" action="/account/delete_alert" method="POST"></form>
 		{{#if newReqs}}
 			<div id="swap-notifications" class="mx-auto">
 				<i class="fas fa-user-clock"></i> You have {{newReqs}} new requests for trade!
 			</div>
 		{{/if}}
+        {{#each alerts}}
+            <div id="swap-notifications" class="mx-auto">
+                {{alert}} &nbsp 
+                <div id="delete-alert">
+                    <button type="submit" id="delete-alert" form="delete-alert" name="alertId" value={{alert_id}}><i class="material-icons">delete</i></button>
+                </div>
+            </div>
+        {{/each}}
 
 	<div id="userDetails" class="row justify-content-center mb-4 mx-auto">
 		<div class="col-md-3"><div class="row smallHeader">Name:</div><div class="row largeHeader">{{first_name}} {{last_name}}</div></div>
@@ -45,9 +53,9 @@
 		
         <div class="section-top"><h2> Pending Swaps </h2></div>
         <div class="section">
-
-            <h4>Swaps I've Requested (I am traded_to)</h4>
-            <table>
+            <!-- traded_to == current user scenario -->
+            <h4>Swaps Requested By Me - {{swapsToMePending}}</h4>
+            <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
                     <th>Request Date</th>
@@ -74,8 +82,8 @@
                     {{/unless}}
                 {{/each}}
             </table>
-
-            <h4> Requested Swaps Sent to Me (I am traded_by)</h4>
+            <!-- traded_by == current user scenario -->
+            <h4> Swaps Requested To Me - {{swapsByMePending}}</h4>
             <form id="accept-trade" action="/swap/accept" method="POST"></form>
             <form id="reject-trade" action="/swap/reject" method="POST"></form>
             <form id="get-shipping" action="/swap/get-shipping" method="POST"></form>
@@ -85,7 +93,7 @@
             <form id="not-received" action="/swap/not_received" method="POST"></form>
             <form id="claim" action="/swap/claim" method="POST"></form>
             <form id="not-received-refund" action="/swap/not_received_refund" method="POST"></form>
-            <table>
+            <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
                     <th>Request Date</th>
@@ -127,8 +135,8 @@
 
         <div class="section-top"><h2> Previous/Completed Swaps </h2></div>
         <div class="section">
-            <h4>Swaps Requested By Me</h4>
-            <table>
+            <h4>Swaps Requested By Me - {{swapsToMeComplete}}</h4>
+            <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
                     <th>Request Date</th>
@@ -160,8 +168,8 @@
                     {{/if}}
                 {{/each}}
             </table>
-            <h4>Swaps Requested To Me</h4>
-            <table>
+            <h4>Swaps Requested To Me - {{swapsByMeComplete}}</h4>
+            <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
                     <th>Request Date</th>
