@@ -55,7 +55,7 @@
         <div class="section">
             <!-- traded_to == current user scenario -->
             <h4>Swaps Requested By Me - {{swapsToMePending}}</h4>
-            <table>
+            <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
                     <th>Request Date</th>
@@ -93,7 +93,7 @@
             <form id="not-received" action="/swap/not_received" method="POST"></form>
             <form id="claim" action="/swap/claim" method="POST"></form>
             <form id="not-received-refund" action="/swap/not_received_refund" method="POST"></form>
-            <table>
+            <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
                     <th>Request Date</th>
@@ -136,7 +136,7 @@
         <div class="section-top"><h2> Previous/Completed Swaps </h2></div>
         <div class="section">
             <h4>Swaps Requested By Me - {{swapsToMeComplete}}</h4>
-            <table>
+            <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
                     <th>Request Date</th>
@@ -169,7 +169,7 @@
                 {{/each}}
             </table>
             <h4>Swaps Requested To Me - {{swapsByMeComplete}}</h4>
-            <table>
+            <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
                     <th>Request Date</th>
