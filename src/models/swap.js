@@ -80,6 +80,15 @@ Swap.deleteSwap = function(id) {
     return mysql.query(getQuery("deleteSwap"), [id]);
 };
 
+Swap.getTradedById = function(swapId) {
+    console.log("swapID: ", swapId);
+    return mysql.query(getQuery("getTradedById"), [swapId]);
+}
+
+Swap.getTradedToId = function(swapId) {
+    return mysql.query(getQuery("getTradedToId"), [swapId]);
+}
+
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -151,6 +160,18 @@ function getQuery(type) {
             break;
         case "deleteSwap":
             query = "DELETE FROM swap WHERE swap_id = ?;";
+            break;
+        case "getTradedById":
+            query = "SELECT bc.cost, s.traded_by FROM swap AS s  \
+                    INNER JOIN books_owned AS bo ON s.list_id = bo.list_id \
+                    INNER JOIN book_condition AS bc ON bo.condition_id = bc.condition_id \
+                    WHERE swap_id = ?;";
+            break;
+        case "getTradedToId":
+            query = "SELECT bc.cost, s.traded_to FROM swap AS s  \
+                    INNER JOIN books_owned AS bo ON s.list_id = bo.list_id \
+                    INNER JOIN book_condition AS bc ON bo.condition_id = bc.condition_id \
+                    WHERE swap_id = ?;";
             break;
     }
 

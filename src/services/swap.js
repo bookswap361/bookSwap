@@ -106,7 +106,24 @@ SwapServices.createSwap = function(info) {
 };
 
 SwapServices.acceptSwap = function(swapId) {
-    return SwapModel.acceptSwap(swapId);
+    console.log("Accept swap in services.");
+    var accept = new Promise(function(resolve, reject) {
+        SwapModel.acceptSwap(swapId)
+            .then(resolve)
+            .catch(reject)
+    });
+    var addPoints = new Promise(function(resolve, reject) {
+        SwapModel.getTradedById(swapId)
+        .then(function(result) {
+            var cost = result[0].cost;
+            var traded_by = result[0].traded_by;
+            console.log("cost: ", cost);
+            console.log("traded_by: ", traded_by);
+            resolve(UserModel.updatePoints(cost, traded_by))
+            })
+        .catch(reject)
+    });
+    return Promise.all([accept, addPoints]);
 };
 
 SwapServices.rejectSwap = function(swapId) {

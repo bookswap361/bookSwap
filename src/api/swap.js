@@ -44,6 +44,7 @@ router.route("/create")
 
 router.route("/accept")
     .post(function(req, res) {
+        console.log("Accept swap in api.");
         SwapServices.acceptSwap(Number(req.body.swapId))
             .then(function() {
                 res.redirect("/account");
