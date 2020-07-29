@@ -5,6 +5,10 @@
     <div id="addedNotice" class="text-center">The book has been successfully added to our database!</div>
     {{/if}}
 
+    <div class="col-12 col-md-5 mt-2 mt-sm-0 text-center text-sm-left">
+        <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
+    </div>
+
     <div class="row text-center text-sm-left">
         <div class="col-12 col-sm-4 text-sm-right">
             <img src="{{result.thumbnail_url}}" style="border-radius: 3px;">
@@ -18,12 +22,7 @@
             {{#if result.exists}}
                 <div class="container">
                     <div class="row">
-                        <div class="col-12 col-md-7  text-center text-md-left">
-                            <button type="button" class="btn btn-primary" onclick="showAddForm()">Add this book to your collection of owned books:</button>
-                        </div>
-                        <div class="col-12 col-md-5 text-center mt-2 mt-md-0 text-md-left">
-                            <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
-                        </div>
+                        <button type="button" class="btn btn-primary" onclick="showAddForm()">Add this book to your collection of owned books:</button>
                     </div>
                     <div class="row">
                         <div id="chooseCondition" class="container hidden">
@@ -67,9 +66,6 @@
                     <input name="description"   value="{{result.description}}"   hidden="true"> 
                     <input type="submit"        value="Add Book"          class="btn btn-primary">
                 </form>
-            </div>
-            <div class="col-6 col-md-2 text-center">
-            <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
             </div>
         </div>
     {{/if}}
