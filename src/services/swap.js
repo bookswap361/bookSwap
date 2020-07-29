@@ -46,11 +46,23 @@ SwapServices.getSwapsByUserId = function(userId, isTradedToCase) {
         promise(userId)
         .then(function(results) {
             // Get requests only if book is traded by you
-            var returnObj = !isTradedToCase ? {"newReqs": 0} : {};
+            var returnObj = !isTradedToCase ? {"newReqs": 0, "swapsByMeComplete": 0, "swapsByMePending": 0} : {"swapsToMeComplete": 0, "swapsToMePending": 0};
             var swaps = [];
             results.forEach(function(item) {
-                if (!isTradedToCase && !item.is_accepted && !item.is_complete) {
-                    returnObj.newReqs++;
+                if (!isTradedToCase) {
+                    if (!item.is_accepted && !item.is_complete) {
+                        returnObj.newReqs++;
+                    } else if (!item.is_complete) {
+                        returnObj.swapsByMePending++;
+                    } else if (item.is_complete) {
+                        returnObj.swapsByMeComplete++;
+                    }
+                } else {
+                    if (!item.is_complete) {
+                        returnObj.swapsToMePending++;
+                    } else if (item.is_complete) {
+                        returnObj.swapsToBeComplete++;
+                    }
                 }
                 swaps.push({
                     "swap_id": item.swap_id,
