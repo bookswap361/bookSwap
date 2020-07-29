@@ -33,7 +33,7 @@ router.put("/completed-swaps", function(req, res){
 
 router.route("/create")
     .post(function(req, res) {
-        SwapServices.createSwap({"list_id": Number(req.body.list_id), "traded_by": req.body.owner_id, "traded_to": req.session.u_id})
+        SwapServices.createSwap({"list_id": Number(req.body.list_id), "traded_by": req.body.owner_id, "traded_to": req.session.u_id, "cost": req.body.cost})
             .then(function() {
                 res.redirect("/account");
             })
