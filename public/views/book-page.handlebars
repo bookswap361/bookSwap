@@ -2,7 +2,7 @@
 <div class="container">
     
     {{#if isNew}}
-    <div id="addedNotice" class="text-center">The book has been successfully added to our database!</div>
+    <div id="addedNotice" class="text-center">Book has been successfully added to our database!</div>
     {{/if}}
 
     <div class="col-12 col-md-5 mt-2 mt-sm-0 text-center text-sm-left">
@@ -24,25 +24,22 @@
                     <div class="row">
                         <button type="button" class="btn btn-primary" onclick="showAddForm()">Add this book to your collection of owned books:</button>
                     </div>
-                    <div class="row">
-                        <div id="chooseCondition" class="container hidden">
-                            <div id="addForm">
+                    <div id="chooseCondition" class="row container hidden">
+                        <div id="addForm">
+                            <label for="condition"><a href="#" target="_blank">Choose the condition of your book to trade:</a></label>
+                            <select name="condition" id="newCondition">
+                                <option value="3">Excellent condition: 15pts</option>
+                                <option value="2">Good condition: 10pts</option>
+                                <option value="1">Acceptable condition: 5pts</option>
+                            </select> 
 
-                                <label for="condition"><a href="#" target="_blank">Choose the condition of your book to trade:</a></label>
-                                <select name="condition" id="newCondition">
-                                    <option value="3">Excellent condition: 15pts</option>
-                                    <option value="2">Good condition: 10pts</option>
-                                    <option value="1">Acceptable condition: 5pts</option>
-                                </select> 
+                            <input id="newTitle" value="{{result.title}}" hidden>
+                            <input id="newUser_id" value="{{user_id}}" hidden>
+                            <input id="newBook_id" value="{{result.book_id}}" hidden>
 
-                                <input id="newTitle" value="{{result.title}}" hidden>
-                                <input id="newUser_id" value="{{user_id}}" hidden>
-                                <input id="newBook_id" value="{{result.book_id}}" hidden>
+                            <button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook()">Add Book!</button>
 
-                                <button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook()">Add Book!</button>
-
-                                <P><div id="confirm"></div></P>
-                            </div>
+                            <P><div id="confirm"></div></P>
                         </div>
                     </div>
                 </div>
