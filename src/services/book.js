@@ -1,5 +1,6 @@
 var BookModel = require("../models/book"),
     BooksOwnedModel = require("../models/books_owned");
+    WishListModel = require("../models/wishlist")
 var BookServices = {};
 
 BookServices.getAllBooks = function() {
@@ -21,7 +22,12 @@ BookServices.getBookByOLId = function(id, user_id) {
 			.then(resolve)
 			.catch(reject);
 	});
-	return Promise.all([p1, p2])
+    var p3 = new Promise(function(resolve, reject) {
+        WishListModel.getWishList(user_id)
+        .then(resolve)
+        .catch(reject);
+    });
+	return Promise.all([p1, p2, p3])
 };
 
 BookServices.createBook = function(info) {
