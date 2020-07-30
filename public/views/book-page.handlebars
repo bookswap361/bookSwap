@@ -39,8 +39,8 @@
         </div>
     {{/if}}
 
-{{#if result.exists}}
-<div class="row">
+ {{#if result.exists}}
+    <div class="row">
         <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
 &nbsp;&nbsp;
 {{#if wishlist}}
@@ -70,9 +70,7 @@
                 <input id="newUser_id" value="{{user_id}}" hidden>
                 <input id="newBook_id" value="{{result.book_id}}" hidden>
 
-                <button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook()">Add to my book list</button>&nbsp:
-                <button type="button" class="btn btn-outline-primary btn-large" id="addWishBtn" onclick="addWish()">Add to my wishlist</button>
-
+                <button type="button" class="btn btn-primary" id="addBookBtn" onclick="addBook.call(null, 'booklist')">Add to my book list</button>
                 <P><div id="confirm"></div></P>
             </div>
         </div>
