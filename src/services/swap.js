@@ -1,7 +1,8 @@
 var BookModel = require("../models/book"),
     UserModel = require("../models/user"),
     SwapModel = require("../models/swap"),
-    BooksOwnedModel = require("../models/books_owned")
+    BooksOwnedModel = require("../models/books_owned"),
+    AlertModel = require("../models/alert");
 var SwapServices = {};
 
 SwapServices.getAllSwaps = function() {
@@ -45,11 +46,23 @@ SwapServices.getSwapsByUserId = function(userId, isTradedToCase) {
         promise(userId)
         .then(function(results) {
             // Get requests only if book is traded by you
-            var returnObj = !isTradedToCase ? {"newReqs": 0} : {};
+            var returnObj = !isTradedToCase ? {"newReqs": 0, "swapsByMeComplete": 0, "swapsByMePending": 0} : {"swapsToMeComplete": 0, "swapsToMePending": 0};
             var swaps = [];
             results.forEach(function(item) {
-                if (!isTradedToCase && !item.is_accepted && !item.is_complete) {
-                    returnObj.newReqs++;
+                if (!isTradedToCase) {
+                    if (!item.is_accepted && !item.is_complete) {
+                        returnObj.newReqs++;
+                    } else if (!item.is_complete) {
+                        returnObj.swapsByMePending++;
+                    } else if (item.is_complete) {
+                        returnObj.swapsByMeComplete++;
+                    }
+                } else {
+                    if (!item.is_complete) {
+                        returnObj.swapsToMePending++;
+                    } else if (item.is_complete) {
+                        returnObj.swapsToBeComplete++;
+                    }
                 }
                 swaps.push({
                     "swap_id": item.swap_id,
@@ -91,35 +104,101 @@ SwapServices.getCompletedSwaps = function() {
 };
 
 SwapServices.createSwap = function(info) {
-    return new Promise(function(resolve, reject) {
+    var newSwap = new Promise(function(resolve, reject) {
         SwapModel.createSwap(info)
         .then(BooksOwnedModel.updateAvailability.bind(null, Number(info.list_id), false))
         .then(resolve)
         .catch(reject)
-    })
-}
-
-SwapServices.acceptSwap = function(swapId) {
-    return SwapModel.acceptSwap(swapId);
+    });
+    var deletePoints = new Promise(function(resolve, reject){
+        UserModel.deletePoints(info.cost, info.traded_to)
+            .then(resolve)
+            .catch(reject)
+        });
+    return Promise.all([newSwap, deletePoints]);
 };
 
-SwapServices.rejectSwap = function(swapId) {
-    return new Promise(function(resolve, reject) {
+SwapServices.acceptSwap = function(swapId, tradedBy) {
+    var accept = new Promise(function(resolve, reject) {
+        SwapModel.acceptSwap(swapId)
+        .then(function() {
+            SwapModel.getTradedToId(swapId)
+            .then(function(result) {
+                AlertModel.addAlert(result[0]["traded_to"], "Your swap with " + tradedBy + " has been accepted!")
+                .then(resolve)
+                .catch(reject)
+            })
+        })
+        .catch(reject)
+    });
+    var addPoints = new Promise(function(resolve, reject) {
+        SwapModel.getTradedById(swapId)
+        .then(function(result) {
+            var cost = result[0].cost;
+            var traded_by = result[0].traded_by;
+            resolve(UserModel.updatePoints(cost, traded_by))
+            })
+        .catch(reject)
+    });
+    return Promise.all([accept, addPoints]);
+};
+
+SwapServices.rejectSwap = function(swapId, tradedBy) {
+    var rejected = new Promise(function(resolve, reject) {
         SwapModel.getListId(swapId)
         .then(function(result) {
             var listId = result[0].list_id;
             SwapModel.rejectSwap(swapId)
             .then(BooksOwnedModel.updateAvailability.bind(null, listId, true))
-            .then(resolve)
+            .then(function() {
+                SwapModel.getTradedToId(swapId)
+                .then(function(result) {
+                    AlertModel.addAlert(result[0]["traded_to"], "Your swap with " + tradedBy + " has been rejected!")
+                    .then(resolve)
+                    .catch(reject);
+                })
+                .catch(reject);
+            })
             .catch(reject);
         })
         .catch(reject);
     });
+    var addPoints = new Promise(function(resolve, reject) {
+        SwapModel.getTradedToId(swapId)
+        .then(function(result) {
+            var cost = result[0].cost;
+            var traded_to = result[0].traded_to;
+            resolve(UserModel.updatePoints(cost, traded_to))
+            })
+        .catch(reject)
+    });
+    return Promise.all([rejected, addPoints]);
 };
 
-SwapServices.updateShipDate = function(swapId) {
-    return SwapModel.updateShipDate(swapId);
+SwapServices.updateShipDate = function(swapId, tradedBy) {
+    return new Promise(function(resolve, reject) {
+        SwapModel.updateShipDate(swapId)
+        .then(function() {
+            SwapModel.getTradedToId(swapId)
+            .then(function(result) {
+                AlertModel.addAlert(result[0]["traded_to"], "Your swap with " + tradedBy + " has been shipped!")
+                .then(resolve)
+                .catch(reject);
+            })
+            .catch(reject);
+        })
+    })
 };
+
+SwapServices.getShippingAddress = function(swapId) {
+    return new Promise(function(resolve, reject) {
+        SwapModel.getShippingAddress(swapId)
+        .then(function(result) {
+            resolve(result[0]);
+        })
+        .catch(reject);
+    });
+}
 
 SwapServices.updateReceivedDate = function(swapId) {
     return SwapModel.updateReceivedDate(swapId);
@@ -141,12 +220,22 @@ SwapServices.notReceived = function(swapId) {
 };
 
 SwapServices.refundSwap = function(swapId) {
-    return new Promise(function(resolve, reject) {
+    var refund = new Promise(function(resolve, reject) {
         SwapModel.updateRefundDate(swapId)
         .then(SwapServices.completeSwap.bind(null, swapId))
         .then(resolve)
         .catch(reject);
     });
+    var addPoints = new Promise(function(resolve, reject) {
+        SwapModel.getTradedToId(swapId)
+        .then(function(result) {
+            var cost = result[0].cost;
+            var traded_to = result[0].traded_to;
+            resolve(UserModel.updatePoints(cost, traded_to))
+            })
+        .catch(reject)
+    });
+    return Promise.all([refund, addPoints]);
 };
 
 SwapServices.completeSwap = function(swapId) {

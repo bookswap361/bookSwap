@@ -18,8 +18,7 @@ body {
 }
 
 #fwLogo {
-  margin-left: 10px;
-  height: 125px;
+  max-width: 100%;
 }
 
 .login {
@@ -67,8 +66,8 @@ body {
 }
 
 .btn-primary{
-  background-color: #0C4482;
-  border-color: #0C4482;
+  background-color: #0c7b93;
+  border-color: #0c7b93;
 }
 
 #book_hidden{

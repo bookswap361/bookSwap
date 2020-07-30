@@ -19,9 +19,16 @@ function addBook(list){
     new Promise(function(resolve, reject) {
         resolve(getDataOwn());
     }).then(function(result){
+
         makeReq(result, list);
     }).catch(function(){
         console.log('error!')
+        if (addedNotice) {
+            addedNotice.innerHTML = "";
+        }
+        makeReq(result);
+    }).catch(function(err){
+        console.log('error!', err)
     })
 
 }

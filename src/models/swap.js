@@ -40,6 +40,10 @@ Swap.getListId = function(swapId) {
     return mysql.query(getQuery("getListId"), [swapId]);
 };
 
+Swap.getShippingAddress = function(swapId) {
+    return mysql.query(getQuery("getShippingAddress"), [swapId]);
+}
+
 Swap.updateShipDate = function(swapId) {
     return mysql.query(getQuery("updateShipDate"), [new Date(), swapId]);
 };
@@ -76,6 +80,15 @@ Swap.deleteSwap = function(id) {
     return mysql.query(getQuery("deleteSwap"), [id]);
 };
 
+Swap.getTradedById = function(swapId) {
+    console.log("swapID: ", swapId);
+    return mysql.query(getQuery("getTradedById"), [swapId]);
+}
+
+Swap.getTradedToId = function(swapId) {
+    return mysql.query(getQuery("getTradedToId"), [swapId]);
+}
+
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -111,6 +124,10 @@ function getQuery(type) {
             INNER JOIN user AS u ON swap.traded_by = u.user_id \
             WHERE swap.traded_to = ? ORDER BY swap.swap_id;";
             break;
+        case "getShippingAddress":
+            query = "SELECT user.first_name, user.last_name, user.street, user.city, user.state, user.zip FROM swap \
+            INNER JOIN user ON swap.traded_to = user.user_id WHERE swap.swap_id = ?;"
+            break;
         case "createSwap":
             query = "INSERT INTO swap (list_id, traded_to, traded_by, request_date) VALUES (?, ?, ?, ?);";
             break;
@@ -143,6 +160,18 @@ function getQuery(type) {
             break;
         case "deleteSwap":
             query = "DELETE FROM swap WHERE swap_id = ?;";
+            break;
+        case "getTradedById":
+            query = "SELECT bc.cost, s.traded_by FROM swap AS s  \
+                    INNER JOIN books_owned AS bo ON s.list_id = bo.list_id \
+                    INNER JOIN book_condition AS bc ON bo.condition_id = bc.condition_id \
+                    WHERE swap_id = ?;";
+            break;
+        case "getTradedToId":
+            query = "SELECT bc.cost, s.traded_to FROM swap AS s  \
+                    INNER JOIN books_owned AS bo ON s.list_id = bo.list_id \
+                    INNER JOIN book_condition AS bc ON bo.condition_id = bc.condition_id \
+                    WHERE swap_id = ?;";
             break;
     }
 

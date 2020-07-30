@@ -6,7 +6,7 @@ router.route("/")
     .get(function(req, res) {
         AccountServices.getAccount(req.session.u_id)
             .then(function(account) {
-                let merged = {...account[0], ...account[1], ...account[2], ...account[3], ...account[4]};
+                let merged = {...account[0], ...account[1], ...account[2], ...account[3], ...account[4], ...account[5]};
                 console.log(merged);
                 res.render('account', merged);
             })
@@ -117,20 +117,16 @@ router.route("/update_points")
                 res.redirect('/about');
             });
     })
-//update lost limit
-router.route("/update_lost")
-    .put(function(req, res) {
-        AccountServices.updateLostLimit(req.body)
-            .then(function(result) {
-                if (result) {
-                    res.redirect('/account');
-                }
-            })
-            .catch(function(err) {
-                res.redirect('/about');
-            });
+
+router.route("/delete_alert")
+    .post(function(req, res, next) {
+        AlertServices.deleteByAlertId(req.body.alertId)
+        .then(function() {
+            res.redirect("/account");
+        })
+        .catch(function(err) {
+            next(err);
+        })
     })
-
-
 
 module.exports = router;
