@@ -100,7 +100,6 @@ AccountServices.getInventoryByUserId = function(user_id) {
     return new Promise(function(resolve, reject){
         BooksOwnedModel.getInventoryByUserId(user_id)
             .then(function(results){
-                console.log("Processing in services/books_owned...");
                 var books = [];
                 results.forEach(function(item) {
                     books.push({
@@ -111,7 +110,6 @@ AccountServices.getInventoryByUserId = function(user_id) {
                       "list_date": item.list_date
                   });
                 })
-                console.log(books);
                 return books;
             })
             .then(resolve)
@@ -120,13 +118,7 @@ AccountServices.getInventoryByUserId = function(user_id) {
 }
 
 AccountServices.updateCondition = function(info) {
-  return new Promise(function(resolve, reject){
-    console.log("Updating Inventory in services/books_owned..");
-    console.log(info);
-    BooksOwnedModel.updateCondition(info)
-      .then(resolve)
-      .catch(reject);
-  });
+    return BooksOwnedModel.updateCondition(info)
 }
 
 AccountServices.deleteBooks = function(list_id, user_id) {

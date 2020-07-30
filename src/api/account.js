@@ -59,22 +59,22 @@ router.route("/delete")
     })
 
 //display books owned
-router.get("/display_books", function(req, res){
+router.get("/display_books", function(req, res, next){
     AccountServices.getInventoryByUserId(req.session.u_id)
         .then(function(books) {
             res.send(books);
         }).catch(function(err) {
-            res.status(400).json({"error": err});
+            next(err);
         });
 })
 
 //update books owned
-router.post("/update_books", function(req, res){
+router.post("/update_books", function(req, res, next){
     AccountServices.updateCondition(req.body)
         .then(function(result) {
             res.redirect('/account');
         }).catch(function(err) {
-            res.status(400).json({"error": err});
+            next(err);
         });
 })
 
