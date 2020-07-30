@@ -276,6 +276,24 @@ function showWishList(event) {
 	event.currentTarget.className += " active";
 }
 
+// Profile functionality.
+function showProfile(event) {
+	
+	var tabcontent = document.getElementsByClassName("tabcontent");
+	for (var i = 0; i < tabcontent.length; i++) {
+		tabcontent[i].style.display = "none";
+	}
+
+	tablinks = document.getElementsByClassName("tablinks");
+	for (var i = 0; i < tablinks.length; i++) {
+		tablinks[i].className = tablinks[i].className.replace(" active", "");
+	}
+
+	document.getElementById("profile").style.display = "block";
+	event.currentTarget.className += " active";
+}
+
+document.getElementById("profileTab").addEventListener("click", showProfile);
 document.getElementById("booksTab").addEventListener("click", showInventory);
 document.getElementById("swapsTab").addEventListener("click", showSwaps);
 document.getElementById("wishlistTab").addEventListener("click", showWishList);
