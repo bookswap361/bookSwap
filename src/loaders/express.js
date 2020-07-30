@@ -38,7 +38,6 @@ var settings = function(app) {
     app.use("/user", checkAuth, userDetails, require("../api/user"));
     app.use("/account", checkAuth, userDetails, require("../api/account"));
     app.use("/swap", checkAuth, userDetails, require("../api/swap"));
-    app.use("/books_owned", checkAuth, userDetails, require("../api/books_owned"));
     app.use("/forum", checkAuth, userDetails, require("../api/forum"));
     app.use(handle404);
     app.use(handle500);

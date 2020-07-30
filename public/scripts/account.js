@@ -14,7 +14,7 @@ function showInventory(event) {
 	}
 	event.currentTarget.className += " active";
 
-	fetch("../books_owned/", {
+	fetch("../account/display_books", {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json'
@@ -150,7 +150,7 @@ function updateInventory(event) {
 		"condition_id": condition_id
 	};
 	
-	fetch("../books_owned/update", {
+	fetch("../account/update_books", {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'

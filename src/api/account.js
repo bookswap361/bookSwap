@@ -57,6 +57,27 @@ router.route("/delete")
                 res.redirect('/account');
             });
     })
+
+//display books owned
+router.get("/display_books", function(req, res){
+    AccountServices.getInventoryByUserId(req.session.u_id)
+        .then(function(books) {
+            res.send(books);
+        }).catch(function(err) {
+            res.status(400).json({"error": err});
+        });
+})
+
+//update books owned
+router.post("/update_books", function(req, res){
+    AccountServices.updateCondition(req.body)
+        .then(function(result) {
+            res.redirect('/account');
+        }).catch(function(err) {
+            res.status(400).json({"error": err});
+        });
+})
+
 //delete from books owned
 router.route("/delete_books")
     .post(function(req, res) {

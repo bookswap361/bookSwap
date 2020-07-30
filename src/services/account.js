@@ -96,6 +96,38 @@ AccountServices.deleteAccount = function(body) {
     return Promise.all([p1, p2, p3])
 };
 
+AccountServices.getInventoryByUserId = function(user_id) {
+    return new Promise(function(resolve, reject){
+        BooksOwnedModel.getInventoryByUserId(user_id)
+            .then(function(results){
+                console.log("Processing in services/books_owned...");
+                var books = [];
+                results.forEach(function(item) {
+                    books.push({
+                      "list_id": item.list_id,
+                      "title": item.title,
+                      "author": item.name,
+                      "condition_description": item.condition_description,
+                      "list_date": item.list_date
+                  });
+                })
+                console.log(books);
+                return books;
+            })
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
+AccountServices.updateCondition = function(info) {
+  return new Promise(function(resolve, reject){
+    console.log("Updating Inventory in services/books_owned..");
+    console.log(info);
+    BooksOwnedModel.updateCondition(info)
+      .then(resolve)
+      .catch(reject);
+  });
+}
 
 AccountServices.deleteBooks = function(list_id, user_id) {
     var p1 = new Promise(function(resolve, reject) {
