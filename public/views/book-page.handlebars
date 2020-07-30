@@ -44,8 +44,6 @@
 
  {{#if result.exists}}
     <div class="row">
-        <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
-&nbsp;&nbsp;
 {{#if wishlist}}
 {{#each wishlist}}
   {{#compare wishlist.book_id '==' result.book_id}}
