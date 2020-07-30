@@ -2,8 +2,7 @@ const addBookBtn      = document.getElementById("addBookBtn"),
       chooseCondition = document.getElementById("chooseCondition"),
       confirmDiv      = document.getElementById("confirm"),
       newLink         = document.getElementById("newLink"),
-      description     = document.getElementById("description"),
-      addedNotice     = document.getElementById("addedNotice");
+      description     = document.getElementById("description");
 
 window.onload = function(event){
     if (description.innerHTML === "null"){
@@ -13,15 +12,17 @@ window.onload = function(event){
 
 // Add existing book to owned books
 function showAddForm(){
-    confirmDiv.innerHTML = "";
-    addBookBtn.disabled = false;
     chooseCondition.classList.remove("hidden");
 }
 
-function addBook(){
+function addBook(list){
     new Promise(function(resolve, reject) {
         resolve(getDataOwn());
     }).then(function(result){
+
+        makeReq(result, list);
+    }).catch(function(){
+        console.log('error!')
         if (addedNotice) {
             addedNotice.innerHTML = "";
         }
@@ -31,6 +32,7 @@ function addBook(){
     })
 
 }
+
 
 function getDataOwn(){
     var payload = {user_id: null, book_id: null, condition_id: null, condition_description: null, list_date: null};
@@ -46,31 +48,61 @@ function getDataOwn(){
     return payload
 }
 
-function makeReq(data) {
-    var req = new XMLHttpRequest();
-    req.open("POST", "../account/add_books", true);
-    req.setRequestHeader('Content-Type', 'application/json');
-    req.send(JSON.stringify(data))
+function makeReq(data, type) {
+    switch (type) {
+        case "booklist":
+            var req = new XMLHttpRequest();
+            req.open("POST", "../account/add_books", true);
+            req.setRequestHeader('Content-Type', 'application/json');
+            req.send(JSON.stringify(data))
 
-    console.log(data);
-    var confirmStr = `You have successfully added ${data.title} in ${data.condition_description} condition (asking for ${data.condition_points} points) to your collection! View your account to see it.`;
+            console.log(data);
+            var confirmStr = `You have successfully added ${data.title} in ${data.condition_description} condition (asking for ${data.condition_points} points) to your collection! View your account to see it.`;
 
-    req.onload = function(){
-        if(req.status >= 200 && req.status < 400) {
-            confirmDiv.innerText = confirmStr;
-            addBookBtn.setAttribute("disabled", "true");
-        } else {
-            confirmDiv.innerText = "Something went wrong! Please refresh and try again.";
-        }
-    }
+            req.onload = function(){
+                if(req.status >= 200 && req.status < 400) {
+                    confirmDiv.innerText = confirmStr;
+                    addBookBtn.setAttribute("disabled", "true");
+                } else {
+                confirmDiv.innerText = "Something went wrong! Please refresh and try again.";
+                }
+            }
     
-    req.onprogress = function(event) {
-        confirmDiv.innerText = "Adding book...";
-    }
+            req.onprogress = function(event) {
+            confirmDiv.innerText = "Adding book...";
+            }
 
-    req.onerror = function() {
-        console.log('error');
-        confirmDiv.innerText = "Error! Refresh and try again";
+            req.onerror = function() {
+            console.log('error');
+            confirmDiv.innerText = "Error! Refresh and try again";
+            }
+    break;
+    case "wishlist":
+        var req = new XMLHttpRequest();
+        req.open("POST", "../account/add_wish", true);
+        req.setRequestHeader('Content-Type', 'application/json');
+        req.send(JSON.stringify(data))
+
+        console.log(data);
+        var confirmStr = `You have successfully added ${data.title} to your wishlist. View your account to see it.`;
+
+        req.onload = function(){
+            if(req.status >= 200 && req.status < 400) {
+                confirmDiv.innerText = confirmStr;
+                addWishBtn.setAttribute("disabled", "true");
+            } else {
+                confirmDiv.innerText = "Something went wrong! Please refresh and try again.";
+                }
+            }
+    
+        req.onprogress = function(event) {
+            confirmDiv.innerText = "Adding book...";
+        }
+
+        req.onerror = function() {
+            console.log('error');
+            confirmDiv.innerText = "Error! Refresh and try again";
+        }
     }
 }
 

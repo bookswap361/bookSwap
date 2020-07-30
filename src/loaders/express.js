@@ -15,6 +15,7 @@ var handlebars = require("express-handlebars").create({
         "ifUser": forumHelpers.ifUser
     }
 });
+var helpers = require('handlebars-helpers')();
 var bodyParser = require("body-parser");
 var path = require("path");
 var config = require("../config/config.js");
