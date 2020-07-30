@@ -1,33 +1,41 @@
 
 <link rel="stylesheet" href="/css/dashboard.css">
-	<div class="row mt-4 mb-2"><h2 class="mx-auto"><i class="fas fa-user-circle"></i>&#32;Manage your account</h2></div>
-        <form id="delete-alert" action="/account/delete_alert" method="POST"></form>
-		{{#if newReqs}}
-			<div id="swap-notifications" class="mx-auto">
-				<i class="fas fa-user-clock"></i> You have {{newReqs}} new requests for trade!
-			</div>
-		{{/if}}
-        {{#each alerts}}
-            <div id="swap-notifications" class="mx-auto">
-                {{alert}} &nbsp 
-                <div id="delete-alert">
-                    <button type="submit" id="delete-alert" form="delete-alert" name="alertId" value={{alert_id}}><i class="material-icons">delete</i></button>
-                </div>
-            </div>
-        {{/each}}
 
-	<div id="userDetails" class="row justify-content-center mb-4 mx-auto">
-		<div class="col-md-3"><div class="row smallHeader">Name:</div><div class="row largeHeader">{{first_name}} {{last_name}}</div></div>
-		<div class="col-md-4"><div class="row smallHeader">Email:</div><div class="row largeHeader">{{email}}</div></div>
-		<div class="col-md-4"><div class="row smallHeader">Address:</div><div class="row largeHeader">{{street}} {{zip}}</div></div>
-		<div class="col-md-1"><div class="row smallHeader">Points</div><div class="row largeHeader points">{{points}}</div></div>
+<div class="container mt-4 mb-2">
+    <div class="row mx-auto">
+        <div class="col-8 col-md-7 text-right align-self-center">
+            <h2 style="color: #1b6ca8"><i class="fas fa-user-circle"></i>&#32;{{first_name}}'s account</h2>
+        </div>
+        <div class="col-4 col-md-5 text-left align-self-start">
+            <span class="largeHeader points">{{points}}</span>
+            <span class="smallHeader">Points</span>
+        </div>
+    </div>
+</div>
+
+{{!-- Notifications --}}
+<form id="delete-alert" action="/account/delete_alert" method="POST"></form>
+{{#if newReqs}}
+	<div id="swap-notifications" class="mx-auto px-3">
+		<i class="fas fa-user-clock"></i> You have {{newReqs}} new requests for trade!
 	</div>
+{{/if}}
+{{#each alerts}}
+    <div id="swap-notifications" class="mx-auto">
+        {{alert}} &nbsp 
+        <div id="delete-alert">
+            <button class="inline-form" type="submit" id="delete-alert" form="delete-alert" name="alertId" value={{alert_id}}><i class="material-icons">delete</i></button>
+        </div>
+    </div>
+{{/each}}
 
-	<div class="row mx-auto">
-
+<div class="row mx-auto">
 	<!-- Reference: https://www.w3schools.com/howto/howto_js_tabs.asp -->
 	<div id="dashboard" class="dashboard-top mx-auto">
 		<div class="tab">
+			<button class="tablinks" id="profileTab">
+				<i class="fas fa-user-cog"></i> Profile
+			</button>
 			<button class="tablinks" id="booksTab">
 				<i class="fas fa-book"></i> Book Inventory
 			</button>
@@ -39,6 +47,21 @@
 			</button>
 		</div>
 	</div>
+</div>
+
+<div class="row">
+
+	<div id="profile" class="tabcontent ml-4 mx-sm-auto">
+        <div id="userDetails" class="container text-center">
+            <div class="smallHeader">Name:</div>
+            <div class="largeHeader">{{first_name}} {{last_name}}</div>
+            <div class="smallHeader">Email:</div>
+            <div class="largeHeader">{{email}}</div>
+            <div class="smallHeader">Address:</div>
+            <div class="largeHeader">{{street}}<BR>{{city}}, {{state}} {{zip}}</div>
+            <a href="#"><u>Edit Profile Details</u></a>
+        </div>
+    </div>
 
 	<div id="booksInventory" class="tabcontent mx-auto" style="display: block">
 		<div class="row mx-2 text-center"><button id="addInventory" class="btn mt-2 mb-4 btn-primary mx-auto"> Add New Book </button></div>
@@ -49,8 +72,7 @@
 		</div>
 	</div>
 
-	<div id="swaps" class="tabcontent mx-auto">
-		
+	<div id="swaps" class="tabcontent mx-auto container">
         <div class="section-top"><h2> Pending Swaps </h2></div>
         <div class="section">
             <!-- traded_to == current user scenario -->
@@ -228,10 +250,7 @@
 			{{else}}
 				There's nothing in your wishlist. <a href="/search">Search here</a> to add books.
 			{{/if}}
-        </div>
-		</div>
-
-
-	</div>
+    </div>
+</div>
 
 <script src="../scripts/account.js"></script>

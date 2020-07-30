@@ -106,7 +106,8 @@ function makeRow(){
 
 function showBookInfo(data, num){
     var divDetail = document.createElement("div");
-    divDetail.classList.add("col-9");
+    divDetail.classList.add("col-6");
+    divDetail.classList.add("col-md-9");
     divDetail.setAttribute("id", num);
 
     var length = data.genre.length;
@@ -126,12 +127,12 @@ function cutGenre(data){
 
 function makeThumbnail(id){
     var newthumbnail_url = document.createElement("div");
-    newthumbnail_url.classList.add("col-3")
+    newthumbnail_url.classList.add("col-6")
+    newthumbnail_url.classList.add("col-md-3")
     if (id) {
-        newthumbnail_url.innerHTML = `<img src="${id}">`;
+        newthumbnail_url.innerHTML = `<img src="${id}" class="img-fluid">`;
     } else {
         newthumbnail_url.innerText = "No image found";
-        newthumbnail_url.style.width = "180px";
     }
     return newthumbnail_url;
 }

@@ -37,16 +37,15 @@ body{
   }
   
 .smallHeader{
-    color: grey;
     text-transform: uppercase;
     font-size: smaller;
     color: #7e97a6;
 }
 
 .largeHeader{
-    color: blue;
     font-size: 175%;
-    color: #1b6ca8;
+    margin-bottom: 10px;
+    /* color: #0C4482; */
 }
 
 table, th {
@@ -62,8 +61,11 @@ table, th {
 }
 
 .points{
-    color: #007944;
+    color: #e36387;
     font-weight: bolder;
+    font-size: 3em;
+    padding-left: 2px;
+    line-height: 67%;
 }
 
 
