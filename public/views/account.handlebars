@@ -197,9 +197,14 @@
 
 	<div id="wishlist" class="tabcontent mx-auto">
                 <h2> Wishlist </h2>
+                <div class="row mx-2 text-center"><button id="addWish" class="btn mt-2 mb-4 btn-primary mx-auto" onclick="window.location.href='/book/search';"> Add New Book </button></div>
+                <div class="slideshow-container">
 			{{#if wishlist}}
+            <div class="nav-arrows">
+                        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
 			{{#each wishlist}}
-			<div id="carousel">
+			<div class="mySlides">
 				<table>
 					<tr>
 					<td rowspan="2">
@@ -211,18 +216,20 @@
 					<tr>
 					<td>
 					{{description}}<br>
-					<input name="remove-btn" type="submit" value="remove from wishlist">
+					<form id="delete-this-wish" form action="/account/delete_wish" method="POST">
+                    <input type="hidden" name="user_id" value="1"><input type="hidden" name="book_id" value={{book_id}}>
+                </form>
+                <button type="submit" form="delete-this-wish" class="btn btn-outline-danger">Delete</button>
 					</td></tr>
 				</table>
 				</div>
 				{{/each}}
+                </div>
 			{{else}}
-				There's nothing in your wishlist. <a href="/book/search">Search here</a> to add books.
+				There's nothing in your wishlist. Click the button to add new books.
 			{{/if}}
         </div>
-		</div>
+        </div>
 
-
-	</div>
 
 <script src="../scripts/account.js"></script>
