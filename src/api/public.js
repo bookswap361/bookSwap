@@ -12,6 +12,11 @@ router.route("/signup")
         res.render("signup");
     })
 
+router.route("/about_us")
+    .get(function(req, res) {
+        res.render("about_us");
+    })
+
 router.route("/login")
     .post(function(req, res) {
         UserServices.verifyLogin(req.body)
