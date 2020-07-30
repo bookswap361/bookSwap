@@ -13,8 +13,6 @@
     </div>
 </div>
 
-{{!-- Points --}}
-
 {{!-- Notifications --}}
 <form id="delete-alert" action="/account/delete_alert" method="POST"></form>
 {{#if newReqs}}
@@ -54,14 +52,14 @@
 <div class="row">
 
 	<div id="profile" class="tabcontent ml-4 mx-sm-auto">
-        <div id="userDetails" class="container text-left">
+        <div id="userDetails" class="container text-center">
             <div class="smallHeader">Name:</div>
             <div class="largeHeader">{{first_name}} {{last_name}}</div>
             <div class="smallHeader">Email:</div>
             <div class="largeHeader">{{email}}</div>
             <div class="smallHeader">Address:</div>
             <div class="largeHeader">{{street}}<BR>{{city}}, {{state}} {{zip}}</div>
-            <a href="#">Edit Profile Details</a>
+            <a href="#"><u>Edit Profile Details</u></a>
         </div>
     </div>
 

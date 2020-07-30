@@ -44,7 +44,8 @@ body{
 
 .largeHeader{
     font-size: 175%;
-    /* color: #0C4482; */    
+    margin-bottom: 10px;
+    /* color: #0C4482; */
 }
 
 table, th {
