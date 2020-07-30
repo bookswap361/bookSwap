@@ -15,27 +15,17 @@ function showAddForm(){
     chooseCondition.classList.remove("hidden");
 }
 
-function addBook(){
+function addBook(list){
     new Promise(function(resolve, reject) {
         resolve(getDataOwn());
     }).then(function(result){
-        makeReq(result, "booklist");
+        makeReq(result, list);
     }).catch(function(){
         console.log('error!')
     })
 
 }
 
-function addWish(){
-    new Promise(function(resolve, reject) {
-        resolve(getDataOwn());
-    }).then(function(result){
-        makeReq(result, "wishlist");
-    }).catch(function(){
-        console.log('error!')
-    })
-
-}
 
 function getDataOwn(){
     var payload = {user_id: null, book_id: null, condition_id: null, condition_description: null, list_date: null};
@@ -87,12 +77,12 @@ function makeReq(data, type) {
         req.send(JSON.stringify(data))
 
         console.log(data);
-        var confirmStr = `You have successfully added ${data.title} ito your wishlist. View your account to see it.`;
+        var confirmStr = `You have successfully added ${data.title} to your wishlist. View your account to see it.`;
 
         req.onload = function(){
             if(req.status >= 200 && req.status < 400) {
                 confirmDiv.innerText = confirmStr;
-                addBookBtn.setAttribute("disabled", "true");
+                addWishBtn.setAttribute("disabled", "true");
             } else {
                 confirmDiv.innerText = "Something went wrong! Please refresh and try again.";
                 }
