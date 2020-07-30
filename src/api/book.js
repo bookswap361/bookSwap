@@ -61,8 +61,7 @@ router.route("/:id")
                 if(result[0].length > 0){
                     console.log("Result found");
                     result[0][0].exists = 1;
-                    console.log(result);
-                    res.render("book-page", {"result": result[0][0], "copies": result[1]});
+                    res.render("book-page", {"result": result[0][0], "copies": result[1], "wishlist": result[2]});
                 } else {
                     data.new = 1;
                     console.log("No book found");
