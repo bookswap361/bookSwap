@@ -14,6 +14,7 @@ var handlebars = require("express-handlebars").create({
         "getStatus": swapHelpers.getStatus
     }
 });
+var helpers = require('handlebars-helpers')();
 var bodyParser = require("body-parser");
 var path = require("path");
 var config = require("../config/config.js");
