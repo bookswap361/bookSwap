@@ -79,6 +79,7 @@ router.route("/delete_books")
 router.route("/delete_wish")
     .post(function(req, res) {
         req.body.user_id = req.session.u_id;
+        req.body.book_id = parseInt(req.body.book_id);
         AccountServices.deleteWish(req.body)
             .then(function(result) {
                 if (result) {
