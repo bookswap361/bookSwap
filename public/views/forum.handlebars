@@ -26,7 +26,10 @@
         </div>
 
         <div class="section-top px-4">
-            <h3>{{criteria}} threads</h3>
+            {{#if (ifUser criteria)}}
+            <h3>my threads</h3>
+            {{else}}<h3>{{criteria}} threads</h3>
+            {{/if}}
         </div>
         <div class="section">
             {{#each threads}}
@@ -43,6 +46,11 @@
                     </div>
                 </div>
             {{/each}}
+            {{#if (ifUser criteria)}}
+                {{#unless threads}}
+                    You don't have any threads!&emsp;<a href="/forum/create" style="color: #17a2b8;">Start one here!</a>
+                {{/unless}}
+            {{/if}}
         </div>
 
     </div>

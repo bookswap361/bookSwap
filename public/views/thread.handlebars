@@ -1,44 +1,48 @@
+<link rel="stylesheet" href="/css/forum.css">
 <div class="thread-page-container">
-    <div>
+    <div class="mt-4 mb-2">
         <a href="/forum">Go Back</a>
     </div>
-    <div class="topic-container">
-        <div class="title"><h3> {{title}} </h3></div>
-        <div class="resolve">
-            {{#if isOwner}}
-                {{#if isResolved}}Resolved{{/if}}
-                {{#unless isResolved}}
-                    <form action={{formatResolveLink id}} method="POST">
-                        <input type="hidden" name"thread_id" value="{{id}}">
-                        <input type="submit" name="resolve-button" value="Mark as Resolved">
-                    </form>
+    <div class="section-top d-flex px-3">
+            <div class="title col-sm-9"><h3> {{title}} </h3></div>
+            <div class="col-sm-3">
+                {{#if isOwner}}
+                    {{#if isResolved}}Resolved{{/if}}
+                    {{#unless isResolved}}
+                        <form action={{formatResolveLink id}} method="POST">
+                            <input type="hidden" name"thread_id" value="{{id}}">
+                            <input type="submit" name="resolve-button" value="Mark as Resolved" class="btn btn-primary" style="border: 1px solid white">
+                        </form>
+                    {{/unless}}
+                {{/if}}
+                {{#unless isOwner}}
+                    {{#if isResolved}}Resolved{{/if}}
+                    {{#unless isResolved}}Not Resolved{{/unless}}
                 {{/unless}}
-            {{/if}}
-            {{#unless isOwner}}
-                {{#if isResolved}}Resolved{{/if}}
-                {{#unless isResolved}}Not Resolved{{/unless}}
-            {{/unless}}
-        </div>
-    </div>
-    <div class="thread-container">
-        <div class="message-container">
-            {{#each thread}}
-            <div class="message-individual">
-                <div class="user-details">
-                    {{user}} - {{date}}
-                </div>
-                <div class="message">
-                    {{{post}}}
-                </div>
             </div>
-            {{/each}}
         </div>
-        <div class="reply-container">
+        <div class="section" style="width: 100%;">
+            <div class="message-container">
+                {{#each thread}}
+                <div class="message-individual">
+                    <div class="user-details">
+                        <span class="user">{{user}}</span>&nbsp;on&nbsp;<span class="date">{{date}}</span>&nbsp;said:
+                        <span class="arrow row"></span>
+                    </div>
+                    <div class="message">
+                        {{{post}}}
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+        <div class="col-12 reply-container my-4">
+            <h5>&nbspAdd to the conversation:</h5>
             <form id="insert-message" action="/forum/insert" method="POST">
                 <div id="text-editor"></div>
                 <input type="hidden" id="text-input" name="post" required>
                 <input type="hidden" name="thread_id" value="{{id}}">
-                <input type="submit" name="insert-message-button" value="Submit">
+                <input type="submit" name="insert-message-button" value="Submit" class="mt-2  mr-2 row ml-auto">
             </form>
         </div>
     </div>
