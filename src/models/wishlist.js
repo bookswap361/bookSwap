@@ -14,7 +14,11 @@ WishList.deleteWish = function(body) {
 }
 
 WishList.deleteAllWish = function(body) {
-    return mysql.query(getQuery("deleteWish"), [body.user_id]);
+    return mysql.query(getQuery("deleteAllWish"), [body.user_id]);
+}
+
+WishList.searchWish = function(body) {
+    return mysql.query(getQuery("searchWish"), [body.user_id, body.book_id]);
 }
 
 function getQuery(type) {
@@ -33,7 +37,6 @@ function getQuery(type) {
             break;
         case "deleteAllWish":
             query = "DELETE from wishlist WHERE user_id = ?";
-            break;
         }
 
     return query;
