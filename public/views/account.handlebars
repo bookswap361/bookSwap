@@ -235,22 +235,23 @@
             <div class="nav-arrows">
                         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
   <a class="next" onclick="plusSlides(1)">&#10095;</a>
-			{{#each wishlist}}
-			<div class="mySlides">
-				<table>
+            {{#each wishlist}}
+            <div class="mySlides">
+                <table>
+                    <tr>
+                        <td rowspan="2">
+                            <img id="cover" src="{{thumbnail_url}}">
+                        </td>
+                        <td>
+                            {{title}}
+                        </td>
 					<tr>
-					<td rowspan="2">
-						<img id="cover" src="{{thumbnail_url}}">
-					</td>
-					<td>
-					{{title}}
-					</td>
-					<tr>
-					<td>
-					{{description}}<br>
-                    <button type="submit" name="book_id" value={{book_id}} form="delete-this-wish" class="btn btn-outline-danger">Delete</button>
-					</td></tr>
-				</table>
+                        <td>
+                            {{description}}<br>
+                            <button type="submit" name="book_id" value={{book_id}} form="delete-this-wish" class="btn btn-outline-danger">Delete</button>
+                        </td>
+                    </tr>
+                </table>
 				</div>
 				{{/each}}
                 </div>

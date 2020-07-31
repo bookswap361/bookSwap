@@ -44,12 +44,12 @@
 
  {{#if result.exists}}
     <div class="row">
-{{#if wishlist}}
-  {{{displayButton wishlist result.book_id}}}
-{{else}}
-<button type='button' class='btn btn-primary' id='addWishBtn' onclick='addBook.call(null, "wishlist")'>Add to my wishlist</button>
-    {{/if}}                 
-</div>
+        {{#if wishlist}}
+            {{{displayButton wishlist result.book_id}}}
+        {{else}}
+            <button type='button' class='btn btn-primary' id='addWishBtn' onclick='addBook.call(null, "wishlist")'>Add to my wishlist</button>
+        {{/if}}                 
+    </div>
 
     <hr>
     <div class="row">
