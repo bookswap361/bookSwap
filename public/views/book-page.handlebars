@@ -1,28 +1,34 @@
 <link rel="stylesheet" href="/css/book.css">
 <div class="container">
+    
     {{#if isNew}}
-    <div id="addedNotice">The book has been successfully added to our database!</div>
+    <div id="addedNotice" class="text-center">Book has been successfully added to our database!</div>
+
     {{/if}}
-    <div class="row">
-        <div class="col-md-3">
-            <img src="{{result.thumbnail_url}}">
+
+    <div class="col-12 col-md-5 mt-2 mt-sm-0 text-center text-sm-left">
+        <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
+    </div>
+
+    <div class="row text-center text-sm-left">
+        <div class="col-12 col-sm-4 text-sm-right">
+            <img src="{{result.thumbnail_url}}" style="border-radius: 3px;">
         </div>
-        <div class="col-md-9 mx-auto">
+        <div class="col-12 col-sm-8 pt-2 pl-4 pl-md-0">
             <h3>{{result.title}}</h3> by {{result.name}}
             <hr>
             <span id="description">{{result.description}}</span>
-            
             {{!-- <P>Genres: {{result.genre}}</P> --}}
-        </div>
-    </div>
+            </div>
+            </div>
 
     {{#if result.new}}
-        <div class="row justify-content-center align-items-center mt-2 mb-4">
-            <div class="col-md-8 info">
-                This book hasn't been added to our library yet! Would you like to add it?<BR>
+        <div class="row justify-content-center align-items-center mt-2 mb-4 text-center text-sm-left">
+            <div class="col-12 col-md-8 info">
+                This book hasn't been added to our library yet! Would you like to add it? &nbsp;
                 <em>Note: This book must be added to the library in order to trade this book.</em>
             </div>
-            <div class="col-md-2 text-center">
+            <div class="col-6 col-md-2 text-center py-2 py-md-0">
                 <form method="POST" action="/book/create-book">
                     <input name="title"         value="{{result.title}}"         hidden="true">
                     <input name="thumbnail_url" value="{{result.thumbnail_url}}" hidden="true">
@@ -33,21 +39,27 @@
                     <input type="submit"        value="Add Book"          class="btn btn-primary">
                 </form>
             </div>
-            <div class="col-md-2 text-center">
-            <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
-            </div>
         </div>
     {{/if}}
 
-    {{#if result.exists}}
+ {{#if result.exists}}
     <div class="row">
-        <button type="button" class="btn btn-primary" onclick="showAddForm()">Add this book to your collection of owned books:</button>
-        <button type="button" class="btn btn-danger" onclick="window.location.href='/book/search';">Search Again</button>
-    </div>
+{{#if wishlist}}
+{{#each wishlist}}
+  {{#compare wishlist.book_id '==' result.book_id}}
+
+{{else}}
+<button type="button" class="btn btn-primary" id="addWishBtn" onclick="addBook.call(null, 'wishlist')">Add to my wishlist</button>  
+{{/compare}}
+{{/each}}
+{{else}}
+<button type="button" class="btn btn-primary" id="addWishBtn" onclick="addBook.call(null, 'wishlist')">Add to my wishlist</button> 
+    {{/if}}                 
+</div>
 
     <hr>
     <div class="row">
-        <div id="chooseCondition" class="container hidden">
+        <div id="chooseCondition">
             <div id="addForm">
 
                 <label for="condition"><a href="#" target="_blank">Choose the condition of your book to trade:</a></label>
@@ -61,30 +73,26 @@
                 <input id="newUser_id" value="{{user_id}}" hidden>
                 <input id="newBook_id" value="{{result.book_id}}" hidden>
 
-                <button type="button" class="btn btn-outline-primary btn-large" id="addBookBtn" onclick="addBook()">Add Book!</button>
-
+                <button type="button" class="btn btn-primary" id="addBookBtn" onclick="addBook.call(null, 'booklist')">Add to my book list</button>
                 <P><div id="confirm"></div></P>
             </div>
+        <div class="row container mt-4">
+            {{#if copies}}
+                <h5>Open Swaps for this Book:</h5>
+                <div class="row py-3">
+                    {{#each copies}}
+                        <ul>A copy in {{condition_description}} condition was listed on {{formatDate list_date}}</ul>
+                        <hr>
+                    {{/each}}
+                </div>
+            {{/if}}
+
+            {{#unless copies}}
+            There are no available copies of this book for trade.
+            {{/unless}}
+
+
         </div>
-    </div>
-
-    
-    <div class="row">
-        {{#if copies}}
-        Open Swaps for this Book:
-            <div class="row">
-                {{#each copies}}
-                    <ul>A copy in {{condition_description}} condition was listed on {{list_date}}</ul>
-                    <hr>
-                {{/each}}
-            </div>
-        {{/if}}
-
-        {{#unless copies}}
-        There are no available copies of this book for trade.
-        {{/unless}}
-
     {{/if}}
-    </div>
 
 <script src="../scripts/addbook.js"></script>

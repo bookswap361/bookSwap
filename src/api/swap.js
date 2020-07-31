@@ -2,35 +2,6 @@ var express = require("express");
 var router = express.Router()
 var SwapServices = require("../services/swap");
 
-router.get("/", function(req, res){
-    SwapServices.getAllSwaps()
-        .then(function(result) {
-            console.log(result);
-            res.render("swap", {"swaps": result});
-        }).catch(function(err) {
-            res.status(400).json({"error": err});
-        });
-})
-
-
-router.put("/:id", function(req, res){
-    SwapServices.updateSwap()
-    .then(function(result) {
-        res.send("Update the swap progress");
-    }).catch(function(err) {
-        res.status(400).json({"error": err});
-    });
-})
-
-router.put("/completed-swaps", function(req, res){
-    SwapServices.getCompletedSwaps()
-    .then(function(result) {
-        res.render("swap", {"payload": result});
-    }).catch(function(err) {
-        res.status(400).json({"error": err});
-    });
-})
-
 router.route("/create")
     .post(function(req, res, next) {
         SwapServices.createSwap({"list_id": Number(req.body.list_id), "traded_by": req.body.owner_id, "traded_to": req.session.u_id, "cost": req.body.cost})
@@ -134,11 +105,11 @@ router.route("/claim")
 router.route("/get-shipping")
     .post(function(req, res, next) {
         SwapServices.getShippingAddress(Number(req.body.swapId))
-            .then(function(result) {
-                res.render("shipping", result);
-            })
-            .catch(function(err) {
-                next(err);
-            });
-})
+        .then(function(result) {
+            res.render("shipping", result);
+        })
+        .catch(function(err) {
+            next(err);
+        });
+    });
 module.exports = router;

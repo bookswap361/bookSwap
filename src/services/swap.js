@@ -61,7 +61,7 @@ SwapServices.getSwapsByUserId = function(userId, isTradedToCase) {
                     if (!item.is_complete) {
                         returnObj.swapsToMePending++;
                     } else if (item.is_complete) {
-                        returnObj.swapsToBeComplete++;
+                        returnObj.swapsToMeComplete++;
                     }
                 }
                 swaps.push({
