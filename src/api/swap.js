@@ -2,24 +2,6 @@ var express = require("express");
 var router = express.Router()
 var SwapServices = require("../services/swap");
 
-router.get("/", function(req, res, next){
-    SwapServices.getAllSwaps()
-        .then(function(result) {
-            res.render("swap", {"swaps": result});
-        }).catch(function(err) {
-            next(err);
-        });
-})
-
-router.put("/completed-swaps", function(req, res){
-    SwapServices.getCompletedSwaps()
-    .then(function(result) {
-        res.render("swap", {"payload": result});
-    }).catch(function(err) {
-        res.status(400).json({"error": err});
-    });
-})
-
 router.route("/create")
     .post(function(req, res, next) {
         SwapServices.createSwap({"list_id": Number(req.body.list_id), "traded_by": req.body.owner_id, "traded_to": req.session.u_id, "cost": req.body.cost})
