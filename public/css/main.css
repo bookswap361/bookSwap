@@ -113,3 +113,12 @@ color:white;
 #infographic {
   max-width: 85%;
 } 
+
+.dictionary {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  background-color: rgb(245, 245, 245, .97);
+  padding: 1.5em;
+  border-radius: 2px;
+}
