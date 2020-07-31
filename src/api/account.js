@@ -32,17 +32,19 @@ router.route("/add_books")
 
 //add books to wishlist
 router.route("/add_wish")
-    .post(function(req, res) {
+ .post(function(req, res) {
+        req.body.user_id = req.session.u_id;
         AccountServices.addWish(req.body)
             .then(function(result) {
                 if (result) {
-                    res.redirect('/account');
+                    res.send('Book successfully added');
                 }
             })
             .catch(function(err) {
                 res.redirect('/about');
             });
     })
+
 
 //delete account
 router.route("/delete")
@@ -57,6 +59,7 @@ router.route("/delete")
                 res.redirect('/account');
             });
     })
+
 //delete from books owned
 router.route("/delete_books")
     .post(function(req, res) {
@@ -70,9 +73,13 @@ router.route("/delete_books")
                 res.redirect('/about');
             });
     })
+
+
 //delete from wishlist
 router.route("/delete_wish")
     .post(function(req, res) {
+        req.body.user_id = req.session.u_id;
+        req.body.book_id = parseInt(req.body.book_id);
         AccountServices.deleteWish(req.body)
             .then(function(result) {
                 if (result) {
@@ -83,6 +90,7 @@ router.route("/delete_wish")
                 res.redirect('/about');
             });
     })
+
 //update account info
 router.route("/update")
     .put(function(req, res) {

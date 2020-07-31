@@ -111,6 +111,25 @@ max-width: 100px;
   font-weight: bold;
 }
 
+
+.nav-arrows {
+  position:relative;
+}
+
+.prev {
+  cursor:pointer;
+  position:absolute;
+  top:50px;
+  left:5px;
+}
+
+.next {
+  cursor:pointer;
+  position:absolute;
+  top:50px;
+  right:5px;
+}
+
 #delete-alert {
     background: none;
     border: none;

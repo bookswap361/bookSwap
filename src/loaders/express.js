@@ -15,6 +15,7 @@ var handlebars = require("express-handlebars").create({
         "ifUser": forumHelpers.ifUser
     }
 });
+var helpers = require('handlebars-helpers')();
 var bodyParser = require("body-parser");
 var path = require("path");
 var config = require("../config/config.js");
@@ -61,7 +62,7 @@ function checkAuth(req, res, next) {
 
 function handle404(req, res) {
     res.status(404);
-    res.render("error", {"error": "400: Page Not Found"});
+    res.render("error", {"error": "404: Page Not Found"});
 };
 
 function handle500(error, req, res, next) {
