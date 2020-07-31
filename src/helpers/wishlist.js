@@ -3,7 +3,6 @@ var WishlistHbsHelpers = {};
 WishlistHbsHelpers.displayButton = function(wishlist, bookId) {
     var display = true;
     for (var i = 0; i < wishlist.length; i++) {
-        console.log(wishlist[i])
         var list = wishlist[i];
         if (list.book_id == bookId) {
             display = false;
