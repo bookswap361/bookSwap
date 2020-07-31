@@ -30,16 +30,11 @@ User.updatePoints = function(number, user_id) {
     return mysql.query(getQuery("updatePoints"), [number, user_id]);
 }
 
-/*User.deletePoints = function(body) {
-    return mysql.query(getQuery("deletePoints"), [body.number, body.user_id]);
-}*/
-
 User.updateUser = function(body) {
     return mysql.query(getQuery("updateUser"), [body.first_name, body.last_name, body.email, body.street, body.user_id]);
 }
 
 User.deletePoints = function(number, user_id) {
-    console.log("deleting " + number + " from user_id " + user_id + ".");
     return mysql.query(getQuery("deletePoints"), [number, user_id]);
 }
 
