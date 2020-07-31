@@ -1,7 +1,8 @@
-var UserModel = require("../models/user");
-    BooksOwnedModel = require("../models/books_owned");
-    WishListModel = require("../models/wishlist");
+var UserModel = require("../models/user"),
+    BooksOwnedModel = require("../models/books_owned"),
+    WishListModel = require("../models/wishlist"),
     SwapServices = require("./swap"),
+    BookModel = require("../models/book");
     AlertServices = require("./alert");
 var AccountServices = {};
 
@@ -96,36 +97,13 @@ AccountServices.deleteAccount = function(body) {
     return Promise.all([p1, p2, p3])
 };
 
-AccountServices.getInventoryByUserId = function(user_id) {
-    return new Promise(function(resolve, reject){
-        BooksOwnedModel.getInventoryByUserId(user_id)
-            .then(function(results){
-                console.log("Processing in services/books_owned...");
-                var books = [];
-                results.forEach(function(item) {
-                    books.push({
-                      "list_id": item.list_id,
-                      "title": item.title,
-                      "author": item.name,
-                      "condition_description": item.condition_description,
-                      "list_date": item.list_date
-                  });
-                })
-                console.log(books);
-                return books;
-            })
-            .then(resolve)
-            .catch(reject);
-    });
-}
-
 AccountServices.updateCondition = function(info) {
     return BooksOwnedModel.updateCondition(info);
 }
 
 AccountServices.deleteBooks = function(list_id, user_id) {
     var p1 = new Promise(function(resolve, reject) {
-        BooksOwnedModel.deleteInventory(list_id)
+        BooksOwnedModel.deleteBook(list_id)
             .then(resolve)
             .catch(reject);
         });

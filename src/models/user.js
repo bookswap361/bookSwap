@@ -30,9 +30,9 @@ User.updatePoints = function(number, user_id) {
     return mysql.query(getQuery("updatePoints"), [number, user_id]);
 }
 
-User.deletePoints = function(body) {
+/*User.deletePoints = function(body) {
     return mysql.query(getQuery("deletePoints"), [body.number, body.user_id]);
-}
+}*/
 
 User.updateUser = function(body) {
     return mysql.query(getQuery("updateUser"), [body.first_name, body.last_name, body.email, body.street, body.user_id]);
@@ -87,10 +87,6 @@ function getQuery(type) {
         case "deletePoints":
             query = "UPDATE user SET points = points - ? WHERE user_id = ?";
             break;
-
-        case "deletePoints":
-             query = "UPDATE user SET points = points - ? WHERE user_id = ?";
-             break;
 
         case "updateLostLimit":
             query = "UPDATE user SET lost_limit_reached = 1 WHERE user_id = ?";

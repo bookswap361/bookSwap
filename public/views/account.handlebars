@@ -45,6 +45,30 @@
 
 		<div class="row mx-2">
 			<table id="inventoryTable" class="mx-auto">
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Condition</th>
+                    <th>List Date</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {{#each books}}
+                    <tr id="{{list_id}}">
+                        <td>{{title}}</td>
+                        <td>{{name}}</td>
+                        <td>{{condition_description}}</td>
+                        <td>{{formatDate list_date}}</td>
+                        <td>
+                            <button style="display:block" class="update btn btn-outline-primary">Update</button>
+                            <button style="display:none" class="submit btn btn-outline-primary">Submit</button>
+                        </td>
+                        <td>
+                            <button style="display:block" class="delete btn btn-outline-danger">Delete</button>
+                            <button style="display:none" class="cancel btn btn-outline-danger">Cancel</button>
+                        </td>
+                    </tr>
+                {{/each}}
 			</table>
 		</div>
 	</div>
