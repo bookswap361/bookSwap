@@ -204,9 +204,10 @@ function showSlides(n) {
   for (i = 0; i < slides.length; i++) {
       slides[i].style.display = "none";
   }
-  
-  slides[slideIndex-1].style.display = "block";
-  dots[slideIndex-1].className += "active";
+  if (slides.length > 0){
+  	slides[slideIndex-1].style.display = "block";
+  	dots[slideIndex-1].className += "active";
+  }
 }
 
 document.getElementById("profileTab").addEventListener("click", showProfile);
@@ -234,5 +235,4 @@ for (var i = 0; i < deletes.length; i++) {
 var cancels = document.getElementsByClassName("cancel");
 for (var i = 0; i < cancels.length; i++) {
 	cancels[i].addEventListener("click", cancelUpdate);
-
-window.onload = document.getElementById("booksTab").click();
+}
