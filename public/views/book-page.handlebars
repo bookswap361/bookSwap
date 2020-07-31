@@ -45,15 +45,9 @@
  {{#if result.exists}}
     <div class="row">
 {{#if wishlist}}
-{{#each wishlist}}
-  {{#compare wishlist.book_id '==' result.book_id}}
-
+  {{{displayButton wishlist result.book_id}}}
 {{else}}
-<button type="button" class="btn btn-primary" id="addWishBtn" onclick="addBook.call(null, 'wishlist')">Add to my wishlist</button>  
-{{/compare}}
-{{/each}}
-{{else}}
-<button type="button" class="btn btn-primary" id="addWishBtn" onclick="addBook.call(null, 'wishlist')">Add to my wishlist</button> 
+<button type='button' class='btn btn-primary' id='addWishBtn' onclick='addBook.call(null, "wishlist")'>Add to my wishlist</button>
     {{/if}}                 
 </div>
 
