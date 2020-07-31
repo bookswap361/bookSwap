@@ -1,10 +1,11 @@
 var BooksOwnedModel = require("../models/books_owned"),
     UserModel = require("../models/user"),
-	BooksAvailableServices = {};
+    BookModel = require("../models/book"),
+    BooksAvailableServices = {};
 
 BooksAvailableServices.getAvailableBooks = function(user_id) {
 	return new Promise(function(resolve, reject) {
-		BooksOwnedModel.getAvailableBooks(user_id)
+		BookModel.getAvailableBooks(user_id)
 			.then(function(results) {
 				var availableBooks = []
 				results.forEach(function(book) {
