@@ -236,3 +236,5 @@ var cancels = document.getElementsByClassName("cancel");
 for (var i = 0; i < cancels.length; i++) {
 	cancels[i].addEventListener("click", cancelUpdate);
 }
+
+window.onload = document.getElementById("booksTab").click();
