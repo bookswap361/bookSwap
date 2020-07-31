@@ -3,6 +3,7 @@ var app = express();
 var generalHelpers = require("../helpers/general");
 var forumHelpers = require("../helpers/forum");
 var swapHelpers = require("../helpers/swap");
+var wishlistHelpers = require("../helpers/wishlist");
 var session = require('express-session');
 var handlebars = require("express-handlebars").create({
     "defaultLayout": "main",
@@ -12,7 +13,8 @@ var handlebars = require("express-handlebars").create({
         "formatThreadLink": forumHelpers.formatThreadLink,
         "setChecked": forumHelpers.setChecked,
         "getStatus": swapHelpers.getStatus,
-        "ifUser": forumHelpers.ifUser
+        "ifUser": forumHelpers.ifUser,
+        "displayButton": wishlistHelpers.displayButton
     }
 });
 var helpers = require('handlebars-helpers')();
