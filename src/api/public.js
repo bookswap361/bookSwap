@@ -10,7 +10,7 @@ router.route("/")
 router.route("/signup")
     .get(function(req, res) {
         res.render("signup");
-    })
+    });
 
 router.route("/about_us")
     .get(function(req, res) {
@@ -34,7 +34,7 @@ router.route("/login")
                 req.session.bad_login = true;
                 res.redirect("/");
             });
-    })
+    });
 
 router.route("/create")
     .post(function(req, res) {
@@ -52,6 +52,6 @@ router.route("/create")
             .catch(function(err) {
                 res.render("signup", err);
             });
-    })
+    });
 
 module.exports = router;

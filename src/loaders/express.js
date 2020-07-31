@@ -62,7 +62,7 @@ function checkAuth(req, res, next) {
 
 function handle404(req, res) {
     res.status(404);
-    res.render("error", {"error": "400: Page Not Found"});
+    res.render("error", {"error": "404: Page Not Found"});
 };
 
 function handle500(error, req, res, next) {
