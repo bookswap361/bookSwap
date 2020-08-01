@@ -47,10 +47,23 @@ BooksAvailableServices.getAffordableBooks = function(userId) {
     });
 };
 
-BooksAvailableServices.getCondition = function(book_id, user_id) {
-    var books = new Promise(function(resolve, reject){
-        BooksOwnedModel.getCondition(book_id, user_id)
-            .then(function(results){
+BooksAvailableServices.getCondition = function(book_id, user_id, filterAll) {
+    var condition;
+    if (filterAll) {
+        condition = BooksOwnedModel.getCondition(book_id, user_id);
+    } else {
+        condition = new Promise(function(resolve, reject) {
+            UserServices.getPoints(user_id)
+                .then(function(result) {
+                    BooksOwnedModel.getConditionByPoints(book_id, user_id, result[0].points)
+                        .then(resolve);
+                })
+                .catch(reject);
+        });
+    }
+    var books = new Promise(function(resolve, reject) {
+        condition
+            .then(function(results) {
                 var books = [];
                 results.forEach(function(item) {
                     books.push({
