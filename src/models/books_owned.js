@@ -13,6 +13,10 @@ BooksOwned.getCondition = function(book_id, user_id) {
     return mysql.query(getQuery("getCondition"), [book_id, user_id]);
 }
 
+BooksOwned.getConditionByPoints = function(bookId, userId, points) {
+    return mysql.query(getQuery("getConditionByPoints"), [bookId, userId, points]);
+}
+
 BooksOwned.deleteBook = function(list_id) {
     return mysql.query(getQuery("deleteBook"), [Number(list_id.list_id)]);
 }
@@ -59,6 +63,16 @@ function getQuery(type) {
                 INNER JOIN book_condition bc ON bo.condition_id = bc.condition_id \
                 INNER JOIN user u ON bo.user_id = u.user_id \
                 WHERE bo.is_available = 1 AND bo.book_id = ? AND bo.user_id != ?;"
+            break;
+        case "getConditionByPoints":
+            query = "SELECT bo.list_id, b.title, a.name, u.first_name, u.last_name, u.user_id, bo.condition_description, bc.cost\
+                from books_owned bo \
+                INNER JOIN book b ON bo.book_id = b.book_id \
+                INNER JOIN book_author ba ON bo.book_id = ba.book_id \
+                INNER JOIN author a ON ba.author_id = a.author_id \
+                INNER JOIN book_condition bc ON bo.condition_id = bc.condition_id \
+                INNER JOIN user u ON bo.user_id = u.user_id \
+                WHERE bo.is_available = 1 AND bo.book_id = ? AND bo.user_id != ? AND bc.cost <= ?;"
             break;
         case "deleteBook":
             query = "DELETE from books_owned WHERE list_id = ?;";
