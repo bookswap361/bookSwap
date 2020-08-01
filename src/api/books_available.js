@@ -6,7 +6,6 @@ router.get("/", function(req, res, next) {
     if (req.query && req.query.filter && req.query.filter == "afford") {
         BooksAvailableServices.getAffordableBooks(req.session.u_id)
             .then(function(result) {
-                console.log("at the end", result)
                 res.render("book", {"books": result, "criteria": req.query.filter});
             })
             .catch(function(err) {
@@ -15,7 +14,6 @@ router.get("/", function(req, res, next) {
     } else {
         BooksAvailableServices.getAvailableBooks(req.session.u_id)
             .then(function(result) {
-                console.log(result)
                 res.render("book", {"books": result, "criteria": "all"});
             })
             .catch(function(err) {

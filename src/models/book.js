@@ -127,6 +127,7 @@ function getQuery(type) {
                 INNER JOIN author a ON ba.author_id = a.author_id \
                 WHERE bo.is_available = 1 AND bo.user_id != ? AND bc.cost <= ?\
                 GROUP BY b.book_id;";
+            break;
         }
 
     return query;
