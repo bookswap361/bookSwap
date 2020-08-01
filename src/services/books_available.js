@@ -1,5 +1,5 @@
 var BooksOwnedModel = require("../models/books_owned"),
-    UserModel = require("../models/user"),
+    UserServices = require("./user"),
     BookModel = require("../models/book"),
     BooksAvailableServices = {};
 
@@ -23,6 +23,30 @@ BooksAvailableServices.getAvailableBooks = function(user_id) {
 	});
 }
 
+BooksAvailableServices.getAffordableBooks = function(userId) {
+    return new Promise(function(resolve, reject) {
+        UserServices.getPoints(userId)
+            .then(function(result) {
+                BookModel.getAvailableBooksByPoints(userId, result[0].points)
+                    .then(function(result) {
+                        console.log('book filter', result)
+                        var books = [];
+                        result.forEach(function(book) {
+                            books.push({
+                                "book_id": book.book_id,
+                                "title": book.title,
+                                "name": book.name,
+                                "copies": book.count
+                            });
+                        });
+                        resolve(books);
+                    })
+                    .catch(reject);
+            })
+            .catch(reject);
+    });
+};
+
 BooksAvailableServices.getCondition = function(book_id, user_id) {
     var books = new Promise(function(resolve, reject){
         BooksOwnedModel.getCondition(book_id, user_id)
@@ -44,7 +68,7 @@ BooksAvailableServices.getCondition = function(book_id, user_id) {
             .catch(reject);
     });
     var points = new Promise(function(resolve, reject){
-        UserModel.getPoints(user_id)
+        UserServices.getPoints(user_id)
             .then(function(results){
                 resolve({"points": results[0].points});
             })
