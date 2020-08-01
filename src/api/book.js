@@ -40,7 +40,7 @@ router.route("/:id")
                     result[0][0].exists = 1;
                     res.render("book-page", req.query && req.query.new ? {"result": result[0][0], "isNew": true} : {"result": result[0][0], "copies": result[1]});
                 } else {
-                   next(err);
+                   next();
                 }
             })
             .catch(function(err) {

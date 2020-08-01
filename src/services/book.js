@@ -32,6 +32,9 @@ BookServices.getBookByOLId = function(id, user_id) {
 
 BookServices.createBook = function(info) {
     return new Promise(function(resolve, reject) {
+        if (info.name == "null") {
+            info.name = "n/a"
+        }
         BookModel.createBook(info)
             .then(BookModel.createAuthor.bind(null, info))
             .then(BookModel.getAuthIdFromOlId.bind(null, info))
