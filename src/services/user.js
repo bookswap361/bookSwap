@@ -43,6 +43,10 @@ UserServices.updatePoints = function(body) {
     });
 };
 
+UserServices.getPoints = function(userId) {
+    return UserModel.getPoints(userId);
+};
+
 UserServices.createUser = function(body) {    
  return new Promise(function(resolve, reject) {
     UserModel.getUserByEmail(body)
