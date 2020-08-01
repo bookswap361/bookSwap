@@ -11,7 +11,7 @@ var handlebars = require("express-handlebars").create({
         "formatDate": generalHelpers.formatDate,
         "formatResolveLink": forumHelpers.formatResolveLink,
         "formatThreadLink": forumHelpers.formatThreadLink,
-        "setChecked": forumHelpers.setChecked,
+        "setChecked": generalHelpers.setChecked,
         "getStatus": swapHelpers.getStatus,
         "ifUser": forumHelpers.ifUser,
         "displayButton": wishlistHelpers.displayButton
