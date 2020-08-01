@@ -24,8 +24,8 @@ router.get("/", function(req, res, next) {
     }
 });
 
-router.get("/condition/:id", function(req, res, next) {
-    BooksAvailableServices.getCondition(req.params.id, req.session.u_id)
+router.get("/condition", function(req, res, next) {
+    BooksAvailableServices.getCondition(Number(req.query.id), req.session.u_id, req.query.filter == "all")
         .then(function(books) {
             res.send(books);
         }).catch(function(err) {
