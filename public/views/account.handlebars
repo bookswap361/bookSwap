@@ -68,6 +68,30 @@
 
 		<div class="row mx-2">
 			<table id="inventoryTable" class="mx-auto">
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Condition</th>
+                    <th>List Date</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {{#each books}}
+                    <tr id="{{list_id}}">
+                        <td>{{title}}</td>
+                        <td>{{name}}</td>
+                        <td>{{condition_description}}</td>
+                        <td>{{formatDate list_date}}</td>
+                        <td>
+                            <button style="display:block" class="update btn btn-outline-primary">Update</button>
+                            <button style="display:none" class="submit btn btn-outline-primary">Submit</button>
+                        </td>
+                        <td>
+                            <button style="display:block" class="delete btn btn-outline-danger">Delete</button>
+                            <button style="display:none" class="cancel btn btn-outline-danger">Cancel</button>
+                        </td>
+                    </tr>
+                {{/each}}
 			</table>
 		</div>
 	</div>
@@ -105,7 +129,7 @@
                 {{/each}}
             </table>
             <!-- traded_by == current user scenario -->
-            <h4> Swaps Requested To Me - {{swapsByMePending}}</h4>
+            <h4> Swaps Requested To Me - {{add swapsByMePending newReqs}}</h4>
             <form id="accept-trade" action="/swap/accept" method="POST"></form>
             <form id="reject-trade" action="/swap/reject" method="POST"></form>
             <form id="get-shipping" action="/swap/get-shipping" method="POST"></form>
@@ -227,6 +251,7 @@
     </div>
 
 	<div id="wishlist" class="tabcontent mx-auto">
+    <form id="delete-this-wish" form action="/account/delete_wish" method="POST">
                 <h2> Wishlist </h2>
                 <div class="row mx-2 text-center"><button id="addWish" class="btn mt-2 mb-4 btn-primary mx-auto" onclick="window.location.href='/book/search';"> Add New Book </button></div>
                 <div class="slideshow-container">
@@ -234,25 +259,23 @@
             <div class="nav-arrows">
                         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
   <a class="next" onclick="plusSlides(1)">&#10095;</a>
-			{{#each wishlist}}
-			<div class="mySlides">
-				<table>
+            {{#each wishlist}}
+            <div class="mySlides">
+                <table>
+                    <tr>
+                        <td rowspan="2">
+                            <img id="cover" src="{{thumbnail_url}}">
+                        </td>
+                        <td>
+                            {{title}}
+                        </td>
 					<tr>
-					<td rowspan="2">
-						<img id="cover" src="{{thumbnail_url}}">
-					</td>
-					<td>
-					{{title}}
-					</td>
-					<tr>
-					<td>
-					{{description}}<br>
-					<form id="delete-this-wish" form action="/account/delete_wish" method="POST">
-                    <input type="hidden" name="user_id" value="1"><input type="hidden" name="book_id" value={{book_id}}>
-                </form>
-                <button type="submit" form="delete-this-wish" class="btn btn-outline-danger">Delete</button>
-					</td></tr>
-				</table>
+                        <td>
+                            {{description}}<br>
+                            <button type="submit" name="book_id" value={{book_id}} form="delete-this-wish" class="btn btn-outline-danger">Delete</button>
+                        </td>
+                    </tr>
+                </table>
 				</div>
 				{{/each}}
                 </div>

@@ -7,7 +7,6 @@ router.route("/")
         AccountServices.getAccount(req.session.u_id)
             .then(function(account) {
                 let merged = {...account[0], ...account[1], ...account[2], ...account[3], ...account[4], ...account[5]};
-                console.log(merged);
                 res.render('account', merged);
             })
             .catch(function(err) {
@@ -59,6 +58,18 @@ router.route("/delete")
                 res.redirect('/account');
             });
     })
+
+
+//update books owned
+router.post("/update_books", function(req, res, next){
+    AccountServices.updateCondition(req.body)
+        .then(function(result) {
+            res.redirect('/account');
+        }).catch(function(err) {
+            next(err);
+        });
+})
+
 
 //delete from books owned
 router.route("/delete_books")

@@ -1,10 +1,11 @@
-var BooksAvailableModel = require("../models/books_available"),
+var BooksOwnedModel = require("../models/books_owned"),
     UserModel = require("../models/user"),
-	BooksAvailableServices = {};
+    BookModel = require("../models/book"),
+    BooksAvailableServices = {};
 
 BooksAvailableServices.getAvailableBooks = function(user_id) {
 	return new Promise(function(resolve, reject) {
-		BooksAvailableModel.getAvailableBooks(user_id)
+		BookModel.getAvailableBooks(user_id)
 			.then(function(results) {
 				var availableBooks = []
 				results.forEach(function(book) {
@@ -24,7 +25,7 @@ BooksAvailableServices.getAvailableBooks = function(user_id) {
 
 BooksAvailableServices.getCondition = function(book_id, user_id) {
     var books = new Promise(function(resolve, reject){
-        BooksAvailableModel.getCondition(book_id, user_id)
+        BooksOwnedModel.getCondition(book_id, user_id)
             .then(function(results){
                 var books = [];
                 results.forEach(function(item) {
