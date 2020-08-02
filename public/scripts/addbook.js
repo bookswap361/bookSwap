@@ -1,5 +1,4 @@
 const addBookBtn      = document.getElementById("addBookBtn"),
-      chooseCondition = document.getElementById("chooseCondition"),
       confirmDiv      = document.getElementById("confirm"),
       newLink         = document.getElementById("newLink"),
       description     = document.getElementById("description");
@@ -11,9 +10,6 @@ window.onload = function(event){
 }
 
 // Add existing book to owned books
-function showAddForm(){
-    chooseCondition.classList.remove("hidden");
-}
 
 function addBook(list){
     new Promise(function(resolve, reject) {

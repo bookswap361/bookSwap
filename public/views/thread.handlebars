@@ -3,22 +3,23 @@
     <div class="mt-4 mb-2">
         <a href="/forum">Go Back</a>
     </div>
-    <div class="section-top d-flex px-3">
-            <div class="title col-sm-9"><h3> {{title}} </h3></div>
-            <div class="col-sm-3">
-                {{#if isOwner}}
-                    {{#if isResolved}}Resolved{{/if}}
-                    {{#unless isResolved}}
+    <div class="section-top d-sm-flex px-3">
+        <div class="title col-12 col-sm-9"><h3> {{title}} </h3></div>
+            {{#if isOwner}}
+                <div class="col-12 col-sm-3 text-sm-right align-self-sm-center">
+                {{#if isResolved}}Resolved{{/if}}
+                {{#unless isResolved}}
+                    <div class="col-12 col-sm-3 text-sm-right align-self-sm-center">
                         <form action={{formatResolveLink id}} method="POST">
                             <input type="hidden" name"thread_id" value="{{id}}">
                             <input type="submit" name="resolve-button" value="Mark as Resolved" class="btn btn-primary" style="border: 1px solid white">
                         </form>
-                    {{/unless}}
-                {{/if}}
-                {{#unless isOwner}}
-                    {{#if isResolved}}Resolved{{/if}}
-                    {{#unless isResolved}}Not Resolved{{/unless}}
                 {{/unless}}
+            {{/if}}
+            {{#unless isOwner}}
+                {{#if isResolved}}Resolved{{/if}}
+                {{#unless isResolved}}Not Resolved{{/unless}}
+            {{/unless}}
             </div>
         </div>
         <div class="section" style="width: 100%;">
