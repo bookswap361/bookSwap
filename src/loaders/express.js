@@ -11,7 +11,7 @@ var handlebars = require("express-handlebars").create({
         "formatDate": generalHelpers.formatDate,
         "formatResolveLink": forumHelpers.formatResolveLink,
         "formatThreadLink": forumHelpers.formatThreadLink,
-        "setChecked": forumHelpers.setChecked,
+        "setChecked": generalHelpers.setChecked,
         "getStatus": swapHelpers.getStatus,
         "ifUser": forumHelpers.ifUser,
         "displayButton": wishlistHelpers.displayButton
@@ -63,13 +63,13 @@ function checkAuth(req, res, next) {
 
 function handle404(req, res) {
     res.status(404);
-    res.render("error", {"error": "404: Page Not Found"});
+    res.render("error", {"errorMessage": "404: Page Not Found"}); 
 };
 
 function handle500(error, req, res, next) {
     console.error(error.stack);
     res.status(500);
-    res.render("error", {"error": "500: Internal Server Error"});
+    res.render("error", {"errorMessage": "500: Internal Server Error"});
 };
 
 module.exports = settings;

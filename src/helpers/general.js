@@ -5,4 +5,8 @@ GeneralHbsHelpers.formatDate = function(date) {
     return (dateObj.getMonth() + 1) + "-" + dateObj.getDate() + "-" + dateObj.getFullYear();
 };
 
+GeneralHbsHelpers.setChecked = function(value, currentValue) {
+    return value == currentValue ? "checked" : "";
+};
+
 module.exports = GeneralHbsHelpers;
