@@ -27,7 +27,6 @@ Swap.createSwap = function(info) {
     return mysql.query(getQuery("createSwap"), [info.list_id, info.traded_to, info.traded_by, new Date()]);
 };
 
-
 Swap.acceptSwap = function(swapId, date) {
     return mysql.query(getQuery("acceptSwap"), [new Date(), swapId]);
 };
@@ -81,12 +80,15 @@ Swap.deleteSwap = function(id) {
 };
 
 Swap.getTradedById = function(swapId) {
-    console.log("swapID: ", swapId);
     return mysql.query(getQuery("getTradedById"), [swapId]);
 }
 
 Swap.getTradedToId = function(swapId) {
     return mysql.query(getQuery("getTradedToId"), [swapId]);
+}
+
+Swap.deleteSwapsByListId = function(list_id) {
+    return mysql.query(getQuery("deleteSwapsByListId"), [list_id.list_id]);
 }
 
 function getQuery(type) {
@@ -172,6 +174,9 @@ function getQuery(type) {
                     INNER JOIN books_owned AS bo ON s.list_id = bo.list_id \
                     INNER JOIN book_condition AS bc ON bo.condition_id = bc.condition_id \
                     WHERE swap_id = ?;";
+            break;
+        case "deleteSwapsByListId":
+            query = "DELETE FROM swap WHERE list_id = ?;";
             break;
     }
 

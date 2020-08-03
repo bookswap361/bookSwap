@@ -2,7 +2,8 @@ var UserModel = require("../models/user"),
     BooksOwnedModel = require("../models/books_owned"),
     WishListModel = require("../models/wishlist"),
     SwapServices = require("./swap"),
-    BookModel = require("../models/book");
+    BookModel = require("../models/book"),
+    SwapModel = require("../models/swap"),
     AlertServices = require("./alert");
 var AccountServices = {};
 
@@ -103,7 +104,8 @@ AccountServices.updateCondition = function(info) {
 
 AccountServices.deleteBooks = function(list_id, user_id) {
     var p1 = new Promise(function(resolve, reject) {
-        BooksOwnedModel.deleteBook(list_id)
+        SwapModel.deleteSwapsByListId(list_id)
+            .then(BooksOwnedModel.deleteBook(list_id))
             .then(resolve)
             .catch(reject);
         });
@@ -112,7 +114,6 @@ AccountServices.deleteBooks = function(list_id, user_id) {
             .then(resolve)
             .catch(reject);
         });
-
     return Promise.all([p1, p2]);
 };
 
