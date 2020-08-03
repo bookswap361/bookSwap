@@ -236,4 +236,4 @@ for (var i = 0; i < cancels.length; i++) {
 	cancels[i].addEventListener("click", cancelUpdate);
 }
 
-window.onload = document.getElementById("booksTab").click();
+window.onload = document.getElementById("profileTab").click();
