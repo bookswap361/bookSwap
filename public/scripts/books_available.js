@@ -71,12 +71,15 @@ function getCondition(event) {
             var cost = document.createElement('td');
             cost.innerText = books[i].cost;
             cost.className = "center";
+            cost.classList.add("highlight");
             row.appendChild(cost);
 
             // Create swap button
             var swap = document.createElement('td');
             var swapButton = document.createElement('button');
             swapButton.className = "swap";
+            swapButton.classList.add("btn");
+            swapButton.classList.add("btn-primary");
             swapButton.innerText = "Swap";
             swapButton.onclick = createSwap.bind(this, books[i].user_id);
             swapButton.type = "button";

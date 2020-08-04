@@ -108,3 +108,8 @@ width:100%;
     padding: 1.5em;
     border-radius: 2px;
 }
+
+.highlight {
+    color:#018383;
+    font-weight: bold;
+}
