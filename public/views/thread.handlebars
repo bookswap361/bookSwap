@@ -5,15 +5,14 @@
     </div>
     <div class="section-top d-sm-flex px-3">
         <div class="title col-12 col-sm-9"><h3> {{title}} </h3></div>
+            <div class="col-12 col-sm-3 text-sm-right align-self-sm-center">
             {{#if isOwner}}
-                <div class="col-12 col-sm-3 text-sm-right align-self-sm-center">
                 {{#if isResolved}}Resolved{{/if}}
                 {{#unless isResolved}}
-                    <div class="col-12 col-sm-3 text-sm-right align-self-sm-center">
-                        <form action={{formatResolveLink id}} method="POST">
-                            <input type="hidden" name"thread_id" value="{{id}}">
-                            <input type="submit" name="resolve-button" value="Mark as Resolved" class="btn btn-primary" style="border: 1px solid white">
-                        </form>
+                    <form action={{formatResolveLink id}} method="POST">
+                        <input type="hidden" name"thread_id" value="{{id}}">
+                        <input type="submit" name="resolve-button" value="Mark as Resolved" class="btn btn-primary" style="border: 1px solid rgb(255, 255, 255, 0.2);">
+                    </form>
                 {{/unless}}
             {{/if}}
             {{#unless isOwner}}
@@ -22,30 +21,27 @@
             {{/unless}}
             </div>
         </div>
-        <div class="section" style="width: 100%;">
-            <div class="message-container">
-                {{#each thread}}
-                <div class="message-individual">
-                    <div class="user-details">
-                        <span class="user">{{user}}</span>&nbsp;on&nbsp;<span class="date">{{date}}</span>&nbsp;said:
-                        <span class="arrow row"></span>
-                    </div>
-                    <div class="message">
-                        {{{post}}}
-                    </div>
-                </div>
-                {{/each}}
+    <div class="section">
+        {{#each thread}}
+        <div class="message-individual">
+            <div class="user-details">
+                <span class="user">{{user}}</span>&nbsp;on&nbsp;<span class="date">{{date}}</span>&nbsp;said:
+                <span class="arrow row"></span>
+            </div>
+            <div class="message">
+                {{{post}}}
             </div>
         </div>
-        <div class="col-12 reply-container my-4">
-            <h5>&nbspAdd to the conversation:</h5>
-            <form id="insert-message" action="/forum/insert" method="POST">
-                <div id="text-editor"></div>
-                <input type="hidden" id="text-input" name="post" required>
-                <input type="hidden" name="thread_id" value="{{id}}">
-                <input type="submit" name="insert-message-button" value="Submit" class="mt-2  mr-2 row ml-auto">
-            </form>
-        </div>
+        {{/each}}
+    </div>
+    <div class="col-12 reply-container my-4">
+        <h5>&nbspAdd to the conversation:</h5>
+        <form id="insert-message" action="/forum/insert" method="POST">
+            <div id="text-editor"></div>
+            <input type="hidden" id="text-input" name="post" required>
+            <input type="hidden" name="thread_id" value="{{id}}">
+            <input type="submit" name="insert-message-button" value="Submit" class="mt-2  mr-2 row ml-auto">
+        </form>
     </div>
 </div>
 <script src="https://cdn.ckeditor.com/ckeditor5/20.0.0/classic/ckeditor.js"></script>
