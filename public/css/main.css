@@ -1,124 +1,99 @@
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 body {
-  color: #342B38;
-  font-family: 'Raleway', sans-serif;
+    color: #342B38;
+    font-family: 'Raleway', sans-serif;
 }
 
 .row {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .topHeader {
-  margin-top: 0px;
-  background-color: #F8F3EA;
-  padding-bottom: 6px;
-}
-
-#fwLogo {
-  max-width: 100%;
+    margin-top: 0px;
+    background-color: #F8F3EA;
+    padding-bottom: 6px;
 }
 
 .login {
-  margin-right: 20px;
-  margin-left: auto;
-  margin-top: 10px;
+    margin-right: 20px;
+    margin-left: auto;
+    margin-top: 10px;
 }
 
 .navbar {
-  background-color: #80BDAB;
-  box-shadow: 0px 2px 1px grey;
+    background-color: #80BDAB;
+    box-shadow: 0px 2px 1px grey;
 }
 
 #mainNavBar .nav-link{
-  color: #002F43;
-  letter-spacing: 0.75px;
-  size: 3em;
+    color: #002F43;
+    letter-spacing: 0.75px;
+    size: 3em;
 }
-  
+    
 #mainNavBar .current{
-  color: white;
-  font-weight: bolder;
-  padding-bottom: .2rem;
-  background-color: #507B9D;
+    color: white;
+    font-weight: bolder;
+    padding-bottom: .2rem;
+    background-color: #507B9D;
 }
-  
+    
 #mainNavBar .nav-link:hover{
-  color: white;
-  box-shadow: 0px 1px 0px black;
-  padding-bottom: 0.2rem;
+    color: white;
+    box-shadow: 0px 1px 0px black;
+    padding-bottom: 0.2rem;
 }
 
 /* prevent Safari bug that stretches images in fluid containers */
 .container-fluid *{
-  align-items: flex-start;
+    align-items: flex-start;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
 #info span{
-  margin-left: 5px;
-  margin-right: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .btn-primary{
-  background-color: #0c7b93;
-  border-color: #0c7b93;
+    background-color: #0c7b93;
+    border-color: #0c7b93;
+}
+
+.btn-primary:hover {
+    background-color: #00A2BA;
+    border-color: #00A2BA;
 }
 
 #book_hidden{
-  display: none;
+    display: none;
 }
 
 .btn {
-  margin-left: 10px;
+    margin-left: 10px;
 }
 
 #container {
 width:100%;
 }
 
-
-/*styling for top bar */
-#top-bar {
-  padding:10px;
-  background-color: #2A4185;
-  width:100%;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  }
-
-#top-bar h3 {
-color:white;
-}
-
-#info {
-  font-size:1.5em;
-  text-align:center;
-  background-color: #F8F3EA;
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-  box-shadow: grey 2px 2px 2px;
-}
-
 #info span{
-  color:#084177;
-  font-weight: bolder;
+    color:#084177;
+    font-weight: bolder;
 }
 
 #infographic {
-  max-width: 85%;
+    max-width: 85%;
 } 
 
 .dictionary {
-  position: absolute;
-  top: 5%;
-  left: 5%;
-  background-color: rgb(245, 245, 245, .97);
-  padding: 1.5em;
-  border-radius: 2px;
+    background-color: rgb(245, 245, 245, .97);
+    padding: 1.5em;
+    border-radius: 2px;
 }

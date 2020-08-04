@@ -8,9 +8,9 @@ body{
     border: 1px solid #ccc;
     background-color: #f1f1f1;
     border-radius: 10px;
-  }
+}
   
-  .tab button {
+.tab button {
     background-color: inherit;
     float: left;
     border: none;
@@ -18,23 +18,23 @@ body{
     cursor: pointer;
     padding: 14px 16px;
     transition: 0.3s;
-  }
+}
   
-  .tab button:hover {
+.tab button:hover {
     background-color: #ddd;
-  }
+}
   
-  .tab button.active {
+.tab button.active {
     background-color: #ccc;
-  }
+}
   
-  .tabcontent {
+.tabcontent {
     display: none;
     padding: 6px 12px;
     /* border: 1px solid #ccc; */
     border-top: none;
     text-align: center;
-  }
+}
   
 .smallHeader{
     text-transform: uppercase;
