@@ -1,49 +1,62 @@
 <link rel="stylesheet" href="/css/books_available.css">
+<div class="container">
+    <div class="col-sm-9">
+        <div class="row">
+            View:   &emsp;
+            <form id="filter-swaps" action="/books_available/" method="GET">
+                <input type="radio" form="filter-swaps" id="view-all" name="filter" value="all" onclick="filterSubmit(this)" {{{setChecked "all" criteria}}}>
+                <label for="view-all">All   &emsp;</label>
+                <input type="radio" form="filter-swaps" id="view-afford" name="filter" value="afford" onclick="filterSubmit(this)" {{{setChecked "afford" criteria}}}>
+                <label for="view-afford">Swaps I Can Afford &emsp;</label>
+            </form>
+        </div>
+    </div>
 
-<div class="col-md-8 mx-auto my-2">
-	<h2>Swap a Book</h2>
-	<table>
-		<tr>
-			<th id="book_hidden"></th>
-		</tr>
-		<tr>
-			<th>Title</th>
-			<th>Author</th>
-			<th>Copies</th>
-			<th></th>
-		</tr>
+    <div class="col-md-8 mx-auto my-2">
+        <h2>Swap a Book</h2>
+	    <table>
+		    <tr>
+                <th id="book_hidden"></th>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+			    <th>Copies</th>
+			    <th></th>
+		    </tr>
 
-		{{#each books}}
-		<tr id={{this.book_id}}>
-			<td> {{this.title}} </td>
-			<td> {{this.name}} </td>
-			<td class="center"> {{this.copies}} </td>
-			<td>
-				<button type="button" data-toggle="modal" data-target="#conditionModal" class="details">Details
-				</button>
-			</td>
-		</tr>
-		{{/each}}
-	</table>
+            {{#each books}}
+                <tr id={{this.book_id}}>
+                    <td> {{this.title}} </td>
+                    <td> {{this.name}} </td>
+                    <td class="center"> {{this.copies}} </td>
+                    <td>
+                        <button type="button" data-toggle="modal" data-target="#conditionModal" class="details">Details</button>
+                    </td>
+                </tr>
+            {{/each}}
+        </table>
 
-<!-- Modal for book conditions/add a swap -->
-<div id="conditionModal" class="modal bd-example-modal-lg" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            	<h5>Request a Swap</h5>
-            	<button id="exitButton" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            <p>Available Book Details</p>
-            <table id=conditionTable>
-
-            </table
+        <!-- Modal for book conditions/add a swap -->
+        <div id="conditionModal" class="modal bd-example-modal-lg" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Request a Swap</h5>
+                        <button id="exitButton" type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Available Book Details</p>
+                        <table id=conditionTable></table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+
 <script src="../scripts/books_available.js"></script>
+<script src="../scripts/filter.js"></script>

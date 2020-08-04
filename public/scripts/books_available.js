@@ -3,7 +3,9 @@ function getCondition(event) {
 
 	// Get book_id for row.
 	var book_id = event.target.parentNode.parentNode.id;
-	var url = "../books_available/condition/" + book_id;
+    var isAllChecked = document.getElementById("view-all").checked;
+
+    var url = "../books_available/condition/?id=" + book_id + "&filter=" + (isAllChecked ? "all" : "afford");
 
 	fetch(url, {
 		method: 'GET',
