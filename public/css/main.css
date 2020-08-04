@@ -71,6 +71,17 @@ body {
     border-color: #00A2BA;
 }
 
+.btn-info {
+    background-color: #ffacb7;
+    border-color: #ffacb7;
+    color: #b52b65;
+}
+
+.btn-info:hover {
+    background-color: #b52b65;
+    border-color: #b52b65;
+}
+
 #book_hidden{
     display: none;
 }

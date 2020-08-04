@@ -28,7 +28,7 @@
     {{#if result.new}}
         <div class="row justify-content-center align-items-center mt-2 mb-4 text-center text-sm-left px-3">
             <div class="col-12 col-md-8 info">
-                This book hasn't been added to our library yet! Would you like to add it? &nbsp;
+                This book hasn't been added to our library yet! Would you like to add it? <br>
                 <em>Note: This book must be added to the library in order to trade this book.</em>
             </div>
             <div class="col-6 col-md-2 text-center py-2 py-md-0">
@@ -51,7 +51,7 @@
                 {{#if wishlist}}
                     {{{displayButton wishlist result.book_id}}}
                 {{else}}
-                    <button type='button' class='btn text-center' id='addWishBtn' onclick='addBook.call(null, "wishlist")' style='background-color: #ffacb7;'><i class="far fa-heart"></i> Add to my wishlist</button>
+                    <button type='button' class='btn btn-info text-center' id='addWishBtn' onclick='addBook.call(null, "wishlist")'><i class="far fa-heart"></i> Add to my wishlist</button>
                 {{/if}}                 
             </div>
         </div>
