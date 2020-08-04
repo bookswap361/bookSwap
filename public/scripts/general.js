@@ -14,3 +14,7 @@ function fetchHelper(url, method, data = {}) {
 function windowReload() {
     window.location.reload();
 };
+
+function filterSubmit(radio) {
+    radio.form.submit();
+};
