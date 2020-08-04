@@ -48,7 +48,6 @@ function makeReq() {
             allResults.push(data);
         } 
         var i = 0;
-        console.log(allResults)
         allResults.forEach(function(item){
             if (item.book_id != null) {
                 showResult(item, i);
