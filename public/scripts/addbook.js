@@ -15,32 +15,13 @@ function showAddForm(){
     chooseCondition.classList.remove("hidden");
 }
 
-function addBook(list){
-    new Promise(function(resolve, reject) {
-        resolve(getDataOwn());
-    }).then(function(result){
-
-        makeReq(result, list);
-    }).catch(function(){
-        console.log('error!')
-        if (addedNotice) {
-            addedNotice.innerHTML = "";
-        }
-        makeReq(result);
-    }).catch(function(err){
-        console.log('error!', err)
-    })
-
-}
-
-
 function getDataOwn(){
     var payload = {user_id: null, book_id: null, condition_id: null, condition_description: null, list_date: null};
     payload.user_id = 1;
     payload.book_id = parseInt(document.getElementById("newBook_id").value);
     payload.condition_id = parseInt(document.getElementById("newCondition").value);
     payload.condition_description = convertCondition(payload.condition_id).description;
-    payload.list_date = getDate();
+    payload.list_date = new Date();
     
     payload.title = document.getElementById("newTitle").value;
     payload.condition_points = convertCondition(payload.condition_id).points;
@@ -48,72 +29,36 @@ function getDataOwn(){
     return payload
 }
 
-function makeReq(data, type) {
+function makeReq(type) {
+    var data = getDataOwn();
     switch (type) {
         case "booklist":
-            var req = new XMLHttpRequest();
-            req.open("POST", "../account/add_books", true);
-            req.setRequestHeader('Content-Type', 'application/json');
-            req.send(JSON.stringify(data))
-
-            console.log(data);
             var confirmStr = `You have successfully added ${data.title} in ${data.condition_description} condition (asking for ${data.condition_points} points) to your collection! View your account to see it.`;
-
-            req.onload = function(){
-                if(req.status >= 200 && req.status < 400) {
-                    confirmDiv.innerText = confirmStr;
-                    addBookBtn.setAttribute("disabled", "true");
-                } else {
-                confirmDiv.innerText = "Something went wrong! Please refresh and try again.";
-                }
-            }
-    
-            req.onprogress = function(event) {
-            confirmDiv.innerText = "Adding book...";
-            }
-
-            req.onerror = function() {
-            console.log('error');
-            confirmDiv.innerText = "Error! Refresh and try again";
-            }
-    break;
-    case "wishlist":
-        var req = new XMLHttpRequest();
-        req.open("POST", "../account/add_wish", true);
-        req.setRequestHeader('Content-Type', 'application/json');
-        req.send(JSON.stringify(data))
-
-        console.log(data);
-        var confirmStr = `You have successfully added ${data.title} to your wishlist. View your account to see it.`;
-
-        req.onload = function(){
-            if(req.status >= 200 && req.status < 400) {
+            
+            fetchHelper("/account/add_books", "POST", data)
+            .then(function() {                
                 confirmDiv.innerText = confirmStr;
-                addWishBtn.setAttribute("disabled", "true");
-            } else {
-                confirmDiv.innerText = "Something went wrong! Please refresh and try again.";
-                }
-            }
-    
-        req.onprogress = function(event) {
-            confirmDiv.innerText = "Adding book...";
-        }
-
-        req.onerror = function() {
-            console.log('error');
+                addBookBtn.setAttribute("disabled", "true");
+            })
+            .catch(function(err) {
+                console.log(err);
+                confirmDiv.innerText = "Error! Refresh and try again.";
+            });
+        break;
+    case "wishlist":
+        var confirmStr = `You have successfully added ${data.title} to your wishlist. View your account to see it.`;
+        
+        fetchHelper("/account/add_wish", "POST", data)
+        .then(function() {
+            confirmDiv.innerText = confirmStr;
+            addWishBtn.setAttribute("disabled", "true");
+        })
+        .catch(function(err) {
+            console.log(err);
             confirmDiv.innerText = "Error! Refresh and try again";
-        }
+        });
+        break;
     }
-}
-
-function getDate(){
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
-
-    today = `${yyyy}-${mm}-${dd}`;
-    return today;
 }
 
 function convertCondition(condition){
