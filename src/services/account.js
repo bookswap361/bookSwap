@@ -1,10 +1,11 @@
 var UserModel = require("../models/user"),
     BooksOwnedModel = require("../models/books_owned"),
     WishListModel = require("../models/wishlist"),
-    SwapServices = require("./swap"),
+    SwapServices = require("../services/swap"),
     BookModel = require("../models/book"),
     SwapModel = require("../models/swap"),
-    AlertServices = require("./alert");
+    AlertServices = require("../services/alert");
+    ForumServices = require("../services/forum");
 var AccountServices = {};
 
 AccountServices.getAccount = function(id) {
@@ -79,23 +80,17 @@ AccountServices.addWish = function(body) {
 };
 
 
-AccountServices.deleteAccount = function(body) {
-    var p1 = new Promise(function(resolve, reject) {
-        BooksOwnedModel.deleteAllBooks(body)
-            .then(resolve)
-            .catch(reject);
-            });
-    var p2 = new Promise(function(resolve, reject) {
-        WishListModel.deleteAllWish(body)
-            .then(resolve)
-            .catch(reject);
-            });
-    var p3 = new Promise(function(resolve, reject) {
-        UserModel.deleteUser(body)
-            .then(resolve)
-            .catch(reject);
-             });
-    return Promise.all([p1, p2, p3])
+AccountServices.deleteAccount = function(user_id) {
+    return new Promise(function(resolve, reject) {
+        ForumServices.scrubForumByDeletedUserId(user_id)
+        .then(SwapServices.scrubSwapsByDeletedUserId.bind(null, user_id))
+        .then(AlertServices.deleteByUserId.bind(null, user_id))
+        .then(BooksOwnedModel.deleteAllBooks.bind(null, user_id))
+        .then(WishListModel.deleteAllWish.bind(null,user_id))
+        .then(UserModel.deleteUser.bind(null,user_id))
+        .then(resolve)
+        .catch(reject);
+    });
 };
 
 AccountServices.updateCondition = function(info) {

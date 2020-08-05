@@ -8,82 +8,58 @@ bindSearch();
 function bindSearch(){
     document.getElementById("searchSubmit").addEventListener("click", function(event){        
         event.preventDefault();
-        new Promise(function(resolve, reject){
-            resolve(resetResults())
-        }).then(function(result){
-            loadingText.innerText = "Loading and filtering results... please wait... ";
-        }).then(function(result){
-            makeReq()
-        }).catch(function(){
-            loadingText.innerText = "Hmm something went wrong, please try again.";
-        })
+        makeReq();
     });
 }
 
 function makeReq() {
+    resetResults();
     var query = document.getElementById("searchText").value;
-    
-    return new Promise(function(resolve, reject){        
-        resultsDiv.classList.remove("hidden");            
-        var req = new XMLHttpRequest();
-        var baseURL = `https://openlibrary.org/search.json?q=${query}`;
-        req.open("GET", baseURL, true);
-        req.send(null);
-
-        req.onload = function(){
-            if(req.status >= 200 && req.status < 400) {
-
-                new Promise(function(resolve, reject){
-                    resolve(JSON.parse(req.responseText))
-                }).then(function(results){
-                    var allResults = [];
-                    var max = 20;
-                    if (results.docs.length < 20) max = results.docs.length;
-                    for(var i=0; i<max; i++) {
-                        var data = {title: null, name: null, genre: [], thumbnail_url: null, book_id: null, author_id: null, description: null};
+    loadingText.innerText = "Loading and filtering results... please wait... ";
+    fetchHelper(`https://openlibrary.org/search.json?q=${query}`, "GET")
+    .then(function(data) {
+        return data.json();
+    })
+    .then(function(results) {
+        resultsDiv.classList.remove("hidden");
+        loadingText.innerText = "";
+        var allResults = [];
+        var max = 20;
+        if (results.docs.length < 20) max = results.docs.length;
+        for(var i=0; i<max; i++) {
+            var data = {title: null, name: null, genre: [], thumbnail_url: null, book_id: null, author_id: null, description: null};
                         
-                        if (results.docs[i].hasOwnProperty("title_suggest")) data.title  = results.docs[i].title_suggest;
-                        if (results.docs[i].hasOwnProperty("author_name")) data.name = results.docs[i].author_name[0];
-                        if (results.docs[i].hasOwnProperty("key")) {
-                            var key = results.docs[i].key;
-                            data.book_id = key.split("/")[2];
-                        }
-                        if (results.docs[i].hasOwnProperty("author_key")) data.author_id = results.docs[i]["author_key"][0];
-                        if (results.docs[i].hasOwnProperty("cover_i")){
-                            data.thumbnail_url = `https://covers.openlibrary.org/b/id/${results.docs[i].cover_i}-M.jpg`
-                        }
-                        if (results.docs[i].hasOwnProperty("first_sentence")) data.description = results.docs[i]["first_sentence"][0];
-                        if (results.docs[i].hasOwnProperty("subject")) {
-                            results.docs[i].subject.forEach(function(item){
-                                data.genre.push(item);
-                            });
-                        }
-                        allResults.push(data);
-                    }
-                    return allResults;
-                }).then(function(results){
-                    console.log(results);
-                    var i = 0;
-                    results.forEach(function(item){
-                        if (item.book_id != null) {
-                            showResult(item, i);
-                            resultData.push(item)
-                            i++;
-                        }
-                    })
-                    loadingText.innerText = `${i} results found for "${query}"`;
-                    noFind.classList.remove("hidden");
-                })
-                .catch(function(){
-                    resultsDiv.innerHTML = "Error! Try search again";
+            if (results.docs[i].hasOwnProperty("title_suggest")) data.title  = results.docs[i].title_suggest;
+            if (results.docs[i].hasOwnProperty("author_name")) data.name = results.docs[i].author_name[0];
+            if (results.docs[i].hasOwnProperty("key")) {
+                var key = results.docs[i].key;
+                data.book_id = key.split("/")[2];
+            }
+            if (results.docs[i].hasOwnProperty("author_key")) data.author_id = results.docs[i]["author_key"][0];
+            if (results.docs[i].hasOwnProperty("cover_i")){
+                data.thumbnail_url = `https://covers.openlibrary.org/b/id/${results.docs[i].cover_i}-M.jpg`
+            }
+            if (results.docs[i].hasOwnProperty("first_sentence")) data.description = results.docs[i]["first_sentence"][0];
+            if (results.docs[i].hasOwnProperty("subject")) {
+                results.docs[i].subject.forEach(function(item){
+                    data.genre.push(item);
                 });
-            } else resultsDiv.innerHTML = "404 Error! Try search again";
-        }
-        req.onerror = function() {
-            console.log("error")
-        }        
+            }
+            allResults.push(data);
+        } 
+        var i = 0;
+        allResults.forEach(function(item){
+            if (item.book_id != null) {
+                showResult(item, i);
+                resultData.push(item)
+                i++;
+            }
+        })
+        loadingText.innerText = `${i} results found for "${query}"`;
+        noFind.classList.remove("hidden");
     })
 }
+
 
 function showResult(data, num) {
     var newRow = makeRow()
@@ -185,18 +161,12 @@ resultsDiv.onclick = function(event) {
 
 function renderBook(data){
     var id = data.book_id;
+    if (id) {
+        fetchHelper(`/book/${id}`, "POST", data)
+        .catch(function(err) {
+            console.log(err);
+            resultsDiv.innerHTML = "Hmm something went wrong. Please refresh and try again.";
+        });
+    }
     
-    var req = new XMLHttpRequest();
-    req.open("POST", `/book/${id}`, true);
-    req.setRequestHeader('Content-Type', 'application/json');
-    req.send(JSON.stringify(data))
-
-    req.onload = function(){
-        if(req.status >= 200 && req.status < 400) {
-            window.open(`/book/${id}`, "_self");
-        } else resultsDiv.innerHTML = "Hmm something went wrong. Please refresh and try again.";
-    }
-    req.onerror = function() {
-        console.log("error")
-    }
 }

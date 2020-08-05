@@ -6,21 +6,15 @@ function getCondition(event) {
     var isAllChecked = document.getElementById("view-all").checked;
 
     var url = "../books_available/condition/?id=" + book_id + "&filter=" + (isAllChecked ? "all" : "afford");
+    
+    fetchHelper(url, "GET")
+    .then(function(data) {
+        return data.json();
+    })
+    .then(function(response) {
+        buildTable(response)
+    });
 
-	fetch(url, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json'
-		}
-	}).then(function (data) {
-		return data.json();
-	}).then(function(response) {
-		buildTable(response);
-	}).catch(function (err){
-		console.log(err);
-	}).catch(function(err){
-		console.log(err);
-	});
 }
 
 // Builds a table displaying conditions and costs of available books.
@@ -99,26 +93,18 @@ function getCondition(event) {
  // Creates a new swap and adds it to the database.
 function createSwap(userId, event) {
     var cost = event.target.parentNode.parentNode.cells[4].innerText;
-    console.log(cost);
     var info = {
         "list_id": event.target.parentNode.parentNode.id,
         "owner_id": userId,
         "cost": cost
     };
 
-    fetch("../swap/create", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-		body: JSON.stringify(info)
-    }).then(function(result) {
+    fetchHelper("/swap/create", "POST", info)
+    .then(function() {
         document.getElementById('exitButton').click();
         document.location.href = '../books_available';
         console.log('Swap added.');
-    }).catch(function(err){
-        console.log(err);
-    });
+    })
 }
 
 // add event listeners to all 'details' buttons

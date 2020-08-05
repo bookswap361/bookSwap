@@ -29,7 +29,6 @@ BooksAvailableServices.getAffordableBooks = function(userId) {
             .then(function(result) {
                 BookModel.getAvailableBooksByPoints(userId, result[0].points)
                     .then(function(result) {
-                        console.log('book filter', result)
                         var books = [];
                         result.forEach(function(book) {
                             books.push({

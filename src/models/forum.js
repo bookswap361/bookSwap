@@ -54,6 +54,14 @@ ForumModel.getThreadsByUserId = function(id) {
     return mysql.query(getQuery("getThreadsByUserId"), [id]);
 };
 
+ForumModel.scrubThreadsByDeletedUserId = function(id) {
+    return mysql.query(getQuery("scrubThreadsByDeletedUserId"), [id]);
+};
+
+ForumModel.scrubMessagesByDeletedUserId = function(id) {
+    return mysql.query(getQuery("scrubMessagesByDeletedUserId"), [id]);
+};
+
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -83,6 +91,12 @@ function getQuery(type) {
             break;
         case "getThreadsByUserId":
             query = "SELECT t.thread_id, t.title, u.first_name, u.last_name, DATE_FORMAT(t.create_date,'%M-%D-%Y') as create_date, t.is_resolved FROM thread t INNER JOIN user u ON t.user_id = u.user_id WHERE t.user_id = ? GROUP BY t.thread_id ORDER BY t.thread_id;";
+            break;
+        case "scrubThreadsByDeletedUserId":
+            query = "UPDATE thread SET user_id = 1 WHERE user_id = ?;"
+            break
+        case "scrubMessagesByDeletedUserId":
+            query = "UPDATE messages SET user_id = 1 WHERE user_id = ?;"
             break;
     }
     return query;

@@ -13,8 +13,8 @@ WishList.deleteWish = function(body) {
     return mysql.query(getQuery("deleteWish"), [body.user_id, body.book_id]);
 }
 
-WishList.deleteAllWish = function(body) {
-    return mysql.query(getQuery("deleteAllWish"), [body.user_id]);
+WishList.deleteAllWish = function(id) {
+    return mysql.query(getQuery("deleteAllWish"), [id]);
 }
 
 WishList.searchWish = function(body) {

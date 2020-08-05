@@ -10,20 +10,20 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/forum.css">
-
+    <script src="/scripts/general.js"></script>
 </head>
 <body>
     
     <div class="container-fluid">
         <div class="row topHeader">
             <div class="col-8 col-md-3 mx-auto mx-md-0">
-                <a href="/"><img src="/imgs/forwordheader.png" id="fwLogo" class="img-fluid"></a>
+                <a href="/"><img src="/imgs/forwordheader.png" class="img-fluid"></a>
             </div>
             <div class="col-12 col-md-9 mx-auto mx-md-0 d-md-block px-md-0 mt-lg-4">
                 {{#if first_name}}
                     <div class="row d-block text-center text-md-right mr-md-3">
                         <form id="logoutForm" form action ="/user/logout" method="POST" class="inline-form">
-                            <span style="font-size: 1.75em; color: #184d47; ">Welcome back, {{first_name}}!</span>
+                            <span id="welcome">Welcome back, {{first_name}}!</span>
                             <input name= "logoutBtn" type="submit" value="Logout">
                         </form>
                     </div>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="row d-block text-center text-md-right mr-md-4">
                         {{#if bad_login}}
-                            <p style="color: red;">Invalid login credentials</p>
+                            <p id="error">Invalid login credentials</p>
                         {{/if}}
                         not a member? &nbsp; <a href="/signup">create an account!</a>
                     </div>

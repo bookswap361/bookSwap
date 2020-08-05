@@ -1,40 +1,46 @@
-.topic-cell {
-    width: 350px;
+a {
+    color: #4a6185;
 }
 
-.topic-container {
-    display: flex;
+#start a {
+    color: #17a2b8;
+}
+
+.header {
+    border-bottom: 1px solid #3b6978;
+    color: #184d47;
 }
 
 .title {
+    font-size: 133%;
     width: 90%;
-}
-
-.message-individual:nth-child(odd) {
-    padding: 5px;
-}
-
-.message-individual:nth-child(even) {
-    padding: 5px;
-    text-align: right;
 }
 
 .user-details {
     font-size: 12px;
 }
 
+.message-individual {
+    padding: 5px;
+}
+
+.message-individual:nth-child(even) {
+    text-align: right;
+}
+
 .message {
     padding: 8px;
-    padding-left: 15px;
     border-radius: 12px;
 }
 
 .message-individual:nth-child(even) .message {
     background-color: #cbeaed;
+    padding-right: 15px;
 }
 
 .message-individual:nth-child(odd) .message {
     background-color: #d1eaa3;
+    padding-left: 15px;
 }
 
 .arrow {
@@ -48,12 +54,15 @@
     margin-left: auto;
     margin-right: 12px;
     border-bottom: 8px solid #cbeaed;
-
 }
 
 .message-individual:nth-child(odd) .arrow {
     margin-left: 12px;
     border-bottom: 8px solid #d1eaa3;
+}
+
+#resolveForm .btn{
+    border: 1px solid rgb(255,255,255,0.5);
 }
 
 .forum-card {
@@ -86,17 +95,9 @@
     border-top-right-radius: 10px;
 }
 
-.title {
-    font-size: 133%;
-}
-
 .title-icon {
     font-size: 150%;
     color: #8ccbbe;
-}
-
-a {
-    color: #4a6185;
 }
 
 .date {
@@ -114,11 +115,24 @@ a {
 }
 
 .fa-columns {
-    font-size: 150%;
+    font-size: 4rem;
+}
+
+#forTitle {
+    font-size:3rem;
+    margin-bottom: -8px;
+}
+
+#caption span {
+    color: #d8345f;
 }
 
 .resolved {
     color: #93889E;
+}
+
+p {
+    margin-bottom: 0px;
 }
 
 /* most styling from: https://css-tricks.com/snippets/css/simple-and-nice-blockquote-styling/*/
@@ -141,4 +155,3 @@ blockquote p {
     display: inline;
     font-style: italic;
 }
-

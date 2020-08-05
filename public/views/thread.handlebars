@@ -3,16 +3,21 @@
     <div class="mt-4 mb-2">
         <a href="/forum">Go Back</a>
     </div>
-    <div class="section-top d-sm-flex px-3">
-        <div class="title col-12 col-sm-9"><h3> {{title}} </h3></div>
-            <div class="col-12 col-sm-3 text-sm-right align-self-sm-center">
-            {{#if isOwner}}
-                {{#if isResolved}}Resolved{{/if}}
-                {{#unless isResolved}}
-                    <form action={{formatResolveLink id}} method="POST">
-                        <input type="hidden" name"thread_id" value="{{id}}">
-                        <input type="submit" name="resolve-button" value="Mark as Resolved" class="btn btn-primary" style="border: 1px solid rgb(255, 255, 255, 0.2);">
-                    </form>
+    <div class="section-top d-flex px-3">
+            <div class="title col-sm-9"><h3> {{title}} </h3></div>
+            <div class="col-sm-3">
+                {{#if isOwner}}
+                    {{#if isResolved}}Resolved{{/if}}
+                    {{#unless isResolved}}
+                        <form action={{formatResolveLink id}} method="POST" id="resolveForm">
+                            <input type="hidden" name"thread_id" value="{{id}}">
+                            <input type="submit" name="resolve-button" value="Mark as Resolved" class="btn btn-primary">
+                        </form>
+                    {{/unless}}
+                {{/if}}
+                {{#unless isOwner}}
+                    {{#if isResolved}}Resolved{{/if}}
+                    {{#unless isResolved}}Not Resolved{{/unless}}
                 {{/unless}}
             {{/if}}
             {{#unless isOwner}}
@@ -21,15 +26,19 @@
             {{/unless}}
             </div>
         </div>
-    <div class="section">
-        {{#each thread}}
-        <div class="message-individual">
-            <div class="user-details">
-                <span class="user">{{user}}</span>&nbsp;on&nbsp;<span class="date">{{date}}</span>&nbsp;said:
-                <span class="arrow row"></span>
-            </div>
-            <div class="message">
-                {{{post}}}
+        <div class="section">
+            <div class="message-container">
+                {{#each thread}}
+                <div class="message-individual">
+                    <div class="user-details">
+                        <span class="user">{{user}}</span>&nbsp;on&nbsp;<span class="date">{{date}}</span>&nbsp;said:
+                        <span class="arrow row"></span>
+                    </div>
+                    <div class="message">
+                        {{{post}}}
+                    </div>
+                </div>
+                {{/each}}
             </div>
         </div>
         {{/each}}

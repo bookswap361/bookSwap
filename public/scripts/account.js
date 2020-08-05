@@ -42,16 +42,9 @@ function updateInventory(event) {
 		"condition_description": condition,
 		"condition_id": condition_id
 	};
-	
-	fetch("../account/update_books", {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(info)
-	}).then(function() {
-		window.location.reload();
-	})
+
+    fetchHelper("/account/update_books", "POST", info)
+    .then(windowReload);
 }
 
 // Makes a book's condition editable.
@@ -97,16 +90,11 @@ function makeEditable(event) {
 // Delete Book from Inventory.
 function deleteInventory(event) {
 	var list_id = event.target.parentNode.parentNode.id;
-
-	fetch("../account/delete_books", {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({"list_id": list_id})
-	}).then(function() {
-		window.location.reload();
-	})
+    var dataObj = {
+        "list_id": list_id
+    };
+    fetchHelper("/account/delete_books", "POST", dataObj)
+    .then(windowReload);
 }
 
 // Cancels the update.
@@ -127,7 +115,7 @@ function cancelUpdate(event){
 	var cancelButton = currentRow.item(5).childNodes[3];
 	cancelButton.style.display = 'none';
 
-	window.location.reload();
+	windowReload();
 }
 
 // Swap tab functionality.
