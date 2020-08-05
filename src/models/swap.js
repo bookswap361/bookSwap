@@ -91,6 +91,14 @@ Swap.deleteSwapsByListId = function(list_id) {
     return mysql.query(getQuery("deleteSwapsByListId"), [list_id.list_id]);
 }
 
+Swap.scrubTradedToByDeletedUserId = function(user_id) {
+    return mysql.query(getQuery("scrubTradedToByDeletedUserId"), [user_id]);
+}
+
+Swap.scrubTradedByByDeletedUserId = function(user_id) {
+    return mysql.query(getQuery("scrubTradedByByDeletedUserId"), [user_id]);
+}
+
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -177,6 +185,12 @@ function getQuery(type) {
             break;
         case "deleteSwapsByListId":
             query = "DELETE FROM swap WHERE list_id = ?;";
+            break;
+        case "scrubTradedToByDeletedUserId":
+            query = "UPDATE swap SET traded_to = 1 WHERE traded_to = ?;"
+            break;
+        case "scrubTradedByByDeletedUserId":
+            query = "UPDATE swap SET traded_by = 1 WHERE traded_by = ?;"
             break;
     }
 
