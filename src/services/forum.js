@@ -129,4 +129,13 @@ ForumServices.resolveThread = function(data) {
     return ForumModel.resolveThread(Number(data.id));        
 };
 
+ForumServices.scrubForumByDeletedUserId = function(user_id) {
+    return new Promise(function(resolve, reject) {
+        ForumModel.scrubMessagesByDeletedUserId(user_id)
+            .then(ForumModel.scrubThreadsByDeletedUserId.bind(null, user_id))
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
 module.exports = ForumServices;

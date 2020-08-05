@@ -27,9 +27,10 @@ UserServices.getUserByEmail = function(body) {
     });
 };
 
-UserServices.deleteUser = function(body) {
+UserServices.deleteUser = function(id) {
     return new Promise(function(resolve, reject) {
-        UserModel.deleteUser(body)
+        console.log(id);
+        UserModel.deleteUser(id)
             .then(resolve)
             .catch(reject);
     });

@@ -3,6 +3,7 @@ var BookModel = require("../models/book"),
     SwapModel = require("../models/swap"),
     BooksOwnedModel = require("../models/books_owned"),
     AlertModel = require("../models/alert");
+    ForumServices = require("../services/forum")
 var SwapServices = {};
 
 SwapServices.getAllSwaps = function() {
@@ -271,5 +272,14 @@ SwapServices.updateSwap = function(id){
             .catch(reject);
     });  
 }
+
+SwapServices.scrubSwapsByDeletedUserId = function(id) {
+    return new Promise(function(resolve, reject) {
+        SwapModel.scrubTradedByByDeletedUserId(id)
+            .then(SwapModel.scrubTradedToByDeletedUserId.bind(null, id))
+            .then(resolve)
+            .catch(reject);
+    });
+};
 
 module.exports = SwapServices;
