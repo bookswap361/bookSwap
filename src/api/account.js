@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var AccountServices = require("../services/account");
+var AlertServices = require("../services/alert");
 const { route } = require("./user");
 
 router.route("/")

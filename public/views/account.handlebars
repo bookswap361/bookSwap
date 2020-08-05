@@ -123,7 +123,7 @@
                             <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
                             <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
                             <td>{{#if claim_open_date}} {{formatDate claim_open_date}} {{/if}}</td>
-                            <td>{{{getStatus user_id swap_id traded_to traded_by approve_date reject_date ship_date received_date not_received lost_limit refund_date is_complete has_claim lost_date}}}</td>
+                            <td>{{{getStatus this}}}</td>
                         </tr>
                     {{/unless}}
                 {{/each}}
@@ -164,7 +164,7 @@
 
                             {{#if is_accepted}}
                                 <td>
-                                    {{{getStatus user_id swap_id traded_to traded_by approve_date reject_date ship_date received_date not_received lost_limit refund_date is_complete has_claim lost_date}}}
+                                    {{{getStatus this}}}
                                 </td>
                             {{/if}}
                             {{#unless is_accepted}}
@@ -209,7 +209,7 @@
                             <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
                             <td>{{#if lost_date}} {{formatDate lost_date}} {{/if}}</td>
                             <td>{{#if refund_date}} {{formatDate refund_date}} {{/if}}</td>
-                            <td>{{{getStatus user_id swap_id traded_to traded_by approve_date reject_date ship_date received_date not_received lost_limit refund_date is_complete has_claim lost_date}}}</td>
+                            <td>{{{getStatus this}}}</td>
                         </tr>
                     {{/if}}
                 {{/each}}
@@ -242,7 +242,7 @@
                             <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
                             <td>{{#if lost_date}} {{formatDate lost_date}} {{/if}}</td>
                             <td>{{#if refund_date}} {{formatDate refund_date}} {{/if}}</td>
-                            <td>{{{getStatus user_id swap_id traded_to traded_by approve_date reject_date ship_date received_date not_received lost_limit refund_date is_complete has_claim lost_date}}}</td>
+                            <td>{{{getStatus this}}}</td>
                         </tr>
                     {{/if}}
                 {{/each}}
