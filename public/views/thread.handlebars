@@ -9,9 +9,9 @@
                 {{#if isOwner}}
                     {{#if isResolved}}Resolved{{/if}}
                     {{#unless isResolved}}
-                        <form action={{formatResolveLink id}} method="POST">
+                        <form action={{formatResolveLink id}} method="POST" id="resolveForm">
                             <input type="hidden" name"thread_id" value="{{id}}">
-                            <input type="submit" name="resolve-button" value="Mark as Resolved" class="btn btn-primary" style="border: 1px solid white">
+                            <input type="submit" name="resolve-button" value="Mark as Resolved" class="btn btn-primary">
                         </form>
                     {{/unless}}
                 {{/if}}
@@ -21,7 +21,7 @@
                 {{/unless}}
             </div>
         </div>
-        <div class="section" style="width: 100%;">
+        <div class="section">
             <div class="message-container">
                 {{#each thread}}
                 <div class="message-individual">

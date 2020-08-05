@@ -15,9 +15,6 @@
     <div class="col-md-8 mx-auto my-2">
         <h2>Swap a Book</h2>
 	    <table>
-		    <tr>
-                <th id="book_hidden"></th>
-            </tr>
             <tr>
                 <th>Title</th>
                 <th>Author</th>
@@ -26,14 +23,14 @@
 		    </tr>
 
             {{#each books}}
-                <tr id={{this.book_id}}>
-                    <td> {{this.title}} </td>
-                    <td> {{this.name}} </td>
-                    <td class="center"> {{this.copies}} </td>
-                    <td>
-                        <button type="button" data-toggle="modal" data-target="#conditionModal" class="details">Details</button>
-                    </td>
-                </tr>
+            <tr id={{this.book_id}}>
+                <td> {{this.title}} </td>
+                <td> {{this.name}} </td>
+                <td class="center"> {{this.copies}} </td>
+                <td>
+                    <button type="button" data-toggle="modal" data-target="#conditionModal" class="details">Details</button>
+                </td>
+            </tr>
             {{/each}}
         </table>
 
