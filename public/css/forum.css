@@ -10,31 +10,31 @@
     width: 90%;
 }
 
-.message-individual:nth-child(odd) {
-    padding: 5px;
-}
-
-.message-individual:nth-child(even) {
-    padding: 5px;
-    text-align: right;
-}
-
 .user-details {
     font-size: 12px;
 }
 
+.message-individual {
+    padding: 5px;
+}
+
+.message-individual:nth-child(even) {
+    text-align: right;
+}
+
 .message {
     padding: 8px;
-    padding-left: 15px;
     border-radius: 12px;
 }
 
 .message-individual:nth-child(even) .message {
     background-color: #cbeaed;
+    padding-right: 15px;
 }
 
 .message-individual:nth-child(odd) .message {
     background-color: #d1eaa3;
+    padding-left: 15px;
 }
 
 .arrow {
@@ -119,6 +119,10 @@ a {
 
 .resolved {
     color: #93889E;
+}
+
+p {
+    margin-bottom: 0px;
 }
 
 /* most styling from: https://css-tricks.com/snippets/css/simple-and-nice-blockquote-styling/*/
