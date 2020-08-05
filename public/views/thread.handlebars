@@ -19,11 +19,6 @@
                     {{#if isResolved}}Resolved{{/if}}
                     {{#unless isResolved}}Not Resolved{{/unless}}
                 {{/unless}}
-            {{/if}}
-            {{#unless isOwner}}
-                {{#if isResolved}}Resolved{{/if}}
-                {{#unless isResolved}}Not Resolved{{/unless}}
-            {{/unless}}
             </div>
         </div>
         <div class="section">
@@ -41,16 +36,15 @@
                 {{/each}}
             </div>
         </div>
-        {{/each}}
-    </div>
-    <div class="col-12 reply-container my-4">
-        <h5>&nbspAdd to the conversation:</h5>
-        <form id="insert-message" action="/forum/insert" method="POST">
-            <div id="text-editor"></div>
-            <input type="hidden" id="text-input" name="post" required>
-            <input type="hidden" name="thread_id" value="{{id}}">
-            <input type="submit" name="insert-message-button" value="Submit" class="mt-2  mr-2 row ml-auto">
-        </form>
+        <div class="col-12 reply-container my-4">
+            <h5>&nbspAdd to the conversation:</h5>
+            <form id="insert-message" action="/forum/insert" method="POST">
+                <div id="text-editor"></div>
+                <input type="hidden" id="text-input" name="post" required>
+                <input type="hidden" name="thread_id" value="{{id}}">
+                <input type="submit" name="insert-message-button" value="Submit" class="mt-2  mr-2 row ml-auto">
+            </form>
+        </div>
     </div>
 </div>
 <script src="https://cdn.ckeditor.com/ckeditor5/20.0.0/classic/ckeditor.js"></script>
