@@ -3,7 +3,6 @@
     
     {{#if isNew}}
     <div id="addedNotice" class="text-center">Book has been successfully added to our database!</div>
-
     {{/if}}
 
     <div class="col-12 col-md-5 mt-2 mt-sm-0 text-center text-sm-left">
@@ -19,8 +18,8 @@
             <hr>
             <span id="description">{{result.description}}</span>
             {{!-- <P>Genres: {{result.genre}}</P> --}}
-            </div>
-            </div>
+        </div>
+    </div>
 
     {{#if result.new}}
         <div class="row justify-content-center align-items-center mt-2 mb-4 text-center text-sm-left">
@@ -52,6 +51,7 @@
     </div>
 
     <hr>
+    
     <div class="row">
         <div id="chooseCondition">
             <div id="addForm">
@@ -84,9 +84,8 @@
             {{#unless copies}}
             There are no available copies of this book for trade.
             {{/unless}}
-
-
         </div>
-    {{/if}}
+    </div>
+{{/if}}
 
 <script src="../scripts/addbook.js"></script>

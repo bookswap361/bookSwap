@@ -22,14 +22,14 @@ body {
     color: #184d47;
 }
 
+#error {
+    color: red;
+}
+
 .login {
     margin-right: 20px;
     margin-left: auto;
     margin-top: 10px;
-}
-
-#error {
-    color: red;
 }
 
 .navbar {
@@ -42,7 +42,13 @@ body {
     letter-spacing: 0.75px;
     size: 3em;
 }
-    
+
+#mainNavBar .nav-link:hover{
+    color: white;
+    box-shadow: 0px 1px 0px black;
+    padding-bottom: 0.2rem;
+}    
+
 #mainNavBar .current{
     color: white;
     font-weight: bolder;
@@ -50,12 +56,6 @@ body {
     background-color: #507B9D;
 }
     
-#mainNavBar .nav-link:hover{
-    color: white;
-    box-shadow: 0px 1px 0px black;
-    padding-bottom: 0.2rem;
-}
-
 /* prevent Safari bug that stretches images in fluid containers */
 .container-fluid *{
     align-items: flex-start;
@@ -79,34 +79,11 @@ body {
     background-color: #ffacb7;
     border-color: #ffacb7;
     color: #b52b65;
-    margin-left: 5px;
-    margin-right: 5px;
 }
 
 .btn-info:hover {
     background-color: #b52b65;
     border-color: #b52b65;
-}
-
-#book_hidden {
-    display: none;
-}
-
-.btn {
-    margin-left: 10px;
-}
-
-#container {
-width:100%;
-}
-
-.info {
-    font-size: 1.3rem;
-}
-
-.info span{
-    color:#084177;
-    font-weight: bolder;
 }
 
 .info-header {
@@ -133,28 +110,20 @@ width:100%;
     font-size: .75rem;
 }
 
-#book_hidden{
-    display: none;
-}
-
-#container {
-    width:100%;
-}
-
 /*styling for top bar */
-#top-bar {
+.top-bar {
     padding:10px;
     background-color: #2A4185;
     width:100%;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    }
+}
 
-#top-bar h3 {
+.top-bar h3 {
     color:white;
 }
 
-#info {
+.info {
     font-size:1.5em;
     text-align:center;
     background-color: #F8F3EA;
@@ -163,11 +132,7 @@ width:100%;
     box-shadow: grey 2px 2px 2px;
 }
 
-#info span{
+.info span{
     color:#084177;
     font-weight: bolder;
 }
-
-#infographic {
-    max-width: 85%;
-} 

@@ -6,7 +6,7 @@
         <div class="col-8 col-sm-7 text-left">
             <div id="forTitle">The Forum</div>
             <div id="caption">
-                &nbsp; seek answers <span>for</span> your <span>ums</span>
+            &nbsp; seek answers <span>for</span> your <span>ums</span>
             </div>
         </div>
     </div>
@@ -40,18 +40,18 @@
         </div>
         <div class="section">
             {{#each threads}}
-                <div class="forum-card row mx-1 py-3 px-2">
-                    <span class="d-none">{{thread_id}}</span>
-                    <div class="title-icon d-none d-md-block col-md-1 my-auto text-md-right"><i class="fas fa-comment-alt"></i></div>
-                    <div class="title col-6 col-md-7 my-auto pl-md-0">
-                        <a href={{formatThreadLink thread_id}}>{{title}}</a>
-                    </div>
-                    <div class="col-6 col-md-4 text-right my-auto">
-                        <span class="resolved">{{is_resolved}}</span>
-                        <br>by <span class="user">{{user}}&emsp;>></span>
-                        <br> on <span class="date">{{create_date}}</span>
-                    </div>
+            <div class="forum-card row mx-1 py-3 px-2">
+                <span class="d-none">{{thread_id}}</span>
+                <div class="title-icon d-none d-md-block col-md-1 my-auto text-md-right"><i class="fas fa-comment-alt"></i></div>
+                <div class="title col-6 col-md-7 my-auto pl-md-0">
+                    <a href={{formatThreadLink thread_id}}>{{title}}</a>
                 </div>
+                <div class="col-6 col-md-4 text-right my-auto">
+                    <span class="resolved">{{is_resolved}}</span>
+                    <br>by <span class="user">{{user}}&emsp;>></span>
+                    <br> on <span class="date">{{create_date}}</span>
+                </div>
+            </div>
             {{/each}}
             {{#if (ifUser criteria)}}
                 {{#unless threads}}
