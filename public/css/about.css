@@ -25,3 +25,18 @@
 #question-content p {
     margin: 5px 10px 20px;
 }
+
+.dictionary {
+    background-color: rgb(245, 245, 245, .97);
+    padding: 1.5em;
+    border-radius: 0px 0px 15px 15px;
+    border-top: 3px solid rgb(128, 128, 128, 0.5);
+    width: 90%;
+}
+
+#fw {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #1b6ca8;
+    line-height: 50%;
+}

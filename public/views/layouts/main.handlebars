@@ -16,51 +16,58 @@
     
     <div class="container-fluid">
         <div class="row topHeader">
-            <div class="col-12 col-md-4"><a href="/"><img src="/imgs/forwordheader.png" id="fwLogo"></a></div>
-            <div class="col-12 col-md-8 mx-auto d-md-block px-md-0 mt-lg-3">
-                {{#if first_name}}
-                <div class="row d-block text-center text-md-right"></div>
-                    <form id="logoutForm" form action ="/user/logout" method="POST" class="inline-form text-center text-md-right mr-md-3">
-                    <span style="font-size: 2em;">Welcome back, {{first_name}}!</span>
-                    <input name = "logoutBtn" type="submit" value="Logout" class="btn btn-warning"></form>
-                </div>
-                {{else}}
-                <div class="row login d-block text-center text-md-right">
-                        <form id="loginForm" form action="/login" method="POST">
-                            <input type="text" name="email" placeholder="email" required><input type="password" name="password" placeholder="password" required>
-                            <input name="loginBtn" type="submit" value="go!">
-                        </form>                    
-                </div>
-            <div class="row d-block text-center text-md-right mr-md-3">
-                {{#if bad_login}}
-                    <p style="color: red;">Invalid login credentials</p>
-                {{/if}}
-                not a member? &nbsp; <a href="/signup">create an account!</a>
-            {{/if}}
+            <div class="col-8 col-md-3 mx-auto mx-md-0">
+                <a href="/"><img src="/imgs/forwordheader.png" id="fwLogo" class="img-fluid"></a>
             </div>
+            <div class="col-12 col-md-9 mx-auto mx-md-0 d-md-block px-md-0 mt-lg-4">
+                {{#if first_name}}
+                    <div class="row d-block text-center text-md-right mr-md-3">
+                        <form id="logoutForm" form action ="/user/logout" method="POST" class="inline-form">
+                            <span style="font-size: 1.75em; color: #184d47; ">Welcome back, {{first_name}}!</span>
+                            <input name= "logoutBtn" type="submit" value="Logout">
+                        </form>
+                    </div>
+
+                    {{else}}
+                    <div class="row login d-block text-center text-md-right">
+                            <form id="loginForm" form action="/login" method="POST">
+                                <input type="text" name="email" placeholder="email" required><input type="password" name="password" placeholder="password" required>
+                                <input name="loginBtn" type="submit" value="go!">
+                            </form>                    
+                    </div>
+                    <div class="row d-block text-center text-md-right mr-md-4">
+                        {{#if bad_login}}
+                            <p style="color: red;">Invalid login credentials</p>
+                        {{/if}}
+                        not a member? &nbsp; <a href="/signup">create an account!</a>
+                    </div>
+                {{/if}}
             </div>
         </div>
     </div>
         
-
     <nav class="navbar navbar-light navbar-expand-sm sticky-top" id="mainNavBar">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navBarText"  aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse flex-row justify-content-center" id="navBarText">
-          <ul class="navbar-nav">
-             {{#if first_name}}
-              <li><a href="/account" class="nav-link">my account</a></li>
-              <li><a href="/books_available" class="nav-link">available books</a></li>
-              <li><a href="/book/search" class="nav-link">search books</a></li>
-              <li><a href="#" class="nav-link">search users</a></li>
-              <li><a href="/forum" class="nav-link">forum</a></li>
-              {{else}}
-              <li><a href="/books_available" class="nav-link">available books</a></li>
-              {{/if}}
-              <li><a href="/about_us" class="nav-link">about</a></li>
-          </ul>
-      </div>
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navBarText"  aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon text-right"></span>
+        </button>
+        <div class="collapse navbar-collapse flex-row justify-content-center" id="navBarText">
+            <ul class="navbar-nav text-right text-sm-center">
+            {{#if first_name}}
+                <li><a href="/account" class="nav-link">my account</a></li>
+                <li><a href="/books_available" class="nav-link">available books</a></li>
+                <li><a href="/book/search" class="nav-link">search books</a></li>
+                <li><a href="#" class="nav-link">search users</a></li>
+                <li><a href="/forum" class="nav-link">forum</a></li>
+                <li><a href="/about_us" class="nav-link">about</a></li>
+            {{else}}
+                <li><a href="/" class="nav-link">forword</a></li>
+                <li class="align-self-center d-none d-sm-block">|</li>
+                <li><a href="/books_available" class="nav-link">available books</a></li>
+                <li class="align-self-center d-none d-sm-block">|</li>
+                <li><a href="/about_us" class="nav-link">learn more</a></li>
+            {{/if}}
+            </ul>
+        </div>
     </nav>
 
     {{{body}}}
