@@ -1,13 +1,15 @@
-<div>
-    <a href="/forum">Go Back</a>
-</div>
-<div>
-    <form id="create-thread" action="/forum/create" method="POST">
-        <input type="text" name="title" placeholder="Enter thread title.." required><p>
-        <div id="text-editor"></div>
-        <input type="hidden" id="text-input" name="message" required><p>
-        <input type="submit" name="create-thread-button" value="Create">
-    </form>
+<div class="container mt-2">
+    <div>
+        <a href="/forum">Go Back</a>
+    </div>
+    <div class="row">
+        <form id="create-thread" action="/forum/create" method="POST">
+            <input type="text" name="title" placeholder="Enter thread title.." required><p>
+            <div id="text-editor"></div>
+            <input type="hidden" id="text-input" name="message" required><p>
+            <input type="submit" name="create-thread-button" value="Create">
+        </form>
+    </div>
 </div>
 
 <script src="https://cdn.ckeditor.com/ckeditor5/20.0.0/classic/ckeditor.js"></script>
