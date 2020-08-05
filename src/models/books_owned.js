@@ -33,8 +33,8 @@ BooksOwned.addBook = function(body) {
     return mysql.query(getQuery("newBook"), [body.user_id, body.book_id, body.condition_id, body.condition_description, body.list_date]);
 }
 
-BooksOwned.deleteAllBooks = function(body) {
-    return mysql.query(getQuery("deleteBooksOwned"), [body.user_id]);
+BooksOwned.deleteAllBooks = function(id) {
+    return mysql.query(getQuery("deleteAllBooks"), [id]);
 }
 
 function getQuery(type) {

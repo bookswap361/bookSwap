@@ -21,8 +21,8 @@ User.createUser = function(body, hash) {
             body.state, body.zip, hash]);
 }
 
-User.deleteUser = function(body) {
-    return mysql.query(getQuery("deleteUser"), [body.email]);
+User.deleteUser = function(id) {
+    return mysql.query(getQuery("deleteUserById"), [id]);
 }
 //not sure if this will work, but when it's called by account services or swap services, maybe a number can be specificed for the points?
 //example in Account Services
@@ -67,8 +67,8 @@ function getQuery(type) {
             query = "SELECT * from user WHERE email = ?";
             break;
 
-        case "deleteUser":
-            query = "DELETE from user WHERE email = ?";
+        case "deleteUserById":
+            query = "DELETE from user WHERE user_id = ?";
             break;
 
         case "updateUser":
