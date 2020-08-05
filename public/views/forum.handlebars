@@ -1,32 +1,34 @@
-<div class="thread-page-container container">
-    <div class="row justify-content-center align-items-center pb-3" style="border-bottom: 1px solid #3b6978; color: #184d47">
-        <div class="col-xs-1 col-sm-5  text-sm-right"><i class="fas fa-columns" style="font-size: 4rem;"></i></div>
-        <div class="col-xs-11 col-sm-7 text-left">
-            <div style="font-size:3rem; margin-bottom: -8px;">The Forum</div>
-            <div>
-                &nbsp; seek answers <span style="color: #d8345f">for</span> your <span style="color: #d8345f">ums</span>
+<div class="thread-page-container container mb-4">
+    <div class="row justify-content-center align-items-center pb-3 header">
+        <div class="col-2 col-sm-5  text-right">
+            <i class="fas fa-columns"></i>
+        </div>
+        <div class="col-8 col-sm-7 text-left">
+            <div id="forTitle">The Forum</div>
+            <div id="caption">
+                &nbsp; seek answers <span>for</span> your <span>ums</span>
             </div>
         </div>
     </div>
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-sm-9">
-                <div class="row">
-                    View:	&emsp;
+            <div class="col-12 col-md-9 order-2 order-md-1 text-md-left">
+                <div class="d-block d-md-flex">
+                    View: &emsp;
                     <form id="filter-threads" action="/forum/" method="GET">
                         <input type="radio" form="filter-threads" id="view-all" name="filter" value="all" onclick="filterSubmit(this)" {{{setChecked "all" criteria}}}>
-                        <label for="view-all">All	&emsp;</label>
+                        <label for="view-all">All &emsp;</label>
                         <input type="radio" form="filter-threads" id="view-resolved" name="filter" value="resolved" onclick="filterSubmit(this)" {{{setChecked "resolved" criteria}}}>
-                        <label for="view-resolved">Resolved	&emsp;</label>
+                        <label for="view-resolved">Resolved &emsp;</label>
                         <input type="radio" form="filter-threads" id="view-unresolved" name="filter" value="unresolved" onclick="filterSubmit(this)" {{{setChecked "unresolved" criteria}}}>
-                        <label for="view-unresolved">Unresolved	&emsp;</label>
+                        <label for="view-unresolved">Unresolved &emsp;</label>
                         <input type="radio" form="filter-threads" id="view-userId" name="filter" value="userId" onclick="filterSubmit(this)" {{{setChecked "userId"criteria}}}>
-                        <label for="view-userId">My Threads	&emsp;</label>
+                        <label for="view-userId">My Threads &emsp;</label>
                     </form> 
                 </div>
             </div>
-            <div class="col-sm-3 text-right">
-                <a href="/forum/create"><button type="button" class="btn btn-info"><i class="fas fa-plus-square"></i>&emsp;Create Thread</button></a>
+            <div class="col-12 col-md-3 text-center text-md-right order-1 order-md-2">
+                <a href="/forum/create"><button type="button" class="btn btn-primary"><i class="fas fa-plus-square"></i>&emsp;Create Thread</button></a>
             </div>
         </div>
 
@@ -39,12 +41,12 @@
         <div class="section">
             {{#each threads}}
                 <div class="forum-card row mx-1 py-3 px-2">
-                    <span style="display:none">{{thread_id}}</span>
-                    <div class="col-sm-1 title-icon my-auto text-right"><i class="fas fa-comment-alt"></i></div>
-                    <div class="col-sm-7 title my-auto pl-0">
+                    <span class="d-none">{{thread_id}}</span>
+                    <div class="title-icon d-none d-md-block col-md-1 my-auto text-md-right"><i class="fas fa-comment-alt"></i></div>
+                    <div class="title col-6 col-md-7 my-auto pl-md-0">
                         <a href={{formatThreadLink thread_id}}>{{title}}</a>
                     </div>
-                    <div class="col-sm-4 text-right my-auto">
+                    <div class="col-6 col-md-4 text-right my-auto">
                         <span class="resolved">{{is_resolved}}</span>
                         <br>by <span class="user">{{user}}&emsp;>></span>
                         <br> on <span class="date">{{create_date}}</span>
@@ -53,11 +55,11 @@
             {{/each}}
             {{#if (ifUser criteria)}}
                 {{#unless threads}}
-                    You don't have any threads!&emsp;<a href="/forum/create" style="color: #17a2b8;">Start one here!</a>
+                    You don't have any threads!&emsp;<a href="/forum/create" id="start">Start one here!</a>
                 {{/unless}}
             {{/if}}
         </div>
-
     </div>
 </div>
 
+<script src="../scripts/filter.js"></script>
