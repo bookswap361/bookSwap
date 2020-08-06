@@ -4,20 +4,20 @@ var AccountServices = require("../services/account");
 const { route } = require("./user");
 
 router.route("/")
-    .get(function(req, res) {
+    .get(function(req, res, next) {
         AccountServices.getAccount(req.session.u_id)
             .then(function(account) {
                 let merged = {...account[0], ...account[1], ...account[2], ...account[3], ...account[4], ...account[5]};
                 res.render('account', merged);
             })
             .catch(function(err) {
-                res.redirect('/');
+                next(err);
             });
     })
 
 //add books to account
 router.route("/add_books")
-    .post(function(req, res) {
+    .post(function(req, res, next) {
         req.body.user_id = req.session.u_id;
         AccountServices.addBook(req.body, req.session.u_id)
             .then(function(result) {
@@ -26,13 +26,13 @@ router.route("/add_books")
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                next(err);
             });
     })
 
 //add books to wishlist
 router.route("/add_wish")
- .post(function(req, res) {
+ .post(function(req, res, next) {
         req.body.user_id = req.session.u_id;
         AccountServices.addWish(req.body)
             .then(function(result) {
@@ -41,14 +41,14 @@ router.route("/add_wish")
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                next(err);
             });
     })
 
 
 //delete account
 router.route("/delete")
-    .post(function(req, res) {
+    .post(function(req, res, next) {
         AccountServices.deleteAccount(req.body.user_id)
             .then(function(result) {
                 if (result) {
@@ -57,7 +57,7 @@ router.route("/delete")
                 }
             })
             .catch(function(err) {
-                res.redirect('/account');
+                next(err);
             });
     })
 
@@ -75,7 +75,7 @@ router.post("/update_books", function(req, res, next){
 
 //delete from books owned
 router.route("/delete_books")
-    .post(function(req, res) {
+    .post(function(req, res, next) {
         AccountServices.deleteBooks(req.body, req.session.u_id)
             .then(function(result) {
                 if (result) {
@@ -83,14 +83,14 @@ router.route("/delete_books")
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                next(err);
             });
     })
 
 
 //delete from wishlist
 router.route("/delete_wish")
-    .post(function(req, res) {
+    .post(function(req, res, next) {
         req.body.user_id = req.session.u_id;
         req.body.book_id = parseInt(req.body.book_id);
         AccountServices.deleteWish(req.body)
@@ -100,7 +100,7 @@ router.route("/delete_wish")
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                next(err);
             });
     })
 
@@ -114,7 +114,7 @@ router.route("/update")
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                next(err);
             });
     })
 //update points
@@ -127,7 +127,7 @@ router.route("/update_points")
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                next(err);
             });
     })
 
