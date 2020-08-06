@@ -21,4 +21,22 @@
     text-align: center;
     box-shadow: 3px 3px grey;
     font-size: 1.1rem;
+    margin-top: 15px;
+}
+
+#separation {
+    width: 75%;
+}
+
+.coverArt {
+    border-radius: 3px;
+    box-shadow: -5px 5px 5px rgba(155, 155, 155, 0.5);
+}
+
+h3 {
+    color: #1b6ca8;
+}
+
+h2 {
+    color: #184d47;
 }

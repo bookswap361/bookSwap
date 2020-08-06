@@ -4,7 +4,7 @@ const addBookBtn      = document.getElementById("addBookBtn"),
 
 window.onload = function(event){
     if (description.innerHTML === "null"){
-        description.innerHTML = `<em>No description for this book available</em>`;
+        description.innerHTML = `<em>No description for this book is available</em>`;
     }
 }
 
