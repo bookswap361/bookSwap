@@ -1,6 +1,5 @@
 const addBookBtn      = document.getElementById("addBookBtn"),
       confirmDiv      = document.getElementById("confirm"),
-      newLink         = document.getElementById("newLink"),
       description     = document.getElementById("description");
 
 window.onload = function(event){
@@ -34,7 +33,7 @@ function makeReq(type) {
             fetchHelper("/account/add_books", "POST", data)
             .then(function() {                
                 confirmDiv.innerText = confirmStr;
-                addBookBtn.setAttribute("disabled", "true");
+                disableBtn(addBookBtn);
             })
             .catch(function(err) {
                 console.log(err);
@@ -47,7 +46,7 @@ function makeReq(type) {
         fetchHelper("/account/add_wish", "POST", data)
         .then(function() {
             confirmDiv.innerText = confirmStr;
-            addWishBtn.setAttribute("disabled", "true");
+            disableBtn(addWishBtn);
         })
         .catch(function(err) {
             console.log(err);

@@ -82,7 +82,7 @@ function getCondition(event) {
 
             if (userPoints < books[i].cost) {
                 row.classList.add("inactive");
-                swapButton.disabled = true;
+                disableBtn(swapButton);
             }
 
             newtable.appendChild(row);
