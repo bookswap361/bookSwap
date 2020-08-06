@@ -6,44 +6,46 @@ User.getAllUsers = function() {
     return mysql.query(getQuery("allUsers"), []);
 }
 
-User.getUserById = function(id) {
-    return mysql.query(getQuery("userById"), [id]);
+User.getUserById = function(user_id) {
+    return mysql.query(getQuery("userById"), [user_id]);
 }
 
-User.getUserByEmail = function(body) {
-    return mysql.query(getQuery("userByEmail"), [body.email]);
+User.getUserByEmail = function(email) {
+    return mysql.query(getQuery("userByEmail"), [email]);
 }
 
-User.createUser = function(body, hash) {
+User.createUser = function(user, hash) {
     return mysql.query(getQuery("createUser"), 
-        [body.first_name, body.last_name,
-            body.email, body.street, body.city,
-            body.state, body.zip, hash]);
+        [user.first_name, user.last_name,
+            user.email, user.street, user.city,
+            user.state, user.zip, hash]);
 }
 
-User.deleteUser = function(id) {
-    return mysql.query(getQuery("deleteUserById"), [id]);
-}
-//not sure if this will work, but when it's called by account services or swap services, maybe a number can be specificed for the points?
-//example in Account Services
-User.updatePoints = function(number, user_id) {
-    return mysql.query(getQuery("updatePoints"), [number, user_id]);
+User.deleteUser = function(user_id) {
+    return mysql.query(getQuery("deleteUserById"), [user_id]);
 }
 
-User.updateUser = function(body) {
-    return mysql.query(getQuery("updateUser"), [body.first_name, body.last_name, body.email, body.street, body.user_id]);
+//should update to be named addPoints (updatePoints is misleading)
+User.updatePoints = function(amount, user_id) {
+    return mysql.query(getQuery("updatePoints"), [amount, user_id]);
 }
 
-User.deletePoints = function(number, user_id) {
-    return mysql.query(getQuery("deletePoints"), [number, user_id]);
+//needs to be updated with city, state, zip
+User.updateUser = function(user) {
+    return mysql.query(getQuery("updateUser"), [user.first_name, user.last_name, user.email, user.street, user.user_id]);
 }
 
-User.updateLostLimit = function(id) {
-    return mysql.query(getQuery("updateLostLimit"), [id]);
+//should update to be named subPoints (deletePoints is misleading)
+User.deletePoints = function(amount, user_id) {
+    return mysql.query(getQuery("deletePoints"), [amount, user_id]);
+}
+
+User.updateLostLimit = function(user_id) {
+    return mysql.query(getQuery("updateLostLimit"), [user_id]);
 };
 
-User.getPoints = function(id) {
-    return mysql.query(getQuery("getPoints"), [id]);
+User.getPoints = function(user_id) {
+    return mysql.query(getQuery("getPoints"), [user_id]);
 };
 
 function getQuery(type) {
