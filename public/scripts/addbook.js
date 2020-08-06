@@ -2,14 +2,7 @@ const addBookBtn      = document.getElementById("addBookBtn"),
       confirmDiv      = document.getElementById("confirm"),
       description     = document.getElementById("description");
 
-window.onload = function(event){
-    if (description.innerHTML === "null"){
-        description.innerHTML = `<em>No description for this book is available</em>`;
-    }
-}
-
 // Add existing book to owned books
-
 function getDataOwn(){
     var payload = {user_id: null, book_id: null, condition_id: null, condition_description: null, list_date: null};
     payload.user_id = 1;
