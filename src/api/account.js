@@ -7,8 +7,7 @@ router.route("/")
     .get(function(req, res, next) {
         AccountServices.getAccount(req.session.u_id)
             .then(function(account) {
-                let merged = {...account[0], ...account[1], ...account[2], ...account[3], ...account[4], ...account[5]};
-                res.render('account', merged);
+                res.render('account', account);
             })
             .catch(function(err) {
                 next(err);
@@ -18,7 +17,6 @@ router.route("/")
 //add books to account
 router.route("/add_books")
     .post(function(req, res, next) {
-        req.body.user_id = req.session.u_id;
         AccountServices.addBook(req.body, req.session.u_id)
             .then(function(result) {
                 if (result) {
@@ -33,8 +31,7 @@ router.route("/add_books")
 //add books to wishlist
 router.route("/add_wish")
  .post(function(req, res, next) {
-        req.body.user_id = req.session.u_id;
-        AccountServices.addWish(req.body)
+        AccountServices.addWish(req.session.u_id, req.body.user_id)
             .then(function(result) {
                 if (result) {
                     res.send('Book successfully added');
@@ -76,7 +73,7 @@ router.post("/update_books", function(req, res, next){
 //delete from books owned
 router.route("/delete_books")
     .post(function(req, res, next) {
-        AccountServices.deleteBooks(req.body, req.session.u_id)
+        AccountServices.deleteBooks(req.body.list_id, req.session.u_id)
             .then(function(result) {
                 if (result) {
                     res.redirect('/account');
@@ -91,9 +88,7 @@ router.route("/delete_books")
 //delete from wishlist
 router.route("/delete_wish")
     .post(function(req, res, next) {
-        req.body.user_id = req.session.u_id;
-        req.body.book_id = parseInt(req.body.book_id);
-        AccountServices.deleteWish(req.body)
+        AccountServices.deleteWish(req.session.u_id, req.body.book_id)
             .then(function(result) {
                 if (result) {
                     res.redirect('/account');
