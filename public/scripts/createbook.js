@@ -4,10 +4,12 @@ const allOlKeys   = document.getElementById("allOlKeys").innerHTML.split(","),
       loadingText = document.getElementById("loadingText"),
       resultsDiv  = document.getElementById("resultsDiv"),
       authorRes   = document.getElementById("authorRes"),
-      other       = document.getElementById("other");
+      authorInput = document.getElementById("qAuthor"),
+      other       = document.getElementById("other"),
+      MAX_RESULT  = 5;
 var uniqueResults;
 
-document.addEventListener("DOMContentLoaded", dataCreate);
+document.addEventListener("DOMContentLoaded", pageInit);
 
 function createOlKey(id){
     var newKey = "OL" + Math.floor(Math.random()*50000+1) + id;
@@ -17,7 +19,7 @@ function createOlKey(id){
     return newKey;
 }
 
-function dataCreate(){
+function pageInit() {
     document.getElementById("bol_key").setAttribute("value", createOlKey("NB"));
     document.getElementById("aol_key").setAttribute("value", createOlKey("NA"));
     attachAuthorListener();
@@ -26,28 +28,29 @@ function dataCreate(){
 function attachAuthorListener(){
     findAuthBtn.addEventListener("click", function(event){        
         event.preventDefault();
-        makeReq();
+        authorGetRequest();
     });
 }
 
-function getData(){
-    return document.getElementById("qAuthor").value;
+function getAuthorValue(){
+    return authorInput.value;
 }
 
-function makeReq() {
-    var data = getData();
+function authorGetRequest() {
+    var authorValue = getAuthorValue();
     loadingText.innerHTML = "Finding author... please wait... ";
-    fetchHelper(`https://openlibrary.org/search.json?author=${data}`, "GET")
+    fetchHelper(`https://openlibrary.org/search.json?author=${authorValue}`, "GET")
     .then(function(data) {
         return data.json();
     })
     .then(function(results) {
-        var authorValue = getData();
+        var authorValue = getAuthorValue();
         var allResults = [];
-        var max = 5;
+        uniqueResults = [];
+        var numResults = results.docs.length < MAX_RESULT ? results.docs.length : MAX_RESULT;
+        resetAuthorDropdown();
         loadingText.innerHTML = "";
-        if (results.docs.length < 5) max = results.docs.length;
-        for(var i=0; i<max; i++) {
+        for(var i = 0; i < numResults; i++) {
             var data = {name: null, author_id: null};
             if (results.docs[i].hasOwnProperty("author_name")) data.name = results.docs[i].author_name[0];
             if (results.docs[i].hasOwnProperty("author_key")) data.author_id = results.docs[i]["author_key"][0];
@@ -55,15 +58,15 @@ function makeReq() {
 
         }
         uniqueResults = getUnique(allResults);
-        var i = 0;
-        uniqueResults.forEach(function(item){
+        var resultCounter = 0;
+        uniqueResults.forEach(function(item, index){
             if (item.author_id != null) {
-                showResult(item);
-                i++;
+                showResult(item, index == 0);
+                resultCounter++;
             }
         })
-        loadingText.innerText = `${i} results found for "${authorValue}"`;
-        if (i > 0){
+        loadingText.innerText = `${resultCounter} results found for "${authorValue}"`;
+        if (resultCounter > 0){
             resultsDiv.classList.remove("hidden");
         } else {
             loadingText.innerText = "No results found- enter details below:"
@@ -73,15 +76,16 @@ function makeReq() {
     })
 }
 
-function showResult(data){
+function showResult(data, isFirst) {
     var newOpt = document.createElement("option");
     newOpt.value = data.name;
     newOpt.innerText = data.name;
     newOpt.setAttribute("id", data.author_id);
-    authorRes.insertBefore(newOpt, other);
+    newOpt.setAttribute("selected", isFirst ? "" : true);
+    authorRes.prepend(newOpt);
 }
 
-function getUnique(data){
+function getUnique(data) {
     var result = [];
     const map = new Map();
     for (const item of data) {
@@ -96,15 +100,26 @@ function getUnique(data){
     return result;
 }
 
-function fillInAuthor(){
-  var selection = authorRes.value;
-  if (uniqueResults.find(isSelected)) {
-    var id = uniqueResults.find(isSelected).author_id;
-    document.getElementById("iAuthor").value = selection;
-    document.getElementById("aol_key").value = id;
-  }
-
-  function isSelected(item){
-    return item.name == selection;
+function fillInAuthor() {
+    var selection = authorRes.value;
+    var findAuthor = uniqueResults.find(isSelected);
+    if (findAuthor) {
+        var id = findAuthor.author_id;
+        document.getElementById("iAuthor").value = selection;
+        document.getElementById("aol_key").value = id;
+    } else {
+        document.getElementById("iAuthor").value = "";
     }
+
+    function isSelected(item){
+        return item.name == selection;
+    }
+}
+
+function resetAuthorDropdown() {
+    var otherOption = document.createElement("option");
+    authorRes.innerHTML = "";
+    otherOption.value = "";
+    otherOption.innerText = "Other - Type in author name below";
+    authorRes.appendChild(otherOption);
 }
