@@ -7,6 +7,7 @@ td th {
 }
 
 table {
+	color: #342B38;
     border-collapse: separate;
     border-spacing: 1em .5em;
 }
@@ -21,4 +22,6 @@ table {
 
 .modal-header h5 {
 	color: #2A4185;
+	font-weight: bolder;
+	margin-bottom: 0px;
 }

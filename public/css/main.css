@@ -93,6 +93,7 @@ body {
 
 .info {
     font-size: 1.3rem;
+    text-align: center;
 }
 
 .info span{
@@ -103,7 +104,8 @@ body {
 .info-header {
     color: #2A4185;
     font-size: 1.6rem;
-    letter-spacing: 1.5px;
+    letter-spacing: 1.4px;
+    font-weight: bold;
 }
 
 #infographic {
@@ -116,7 +118,8 @@ body {
 }
 
 .img-rounded {
-    border-radius: 25px;
+    border-radius: 20px;
+    box-shadow: -5px 5px 5px rgba(155, 155, 155, 0.5)
 }
 
 .caption {
