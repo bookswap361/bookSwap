@@ -36,9 +36,19 @@ function getAuthorValue(){
     return authorInput.value;
 }
 
+function toggleLoadingText(options) {
+    if (!options) {
+        loadingText.innerHTML = "Finding author... please wait... ";
+    } else if (options.resultCounter) {
+        loadingText.innerHTML = `${options.resultsLength} results found for "${options.authorValue}"`;
+    } else {
+        loadingText.innerHTML = "No results found - enter details below:";
+    }
+}
+
 function authorGetRequest() {
     var authorValue = getAuthorValue();
-    loadingText.innerHTML = "Finding author... please wait... ";
+    toggleLoadingText();
     fetchHelper(`https://openlibrary.org/search.json?author=${authorValue}`, "GET")
     .then(function(data) {
         return data.json();
@@ -46,10 +56,9 @@ function authorGetRequest() {
     .then(function(results) {
         var authorValue = getAuthorValue();
         var allResults = [];
-        uniqueResults = [];
         var numResults = results.docs.length < MAX_RESULT ? results.docs.length : MAX_RESULT;
+        uniqueResults = [];
         resetAuthorDropdown();
-        loadingText.innerHTML = "";
         for(var i = 0; i < numResults; i++) {
             var data = {name: null, author_id: null};
             if (results.docs[i].hasOwnProperty("author_name")) data.name = results.docs[i].author_name[0];
@@ -58,38 +67,40 @@ function authorGetRequest() {
 
         }
         uniqueResults = getUnique(allResults);
-        var resultCounter = 0;
-        uniqueResults.forEach(function(item, index){
-            if (item.author_id != null) {
-                showResult(item, index == 0);
-                resultCounter++;
-            }
-        })
-        loadingText.innerText = `${resultCounter} results found for "${authorValue}"`;
-        if (resultCounter > 0){
+        showResult(uniqueResults);
+        var resultsLength = uniqueResults.length;
+        toggleLoadingText({resultsLength, authorValue});
+        if (resultsLength){
             resultsDiv.classList.remove("hidden");
+            fillInAuthor();
         } else {
-            loadingText.innerText = "No results found- enter details below:"
-            document.getElementById("iAuthor").value = data;
+            document.getElementById("iAuthor").value = "";
         }
         document.getElementById("addBook").classList.remove("hidden");
-    })
+    });
 }
 
-function showResult(data, isFirst) {
+function showResult(data) {
+    data.forEach(function(item, index) {
+        var option = createOption(item, index == 0);
+        authorRes.prepend(option);
+    });
+}
+
+function createOption(data, isFirst) {
     var newOpt = document.createElement("option");
     newOpt.value = data.name;
     newOpt.innerText = data.name;
     newOpt.setAttribute("id", data.author_id);
     newOpt.setAttribute("selected", isFirst ? "" : true);
-    authorRes.prepend(newOpt);
+    return newOpt;
 }
 
 function getUnique(data) {
     var result = [];
     const map = new Map();
     for (const item of data) {
-        if(!map.has(item.author_id)){
+        if(!map.has(item.author_id) && item.author_id){
             map.set(item.author_id, true);
             result.push({
                 name: item.name,
