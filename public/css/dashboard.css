@@ -6,7 +6,7 @@ body{
     color: #1b6ca8;
 }
 
-/* Reference: https://www.w3schools.com/howto/howto_js_tabs.asp*/
+/* Reference: https: //www.w3schools.com/howto/howto_js_tabs.asp*/
 .tab {
     overflow: hidden;
     border: 1px solid #ccc;
@@ -72,10 +72,6 @@ table, th {
     line-height: 67%;
 }
 
-#cover {
-    max-width: 100px;
-}
-
 .section {
     border: 1px solid #71a0a5;
     border-top: none;
@@ -94,7 +90,7 @@ table, th {
     border-top-right-radius: 10px;
 }
 
-#swap-notifications {
+.swap-notifications {
     background-color: #b8e9c0;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -120,21 +116,22 @@ table, th {
 
 
 .nav-arrows {
-    position:relative;
+    position: relative;
+    font-size: 2.5rem;
 }
 
 .prev {
-    cursor:pointer;
-    position:absolute;
-    top:50px;
-    left:5px;
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    left: 5px;
 }
 
 .next {
-    cursor:pointer;
-    position:absolute;
-    top:50px;
-    right:5px;
+    cursor: pointer;
+    position: absolute;
+    top: 40%;
+    right: 5px;
 }
 
 #delete-alert {
@@ -147,4 +144,22 @@ table, th {
 
 #delete-alert:focus {
     outline: none !important;
+}
+
+.slideshow-container {
+    width: 75%;
+}
+
+.cover {
+    max-width: 150px;
+}
+
+.description {
+    font-size: 1.1rem;
+    padding: 20px;
+}
+
+.description span {
+    color: #1b6ca8;
+    font-size: 1.5rem;
 }

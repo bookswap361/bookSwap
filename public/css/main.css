@@ -89,6 +89,12 @@ table {
     border-color: #b52b65;
 }
 
+.btn-success {
+    background-color: rgb(159, 228, 209, 0.5);
+    border: none;
+    color: #154D47;
+}
+
 .info-header {
     color: #2A4185;
     font-size: 1.6rem;
@@ -122,8 +128,15 @@ table {
 } 
 
 .highlight {
-    color:#018383;
+    color: #018383;
     font-weight: bold;
+}
+
+.count {
+    padding: .1em .5rem .3rem .3em;
+    border: 1px solid rgba(155,155,155, 0.25);
+    background-color: rgba(255, 255, 255);
+    border-radius: 5px;
 }
 
 .img-rounded {
