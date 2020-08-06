@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 var AccountServices = require("../services/account");
-const { route } = require("./user");
 
 router.route("/")
     .get(function(req, res, next) {
@@ -12,6 +11,16 @@ router.route("/")
             .catch(function(err) {
                 next(err);
             });
+    })
+
+router.route("/logout")
+    .post(function(req, res, next) {
+        if (req.session.u_id) {
+            req.session.destroy();         
+            res.redirect('/');
+        } else {
+            next(err);
+        }
     })
 
 //add books to account
