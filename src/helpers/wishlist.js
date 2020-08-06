@@ -10,7 +10,7 @@ WishlistHbsHelpers.displayButton = function(wishlist, bookId) {
         }
     }
 
-    return display ? "<button type='button' class='btn btn-primary' id='addWishBtn' onclick='addBook.call(null, \"wishlist\")'>Add to my wishlist</button>" : "";
+    return display ? "<button type='button' class='btn btn-primary' id='addWishBtn' onclick='makeReq.call(null, \"wishlist\")'>Add to my wishlist</button>" : "";
 };
 
 module.exports = WishlistHbsHelpers;

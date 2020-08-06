@@ -3,7 +3,6 @@
     
     {{#if isNew}}
     <div id="addedNotice" class="text-center">Book has been successfully added to our database!</div>
-
     {{/if}}
 
     <div class="col-12 col-md-5 mt-2 mt-sm-0 text-center text-sm-left">
@@ -19,8 +18,8 @@
             <hr>
             <span id="description">{{result.description}}</span>
             {{!-- <P>Genres: {{result.genre}}</P> --}}
-            </div>
-            </div>
+        </div>
+    </div>
 
     {{#if result.new}}
         <div class="row justify-content-center align-items-center mt-2 mb-4 text-center text-sm-left">
@@ -47,11 +46,12 @@
         {{#if wishlist}}
             {{{displayButton wishlist result.book_id}}}
         {{else}}
-            <button type='button' class='btn btn-primary' id='addWishBtn' onclick='addBook.call(null, "wishlist")'>Add to my wishlist</button>
+            <button type='button' class='btn btn-primary' id='addWishBtn' onclick='makeReq.call(null, "wishlist")'>Add to my wishlist</button>
         {{/if}}                 
     </div>
 
     <hr>
+    
     <div class="row">
         <div id="chooseCondition">
             <div id="addForm">
@@ -67,7 +67,7 @@
                 <input id="newUser_id" value="{{user_id}}" hidden>
                 <input id="newBook_id" value="{{result.book_id}}" hidden>
 
-                <button type="button" class="btn btn-primary" id="addBookBtn" onclick="addBook.call(null, 'booklist')">Add to my book list</button>
+                <button type="button" class="btn btn-primary" id="addBookBtn" onclick="makeReq.call(null, 'booklist')">Add to my book list</button>
                 <P><div id="confirm"></div></P>
             </div>
         <div class="row container mt-4">
@@ -84,9 +84,8 @@
             {{#unless copies}}
             There are no available copies of this book for trade.
             {{/unless}}
-
-
         </div>
-    {{/if}}
+    </div>
+{{/if}}
 
 <script src="../scripts/addbook.js"></script>
