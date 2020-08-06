@@ -1,19 +1,23 @@
 <link rel="stylesheet" href="/css/book.css">
 
-<div class="container">
-    <div class="row align-items-center mb-4">
-        {{#if isNew}}
-            <div id="addedNotice" class="col-12 col-sm-8 text-center text-sm-left order-1 order-sm-2"> Book added &nbsp; <i class="fas fa-seedling"></i> &nbsp; Thank you for growing our library!</div>
-        {{/if}}  
+{{#if result.exists}}
+<div class="py-4 bookContainer">
+{{/if}}
 
-        <div class="col-12 col-sm-4 mt-2 mt-sm-0 text-center text-sm-left order-sm-1">
-            <a href="/book/search">Search Again</a>
-        </div>      
+    <div class="container">
+        <div class="row align-items-center mb-4">
+            {{#if isNew}}
+                <div id="addedNotice" class="col-12 col-sm-8 text-center text-sm-left order-1 order-sm-2"> Book added &nbsp; <i class="fas fa-seedling"></i> &nbsp; Thank you for growing our library!</div>
+            {{/if}}  
+
+            <div class="col-12 col-sm-4 mt-2 mt-sm-0 text-center text-sm-left order-sm-1">
+                <a href="/book/search">Search Again</a>
+            </div>      
+        </div>
     </div>
-</div>
 
-<div class="mx-2">
-    <div class="row text-center text-sm-left">
+    <div class="mx-2">
+        <div class="row text-center text-sm-left">
         <div class="col-12 col-sm-4 text-center">
             <img src="{{result.thumbnail_url}}" class="coverArt">
         </div>
@@ -23,9 +27,9 @@
             <span id="description">{{result.description}}</span>
             {{!-- <P>Genres: {{result.genre}}</P> --}}
         </div>
-    </div>
+        </div>
 
-    {{#if result.new}}
+        {{#if result.new}}
         <div class="row justify-content-center align-items-center mt-2 mb-4 text-center text-sm-left px-3">
             <div class="col-12 col-md-8 info">
                 This book hasn't been added to our library yet! Would you like to add it? <br>
@@ -43,9 +47,10 @@
                 </form>
             </div>
         </div>
-    {{/if}}
+        </div>
+        {{/if}}
 
-    {{#if result.exists}}
+        {{#if result.exists}}
         <div class="row">
             <div class="col-12 col-sm-4 text-center">
                 {{#if wishlist}}
@@ -76,23 +81,24 @@
                 </div>
             </div>
         </div>
-        <hr>
-        <div class="container">
-            <h5>Open Swaps for this Book:</h5>
-                {{#if copies}}
-                    {{#each copies}}
-                        <div class="row py-3">
-                            <ul>A copy in {{condition_description}} condition was listed on {{formatDate list_date}}</ul>
-                            <hr>
-                        </div>
-                    {{/each}}
-                {{/if}}
-
-                {{#unless copies}}
-                <P></P>There are no available copies of this book for trade.
-                {{/unless}}
-            </div>
         </div>
+    </div>
+
+    <div class="container my-4 py-2">
+        <h4>Open Swaps for this Book:</h4>
+            {{#if copies}}
+                {{#each copies}}
+                    <div class="row py-3">
+                        <ul>A copy in {{condition_description}} condition was listed on {{formatDate list_date}}</ul>
+                        <hr>
+                    </div>
+                {{/each}}
+            {{/if}}
+
+            {{#unless copies}}
+            <P></P>There are no available copies of this book for trade.
+            {{/unless}}
+    </div>
     {{/if}}
 </div>
 

@@ -37,6 +37,13 @@ h3 {
     color: #1b6ca8;
 }
 
-h2 {
+h2, h4 {
     color: #184d47;
+}
+
+.bookContainer {
+    background-color: #f9f9f9;
+    margin-top: -0.5%;
+    border-bottom: 1px solid rgba(88, 141, 168, 0.33);
+    box-shadow: 0px 1px 5px rgb(128, 128, 128, 0.15);
 }

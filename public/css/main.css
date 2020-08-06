@@ -129,4 +129,5 @@ body {
 .caption {
     text-align: center;
     font-size: .75rem;
+    margin-top: 5px;
 }
