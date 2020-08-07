@@ -41,7 +41,7 @@ router.route("/add_books")
 //add books to wishlist
 router.route("/add_wish")
  .post(function(req, res, next) {
-        AccountServices.addWish(req.session.u_id, req.body.user_id)
+        AccountServices.addWish(req.session.u_id, req.body.book_id)
             .then(function(result) {
                 if (result) {
                     res.send('Book successfully added');
