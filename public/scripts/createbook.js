@@ -34,7 +34,7 @@ function getAuthorValue(){
 function toggleLoadingText(options) {
     if (!options) {
         loadingText.innerHTML = "Finding author... please wait... ";
-    } else if (options.resultCounter) {
+    } else if (options.resultsLength) {
         loadingText.innerHTML = `${options.resultsLength} results found for "${options.authorValue}"`;
     } else {
         loadingText.innerHTML = "No results found - enter details below:";
