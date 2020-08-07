@@ -11,34 +11,34 @@ UserServices.getAllUsers = function() {
     });
 };
 
-UserServices.getUserById = function(id) {
+UserServices.getUserById = function(user_id) {
     return new Promise(function(resolve, reject) {
-        UserModel.getUserById(id)
+        UserModel.getUserById(user_id)
             .then(resolve)
             .catch(reject);
     });
 };
 
-UserServices.getUserByEmail = function(body) {
+UserServices.getUserByEmail = function(email) {
     return new Promise(function(resolve, reject) {
-        UserModel.getUserByEmail(body)
+        UserModel.getUserByEmail(email)
             .then(resolve)
             .catch(reject);
     });
 };
 
-UserServices.deleteUser = function(id) {
+UserServices.deleteUser = function(user_id) {
     return new Promise(function(resolve, reject) {
-        console.log(id);
-        UserModel.deleteUser(id)
+        UserModel.deleteUser(user_id)
             .then(resolve)
             .catch(reject);
     });
 };
 
-UserServices.updatePoints = function(body) {
+//update to addPoints (updatePoints is misleading)
+UserServices.updatePoints = function(amount, user_id) {
     return new Promise(function(resolve, reject) {
-        UserModel.updatePoints(body)
+        UserModel.updatePoints(amount, user_id)
             .then(resolve)
             .catch(reject);
     });
@@ -50,7 +50,7 @@ UserServices.getPoints = function(userId) {
 
 UserServices.createUser = function(body) {    
  return new Promise(function(resolve, reject) {
-    UserModel.getUserByEmail(body)
+    UserModel.getUserByEmail(body.email)
         .then(function(result) {
             if (result[0]) {
                 let error = {"error": "User already exists under that email"};
@@ -59,7 +59,7 @@ UserServices.createUser = function(body) {
                 bcrypt.hash(body.password, 10, function(err, hash) {
                     UserModel.createUser(body, hash)
                         .then(function() {
-                            UserModel.getUserByEmail(body)
+                            UserModel.getUserByEmail(body.email)
                             .then(function(result) {
                                 resolve(result[0]);
                             })
@@ -75,7 +75,7 @@ UserServices.createUser = function(body) {
 
 UserServices.verifyLogin = function(body) {
     return new Promise(function(resolve, reject) {
-        UserModel.getUserByEmail(body)
+        UserModel.getUserByEmail(body.email)
             .then(function(user) {
                 if (user[0]) {
                     bcrypt.compare(body.password, user[0].password, function( err, result) {

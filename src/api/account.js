@@ -2,24 +2,31 @@ var express = require("express");
 var router = express.Router();
 var AccountServices = require("../services/account");
 var AlertServices = require("../services/alert");
-const { route } = require("./user");
 
 router.route("/")
-    .get(function(req, res) {
+    .get(function(req, res, next) {
         AccountServices.getAccount(req.session.u_id)
             .then(function(account) {
-                let merged = {...account[0], ...account[1], ...account[2], ...account[3], ...account[4], ...account[5]};
-                res.render('account', merged);
+                res.render('account', account);
             })
             .catch(function(err) {
-                res.redirect('/');
+                next(err);
             });
+    })
+
+router.route("/logout")
+    .post(function(req, res, next) {
+        if (req.session.u_id) {
+            req.session.destroy();         
+            res.redirect('/');
+        } else {
+            next(err);
+        }
     })
 
 //add books to account
 router.route("/add_books")
-    .post(function(req, res) {
-        req.body.user_id = req.session.u_id;
+    .post(function(req, res, next) {
         AccountServices.addBook(req.body, req.session.u_id)
             .then(function(result) {
                 if (result) {
@@ -27,29 +34,28 @@ router.route("/add_books")
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                next(err);
             });
     })
 
 //add books to wishlist
 router.route("/add_wish")
- .post(function(req, res) {
-        req.body.user_id = req.session.u_id;
-        AccountServices.addWish(req.body)
+ .post(function(req, res, next) {
+        AccountServices.addWish(req.session.u_id, req.body.book_id)
             .then(function(result) {
                 if (result) {
                     res.send('Book successfully added');
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                next(err);
             });
     })
 
 
 //delete account
 router.route("/delete")
-    .post(function(req, res) {
+    .post(function(req, res, next) {
         AccountServices.deleteAccount(req.body.user_id)
             .then(function(result) {
                 if (result) {
@@ -58,7 +64,7 @@ router.route("/delete")
                 }
             })
             .catch(function(err) {
-                res.redirect('/account');
+                next(err);
             });
     })
 
@@ -76,32 +82,30 @@ router.post("/update_books", function(req, res, next){
 
 //delete from books owned
 router.route("/delete_books")
-    .post(function(req, res) {
-        AccountServices.deleteBooks(req.body, req.session.u_id)
+    .post(function(req, res, next) {
+        AccountServices.deleteBooks(req.body.list_id, req.session.u_id)
             .then(function(result) {
                 if (result) {
                     res.redirect('/account');
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                next(err);
             });
     })
 
 
 //delete from wishlist
 router.route("/delete_wish")
-    .post(function(req, res) {
-        req.body.user_id = req.session.u_id;
-        req.body.book_id = parseInt(req.body.book_id);
-        AccountServices.deleteWish(req.body)
+    .post(function(req, res, next) {
+        AccountServices.deleteWish(req.session.u_id, req.body.book_id)
             .then(function(result) {
                 if (result) {
                     res.redirect('/account');
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                next(err);
             });
     })
 
@@ -115,7 +119,7 @@ router.route("/update")
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                next(err);
             });
     })
 //update points
@@ -128,7 +132,7 @@ router.route("/update_points")
                 }
             })
             .catch(function(err) {
-                res.redirect('/about');
+                next(err);
             });
     })
 
