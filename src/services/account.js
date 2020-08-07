@@ -56,25 +56,6 @@ AccountServices.getAccount = function(user_id) {
 };
 
 
-AccountServices.addBook = function(body, id) {
-    var p1 = new Promise(function(resolve, reject) {
-        BooksOwnedModel.addBook(body)
-            .then(resolve)
-            .catch(reject);
-    });
-    var p2 = new Promise(function(resolve, reject) {
-        UserModel.updatePoints(1, id)
-            .then(resolve)
-            .catch(reject);
-    });
-    var p3 = new Promise(function(resolve, reject) {
-        BookModel.setGenre(body)
-            .then(resolve)
-            .catch(reject);
-    });
-    return Promise.all([p1, p2, p3])
-
-
 AccountServices.addBook = function(book, user_id) {
     return new Promise(function(resolve, reject) {
         BooksOwnedModel.addBook(book, user_id)
@@ -115,7 +96,7 @@ AccountServices.deleteBooks = function(list_id, user_id) {
     return new Promise(function(resolve, reject) {
         SwapModel.deleteSwapsByListId(list_id)
             .then(BooksOwnedModel.deleteBook(list_id))
-            .then(UserModel.deletePoints.bind(null, user_id))
+            .then(UserModel.deletePoints.bind(null, 1, user_id))
             .then(resolve)
             .catch(reject);
         });

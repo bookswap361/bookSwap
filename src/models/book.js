@@ -78,8 +78,8 @@ Book.getGenreList = function() {
     return mysql.query(getQuery("getGenreList"), []);
 }
 
-Book.setGenre = function(info) {
-    return mysql.query(getQuery("setGenre"), [info.genre_id, info.book_id]);
+Book.setGenre = function(genre, book_id) {
+    return mysql.query(getQuery("setGenre"), [genre, book_id]);
 }
 
 function getQuery(type) {

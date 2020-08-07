@@ -4,13 +4,12 @@ const addBookBtn      = document.getElementById("addBookBtn"),
 
 // Add existing book to owned books
 function getDataOwn(){
-    var payload = {user_id: null, book_id: null, condition_id: null, condition_description: null, list_date: null, genre_id: null};
+    var payload = {user_id: null, book_id: null, condition_id: null, condition_description: null, list_date: null};
     payload.user_id = 1;
     payload.book_id = parseInt(document.getElementById("newBook_id").value);
     payload.condition_id = parseInt(document.getElementById("newCondition").value);
     payload.condition_description = convertCondition(payload.condition_id).description;
     payload.list_date = new Date();
-    payload.genre_id = parseInt(document.getElementById("genreList").value);
     
     payload.title = document.getElementById("newTitle").value;
     payload.condition_points = convertCondition(payload.condition_id).points;

@@ -38,7 +38,7 @@ router.route("/:id")
             .then(function(result) {
                 if (result[0].length > 0) {
                     result[0][0].exists = 1;
-                    res.render("book-page", req.query && req.query.new ? {"result": result[0][0], "genres": result[3], "isNew": true} : {"result": result[0][0], "copies": result[1], "genres": result[3]});
+                    res.render("book-page", req.query && req.query.new ? {"result": result[0][0], "genres": result[3], "isNew": true} : {"result": result[0][0], "copies": result[1]});
                 } else {
                    next();
                 }
@@ -53,7 +53,7 @@ router.route("/:id")
             .then(function(result) {
                 if(result[0].length > 0){
                     result[0][0].exists = 1;
-                    res.render("book-page", {"result": result[0][0], "copies": result[1], "wishlist": result[2], "genres": result[3]});
+                    res.render("book-page", {"result": result[0][0], "copies": result[1], "wishlist": result[2]});
                 } else {
                     data.new = 1;
                     res.render("book-page", {"result": data, "genres": result[3]});

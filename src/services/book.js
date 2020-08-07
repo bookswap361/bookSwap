@@ -58,6 +58,7 @@ BookServices.createBook = function(info) {
                 .then(function(result) {
                     resultObj.book_id = result[0].book_id;
                     BookModel.joinAuthBook(resultObj)
+                    .then(BookModel.setGenre.bind(null, info.genre, resultObj.book_id))
                     .then(resolve)
                     .catch(reject);
                 })

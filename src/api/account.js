@@ -83,7 +83,7 @@ router.post("/update_books", function(req, res, next){
 //delete from books owned
 router.route("/delete_books")
     .post(function(req, res, next) {
-        AccountServices.deleteBooks(req.body.list_id, req.session.u_id)
+        AccountServices.deleteBooks(req.body, req.session.u_id)
             .then(function(result) {
                 if (result) {
                     res.redirect('/account');
