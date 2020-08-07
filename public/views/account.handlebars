@@ -4,7 +4,7 @@
 <div class="container mt-4 mb-2">
     <div class="row mx-auto">
         <div class="col-8 col-md-7 text-right align-self-center">
-            <h2 style="color: #1b6ca8"><i class="fas fa-user-circle"></i>&#32;{{first_name}}'s account</h2>
+            <h2 id="accountHeader"><i class="fas fa-user-circle"></i>&#32;{{first_name}}'s account</h2>
         </div>
         <div class="col-4 col-md-5 text-left align-self-start">
             <span class="largeHeader points">{{points}}</span>
@@ -16,12 +16,12 @@
 {{!-- Notifications --}}
 <form id="delete-alert" action="/account/delete_alert" method="POST"></form>
 {{#if newReqs}}
-	<div id="swap-notifications" class="mx-auto px-3">
+	<div class="swap-notifications mx-auto px-3">
 		<i class="fas fa-user-clock"></i> You have {{newReqs}} new requests for trade!
 	</div>
 {{/if}}
 {{#each alerts}}
-    <div id="swap-notifications" class="mx-auto">
+    <div class="swap-notifications mx-auto">
         {{alert}} &nbsp 
         <div id="delete-alert">
             <button class="inline-form" type="submit" id="delete-alert" form="delete-alert" name="alertId" value={{alert_id}}><i class="material-icons">delete</i></button>
@@ -63,7 +63,8 @@
         </div>
     </div>
 
-	<div id="booksInventory" class="tabcontent mx-auto" style="display: block">
+	<div id="booksInventory" class="tabcontent mx-auto">
+		<div class="mx-auto text-center"><h2> Your Listed Books: </h2></div>
 		<div class="row mx-2 text-center"><button id="addInventory" class="btn mt-2 mb-4 btn-primary mx-auto"> Add New Book </button></div>
 
 		<div class="row mx-2">
@@ -87,8 +88,8 @@
                             <button style="display:none" class="submit btn btn-outline-primary">Submit</button>
                         </td>
                         <td>
-                            <button style="display:block" class="delete btn btn-outline-danger">Delete</button>
-                            <button style="display:none" class="cancel btn btn-outline-danger">Cancel</button>
+                            <button style="display:block" class="delete btn btn-outline-danger" href="/account">Delete</button>
+                            <button style="display:none" class="cancel btn btn-outline-danger" href="/account">Cancel</button>
                         </td>
                     </tr>
                 {{/each}}
@@ -100,7 +101,7 @@
         <div class="section-top"><h2> Pending Swaps </h2></div>
         <div class="section">
             <!-- traded_to == current user scenario -->
-            <h4>Swaps Requested By Me - {{swapsToMePending}}</h4>
+            <h4>Swaps Requested By Me&nbsp;&nbsp;<span class="highlight count">{{swapsToMePending}}</span>  </h4>
             <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
@@ -123,13 +124,14 @@
                             <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
                             <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
                             <td>{{#if claim_open_date}} {{formatDate claim_open_date}} {{/if}}</td>
-                            <td>{{{getStatus this}}}</td>
+                            <td class="highlight">{{{getStatus this}}}</td>
                         </tr>
                     {{/unless}}
                 {{/each}}
             </table>
+            <hr>
             <!-- traded_by == current user scenario -->
-            <h4> Swaps Requested To Me - {{add swapsByMePending newReqs}}</h4>
+            <h4> Swaps Requested To Me  <span class="highlight count">{{add swapsByMePending newReqs}}</span></h4>
             <form id="accept-trade" action="/swap/accept" method="POST"></form>
             <form id="reject-trade" action="/swap/reject" method="POST"></form>
             <form id="get-shipping" action="/swap/get-shipping" method="POST"></form>
@@ -163,14 +165,14 @@
                             <td>{{#if claim_open_date}} {{formatDate claim_open_date}} {{/if}}</td>
 
                             {{#if is_accepted}}
-                                <td>
+                                <td class="highlight">
                                     {{{getStatus this}}}
                                 </td>
                             {{/if}}
                             {{#unless is_accepted}}
                                 <td>
-                                    <button type="submit" form="accept-trade" name="swapId" value={{swap_id}} class="btn btn-outline-primary">Accept Trade</button>
-                                    <button type="submit" form="reject-trade" name="swapId" value={{swap_id}} class="btn btn-outline-danger">Reject Trade</button>
+                                    <button type="submit" form="accept-trade" name="swapId" value={{swap_id}} class="btn btn-primary">Accept Trade</button>
+                                    <button type="submit" form="reject-trade" name="swapId" value={{swap_id}} class="btn btn-danger">Reject Trade</button>
                                 </td>
                             {{/unless}}
                         </tr>
@@ -181,7 +183,7 @@
 
         <div class="section-top"><h2> Previous/Completed Swaps </h2></div>
         <div class="section">
-            <h4>Swaps Requested By Me - {{swapsToMeComplete}}</h4>
+            <h4>Swaps Requested By Me - <span class="highlight">{{swapsToMeComplete}}</span></h4>
             <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
@@ -209,12 +211,12 @@
                             <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
                             <td>{{#if lost_date}} {{formatDate lost_date}} {{/if}}</td>
                             <td>{{#if refund_date}} {{formatDate refund_date}} {{/if}}</td>
-                            <td>{{{getStatus this}}}</td>
+                            <td class="highlight">{{{getStatus this}}}</td>
                         </tr>
                     {{/if}}
                 {{/each}}
             </table>
-            <h4>Swaps Requested To Me - {{swapsByMeComplete}}</h4>
+            <h4>Swaps Requested To Me - <span class="highlight">{{swapsByMeComplete}}</span></h4>
             <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
@@ -242,7 +244,7 @@
                             <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
                             <td>{{#if lost_date}} {{formatDate lost_date}} {{/if}}</td>
                             <td>{{#if refund_date}} {{formatDate refund_date}} {{/if}}</td>
-                            <td>{{{getStatus this}}}</td>
+                            <td class="highlight">{{{getStatus this}}}</td>
                         </tr>
                     {{/if}}
                 {{/each}}
@@ -252,9 +254,11 @@
 
 	<div id="wishlist" class="tabcontent mx-auto">
     <form id="delete-this-wish" form action="/account/delete_wish" method="POST"></form>
-        <h2> Wishlist </h2>
-            <div class="row mx-2 text-center"><button id="addWish" class="btn mt-2 mb-4 btn-primary mx-auto" onclick="window.location.href='/book/search';"> Add New Book </button></div>
-            <div class="slideshow-container">
+        <h2> Your Wishlist </h2>
+            <div class="row mx-2 text-center">
+                <button id="addWish" class="btn mt-2 mb-4 btn-primary mx-auto" onclick="window.location.href='/book/search';"> Add New Book </button>
+            </div>
+            <div class="slideshow-container mx-auto">
 			{{#if wishlist}}
                 <div class="nav-arrows">
                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -263,16 +267,14 @@
                     <div class="mySlides">
                         <table>
                             <tr>
-                                <td rowspan="2">
-                                    <img id="cover" src="{{thumbnail_url}}">
-                                </td>
                                 <td>
-                                    {{title}}
+                                    <img class="cover" src="{{thumbnail_url}}">
                                 </td>
-                            <tr>
-                                <td>
-                                    {{description}}<br>
-                                    <button type="submit" name="book_id" value={{book_id}} form="delete-this-wish" class="btn btn-outline-danger">Delete</button>
+                                <td class="description">
+                                    <span>{{title}}</span>
+                                    <P></P>
+                                    {{nullDescription description}}<hr>
+                                    <button type="submit" name="book_id" value={{book_id}} form="delete-this-wish" class="btn btn-danger">Delete</button>
                                 </td>
                             </tr>
                         </table>

@@ -18,3 +18,9 @@ function windowReload() {
 function filterSubmit(radio) {
     radio.form.submit();
 };
+
+function disableBtn(button) {
+    button.setAttribute("disabled", "true");
+    button.classList.contains("btn-primary") ? button.classList.remove("btn-primary") : button.classList.remove("btn-info");
+    button.classList.add("btn-secondary");
+};
