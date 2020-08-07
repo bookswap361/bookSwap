@@ -55,6 +55,7 @@ AccountServices.getAccount = function(user_id) {
     });
 };
 
+
 AccountServices.addBook = function(book, user_id) {
     return new Promise(function(resolve, reject) {
         BooksOwnedModel.addBook(book, user_id)
@@ -95,7 +96,7 @@ AccountServices.deleteBooks = function(list_id, user_id) {
     return new Promise(function(resolve, reject) {
         SwapModel.deleteSwapsByListId(list_id)
             .then(BooksOwnedModel.deleteBook(list_id))
-            .then(UserModel.deletePoints.bind(null, user_id))
+            .then(UserModel.deletePoints.bind(null, 1, user_id))
             .then(resolve)
             .catch(reject);
         });
