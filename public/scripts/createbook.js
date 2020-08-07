@@ -11,21 +11,7 @@ var uniqueResults;
 
 document.addEventListener("DOMContentLoaded", pageInit);
 
-function createOlKey(id){
-    var newKey = "OL" + Math.floor(Math.random()*50000+1) + id;
-    while (allOlKeys.includes(newKey)) {
-        newKey = "OL" + Math.floor(Math.random()*50000+1) + id;
-    }
-    return newKey;
-}
-
-function pageInit() {
-    document.getElementById("bol_key").setAttribute("value", createOlKey("NB"));
-    document.getElementById("aol_key").setAttribute("value", createOlKey("NA"));
-    attachAuthorListener();
-}
-
-function attachAuthorListener(){
+function pageInit(){
     findAuthBtn.addEventListener("click", function(event){        
         event.preventDefault();
         authorGetRequest();
@@ -74,7 +60,7 @@ function authorGetRequest() {
             resultsDiv.classList.remove("hidden");
             fillInAuthor();
         } else {
-            document.getElementById("iAuthor").value = "";
+            setAuthorValues();
         }
         document.getElementById("addBook").classList.remove("hidden");
     });
@@ -116,15 +102,19 @@ function fillInAuthor() {
     var findAuthor = uniqueResults.find(isSelected);
     if (findAuthor) {
         var id = findAuthor.author_id;
-        document.getElementById("iAuthor").value = selection;
-        document.getElementById("aol_key").value = id;
+        setAuthorValues(selection, id);
     } else {
-        document.getElementById("iAuthor").value = "";
+        setAuthorValues();
     }
 
     function isSelected(item){
         return item.name == selection;
     }
+}
+
+function setAuthorValues(authorName, authorId) {
+    document.getElementById("iAuthor").value = authorName || "";
+    document.getElementById("aol_key").value = authorId || "";
 }
 
 function resetAuthorDropdown() {
