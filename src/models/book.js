@@ -74,6 +74,14 @@ Book.getAvailableBooksByPoints = function(userId, points) {
     return mysql.query(getQuery("getAvailableBooksByPoints"), [userId, points]);
 };
 
+Book.getGenreList = function() {
+    return mysql.query(getQuery("getGenreList"), []);
+}
+
+Book.setGenre = function(info) {
+    return mysql.query(getQuery("setGenre"), [info.genre_id, info.book_id]);
+}
+
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -127,6 +135,12 @@ function getQuery(type) {
                 INNER JOIN author a ON ba.author_id = a.author_id \
                 WHERE bo.is_available = 1 AND bo.user_id != ? AND bc.cost <= ?\
                 GROUP BY b.book_id;";
+            break;
+        case "getGenreList":
+            query = "SELECT genre_id, name FROM genre;";
+            break;
+        case "setGenre":
+            query = "INSERT INTO book_genre (genre_id, book_id) VALUES (?, ?);";
             break;
         }
 

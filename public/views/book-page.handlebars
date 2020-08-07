@@ -61,7 +61,18 @@
                     <option value="3">Excellent condition: 15pts</option>
                     <option value="2">Good condition: 10pts</option>
                     <option value="1">Acceptable condition: 5pts</option>
-                </select> 
+                </select>
+
+                <br>
+
+                <label for="genre">Choose the genre of your book to trade:</label>
+                <select name="genre" id="genreList">
+                    {{#each genres}}
+                        <option value="{{genre_id}}">{{name}}</option>
+                    {{/each}}
+                </select>
+
+                <br>
 
                 <input id="newTitle" value="{{result.title}}" hidden>
                 <input id="newUser_id" value="{{user_id}}" hidden>
@@ -70,6 +81,7 @@
                 <button type="button" class="btn btn-primary" id="addBookBtn" onclick="makeReq.call(null, 'booklist')">Add to my book list</button>
                 <P><div id="confirm"></div></P>
             </div>
+        </div>
         <div class="row container mt-4">
             {{#if copies}}
                 <h5>Open Swaps for this Book:</h5>

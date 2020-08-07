@@ -58,16 +58,21 @@ AccountServices.getAccount = function(id) {
 // MC: it does
 AccountServices.addBook = function(body, id) {
     var p1 = new Promise(function(resolve, reject) {
-    BooksOwnedModel.addBook(body)
-    .then(resolve)
-    .catch(reject);
+        BooksOwnedModel.addBook(body)
+            .then(resolve)
+            .catch(reject);
     });
     var p2 = new Promise(function(resolve, reject) {
-    UserModel.updatePoints(1, id)
-    .then(resolve)
-    .catch(reject);
+        UserModel.updatePoints(1, id)
+            .then(resolve)
+            .catch(reject);
     });
-return Promise.all([p1, p2])
+    var p3 = new Promise(function(resolve, reject) {
+        BookModel.setGenre(body)
+            .then(resolve)
+            .catch(reject);
+    });
+    return Promise.all([p1, p2, p3])
 };
 
 
