@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="/css/book.css">
 <div class="container">
-    <div class="row pl-3 pl-md-0"><h2>Search For Books</h2></div>
+    <div class="row pl-3 pl-md-0"><h2><i class="fas fa-search"></i> Search for Books</h2></div>
     <div class="row pl-3 pl-md-0">
         <form>
-            <input type="text" name="searchText" id="searchText" placeholder="Search for books">
+            <input type="text" name="searchText" id="searchText" placeholder="Title">
             <input type="submit" value="Submit" id="searchSubmit">
         </form>
     </div>
@@ -17,7 +17,7 @@
     <div class="container" id="searchResults">
         {{!-- Insert results here --}}
     </div>
-    <div class="container hidden" id="noFind"> <div class="row info"><strong>Can't find your book?</strong>&emsp;Try another search or add it&emsp;<a href="/book/create-book">here!</a> </div> </div>
+    <div class="container hidden" id="noFind"> <div class="row note"><strong>Can't find your book?</strong>&emsp;Try another search or add it&emsp;<a href="/book/create-book">here!</a> </div> </div>
 </div>
 
 <script src="../scripts/searchbook.js"></script>
