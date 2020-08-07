@@ -1,20 +1,8 @@
 const addBookBtn      = document.getElementById("addBookBtn"),
-      chooseCondition = document.getElementById("chooseCondition"),
       confirmDiv      = document.getElementById("confirm"),
-      newLink         = document.getElementById("newLink"),
       description     = document.getElementById("description");
 
-window.onload = function(event){
-    if (description.innerHTML === "null"){
-        description.innerHTML = `<em>No description for this book available</em>`;
-    }
-}
-
 // Add existing book to owned books
-function showAddForm(){
-    chooseCondition.classList.remove("hidden");
-}
-
 function getDataOwn(){
     var payload = {user_id: null, book_id: null, condition_id: null, condition_description: null, list_date: null, genre_id: null};
     payload.user_id = 1;
@@ -39,7 +27,7 @@ function makeReq(type) {
             fetchHelper("/account/add_books", "POST", data)
             .then(function() {                
                 confirmDiv.innerText = confirmStr;
-                addBookBtn.setAttribute("disabled", "true");
+                disableBtn(addBookBtn);
             })
             .catch(function(err) {
                 console.log(err);
@@ -52,7 +40,7 @@ function makeReq(type) {
         fetchHelper("/account/add_wish", "POST", data)
         .then(function() {
             confirmDiv.innerText = confirmStr;
-            addWishBtn.setAttribute("disabled", "true");
+            disableBtn(addWishBtn);
         })
         .catch(function(err) {
             console.log(err);
