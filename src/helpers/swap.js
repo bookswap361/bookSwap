@@ -17,7 +17,7 @@ function getCompleteStatus(swapObject) {
 };
 
 function getButtonHtml(swapId, form, isPrimary, text) {
-    return "<button type='submit' form=" + form + " name='swapId' value=" + swapId + " class='btn btn-outline-" + (isPrimary ? "primary" : "danger") + "'>" + text + "</button>";
+    return "<button type='submit' form=" + form + " name='swapId' value=" + swapId + " class='btn btn-" + (isPrimary ? "primary" : "danger") + "'>" + text + "</button>";
 };
 
 function generateShipperStatus(swapObject) {
@@ -63,16 +63,16 @@ function generateReceiverStatus(swapObject) {
         var elapsedTime = getTimeElapsed(swapObject.ship_date)
         if (elapsedTime > 1) { // 'Show Not Received' button after 4 minutes for test, change to use dayDiff later
             if (swapObject.lost_limit) {
-                returnHtml += getButtonHtml(swapObject.swap_id, "not-received-refund", true, "Not Received");
+                returnHtml += getButtonHtml(swapObject.swap_id, "not-received-refund", false, "Not Received");
             } else {
-                returnHtml += getButtonHtml(swapObject.swap_id, "not-received", true, "Not Received");
+                returnHtml += getButtonHtml(swapObject.swap_id, "not-received", false, "Not Received");
             }
         } else {
             returnHtml += getButtonHtml(swapObject.swap_id, "received", true, "Received");
             returnHtml += getButtonHtml(swapObject.swap_id, "claim", false, "Received in Poor Condition");
         }
     } else if (swapObject.ship_date && swapObject.not_received) {
-        returnHtml += "Mark Not Received -- Pending Shipper";
+        returnHtml += "Marked Not Received -- Pending Shipper";
     } else if (swapObject.has_claim) {
         returnHtml += "Open Claim";
     }

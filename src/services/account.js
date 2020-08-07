@@ -2,78 +2,72 @@ var UserModel = require("../models/user"),
     BooksOwnedModel = require("../models/books_owned"),
     WishListModel = require("../models/wishlist"),
     SwapServices = require("../services/swap"),
-    BookModel = require("../models/book"),
     SwapModel = require("../models/swap"),
     AlertServices = require("../services/alert");
     ForumServices = require("../services/forum");
-var AccountServices = {};
+    AccountServices = {};
 
-AccountServices.getAccount = function(id) {
+AccountServices.getAccount = function(user_id) {
     var p1 = new Promise(function(resolve, reject) {
-        UserModel.getUserById(id)
+        UserModel.getUserById(user_id)
         .then(function(user) {
             resolve(user[0]);
         })
         .catch(reject);
     });
     var p2 = new Promise(function(resolve, reject) {
-        BooksOwnedModel.getBooks(id)
+        BooksOwnedModel.getBooks(user_id)
         .then(function(books) {
             resolve({"books": books});
         })
         .catch(reject);
     });
     var p3 = new Promise(function(resolve, reject) {
-        WishListModel.getWishList(id)
+        WishListModel.getWishList(user_id)
         .then(function(wishlist) {
             resolve({"wishlist": wishlist});
         })
         .catch(reject);
     });
     var p4 = new Promise(function(resolve, reject) {
-        SwapServices.getSwapsByUserId(id, false)
-        .then(function(swaps) {
-            resolve(swaps);
-        })
+        SwapServices.getSwapsByUserId(user_id, false)
+        .then(resolve)
         .catch(reject);
     });
     var p5 = new Promise(function(resolve, reject) {
-        SwapServices.getSwapsByUserId(id, true)
-        .then(function(swaps) {
-            resolve(swaps);
-        })
+        SwapServices.getSwapsByUserId(user_id, true)
+        .then(resolve)
         .catch(reject);
     });
     var p6 = new Promise(function(resolve, reject) {
-        AlertServices.getByUserId(id)
+        AlertServices.getByUserId(user_id)
         .then(function(alerts) {
             resolve({"alerts": alerts});
         })
         .catch(reject);
     })
-    return Promise.all([p1, p2, p3, p4, p5, p6]);
+
+    //returns merged object containing all account data
+    return Promise.all([p1, p2, p3, p4, p5, p6]).then(function(result) {
+        let account = {...result[0], ...result[1], ...result[2], ...result[3],
+                        ...result[4], ...result[5]}
+        return account;
+    });
 };
 
-//add one point when user adds a book -- not sure if this works
-// MC: it does
-AccountServices.addBook = function(body, id) {
-    var p1 = new Promise(function(resolve, reject) {
-    BooksOwnedModel.addBook(body)
-    .then(resolve)
-    .catch(reject);
-    });
-    var p2 = new Promise(function(resolve, reject) {
-    UserModel.updatePoints(1, id)
-    .then(resolve)
-    .catch(reject);
-    });
-return Promise.all([p1, p2])
-};
-
-
-AccountServices.addWish = function(body) {
+AccountServices.addBook = function(book, user_id) {
     return new Promise(function(resolve, reject) {
-        WishListModel.addWish(body)
+        BooksOwnedModel.addBook(book, user_id)
+        .then(UserModel.updatePoints.bind(null, 1, user_id))
+        .then(resolve)
+        .catch(reject);
+    });
+};
+
+
+AccountServices.addWish = function(user_id, book_id) {
+    return new Promise(function(resolve, reject) {
+        WishListModel.addWish(user_id, book_id)
             .then(resolve)
             .catch(reject);
     });
@@ -98,47 +92,42 @@ AccountServices.updateCondition = function(info) {
 }
 
 AccountServices.deleteBooks = function(list_id, user_id) {
-    var p1 = new Promise(function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
         SwapModel.deleteSwapsByListId(list_id)
             .then(BooksOwnedModel.deleteBook(list_id))
+            .then(UserModel.deletePoints.bind(null, user_id))
             .then(resolve)
             .catch(reject);
         });
-    var p2 = new Promise(function(resolve, reject) {
-        UserModel.deletePoints(1, user_id)
-            .then(resolve)
-            .catch(reject);
-        });
-    return Promise.all([p1, p2]);
 };
 
-AccountServices.deleteWish = function(body) {
+AccountServices.deleteWish = function(user_id, book_id) {
     return new Promise(function(resolve, reject) {
-        WishListModel.deleteWish(body)
+        WishListModel.deleteWish(user_id, book_id)
             .then(resolve)
             .catch(reject);
     });
 };
 
-AccountServices.updateAccount = function(body) {
+AccountServices.updateAccount = function(user) {
     return new Promise(function(resolve, reject) {
-        UserModel.updateUser(body)
+        UserModel.updateUser(user)
             .then(resolve)
             .catch(reject);
     });
 };
 
-AccountServices.updatePoints = function(body) {
+AccountServices.updatePoints = function(amount, user_id) {
     return new Promise(function(resolve, reject) {
-        UserModel.updatePoints(body)
+        UserModel.updatePoints(amount, user_id)
             .then(resolve)
             .catch(reject);
     });
 };
 
-AccountServices.updateLostLimit = function(body) {
+AccountServices.updateLostLimit = function(user_id) {
     return new Promise(function(resolve, reject) {
-        UserModel.updateLostLimit(body)
+        UserModel.updateLostLimit(user_id)
             .then(resolve)
             .catch(reject);
     });

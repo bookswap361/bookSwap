@@ -29,8 +29,8 @@ BooksOwned.updateAvailability = function(id, isAvailable) {
     return mysql.query(getQuery("updateAvailability"), [isAvailable ? 1 : 0, id]);
 };
 
-BooksOwned.addBook = function(body) {
-    return mysql.query(getQuery("newBook"), [body.user_id, body.book_id, body.condition_id, body.condition_description, body.list_date]);
+BooksOwned.addBook = function(book, user_id) {
+    return mysql.query(getQuery("newBook"), [user_id, book.book_id, book.condition_id, book.condition_description, book.list_date]);
 }
 
 BooksOwned.deleteAllBooks = function(id) {

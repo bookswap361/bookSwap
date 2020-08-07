@@ -1,16 +1,16 @@
 var mysql = require("../loaders/mysql");
 var WishList = {};
 
-WishList.addWish = function(body) {
-    return mysql.query(getQuery("newWish"), [body.user_id, body.book_id]);
+WishList.addWish = function(user_id, book_id) {
+    return mysql.query(getQuery("newWish"), [user_id, book_id]);
 }
 
 WishList.getWishList = function(id) {
     return mysql.query(getQuery("wish"), [id]);
 }
 
-WishList.deleteWish = function(body) {
-    return mysql.query(getQuery("deleteWish"), [body.user_id, body.book_id]);
+WishList.deleteWish = function(user_id, book_id) {
+    return mysql.query(getQuery("deleteWish"), [user_id, book_id]);
 }
 
 WishList.deleteAllWish = function(id) {
