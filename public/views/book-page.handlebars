@@ -35,14 +35,22 @@
                 This book hasn't been added to our library yet! Would you like to add it? <br>
                 <em>Note: This book must be added to the library in order to trade this book.</em>
             </div>
-            <div class="col-6 col-md-2 text-center py-2 py-md-0">
+        </div>
+        <div class="row justify-content-center align-items-center mt-2 mb-4 text-center text-sm-left px-3">
+            <div class="text-center py-2 py-md-0">
                 <form method="POST" action="/book/create-book">
                     <input name="title"         value="{{result.title}}"         hidden="true">
                     <input name="thumbnail_url" value="{{result.thumbnail_url}}" hidden="true">
                     <input name="bol_key"       value="{{result.book_id}}"       hidden="true"> 
                     <input name="name"          value="{{result.name}}"          hidden="true">
                     <input name="aol_key"       value="{{result.author_id}}"     hidden="true"> 
-                    <input name="description"   value="{{result.description}}"   hidden="true"> 
+                    <input name="description"   value="{{result.description}}"   hidden="true">
+                    <label for="genre">Choose the genre of your book to trade:</label>
+                    <select name="genre" id="genreList">
+                        {{#each genres}}
+                            <option value="{{genre_id}}">{{name}}</option>
+                        {{/each}}
+                    </select> 
                     <input type="submit"        value="Add Book"          class="btn btn-primary">
                 </form>
             </div>
@@ -70,7 +78,7 @@
                         <option value="3">Excellent condition: 15pts</option>
                         <option value="2">Good condition: 10pts</option>
                         <option value="1">Acceptable condition: 5pts</option>
-                    </select> 
+                    </select>
 
                     <input id="newTitle" value="{{result.title}}" hidden>
                     <input id="newUser_id" value="{{user_id}}" hidden>

@@ -27,7 +27,21 @@ BookServices.getBookByOLId = function(id, user_id) {
         .then(resolve)
         .catch(reject);
     });
-	return Promise.all([p1, p2, p3])
+    var p4 = new Promise(function(resolve, reject) {
+        BookModel.getGenreList()
+            .then(function(result) {
+                var genres = [];
+                result.forEach(function(genre) {
+                    genres.push({
+                        "genre_id": genre.genre_id,
+                        "name": genre.name
+                    });
+                });
+                resolve(genres);
+            })
+            .catch(reject);
+    });
+	return Promise.all([p1, p2, p3, p4])
 };
 
 BookServices.createBook = function(info) {
@@ -44,6 +58,7 @@ BookServices.createBook = function(info) {
                 .then(function(result) {
                     resultObj.book_id = result[0].book_id;
                     BookModel.joinAuthBook(resultObj)
+                    .then(BookModel.setGenre.bind(null, info.genre, resultObj.book_id))
                     .then(resolve)
                     .catch(reject);
                 })
