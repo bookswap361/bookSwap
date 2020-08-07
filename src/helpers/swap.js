@@ -44,8 +44,7 @@ function getTimeElapsed(shipDate) {
     var today = new Date();
     var ship = new Date(shipDate);
     var milliseconds = today - ship;
-    var dayDiff = parseInt(milliseconds / (1000 * 60 * 60 * 24));
-    return dayDiff;
+    return parseInt(milliseconds / (1000 * 60 * 60 * 24)); // Days elapsed
 };
 
 function generateReceiverStatus(swapObject) {
