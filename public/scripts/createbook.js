@@ -11,7 +11,16 @@ var uniqueResults;
 
 document.addEventListener("DOMContentLoaded", pageInit);
 
+function createOlKey(id) {
+    var newKey = "OL" + Math.floor(Math.random()*50000+1) + id;
+    while (allOlKeys.includes(newKey)) {
+        newKey = "OL" + Math.floor(Math.random()*50000+1) + id;
+    }
+    return newKey;
+}
+
 function pageInit(){
+    document.getElementById("bol_key").setAttribute("value", createOlKey("NB"));
     findAuthBtn.addEventListener("click", function(event){        
         event.preventDefault();
         authorGetRequest();
@@ -114,7 +123,7 @@ function fillInAuthor() {
 
 function setAuthorValues(authorName, authorId) {
     document.getElementById("iAuthor").value = authorName || "";
-    document.getElementById("aol_key").value = authorId || "";
+    document.getElementById("aol_key").value = authorId || createOlKey("NA");
 }
 
 function resetAuthorDropdown() {
