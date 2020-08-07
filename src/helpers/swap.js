@@ -45,8 +45,7 @@ function getTimeElapsed(shipDate) {
     var ship = new Date(shipDate);
     var milliseconds = today - ship;
     var dayDiff = parseInt(milliseconds / (1000 * 60 * 60 * 24));
-    var minuteDiff = parseInt(milliseconds / (1000 * 60)); // For test
-    return minuteDiff; // Return dayDiff when done
+    return dayDiff;
 };
 
 function generateReceiverStatus(swapObject) {
@@ -61,7 +60,7 @@ function generateReceiverStatus(swapObject) {
         returnHtml += "Shipment Pending";
     } else if (swapObject.ship_date && !swapObject.received_date && !swapObject.not_received) {
         var elapsedTime = getTimeElapsed(swapObject.ship_date)
-        if (elapsedTime > 1) { // 'Show Not Received' button after 4 minutes for test, change to use dayDiff later
+        if (elapsedTime >= 4) { 
             if (swapObject.lost_limit) {
                 returnHtml += getButtonHtml(swapObject.swap_id, "not-received-refund", false, "Not Received");
             } else {
