@@ -14,18 +14,22 @@
     <div class="row hidden" id="resultsDiv">
         <label for="author">Choose an author:</label>
         <select name="author" id="authorRes" onchange="fillInAuthor()">
-        <option value=""></option>
-        <option value="" id="other">Other- type in author name below</option>
         </select> 
     </div>
 
     <div class="row hidden" id="addBook">
         <form action="/book/create-book" action="POST">
+            <label for="genre">Select Genre:</label>
+            <select name="genre" id="genreList">
+                {{#each genres}}
+                    <option value="{{genre_id}}">{{name}}</option>
+                {{/each}}
+            </select>
             <input type="text" name="title" placeholder="Book Title" required>
             <input id="iAuthor" type="text" name="name" placeholder="Author" required>
             <input type="text" name="description" placeholder="Book Description">
             <input id="bol_key" name="bol_key" hidden="true">
-            <input id="aol_key" name="aol_key" hidden="true">
+            <input id="aol_key" name="aol_key" hidden="true"><br>
             <button type="submit" formmethod="post" formaction="/book/create-book" class="btn btn-primary">Add New Book</button>
         </form>
     </div>

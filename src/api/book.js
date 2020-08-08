@@ -7,11 +7,13 @@ router.route("/create-book")
     .get(function(req, res, next) {
         BookServices.getOlKeys()
             .then(function(result){
-                var keys = [];
-                result.forEach(function(element){
-                    keys.push(element.ol_key);
-                });
-                res.render("createbook", {"keys": keys});
+                BookServices.getGenreList()
+                    .then(function(genres) {
+                        res.render("createbook", {"keys": result, "genres": genres});
+                    })
+                    .catch(function(err) {
+                        next(err);
+                    });
             })
             .catch(function(err){
                 next(err);
