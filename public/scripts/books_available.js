@@ -65,7 +65,7 @@ function getCondition(event) {
             var cost = document.createElement('td');
             cost.innerText = books[i].cost;
             cost.className = "center";
-            cost.classList.add("highlight");
+            cost.classList.add(userPoints < books[i].cost ? "highlight-red" : "highlight");
             row.appendChild(cost);
 
             // Create swap button
