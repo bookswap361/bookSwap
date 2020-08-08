@@ -132,6 +132,11 @@ table {
     font-weight: bold;
 }
 
+.highlight-red {
+    color: "#ff0000";
+    font-weight: bold;
+}
+
 .count {
     padding: .1em .5rem .3rem .3em;
     border: 1px solid rgba(155,155,155, 0.25);
