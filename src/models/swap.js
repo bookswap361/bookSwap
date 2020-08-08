@@ -135,7 +135,7 @@ function getQuery(type) {
             WHERE swap.traded_to = ? ORDER BY swap.swap_id;";
             break;
         case "getShippingAddress":
-            query = "SELECT user.first_name, user.last_name, user.street, user.city, user.state, user.zip FROM swap \
+            query = "SELECT user.first_name AS ship_fname, user.last_name AS ship_lname, user.street, user.city, user.state, user.zip FROM swap \
             INNER JOIN user ON swap.traded_to = user.user_id WHERE swap.swap_id = ?;"
             break;
         case "createSwap":
