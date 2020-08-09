@@ -11,7 +11,7 @@ UserServices.getUserById = function(user_id) {
     });
 };
 
-//not complete
+
 UserServices.searchUsers = function() {
     return new Promise(function(resolve, reject) {
         UserModel.searchUsers()
