@@ -1,14 +1,36 @@
-<form id="signupForm" form action="create" method="POST">
-    <input type="text" name="first_name" placeholder="first name" required>
-    <input type="text" name="last_name" placeholder="last name" required>
-    <input type="text" name="email" placeholder="email" required>
-    <input type="text" name="street" placeholder="street" required>
-    <input type="text" name="city" placeholder="city" required>
-    <input type="text" name="state" placeholder="state" required>
-    <input type="text" name="zip" placeholder="zip" required>
-    <input type="password" name="password" placeholder="password" required>
-    <input type="submit" name="signupBtn" value="signup!">
-</form>
-{{#if error}}
-    {{error}}
-{{/if}}
+<link rel="stylesheet" href="../css/signup.css">
+<div class="container">
+    <div class="my-3 text-center">
+        <h2>Sign Up for an Account:</h2>
+        You've made a great choice
+    </div>
+    <div class="mx-auto">
+        <div class="text-center">
+            <form id="signupForm" form action="create" method="POST" class="mb-3">
+                <input type="text" name="first_name" placeholder="first name" required>
+                <P></P>
+                <input type="text" name="last_name" placeholder="last name" required>
+                <P></P>
+                <input type="text" name="email" placeholder="email" required>
+                <P></P>
+                <input type="text" name="street" placeholder="street" required>
+                <P></P>
+                <input type="text" name="city" placeholder="city" required>
+                <P></P>
+                <input type="text" name="state" placeholder="state" required>
+                <P></P>
+                <input type="text" name="zip" placeholder="zip" required>
+                <P></P>
+                <input type="password" name="password" placeholder="password" required>
+                <P></P>
+                <input type="submit" name="signupBtn" value="signup!">
+            </form>
+            <P>Note: All fields are required for signup</P>
+        </div>
+        <div class="row">
+            {{#if error}}
+                {{error}}
+            {{/if}}
+        </div>
+    </div>
+</div>

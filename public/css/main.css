@@ -68,6 +68,10 @@ table {
     display: none;
 }
 
+.btn {
+    margin-left: 5px;
+}
+
 .btn-primary{
     background-color: #0c7b93;
     border-color: #0c7b93;
