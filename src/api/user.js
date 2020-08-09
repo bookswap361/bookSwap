@@ -8,16 +8,15 @@ router.route("/user")
     })
 
 
-
-router.route("/search_user")
-    .get(function(req, res) {
+router.route("/search")
+    .get(function(req, res, next) {
         UserServices.searchUsers(req.session.u_id, req.params.query, req.params.search_by)
             .then(function(result) {
                 res.render('/search', result);
             })
             .catch(function(err) {
-                res.status(400).json({"error": err});
-            });
+                next(err);
+            })
     })
 
 
