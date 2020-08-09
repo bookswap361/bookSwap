@@ -2,12 +2,23 @@ var mysql = require("../loaders/mysql");
 var User = {};
 
 
-User.getAllUsers = function() {
-    return mysql.query(getQuery("allUsers"), []);
-}
 
 User.getUserById = function(user_id) {
     return mysql.query(getQuery("userById"), [user_id]);
+}
+
+User.searchUsers = function(id, query, search_by) {
+    switch(search_by)
+    {
+        case 1:
+        return mysql.query(getQuery("searchUserByFname"), [id, query]);
+        break;
+        case 2:
+        return mysql.query(getQuery("searchUserByLname"), [id, query]);
+        break;
+        case 3:
+        return mysql.query(getQuery("searchUserByEmail"), [id, query]);
+    }
 }
 
 User.getUserByEmail = function(email) {
@@ -51,10 +62,6 @@ User.getPoints = function(user_id) {
 function getQuery(type) {
     var query = "";
     switch(type) {
-        case "allUsers":
-            query = "SELECT * from user;"
-            break;
-
         case "userById":
             query = "SELECT * from user WHERE user_id = ?";
             break;
@@ -76,7 +83,16 @@ function getQuery(type) {
         case "updateUser":
             query = "UPDATE user SET first_name = ?, last_name = ?, email = ?, street = ? WHERE user_id = ?";
             break;
+            
+         case "searchUserByFname":
+            query = "SELECT * FROM user INNER JOIN books_owned ON books_owned.user_id = ? WHERE user.first_name = ? AND books_owned.is_available = 1";
 
+        case "searchUserByLname":
+            query = "SELECT * FROM user INNER JOIN books_owned ON books_owned.user_id = ? WHERE user.last_name = ? AND books_owned.is_available = 1";
+
+        case "searchUserByEmail":
+            query = "SELECT * FROM user INNER JOIN books_owned ON books_owned.user_id = ? WHERE user.email = ? AND books_owned.is_available = 1";
+            
         case "updatePoints":
             query = "UPDATE user SET points = points + ? WHERE user_id = ?";
             break;
