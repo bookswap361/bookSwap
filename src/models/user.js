@@ -11,13 +11,13 @@ User.searchUsers = function(id, query, search_by) {
     switch(search_by)
     {
         case 1:
-        return mysql.query(getQuery("searchUserByFname"), [id, query]);
-        break;
+            return mysql.query(getQuery("searchUserByFname"), [id, query]);
+            break;
         case 2:
-        return mysql.query(getQuery("searchUserByLname"), [id, query]);
-        break;
+            return mysql.query(getQuery("searchUserByLname"), [id, query]);
+            break;
         case 3:
-        return mysql.query(getQuery("searchUserByEmail"), [id, query]);
+            return mysql.query(getQuery("searchUserByEmail"), [id, query]);
     }
 }
 
@@ -89,9 +89,11 @@ function getQuery(type) {
 
         case "searchUserByLname":
             query = "SELECT * FROM user INNER JOIN books_owned ON books_owned.user_id = ? WHERE user.last_name = ? AND books_owned.is_available = 1";
+            break;
 
         case "searchUserByEmail":
             query = "SELECT * FROM user INNER JOIN books_owned ON books_owned.user_id = ? WHERE user.email = ? AND books_owned.is_available = 1";
+            break;
             
         case "updatePoints":
             query = "UPDATE user SET points = points + ? WHERE user_id = ?";
