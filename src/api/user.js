@@ -9,7 +9,7 @@ router.route("/user")
 
 
 
-router.route("/search")
+router.route("/search_user")
     .get(function(req, res) {
         UserServices.searchUsers(req.session.u_id, req.params.query, req.params.search_by)
             .then(function(result) {
