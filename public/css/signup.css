@@ -1,0 +1,19 @@
+h2 {
+    color: #184d47
+}
+
+input {
+    color: #2A4185;
+}
+
+input[type=text], textarea {
+    outline: none;
+    border: 1px solid #DDDDDD;
+    margin: 2px 2px 2px 0px;
+    padding: 5px; 
+}
+   
+input[type=text]:focus, textarea:focus {
+    box-shadow: 0 0 5px rgba(159, 228, 209, 0.85);
+    border: 1px solid rgba(159, 228, 209, 0.85);
+}
