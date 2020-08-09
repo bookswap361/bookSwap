@@ -3,17 +3,18 @@ var bcrypt = require('bcryptjs');
 var UserServices = {};
 
 
-UserServices.getAllUsers = function() {
+UserServices.getUserById = function(user_id) {
     return new Promise(function(resolve, reject) {
-        UserModel.getAllUsers()
+        UserModel.getUserById(user_id)
             .then(resolve)
             .catch(reject);
     });
 };
 
-UserServices.getUserById = function(user_id) {
+//TODO
+UserServices.searchUsers = function() {
     return new Promise(function(resolve, reject) {
-        UserModel.getUserById(user_id)
+        UserModel.searchUsers()
             .then(resolve)
             .catch(reject);
     });

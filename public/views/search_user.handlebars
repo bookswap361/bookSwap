@@ -1,0 +1,18 @@
+<div id="results">
+  {{#if result}}
+      <table><tr>
+        <th>First name</th> <th>Last Name</th> <th>email</th> <th>Available Swaps</th> <th> </th>
+      </tr>
+    {{#each result}}
+      <tr>
+        <td>{{first_name}}</td>
+        <td>{{last_name}}</td>
+        <td>{{email}}</td>
+        <td>{{swaps}}</td>
+        <td><button id="request">Request swap</button></td>
+      </tr>
+    {{/each}}
+      </table>
+  {{else}}
+    Sorry, no results matched your search.
+  {{/if}}
