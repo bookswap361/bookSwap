@@ -7,7 +7,7 @@ router.route("/user")
         res.render("/user");
     })
 
-
+//TODO
 router.route("/search")
     .get(function(req, res, next) {
         UserServices.searchUsers(req.session.u_id, req.params.query, req.params.search_by)
