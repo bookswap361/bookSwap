@@ -1,14 +1,6 @@
-Search for users by:
-<form id="search_user">
-<select name ="search">
-<option value="1" id="f_name">First Name</option>
-<option value="2" id="l_name">Last Name</option>
-<option value="3" id="email">email address</option>&nbsp;&nbsp;
-<input id="filter" type="text" required><br>
-<button id="searchBtn">Search</button>
-</form>
+
 <div id="results">
-{{#if user}}
+{{#if result}}
 <table><tr><th>
 First name</th> <th>Last Name</th> <th>email</th>
 <th>Available Swaps</th><th></th>
@@ -19,7 +11,7 @@ First name</th> <th>Last Name</th> <th>email</th>
 <td>{{last_name}}</td>
 <td>{{email}}</td>
 <td>{{swaps}}</td>
-<td><button id="request" onclick="request_swap()">Request swap</button>
+<td><button id="request">Request swap</button>
 </td>
 </tr>
 {{/each}}
