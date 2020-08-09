@@ -86,7 +86,8 @@ function getQuery(type) {
             
          case "searchUserByFname":
             query = "SELECT * FROM user INNER JOIN books_owned ON books_owned.user_id = ? WHERE user.first_name = ? AND books_owned.is_available = 1";
-
+            break;
+            
         case "searchUserByLname":
             query = "SELECT * FROM user INNER JOIN books_owned ON books_owned.user_id = ? WHERE user.last_name = ? AND books_owned.is_available = 1";
             break;
