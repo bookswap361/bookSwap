@@ -8,29 +8,17 @@ router.route("/")
     })
 
 //TODO
-router.route("/search_by_name")
+router.route("/search")
     .get(function(req, res, next) {
-        UserServices.searchUsersByName(req.query.name)
-            .then(function(result) {
-                console.log(result);
-                res.render('search_user', result);
-            })
-            .catch(function(err) {
-                next(err);
-            })
+        console.log(req)
+        UserServices.searchUsers(Number(req.query.criteria), req.query.content)
+        .then(function(result) {
+            // this part is just a placeholder
+            res.render("searchuser", {"result": result})
+        })
+        .catch(function(err) {
+            next(err);
+        })
     })
-
-router.route("/search_by_email")
-    .get(function(req, res, next) {
-        UserServices.searchUsersByEmail(req.query.email)
-            .then(function(result) {
-                res.render('search_user', result);
-            })
-            .catch(function(err) {
-                next(err);
-            })
-    })
-
-
 
 module.exports = router;

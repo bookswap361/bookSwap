@@ -1,9 +1,12 @@
 Search for users by:
-  <form id="search_user">
+  <form id="search_user" action="/user/search" method="GET">
+    <input type="hidden" id="search-criteria" name="criteria" value="1">
+    <input type="hidden" id="search-content" name="content" value="">
     <select id ="search_by">
-      <option value="1">first or last name</option>
-      <option value="2" id="email">email address</option>&nbsp;&nbsp;
+      <option value="1">first name</option>
+      <option value="2">last name</option>
+      <option value="3">email address</option>&nbsp;&nbsp;
     <input id="filter" type="text" required><br>
-    <button id="searchBtn" onclick="makeReq()">Search</button>
+    <input type="submit" id="searchBtn">Search</button>
   </form>
 <script src="../scripts/searchuser.js"></script>

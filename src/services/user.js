@@ -12,12 +12,9 @@ UserServices.getUserById = function(user_id) {
 };
 
 //TODO
-UserServices.searchUsersByName = function(name) {
-    return new Promise(function(resolve, reject) {
-        UserModel.searchUsersByName(name)
-            .then(resolve)
-            .catch(reject);
-    });
+UserServices.searchUsers = function(critera, content) {
+    // Can do what you did before and use conditions to target which model to use based on criteria
+    // with if or switch
 };
 
 UserServices.searchUsersByEmail = function(email) {
