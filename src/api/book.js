@@ -5,7 +5,6 @@ var BookServices = require("../services/book"),
 
 router.route("/create-book")
     .get(function(req, res, next) {
-        console.log('create book get')
         BookServices.getOlKeys()
             .then(function(result){
                 BookServices.getGenreList()
@@ -100,11 +99,5 @@ router.route("/create-author")
                 next(err);
             });
     });
-
-router.route("/set-genre")
-    .post(function(req, res, next) {
-        console.log('posting to right route?')
-        console.log(req.body)
-    })
 
 module.exports = router;
