@@ -9,10 +9,10 @@
                 <input type="radio" form="filter-swaps" id="view-afford" name="filter" value="afford" onclick="filterSubmit(this)" {{{setChecked "afford" criteria}}}>
                 <label for="view-afford">Swaps I Can Afford &emsp;</label>
                 <label for="genre">Select Genre:</label>
-                <select name="genre" id="genreDropdown">
-                        <option value="all">All</option>
+                <select name="genre" id="genreDropdown" onchange="this.form.submit();" onfocus="this.selectedIndex = -1;">
+                        <option value="0" {{setSelected value 0}}>All</option>
                     {{#each genres}}
-                        <option value="{{genre_id}}">{{name}}</option>
+                        <option value="{{genre_id}}" {{setSelected ../value genre_id}}>{{name}}</option>
                     {{/each}}
                 </select>
             </form>

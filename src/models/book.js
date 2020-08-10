@@ -66,12 +66,22 @@ Book.joinAuthBook = function(info) {
     });
 }
 
-Book.getAvailableBooks = function(user_id) {
-    return mysql.query(getQuery("getAvailableBooks"), [user_id]);
+Book.getAvailableBooks = function(userId, genreId) {
+    if (genreId == 0) {
+        return mysql.query(getQuery("getAvailableBooks"), [userId]);
+    }
+    else {
+        return mysql.query(getQuery("getAvailableBooksByGenre"), [userId, genreId]);
+    }
 }
 
-Book.getAvailableBooksByPoints = function(userId, points) {
-    return mysql.query(getQuery("getAvailableBooksByPoints"), [userId, points]);
+Book.getAvailableBooksByPoints = function(userId, points, genreId) {
+    if (genreId == 0) {
+        return mysql.query(getQuery("getAvailableBooksByPoints"), [userId, points]);
+    }
+    else {
+        return mysql.query(getQuery("getAvailableBooksByPointsAndGenre"), [userId, points, genreId]);
+    }
 };
 
 Book.getGenreList = function() {
@@ -129,6 +139,16 @@ function getQuery(type) {
                 WHERE bo.is_available = 1 AND bo.user_id != ? \
                 GROUP BY b.book_id;";
             break;
+        case "getAvailableBooksByGenre":
+            query = "SELECT b.book_id, b.title, a.name, count(b.book_id) AS count \
+                from book b \
+                INNER JOIN books_owned bo ON b.book_id = bo.book_id \
+                INNER JOIN book_author ba ON bo.book_id = ba.book_id \
+                INNER JOIN author a ON ba.author_id = a.author_id \
+                INNER JOIN book_genre bg ON bo.book_id = bg.book_id \
+                WHERE bo.is_available = 1 AND bo.user_id != ? AND bg.genre_id = ?\
+                GROUP BY b.book_id;";
+            break;
         case "getAvailableBooksByPoints":
             query = "SELECT b.book_id, b.title, a.name, bc.cost, count(b.book_id) AS count \
                 from book b \
@@ -137,6 +157,17 @@ function getQuery(type) {
                 INNER JOIN book_author ba ON bo.book_id = ba.book_id \
                 INNER JOIN author a ON ba.author_id = a.author_id \
                 WHERE bo.is_available = 1 AND bo.user_id != ? AND bc.cost <= ?\
+                GROUP BY b.book_id;";
+            break;
+        case "getAvailableBooksByPointsAndGenre":
+            query = "SELECT b.book_id, b.title, a.name, bc.cost, count(b.book_id) AS count \
+                from book b \
+                INNER JOIN books_owned bo ON b.book_id = bo.book_id \
+                INNER JOIN book_condition bc ON bo.condition_id = bc.condition_id \
+                INNER JOIN book_author ba ON bo.book_id = ba.book_id \
+                INNER JOIN author a ON ba.author_id = a.author_id \
+                INNER JOIN book_genre bg ON bo.book_id = bg.book_id \
+                WHERE bo.is_available = 1 AND bo.user_id != ? AND bc.cost <= ? AND bg.genre_id = ?\
                 GROUP BY b.book_id;";
             break;
         case "getGenreList":

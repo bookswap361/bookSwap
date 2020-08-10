@@ -4,8 +4,9 @@ function getCondition(event) {
 	// Get book_id for row.
 	var book_id = event.target.parentNode.parentNode.id;
     var isAllChecked = document.getElementById("view-all").checked;
+    var genreID = document.getElementById("genreDropdown").value;
 
-    var url = "../books_available/condition/?id=" + book_id + "&filter=" + (isAllChecked ? "all" : "afford");
+    var url = "../books_available/condition/?id=" + book_id + "&filter=" + (isAllChecked ? "all" : "afford") + "&genre=" + genreID;
     
     fetchHelper(url, "GET")
     .then(function(data) {
@@ -14,7 +15,6 @@ function getCondition(event) {
     .then(function(response) {
         buildTable(response)
     });
-
 }
 
 // Builds a table displaying conditions and costs of available books.
