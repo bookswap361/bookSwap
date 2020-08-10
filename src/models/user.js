@@ -7,18 +7,14 @@ User.getUserById = function(user_id) {
     return mysql.query(getQuery("userById"), [user_id]);
 }
 
-User.searchUsers = function(id, query, search_by) {
-    switch(search_by)
-    {
-        case 1:
-            return mysql.query(getQuery("searchUserByFname"), [id, query]);
-            break;
-        case 2:
-            return mysql.query(getQuery("searchUserByLname"), [id, query]);
-            break;
-        case 3:
-            return mysql.query(getQuery("searchUserByEmail"), [id, query]);
-    }
+User.searchUsersByName = function(name) {
+    return mysql.query(getQuery("searchUserByName"), [name]);
+           
+}
+
+User.searchUsersByEmail = function(email) {
+    return mysql.query(getQuery("searchUserByEmail"), [email]);
+           
 }
 
 User.getUserByEmail = function(email) {
@@ -84,16 +80,12 @@ function getQuery(type) {
             query = "UPDATE user SET first_name = ?, last_name = ?, email = ?, street = ? WHERE user_id = ?";
             break;
             
-         case "searchUserByFname":
-            query = "SELECT * FROM user INNER JOIN books_owned ON books_owned.user_id = ? WHERE user.first_name = ? AND books_owned.is_available = 1";
-            break;
-            
-        case "searchUserByLname":
-            query = "SELECT * FROM user INNER JOIN books_owned ON books_owned.user_id = ? WHERE user.last_name = ? AND books_owned.is_available = 1";
+         case "searchUserByName":
+            query = "SELECT * FROM user INNER JOIN books_owned ON books_owned.user_id = user.user_id WHERE user.first_name = ? OR user.last_name = ? AND books_owned.is_available = 1";
             break;
 
         case "searchUserByEmail":
-            query = "SELECT * FROM user INNER JOIN books_owned ON books_owned.user_id = ? WHERE user.email = ? AND books_owned.is_available = 1";
+            query = "SELECT * FROM user INNER JOIN books_owned ON books_owned.user_id = user.user_id WHERE user.email = ? AND books_owned.is_available = 1";
             break;
             
         case "updatePoints":
