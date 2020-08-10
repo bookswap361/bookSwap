@@ -39,7 +39,6 @@ function getDataOwn(){
 }
 
 function makeReq(type) {
-    console.log('here??')
     var data = getDataOwn();
     switch (type) {
         case "booklist":
