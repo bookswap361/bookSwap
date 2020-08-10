@@ -1,15 +1,18 @@
 var WishlistHbsHelpers = {};
 
 WishlistHbsHelpers.displayButton = function(wishlist, bookId) {
-    var display = true;
+    var disableHtml = "";
+    var buttonText = "Add to my wishlist";
     for (var i = 0; i < wishlist.length; i++) {
         var list = wishlist[i];
         if (list.book_id == bookId) {
-            display = false;
+            disableHtml = "disabled";
+            buttonText = "Already in wishlist";
             break;
         }
     }
-    return display ? "<button type='button' class='btn btn-info text-center' id='addWishBtn' onclick='makeReq.call(null, \"wishlist\")'><i class='far fa-heart'></i> Add to my wishlist</button>" : "";
+    
+    return "<button type='button' class='btn btn-info text-center' id='addWishBtn' onclick='makeReq.call(null, \"wishlist\")' " + disableHtml + "><i class='far fa-heart'></i> " + buttonText + "</button>";
 };
 
 module.exports = WishlistHbsHelpers;
