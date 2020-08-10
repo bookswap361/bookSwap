@@ -5,6 +5,7 @@ var BookServices = require("../services/book"),
 
 router.route("/create-book")
     .get(function(req, res, next) {
+        console.log('create book get')
         BookServices.getOlKeys()
             .then(function(result){
                 BookServices.getGenreList()
@@ -22,7 +23,7 @@ router.route("/create-book")
     .post(function(req, res, next) {
         BookServices.createBook(req.body)
             .then(function(result) {
-                res.redirect("/book/" + req.body.bol_key + "?new=1");
+                res.redirect("/book/" + req.body.bol_key);
             })
             .catch(function(err) {
                 next(err);
@@ -34,15 +35,25 @@ router.route("/search")
         res.render("search");
     });
 
+router.route("/set-genre")
+    .post(function(req, res, next) {
+        BookServices.setGenre(Number(req.body.genre), Number(req.body.book_id))
+            .then(function() {
+                res.redirect("/book/" + req.body.ol_key);
+            })
+            .catch(function(err) {
+                next(err);
+            });
+    });
+
 router.route("/:id")
     .get(function(req, res, next) {
         BookServices.getBookByOLId(req.params.id, req.session.u_id)
             .then(function(result) {
                 if (result[0].length > 0) {
-                    result[0][0].exists = 1;
-                    res.render("book-page", req.query && req.query.new ? {"result": result[0][0], "genres": result[3], "isNew": true, "wishlist": result[2]} : {"result": result[0][0], "copies": result[1], "wishlist": result[2]});
+                    res.render("book-page", {"result": result[0][0], "genres": result[3], "copies": result[1], "wishlist": result[2]});
                 } else {
-                   next();
+                    next();
                 }
             })
             .catch(function(err) {
@@ -55,10 +66,23 @@ router.route("/:id")
             .then(function(result) {
                 if(result[0].length > 0){
                     result[0][0].exists = 1;
-                    res.render("book-page", {"result": result[0][0], "copies": result[1], "wishlist": result[2]});
+                    res.render("book-page", {"result": result[0][0], "copies": result[1], "wishlist": result[2], "genres": result[3]});
                 } else {
-                    data.new = 1;
-                    res.render("book-page", {"result": data, "genres": result[3]});
+                    var bookInfo = {
+                        "title": data.title,
+                        "bol_key": data.book_id,
+                        "name": data.name,
+                        "aol_key": data.author_id,
+                        "description": data.description,
+                        "thumbnail_url": data.thumbnail_url
+                    }
+                    BookServices.createBook(bookInfo)
+                        .then(function(result) {
+                            res.redirect("/book/" + bookInfo.bol_key);
+                        })
+                        .catch(function(err) {
+                            next(err);
+                        });
                 }
             })
             .catch(function(err) {
@@ -76,5 +100,11 @@ router.route("/create-author")
                 next(err);
             });
     });
+
+router.route("/set-genre")
+    .post(function(req, res, next) {
+        console.log('posting to right route?')
+        console.log(req.body)
+    })
 
 module.exports = router;

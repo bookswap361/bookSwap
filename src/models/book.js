@@ -90,11 +90,14 @@ function getQuery(type) {
             break;
         case "getBookByOLId":
             query = "SELECT \
-            b.book_id, b.ol_key, b.description, b.thumbnail_url, b.title, a.name \
+            b.book_id, b.ol_key, b.description, b.thumbnail_url, b.title, a.name, IFNULL(g.name, NULL) AS genre_name \
             FROM book b \
             INNER JOIN book_author ba ON b.book_id = ba.book_id\
-            INNER JOIN author a on ba.author_id = a.author_id \
-            WHERE b.ol_key = ?;"
+            INNER JOIN author a ON ba.author_id = a.author_id \
+            LEFT JOIN book_genre bg ON b.book_id = bg.book_id \
+            LEFT JOIN genre g ON bg.genre_id = g.genre_id \
+            WHERE b.ol_key = ? \
+            GROUP BY b.book_id;"
             break;
         case "createBook":
             query = "INSERT INTO book (ol_key, description, thumbnail_url, title) SELECT ?,?,?,? FROM book WHERE NOT EXISTS (SELECT ol_key FROM book WHERE ol_key = ?) LIMIT 1;";
