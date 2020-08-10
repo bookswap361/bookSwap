@@ -56,15 +56,17 @@
                 <div id="addForm" class="mx-auto">
                     <label for="condition">Choose the condition of your book to trade:</label>
                     <select name="condition" id="newCondition">
-                        <option value="3">Excellent condition: 15pts</option>
-                        <option value="2">Good condition: 10pts</option>
-                        <option value="1">Acceptable condition: 5pts</option>
+                        <option value="3">Excellent</option>
+                        <option value="2">Good</option>
+                        <option value="1">Acceptable</option>
                     </select>
 
                     <input id="newTitle" value="{{result.title}}" hidden>
                     <input id="newUser_id" value="{{user_id}}" hidden>
                     <input id="newBook_id" value="{{result.book_id}}" hidden>
-
+                    <div id="points-help">
+                        <i class="material-icons">help_outline</i>
+                    </div>
                     <button type="button" class="btn btn-primary" id="addBookBtn" onclick="makeReq.call(null, 'booklist')">Add to my book list</button>
                     <P><div id="confirm"></div></P>
                 </div>
@@ -89,5 +91,10 @@
             {{/unless}}
     </div>
 </div>
-
+<div id="tooltip">
+    <b>Points Breakdown by Condition:</b><br>
+    Excellent = 15 Points<br>
+    Good = 10 Points<br>
+    Acceptable = 5 Points<br>
+</div>
 <script src="../scripts/addbook.js"></script>

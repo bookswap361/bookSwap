@@ -1,6 +1,27 @@
 const addBookBtn      = document.getElementById("addBookBtn"),
       confirmDiv      = document.getElementById("confirm"),
       description     = document.getElementById("description");
+      pointsHelp      = document.getElementById("points-help");   
+      tooltip         = document.getElementById("tooltip");
+
+window.addEventListener('DOMContentLoaded', pageInit);
+
+function pageInit() {
+    pointsHelp.addEventListener("mouseover", displayPointsToolTip, false);
+    pointsHelp.addEventListener("mouseout", hidePointsToolTip, false);
+}
+
+function displayPointsToolTip() {
+    var tooltipPos = pointsHelp.getBoundingClientRect();
+    tooltip.style.display = "block";
+    pointsHelp.style.cursor = "help";
+    tooltip.style.left = tooltipPos.left + "px";
+    tooltip.style.top = tooltipPos.top + 25 + "px";
+}
+
+function hidePointsToolTip() {
+    tooltip.style.display = "none";
+}
 
 // Add existing book to owned books
 function getDataOwn(){
