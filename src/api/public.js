@@ -46,7 +46,7 @@ router.route("/create")
                     req.session.u_name_last = result.last_name;
                     req.session.authenticated = true;
                     req.session.save();
-                    res.redirect("/account");
+                    res.redirect("/about_us");
                 }
             })
             .catch(function(err) {
