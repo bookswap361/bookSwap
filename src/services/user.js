@@ -12,9 +12,17 @@ UserServices.getUserById = function(user_id) {
 };
 
 //TODO
-UserServices.searchUsers = function() {
+UserServices.searchUsersByName = function(name) {
     return new Promise(function(resolve, reject) {
-        UserModel.searchUsers()
+        UserModel.searchUsersByName(name)
+            .then(resolve)
+            .catch(reject);
+    });
+};
+
+UserServices.searchUsersByEmail = function(email) {
+    return new Promise(function(resolve, reject) {
+        UserModel.searchUsersByEmail(email)
             .then(resolve)
             .catch(reject);
     });
