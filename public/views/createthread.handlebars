@@ -2,12 +2,20 @@
     <div>
         <a href="/forum">Go Back</a>
     </div>
-    <div class="row">
+    <div class="col-10 my-4 create-thread-container">
+        <div class="my-3 text-center">
+            <h2>Create a new thread!</h2>
+        </div>
         <form id="create-thread" action="/forum/create" method="POST">
-            <input type="text" name="title" placeholder="Enter thread title.." required><p>
-            <div id="text-editor"></div>
-            <input type="hidden" id="text-input" name="message" required><p>
-            <input type="submit" name="create-thread-button" value="Create">
+            <h5>&nbspEnter the thread title:</h5>
+            <input id="thread-title-input" type="text" name="title" placeholder="What's the book where...'" required><p>
+            <div class="padding"></div>
+            <h5>&nbspAdd the first message:</h5>
+            <div>
+                <div id="text-editor"></div>
+                <input type="hidden" id="text-input" name="message" required><p>
+                <input type="submit" name="create-thread-button" value="Create">
+            </div>
         </form>
     </div>
 </div>

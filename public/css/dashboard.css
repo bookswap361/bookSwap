@@ -134,7 +134,7 @@ table, th {
     right: 5px;
 }
 
-#delete-alert {
+#delete-alert-button {
     background: none;
     border: none;
     display: inline;
@@ -142,7 +142,7 @@ table, th {
     margin-right: 10px;
 }
 
-#delete-alert:focus {
+#delete-alert-button:focus {
     outline: none !important;
 }
 
