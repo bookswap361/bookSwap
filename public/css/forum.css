@@ -2,6 +2,10 @@ a {
     color: #4a6185;
 }
 
+h2 {
+    color: #184d47;
+}
+
 #start a {
     color: #17a2b8;
 }
@@ -129,6 +133,18 @@ a {
 
 .resolved {
     color: #93889E;
+}
+
+.create-thread-container {
+    margin: 0 auto;
+}
+
+#thread-title-input {
+    width: 100%;
+}
+
+.padding {
+    height: 15px;
 }
 
 p {
