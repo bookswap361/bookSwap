@@ -201,31 +201,49 @@ function showSlides(n) {
   }
 }
 
-document.getElementById("profileTab").addEventListener("click", showProfile);
-document.getElementById("booksTab").addEventListener("click", showInventory);
-document.getElementById("swapsTab").addEventListener("click", showSwaps);
-document.getElementById("wishlistTab").addEventListener("click", showWishList);
-document.getElementById('addInventory').addEventListener("click", function(event) {
-    location.href = "/book/search"});
-
-var updates = document.getElementsByClassName("update");
-for (var i = 0; i < updates.length; i++) {
-	updates[i].addEventListener("click", makeEditable);
+function setEventListeners() {
+    document.getElementById("profileTab").addEventListener("click", showProfile);
+    document.getElementById("booksTab").addEventListener("click", showInventory);
+    document.getElementById("swapsTab").addEventListener("click", showSwaps);
+    document.getElementById("wishlistTab").addEventListener("click", showWishList);
+    document.getElementById('addInventory').addEventListener("click", function(event) { location.href = "/book/search" });
+    setUpdateListener();
+    setSubmitListener();
+    setDeleteListener();
+    setCancelListener();
 }
 
-var submits = document.getElementsByClassName("submit");
-for (var i = 0; i < submits.length; i++) {
-	submits[i].addEventListener("click", updateInventory);
+function setUpdateListener() {
+    var updateElements = document.getElementsByClassName("update");
+    for (var i = 0; i < updateElements.length; i++) {
+	    updateElements[i].addEventListener("click", makeEditable);
+    }
 }
 
-var deletes = document.getElementsByClassName("delete");
-for (var i = 0; i < deletes.length; i++) {
-	deletes[i].addEventListener("click", deleteInventory);
+function setSubmitListener() {
+    var submitElements = document.getElementsByClassName("submit");
+    for (var i = 0; i < submitElements.length; i++) {
+	    submitElements[i].addEventListener("click", updateInventory);
+    }
 }
 
-var cancels = document.getElementsByClassName("cancel");
-for (var i = 0; i < cancels.length; i++) {
-	cancels[i].addEventListener("click", cancelUpdate);
+function setDeleteListener() {
+    var deleteElements = document.getElementsByClassName("delete");
+    for (var i = 0; i < deleteElements.length; i++) {
+	    deleteElements[i].addEventListener("click", deleteInventory);
+    }
 }
 
-window.onload = document.getElementById("profileTab").click();
+function setCancelListener() {
+    var cancelElements = document.getElementsByClassName("cancel");
+    for (var i = 0; i < cancelElements.length; i++) {
+	    cancelElements[i].addEventListener("click", cancelUpdate);
+    }
+}
+
+function pageInit() {
+    setEventListeners();
+    document.getElementById("profileTab").click();
+}
+
+window.onload = pageInit(); 
