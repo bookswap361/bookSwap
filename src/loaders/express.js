@@ -18,7 +18,9 @@ var handlebars = require("express-handlebars").create({
         "displayButton": wishlistHelpers.displayButton,
         "nullDescription": bookHelpers.nullDescription,
         "nullImg": bookHelpers.nullImg,
-        "formatForm": bookHelpers.formatForm
+        "formatForm": bookHelpers.formatForm,
+        "showResultsRange": bookHelpers.showResultsRange,
+        "createResultPages": bookHelpers.createResultPages,
     }
 });
 var helpers = require('handlebars-helpers')();
@@ -40,7 +42,7 @@ var settings = function(app) {
     }));
 
     app.use("/", userDetails, require("../api/public"));
-    app.use("/book", checkAuth, userDetails, require("../api/book"));
+    app.use("/book", userDetails, require("../api/book"));
     app.use("/books_available", checkAuth, userDetails, require("../api/books_available"));
     app.use("/account", checkAuth, userDetails, require("../api/account"));
     app.use("/swap", checkAuth, userDetails, require("../api/swap"));

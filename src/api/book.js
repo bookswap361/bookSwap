@@ -30,22 +30,27 @@ router.route("/create-book")
     });
 
 router.route("/search")
-    .get(function(req, res) {
+    .get(function(req, res, next) {
         if (req.query.title || req.query.author) {
             new Promise(function(resolve, reject){
                 resolve(searchBooks.makeRequest.search(req.query));
             })
             .then(function(results) {
-                res.render("search", {"message": results.numResults + " results found", "data": results.books});
+                res.render("search", {
+                    "total": results.numResults,
+                    "data": results.books,
+                    "pages": results.pages,
+                    "query": req.query
+                });
             })
-            .catch(function(){
-                res.render("error");
-            })
+            .catch(function(err){
+                next(err);
+            });
         }
         else {
             res.render("search");
         }
-    })
+    });
 
 router.route("/set-genre")
     .post(function(req, res, next) {
