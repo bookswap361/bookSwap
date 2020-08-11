@@ -15,7 +15,8 @@ var handlebars = require("express-handlebars").create({
         "getStatus": swapHelpers.getStatus,
         "ifUser": forumHelpers.ifUser,
         "displayButton": wishlistHelpers.displayButton,
-        "nullDescription": generalHelpers.nullDescription
+        "nullDescription": generalHelpers.nullDescription,
+        "setSelected": generalHelpers.setSelected
     }
 });
 var helpers = require('handlebars-helpers')();

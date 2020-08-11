@@ -13,4 +13,8 @@ GeneralHbsHelpers.nullDescription = function(description) {
     return description == "null" ? "No description for this book is available" : description;
 };
 
+GeneralHbsHelpers.setSelected = function(value, currentValue) {
+    return value == currentValue ? "selected" : "";
+ };
+
 module.exports = GeneralHbsHelpers;

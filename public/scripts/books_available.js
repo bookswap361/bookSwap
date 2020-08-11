@@ -14,7 +14,6 @@ function getCondition(event) {
     .then(function(response) {
         buildTable(response)
     });
-
 }
 
 // Builds a table displaying conditions and costs of available books.
@@ -90,7 +89,7 @@ function getCondition(event) {
     }
 }
 
- // Creates a new swap and adds it to the database.
+// Creates a new swap and adds it to the database.
 function createSwap(userId, event) {
     var cost = event.target.parentNode.parentNode.cells[4].innerText;
     var info = {
@@ -100,11 +99,25 @@ function createSwap(userId, event) {
     };
 
     fetchHelper("/swap/create", "POST", info)
-    .then(function() {
+    .then(function(result) {
+        return result.json();
+    })
+    .then(function(text) {
         document.getElementById('exitButton').click();
-        document.location.href = '../books_available';
+        swapAdded(text);
         console.log('Swap added.');
     })
+}
+
+function swapAdded(result) {
+    var thisDiv = document.getElementById('successContent');
+    thisDiv.innerHTML = "";
+
+    var content = document.createElement("p");
+    content.innerText = "Title:  " + result.title + "\nBy:  " + result.author + "\nSee 'my account -> Swaps' for more details.";
+    thisDiv.appendChild(content);
+
+    $('#successModal').modal('show');
 }
 
 // add event listeners to all 'details' buttons
