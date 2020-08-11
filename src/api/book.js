@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
-var BookServices = require("../services/book"),
-    UserServices = require("../services/user");
+var BookServices = require("../services/book");
+var searchBooks = require("../loaders/openLibrary");
 
 router.route("/create-book")
     .get(function(req, res, next) {
@@ -31,8 +31,21 @@ router.route("/create-book")
 
 router.route("/search")
     .get(function(req, res) {
-        res.render("search");
-    });
+        if (req.query.title || req.query.author) {
+            new Promise(function(resolve, reject){
+                resolve(searchBooks.makeRequest.search(req.query));
+            })
+            .then(function(results) {
+                res.render("search", {"message": results.numResults + " results found", "data": results.books});
+            })
+            .catch(function(){
+                res.render("error");
+            })
+        }
+        else {
+            res.render("search");
+        }
+    })
 
 router.route("/:id")
     .get(function(req, res, next) {
