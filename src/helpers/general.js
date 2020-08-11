@@ -14,7 +14,6 @@ GeneralHbsHelpers.nullDescription = function(description) {
 };
 
 GeneralHbsHelpers.setSelected = function(value, currentValue) {
-	console.log("value: " + value + " currentValue: " + currentValue);
     return value == currentValue ? "selected" : "";
  };
 

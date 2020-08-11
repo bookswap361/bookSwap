@@ -66,22 +66,20 @@ Book.joinAuthBook = function(info) {
     });
 }
 
-Book.getAvailableBooks = function(userId, genreId) {
-    if (genreId == 0) {
-        return mysql.query(getQuery("getAvailableBooks"), [userId]);
-    }
-    else {
-        return mysql.query(getQuery("getAvailableBooksByGenre"), [userId, genreId]);
-    }
-}
+Book.getAvailableBooks = function(userId) {
+    return mysql.query(getQuery("getAvailableBooks"), [userId]);
+};
 
-Book.getAvailableBooksByPoints = function(userId, points, genreId) {
-    if (genreId == 0) {
-        return mysql.query(getQuery("getAvailableBooksByPoints"), [userId, points]);
-    }
-    else {
-        return mysql.query(getQuery("getAvailableBooksByPointsAndGenre"), [userId, points, genreId]);
-    }
+Book.getAvailableBooksByGenre = function(userId, genreId) {
+    return mysql.query(getQuery("getAvailableBooksByGenre"), [userId, genreId]);
+};
+
+Book.getAvailableBooksByPoints = function(userId, points) {
+    return mysql.query(getQuery("getAvailableBooksByPoints"), [userId, points]);
+};
+
+Book.getAvailableBooksByPointsAndGenre = function(userId, points, genreId) {
+    return mysql.query(getQuery("getAvailableBooksByPointsAndGenre"), [userId, points, genreId]);
 };
 
 Book.getGenreList = function() {

@@ -4,8 +4,15 @@ var BooksOwnedModel = require("../models/books_owned"),
     BooksAvailableServices = {};
 
 BooksAvailableServices.getAvailableBooks = function(userId, genreId) {
+    var availableBooks;
+    if (genreId == 0) {
+        availableBooks = BookModel.getAvailableBooks(userId);
+    } else {
+        availableBooks = BookModel.getAvailableBooksByGenre(userId, genreId);
+    }
+
 	return new Promise(function(resolve, reject) {
-		BookModel.getAvailableBooks(userId, genreId)
+		availableBooks
 			.then(function(results) {
 				var availableBooks = []
 				results.forEach(function(book) {
@@ -24,23 +31,39 @@ BooksAvailableServices.getAvailableBooks = function(userId, genreId) {
 }
 
 BooksAvailableServices.getAffordableBooks = function(userId, genreId) {
+    var affordableBooks;
+
+    if (genreId == 0) {
+        affordableBooks = new Promise(function(resolve, reject) {
+            UserServices.getPoints(userId)
+                .then(function(result) {
+                    resolve(BookModel.getAvailableBooksByPoints(userId, result[0].points));
+                })
+                .catch(reject);
+            });
+    } else {
+        affordableBooks = new Promise(function(resolve, reject) {
+            UserServices.getPoints(userId)
+                .then(function(result) {
+                    resolve(BookModel.getAvailableBooksByPointsAndGenre(userId, result[0].points, genreId));
+                })
+                .catch(reject);
+            });
+    }
+
     return new Promise(function(resolve, reject) {
-        UserServices.getPoints(userId)
+        affordableBooks
             .then(function(result) {
-                BookModel.getAvailableBooksByPoints(userId, result[0].points, genreId)
-                    .then(function(result) {
-                        var books = [];
-                        result.forEach(function(book) {
-                            books.push({
-                                "book_id": book.book_id,
-                                "title": book.title,
-                                "name": book.name,
-                                "copies": book.count
-                            });
-                        });
-                        resolve(books);
-                    })
-                    .catch(reject);
+                var books = [];
+                result.forEach(function(book) {
+                    books.push({
+                        "book_id": book.book_id,
+                        "title": book.title,
+                        "name": book.name,
+                        "copies": book.count
+                    });
+                });
+                resolve(books);
             })
             .catch(reject);
     });
