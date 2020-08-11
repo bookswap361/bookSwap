@@ -104,7 +104,6 @@ function createSwap(userId, event) {
     })
     .then(function(text) {
         document.getElementById('exitButton').click();
-        console.log(text);
         swapAdded(text);
         console.log('Swap added.');
     })
