@@ -243,7 +243,6 @@ function setCancelListener() {
 
 function pageInit() {
     setEventListeners();
-    document.getElementById("profileTab").click();
 }
 
 window.onload = pageInit(); 
