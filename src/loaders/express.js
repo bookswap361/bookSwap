@@ -42,7 +42,7 @@ var settings = function(app) {
     }));
 
     app.use("/", userDetails, require("../api/public"));
-    app.use("/book", userDetails, require("../api/book"));
+    app.use("/book", checkAuth, userDetails, require("../api/book"));
     app.use("/books_available", checkAuth, userDetails, require("../api/books_available"));
     app.use("/account", checkAuth, userDetails, require("../api/account"));
     app.use("/swap", checkAuth, userDetails, require("../api/swap"));
