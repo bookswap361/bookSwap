@@ -4,9 +4,8 @@ function getCondition(event) {
 	// Get book_id for row.
 	var book_id = event.target.parentNode.parentNode.id;
     var isAllChecked = document.getElementById("view-all").checked;
-    var genreID = document.getElementById("genreDropdown").value;
 
-    var url = "../books_available/condition/?id=" + book_id + "&filter=" + (isAllChecked ? "all" : "afford") + "&genre=" + genreID;
+    var url = "../books_available/condition/?id=" + book_id + "&filter=" + (isAllChecked ? "all" : "afford");
     
     fetchHelper(url, "GET")
     .then(function(data) {
@@ -90,7 +89,7 @@ function getCondition(event) {
     }
 }
 
- // Creates a new swap and adds it to the database.
+// Creates a new swap and adds it to the database.
 function createSwap(userId, event) {
     var cost = event.target.parentNode.parentNode.cells[4].innerText;
     var info = {
@@ -100,11 +99,28 @@ function createSwap(userId, event) {
     };
 
     fetchHelper("/swap/create", "POST", info)
-    .then(function() {
+    .then(function(result) {
+        return result.json();
+    })
+    .then(function(text) {
         document.getElementById('exitButton').click();
-        document.location.href = '../books_available';
+        console.log(text);
+        swapAdded(text);
         console.log('Swap added.');
     })
+}
+
+function swapAdded(result) {
+    var thisDiv = document.getElementById('successContent');
+    thisDiv.innerHTML = "";
+
+    var content = document.createElement("p");
+    content.innerText = "Title:  " + result.title + "\nBy:  " + result.author + "\nSee 'my account -> Swaps' for more details.";
+    thisDiv.appendChild(content);
+
+    $('#successModal').modal('show');
+
+    //document.getElementById('successModal').modal('show');
 }
 
 // add event listeners to all 'details' buttons

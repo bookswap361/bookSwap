@@ -1,6 +1,10 @@
 <link rel="stylesheet" href="/css/books_available.css">
 <div class="container">
     <div class="col-sm-9">
+        <div class="row swapHidden">
+            <p>A Swap request has been made for {{title}} by {{author}}.</p>
+            <p>Visit 'my account' -> swaps for more details.</p>
+        </div>
         <div class="row">
             View:   &emsp;
             <form id="filter-swaps" action="/books_available/" method="GET">
@@ -61,6 +65,28 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal for successfully requesting a swap -->
+        <div id="successModal" class="modal bd-example-modal-lg" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Success: Swap Requested</h5>
+                        <button id="exitButton" type="button" class="close" onclick="windowReload();">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div id="successContent" class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" onclick="windowReload();">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>
 

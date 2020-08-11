@@ -90,6 +90,10 @@ Book.setGenre = function(genre, book_id) {
     return mysql.query(getQuery("setGenre"), [genre, book_id]);
 }
 
+Book.getTitleByListId = function(list_id) {
+    return mysql.query(getQuery("getTitleByListId"), [list_id]);
+}
+
 function getQuery(type) {
     var query = "";
     switch(type) {
@@ -173,6 +177,13 @@ function getQuery(type) {
             break;
         case "setGenre":
             query = "INSERT INTO book_genre (genre_id, book_id) VALUES (?, ?);";
+            break;
+        case "getTitleByListId":
+            query = "SELECT b.title, a.name FROM book b \
+                    INNER JOIN books_owned bo ON b.book_id = bo.book_id \
+                    INNER JOIN book_author ba ON bo.book_id = ba.book_id \
+                    INNER JOIN author a ON ba.author_id = a.author_id \
+                    WHERE bo.list_id = ?;";
             break;
         }
 
