@@ -119,8 +119,6 @@ function swapAdded(result) {
     thisDiv.appendChild(content);
 
     $('#successModal').modal('show');
-
-    //document.getElementById('successModal').modal('show');
 }
 
 // add event listeners to all 'details' buttons
