@@ -23,6 +23,11 @@ table {
  	color: #ff0000;
 }
 
+.italicize {
+	font-style: italic;
+	font-weight: bolder;
+}
+
 .modal-header h5 {
 	color: #2A4185;
 	font-weight: bolder;

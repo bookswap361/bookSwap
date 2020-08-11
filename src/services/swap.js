@@ -108,8 +108,13 @@ SwapServices.createSwap = function(info) {
     var newSwap = new Promise(function(resolve, reject) {
         SwapModel.createSwap(info)
         .then(BooksOwnedModel.updateAvailability.bind(null, Number(info.list_id), false))
-        .then(resolve)
-        .catch(reject)
+        .then(function() {
+            BookModel.getTitleByListId(info.list_id)
+                .then(function(result) {
+                    resolve({"title": result[0].title, "author": result[0].name});
+                })
+                .catch(reject)
+        })
     });
     var deletePoints = new Promise(function(resolve, reject){
         UserModel.deletePoints(info.cost, info.traded_to)
