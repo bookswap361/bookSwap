@@ -1,7 +1,7 @@
 var BookHbsHelpers = {};
 
 BookHbsHelpers.nullDescription = function(description) {
-    return description ? description : "No description for this book is available";
+    return (description && description != "null") ? description : "No description for this book is available";
 };
 
 BookHbsHelpers.nullImg = function(thumbnail_url) {
