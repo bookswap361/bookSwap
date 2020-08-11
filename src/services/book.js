@@ -20,10 +20,12 @@ BookServices.getBooksBy = function(query) {
                     var title = query.title.replace("+", " ");
                     BookModel.getBooksBy(`%${title}%`)
                         .then(function(db_books){
-                            db_books.forEach(function(book) {
-                                results.books.unshift(book);
-                                results.numResults++;
-                            })
+                            if (db_books) {
+                                db_books.forEach(function(book) {
+                                    results.books.unshift(book);
+                                    results.numResults++;
+                                })
+                            }
                             resolve(results)
                         })
                         .catch(reject)
