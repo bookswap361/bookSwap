@@ -9,4 +9,8 @@ GeneralHbsHelpers.setChecked = function(value, currentValue) {
     return value == currentValue ? "checked" : "";
 };
 
+GeneralHbsHelpers.setSelected = function(value, currentValue) {
+    return value == currentValue ? "selected" : "";
+ };
+
 module.exports = GeneralHbsHelpers;

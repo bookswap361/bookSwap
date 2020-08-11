@@ -21,6 +21,7 @@ var handlebars = require("express-handlebars").create({
         "formatForm": bookHelpers.formatForm,
         "showResultsRange": bookHelpers.showResultsRange,
         "createResultPages": bookHelpers.createResultPages,
+        "setSelected": generalHelpers.setSelected
     }
 });
 var helpers = require('handlebars-helpers')();
