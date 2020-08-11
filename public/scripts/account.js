@@ -44,7 +44,9 @@ function updateInventory(event) {
 	};
 
     fetchHelper("/account/update_books", "POST", info)
-    .then(windowReload);
+    .then(function() {
+        location.href = "/account/?tab=books";
+    });
 }
 
 // Makes a book's condition editable.
@@ -94,7 +96,9 @@ function deleteInventory(event) {
         "list_id": list_id
     };
     fetchHelper("/account/delete_books", "POST", dataObj)
-    .then(windowReload);
+    .then(function() {
+        location.href = "/account/?tab=books";
+    });
 }
 
 // Cancels the update.
