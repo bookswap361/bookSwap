@@ -32,20 +32,18 @@ router.route("/create-book")
 router.route("/search")
     .get(function(req, res, next) {
         if (req.query.title || req.query.author) {
-            new Promise(function(resolve, reject){
-                resolve(searchBooks.makeRequest.search(req.query));
-            })
-            .then(function(results) {
-                res.render("search", {
-                    "total": results.numResults,
-                    "data": results.books,
-                    "pages": results.pages,
-                    "query": req.query
+            BookServices.getBooksBy(req.query)
+                .then(function(results) {
+                    res.render("search", {
+                        "total": results.numResults,
+                        "data": results.books,
+                        "pages": results.pages,
+                        "query": req.query
+                    });
+                })
+                .catch(function(err){
+                    next(err);
                 });
-            })
-            .catch(function(err){
-                next(err);
-            });
         }
         else {
             res.render("search");

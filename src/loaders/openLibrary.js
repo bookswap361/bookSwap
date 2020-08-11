@@ -19,7 +19,7 @@ makeRequest.search = function(query){
             })
             
             return {
-                "numResults": results.data.numFound,
+                "numResults": maxResults(results.data.numFound),
                 "books": allResults,
                 "pages": getPages(results),
             }
@@ -52,5 +52,11 @@ function getBookPayload(item) {
 }
 
 function getPages(results) {
-    return Math.ceil(results.data.numFound/100)
+    var total = maxResults(results.data.numFound);
+    return Math.ceil(total/100)
+}
+
+function maxResults(total) {
+    if (total > 1000) return 999;
+    else return total;
 }

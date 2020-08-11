@@ -22,7 +22,8 @@ BookHbsHelpers.createResultPages = function(totalPages, query) {
 };
 
 BookHbsHelpers.showResultsRange = function(page, total) {
-    if (page*100 > total) return `${page-1}00 to ${total}`;
+    if (total < 100) return `1 to ${total}`;
+    else if (page*100 > total) return `${page-1}00 to ${total}`;
     else if (page) return `${page-1}00 to ${page-1}99`;
     else return `1 to 99`;
 };
