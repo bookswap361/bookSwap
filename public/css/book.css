@@ -47,3 +47,18 @@ h2, h4 {
     border-bottom: 1px solid rgba(88, 141, 168, 0.33);
     box-shadow: 0px 1px 5px rgb(128, 128, 128, 0.15);
 }
+
+#points-help {
+    display: inline-block;
+    vertical-align: middle;
+    height: 24px;
+}
+
+#tooltip {
+    display: none;
+    position: absolute;
+    background: #fffdd0;
+    border-radius: 3px;
+    padding: 3px;
+    font-size: 10px;
+}

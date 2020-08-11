@@ -29,7 +29,7 @@ BookServices.getGenreList = function() {
 };
 
 BookServices.getBookByOLId = function(id, user_id) {
-	var p1 = new Promise(function(resolve, reject) {
+    var p1 = new Promise(function(resolve, reject) {
 		BookModel.getBookByOLId(id)
 			.then(resolve)
 			.catch(reject);
@@ -66,8 +66,15 @@ BookServices.createBook = function(info) {
                 .then(function(result) {
                     resultObj.book_id = result[0].book_id;
                     BookModel.joinAuthBook(resultObj)
-                    .then(BookModel.setGenre.bind(null, info.genre, resultObj.book_id))
-                    .then(resolve)
+                    .then(function(result) {
+                        if (info.genre) {
+                            BookServices.setGenre(info.genre, resultObj.book_id)
+                            .then(resolve)
+                            .catch(reject);
+                        } else {
+                            resolve()
+                        }
+                    })
                     .catch(reject);
                 })
                 .catch(reject);
@@ -76,6 +83,9 @@ BookServices.createBook = function(info) {
     });
 };
 
+BookServices.setGenre = function(genreId, bookId) {
+    return BookModel.setGenre(genreId, bookId);
+};
 
 BookServices.getOlKeys = function() {
     return new Promise(function(resolve, reject) {
