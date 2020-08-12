@@ -50,7 +50,6 @@
                 {{/if}}
             </div>
         </div>
-
         <hr id="separation">
         <div class="container">
             <div class="row">
@@ -81,7 +80,20 @@
             {{#if copies}}
                 {{#each copies}}
                     <div class="row py-3">
-                        <ul>A copy in {{condition_description}} condition was listed on {{formatDate list_date}}</ul>
+                        <div class="col-8">
+                            {{first_name}} {{last_name}} listed this book in {{condition_description}} condition on {{formatDate list_date}}.
+                            <BR>
+                            {{!-- if cant afford --}}
+                            <form action="/swap/create" method="POST">
+                                <input hidden {{{formatForm list_id}}} name="list_id">                                
+                                <input hidden {{{formatForm user_id}}} name="owner_id">                                
+                                <input hidden {{{formatForm cost}}} name="cost">
+                                <input hidden value=1 name="book_page">
+                                <input type="submit" value="Swap for {{cost}} points">
+                            </form>
+                        </div>
+
+                        </ul>
                         <hr>
                     </div>
                 {{/each}}
@@ -99,3 +111,4 @@
     Acceptable = 5 Points<br>
 </div>
 <script src="../scripts/addbook.js"></script>
+<script src="../scripts/books_available.js"></script>

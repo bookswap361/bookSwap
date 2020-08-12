@@ -41,9 +41,13 @@
     color: #342B38;
 }
 
-h3, #confirm {
+h3 {
     color: #1b6ca8;
+}
+
+#confirm {
     text-align: center;
+    color: #1b6ca8;
 }
 
 h2, h4 {

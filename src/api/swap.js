@@ -6,7 +6,10 @@ router.route("/create")
     .post(function(req, res, next) {
         SwapServices.createSwap({"list_id": Number(req.body.list_id), "traded_by": req.body.owner_id, "traded_to": req.session.u_id, "cost": req.body.cost})
             .then(function(result) {
-                res.send(result[0]);
+                if (req.body.book_page) {
+                    res.redirect("/account/?tab=swaps");
+                }
+                else res.send(result[0]);
             })
             .catch(function(err) {
                 next(err);
