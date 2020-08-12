@@ -52,6 +52,7 @@ UserServices.getPoints = function(userId) {
 };
 
 UserServices.updatePassword = function(body) {
+    let error = {"err": "Old Password is incorrect"};
     return new Promise(function(resolve, reject) {
         UserServices.verifyLogin(body)
         .then(function(user) {
@@ -62,10 +63,10 @@ UserServices.updatePassword = function(body) {
                         .catch(reject);
                 })
             } else {
-                reject();
+                reject(error);
             }
         })
-        .catch(reject);
+        .catch(reject(error));
 
     })
 }

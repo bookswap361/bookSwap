@@ -65,7 +65,7 @@ router.route("/delete")
                 }
             })
             .catch(function(err) {
-                res.redirect("/account/manage");
+                res.render("manageaccount", err);
             });
     })
 
@@ -129,7 +129,7 @@ router.route("/update_password")
             res.redirect('/account');
         })
         .catch(function(err) {
-            next(err);
+            res.render("manageaccount", err)
         })
     })
 

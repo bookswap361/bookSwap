@@ -1,28 +1,33 @@
 <div class="mx-auto">
     <div class="text-center">
         <h2>Update Account:</h2>
-        <form id="editForm" form action="/account/update" method="POST" class="mb-3">
-            <input type="hidden" name="user_id" value="{{user_id}}">
-            <input type="text" name="first_name" value="{{first_name}}" required>
-            <P></P>
-            <input type="text" name="last_name" value="{{last_name}}" required>
-            <P></P>
-            <input type="email" name="email" value="{{email}}" required>
-            <P></P>
-            <input type="text" name="street" value="{{street}}" required>
-            <P></P>
-            <input type="text" name="city" value="{{city}}" required>
-            <P></P>
-            <input type="text" name="state" value="{{state}}" required>
-            <P></P>
-            <input type="text" name="zip" value="{{zip}}" required>
-            <P></P>
-            <input type="reset" name="resetManageBtn" value="reset!" class="details btn btn-primary">
-            <input type="submit" name="editBtn" value="finish changes!" class="details btn btn-primary">
-        </form>
+        {{#if last_name}}
+            <form id="editForm" form action="/account/update" method="POST" class="mb-3">
+                <input type="hidden" name="user_id" value="{{user_id}}">
+                <input type="text" name="first_name" value="{{first_name}}" required>
+                <P></P>
+                <input type="text" name="last_name" value="{{last_name}}" required>
+                <P></P>
+                <input type="email" name="email" value="{{email}}" required>
+                <P></P>
+                <input type="text" name="street" value="{{street}}" required>
+                <P></P>
+                <input type="text" name="city" value="{{city}}" required>
+                <P></P>
+                <input type="text" name="state" value="{{state}}" required>
+                <P></P>
+                <input type="text" name="zip" value="{{zip}}" required>
+                <P></P>
+                <input type="reset" name="resetManageBtn" value="reset!" class="details btn btn-primary">
+                <input type="submit" name="editBtn" value="finish changes!" class="details btn btn-primary">
+            </form>
+        {{/if}}
         
         <button type="button" data-toggle="modal" data-target="#passModal" class="details btn btn-primary">update password!</button>
         <button type="button" data-toggle="modal" data-target="#deleteModal" class="details btn btn-primary">delete account :(</button>
+        {{#if err}}
+            <P>{{err}}</P>
+        {{/if}}
     </div>
 </div>
 
@@ -76,8 +81,5 @@
         </div>
     </div>
 </div>
-{{#if err}}
-    <P>{{err}}</P>
-{{/if}}
 
 <script src="../scripts/manageaccount.js"></script>
