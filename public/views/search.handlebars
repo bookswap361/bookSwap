@@ -2,22 +2,62 @@
 <div class="container">
     <div class="row pl-3 pl-md-0"><h2><i class="fas fa-search"></i> Search for Books</h2></div>
     <div class="row pl-3 pl-md-0">
-        <form>
-            <input type="text" name="searchText" id="searchText" placeholder="Title">
-            <input type="submit" value="Submit" id="searchSubmit">
+        {{#if query}}
+        <form action="/book/search" method="GET">
+            <input type="text" name="title" {{{formatForm query.title}}}>
+            <input type="text" name="author" {{{formatForm query.author}}}>
+            <input name="page" id="pageQuery" hidden>
+            <input type="submit" value="Submit">
+            <div>
+                Go to Page: &nbsp; {{{createResultPages pages query}}}
+                <p>
+                {{total}} results found | Showing results {{{showResultsRange query.page total}}}
+                </p>
+            </div>
         </form>
+        {{else}}
+        <form action="/book/search" method="GET">
+            <input type="text" name="title" placeholder="Title/ISBN/Genre">
+            <input type="text" name="author" placeholder="Author">
+            <input type="submit" value="Submit">
+        </form>
+        {{/if}}
     </div>
 
-    <div class="row pl-3 pl-md-0">
-        <span id="loadingText"></span>
-    </div>
 </div>
 
-<div class="container hidden" id="resultsDiv">
+{{#if query}}
+<div class="container" id="resultsDiv">
     <div class="container" id="searchResults">
-        {{!-- Insert results here --}}
-    </div>
-    <div class="container hidden" id="noFind"> <div class="row note"><strong>Can't find your book?</strong>&emsp;Try another search or add it&emsp;<a href="/book/create-book">here!</a> </div> </div>
-</div>
 
-<script src="../scripts/searchbook.js"></script>
+        {{#each data}}
+        <div class="row searchResult">
+            <div class="col-6 col-md-3">
+                {{{nullImg thumbnail_url}}}
+            </div>
+            <div class="col-6 col-md-9">
+                {{title}} by {{author}}
+                <p>{{nullDescription description}}</p>
+                <hr>
+                <form action=/book/{{book_id}} method="POST">
+                    <input {{{formatForm title}}} name="title" hidden="true">
+                    <input {{{formatForm author}}} name="name" hidden="true">
+                    <input {{{formatForm thumbnail_url}}} name="thumbnail_url" hidden="true">
+                    <input {{{formatForm book_id}}} name="book_id" hidden="true">
+                    <input {{{formatForm author_id}}} name="author_id" hidden="true">
+                    <input {{{formatForm description}}} name="description" hidden="true">
+                    <input type="submit" value="Select Book">
+                </form>
+            </div>
+        </div>
+        <hr>
+        {{/each}}
+        
+    </div>
+    <div class="container" id="noFind">
+        <div class="row note">
+            <strong>Can't find your book?</strong>&emsp;Try another search or add it&emsp;<a href="/book/create-book">here!</a>
+        </div>
+    </div>
+</div>
+{{/if}}

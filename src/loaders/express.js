@@ -4,6 +4,7 @@ var generalHelpers = require("../helpers/general");
 var forumHelpers = require("../helpers/forum");
 var swapHelpers = require("../helpers/swap");
 var wishlistHelpers = require("../helpers/wishlist");
+var bookHelpers = require("../helpers/books");
 var session = require('express-session');
 var handlebars = require("express-handlebars").create({
     "defaultLayout": "main",
@@ -15,7 +16,11 @@ var handlebars = require("express-handlebars").create({
         "getStatus": swapHelpers.getStatus,
         "ifUser": forumHelpers.ifUser,
         "displayButton": wishlistHelpers.displayButton,
-        "nullDescription": generalHelpers.nullDescription,
+        "nullDescription": bookHelpers.nullDescription,
+        "nullImg": bookHelpers.nullImg,
+        "formatForm": bookHelpers.formatForm,
+        "showResultsRange": bookHelpers.showResultsRange,
+        "createResultPages": bookHelpers.createResultPages,
         "setSelected": generalHelpers.setSelected
     }
 });
