@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var AccountServices = require("../services/account");
 var AlertServices = require("../services/alert");
-const UserServices = require("../services/user");
+var UserServices = require("../services/user");
 
 router.route("/")
     .get(function(req, res, next) {
@@ -57,7 +57,7 @@ router.route("/add_wish")
 //delete account
 router.route("/delete")
     .post(function(req, res, next) {
-        AccountServices.deleteAccount(req.body.user_id)
+        AccountServices.deleteAccount(req.body)
             .then(function(result) {
                 if (result) {
                     req.session.destroy();
@@ -65,7 +65,7 @@ router.route("/delete")
                 }
             })
             .catch(function(err) {
-                next(err);
+                res.redirect("/account/manage");
             });
     })
 
@@ -112,7 +112,7 @@ router.route("/delete_wish")
 
 //update account info
 router.route("/update")
-    .post(function(req, res) {
+    .post(function(req, res, next) {
         AccountServices.updateAccount(req.body)
             .then(function() {
                 res.redirect('/account');
@@ -121,6 +121,18 @@ router.route("/update")
                 next(err);
             });
     })
+
+router.route("/update_password")
+    .post(function(req, res, next) {
+        UserServices.updatePassword(req.body)
+        .then(function() {
+            res.redirect('/account');
+        })
+        .catch(function(err) {
+            next(err);
+        })
+    })
+
 //update points
 router.route("/update_points")
     .put(function(req, res) {

@@ -48,6 +48,10 @@ User.updateUser = function(user) {
         user.state, user.zip, user.user_id]);
 }
 
+User.updatePassword = function(user_id, password) {
+    return mysql.query(getQuery("updatePassword"), [password, user_id]);
+}
+
 //should update to be named subPoints (deletePoints is misleading)
 User.deletePoints = function(amount, user_id) {
     return mysql.query(getQuery("deletePoints"), [amount, user_id]);
@@ -85,6 +89,10 @@ function getQuery(type) {
         case "updateUser":
             query = "UPDATE user SET first_name = ?, last_name = ?, email = ?, street = ?, \
             city = ?, state = ?, zip = ? WHERE user_id = ?";
+            break;
+        
+        case "updatePassword":
+            query = "UPDATE user SET password = ? WHERE user_id = ?"
             break;
             
          case "searchUserByFname":

@@ -26,11 +26,11 @@
                 <input type="submit" name="signupBtn" value="signup!">
             </form>
             <P>Note: All fields are required for signup</P>
-        </div>
-        <div class="row">
-            {{#if error}}
-                {{error}}
-            {{/if}}
+            <div class="row" color="red">
+                {{#if err}}
+                    <P>{{err}}</P>
+                {{/if}}
+            </div>
         </div>
     </div>
 </div>
