@@ -3,7 +3,7 @@
 <div class="py-4 bookContainer">
     <div class="container">
         <div class="row align-items-center mb-4 mt-0">
-            <div class="col-12 col-sm-4 mt-2 mt-sm-0 text-center text-sm-left order-sm-1">
+            <div class="col-12 col-sm-6 mt-2 mt-sm-0 text-center text-sm-left order-sm-1">
                 <a href="javascript:history.back()">Go Back</a> &nbsp; | &nbsp;
                 <a href="/book/search">Search Again</a>
             </div>      
@@ -15,10 +15,11 @@
         <div class="col-12 col-sm-4 text-center">
             <img src="{{result.thumbnail_url}}" class="coverArt">
         </div>
-        <div class="col-12 col-sm-6 pt-2">
+        <div class="col-12 col-sm-8 pt-2">
             <h3>{{result.title}}</h3> by {{result.name}}
             <hr>
             <span id="description">{{nullDescription result.description}}</span>
+            <p><br></p>
             <p>Genre: 
                 {{#if result.genre_name}}
                     {{result.genre_name}}
