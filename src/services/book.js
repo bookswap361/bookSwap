@@ -19,9 +19,19 @@ BookServices.getBooksBy = function(query) {
                 if (query.title) {
                     var title = replace(query.title);
                     BookModel.getBooksBy(`%${title}%`)
-                        .then(function(db_books){
+                        .then(function(db_books) {
                             if (db_books) {
                                 db_books.forEach(function(book) {
+                                    var index = -1;
+                                    for (var i = 0; i < results.books.length; i++) {
+                                        if (results.books[i].book_id == book.book_id) {
+                                            index = i;
+                                            break;
+                                        }
+                                    }
+                                    if (index > -1) {
+                                        results.books.splice(index, 1);
+                                    }
                                     results.books.unshift(book);
                                     results.numResults++;
                                 })

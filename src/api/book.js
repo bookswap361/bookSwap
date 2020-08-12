@@ -44,8 +44,7 @@ router.route("/search")
                 .catch(function(err){
                     next(err);
                 });
-        }
-        else {
+        } else {
             res.render("search");
         }
     });

@@ -114,7 +114,8 @@ function getQuery(type) {
                 FROM book b \
                 INNER JOIN book_author ba ON b.book_id = ba.book_id \
                 INNER JOIN author a ON ba.author_id = a.author_id \
-                WHERE title LIKE ?;"
+                WHERE title LIKE ? \
+                GROUP BY b.book_id;"
             break;
         case "getBookByOLId":
             query = "SELECT \
