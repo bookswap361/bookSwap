@@ -90,10 +90,12 @@ AccountServices.deleteAccount = function(user) {
                 .then(resolve)
                 .catch(reject);
             } else {
-                reject();
+                reject({"err":"Password was entered incorrectly"});
             }
         })
-        .catch(reject);
+        .catch(function() {
+            reject({"err":"Password was entered incorrectly"});
+        })
     });
 };
 

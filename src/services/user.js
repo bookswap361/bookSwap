@@ -62,11 +62,12 @@ UserServices.updatePassword = function(body) {
                         .catch(reject);
                 })
             } else {
-                reject();
+                reject({"err":"Old Password was entered incorrectly"});
             }
         })
-        .catch(reject);
-
+        .catch(function() {
+            reject({"err":"Old Password was entered incorrectly"});
+        })
     })
 }
 
