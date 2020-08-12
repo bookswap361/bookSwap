@@ -17,7 +17,7 @@ BookServices.getBooksBy = function(query) {
         searchBooks.makeRequest.search(query)
             .then(function(results) {
                 if (query.title) {
-                    var title = query.title.replace("+", " ");
+                    var title = replace(query.title);
                     BookModel.getBooksBy(`%${title}%`)
                         .then(function(db_books){
                             if (db_books) {
@@ -26,6 +26,7 @@ BookServices.getBooksBy = function(query) {
                                     results.numResults++;
                                 })
                             }
+                            results.numResults = maxResults(results.numResults);
                             resolve(results)
                         })
                         .catch(reject)
@@ -127,3 +128,12 @@ BookServices.getOlKeys = function() {
 
 
 module.exports = BookServices;
+
+function replace(str) {
+    return str.replace("+", " ")
+}
+
+function maxResults(num) {
+    if (num > 1000) return 999;
+    else return num;
+}
