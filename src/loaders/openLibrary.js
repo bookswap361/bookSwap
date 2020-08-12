@@ -57,6 +57,6 @@ function getPages(results) {
 }
 
 function maxResults(total) {
-    if (total > 1000) return 999;
+    if (total >= 1000) return 999;
     else return total;
 }

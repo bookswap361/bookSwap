@@ -134,6 +134,6 @@ function replace(str) {
 }
 
 function maxResults(num) {
-    if (num > 1000) return 999;
+    if (num >= 1000) return 999;
     else return num;
 }
