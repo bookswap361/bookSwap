@@ -33,6 +33,14 @@
     box-shadow: -5px 5px 5px rgba(155, 155, 155, 0.5);
 }
 
+.result {
+    color: #1b6ca8;
+}
+
+.result p {
+    color: #342B38;
+}
+
 h3 {
     color: #1b6ca8;
 }
@@ -62,3 +70,39 @@ h2, h4 {
     padding: 3px;
     font-size: 10px;
 }
+
+.loading {
+    z-index: 10000;
+    background-color: rgba(255, 255, 255, 0.8);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    color: black;
+}
+
+.loading div {
+    position: fixed;
+    left: 42%;
+    top: 33%;
+    text-align: center;
+}
+
+#loader {
+    position: absolute;
+    top: -16px;
+    left: 11px;
+    width: 160px;
+    height: 160px;
+    border: 16px solid #DDDDDD;
+    border-top: 16px solid #1b6ca8;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+    z-index: -1;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
