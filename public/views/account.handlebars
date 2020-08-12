@@ -65,9 +65,12 @@
 
 	<div id="booksInventory" class="tabcontent mx-auto">
 		<div class="mx-auto text-center"><h2> Your Listed Books: </h2></div>
-		<div class="row mx-2 text-center"><button id="addInventory" class="btn mt-2 mb-4 btn-primary mx-auto"> Add New Book </button></div>
+		<div class="row mx-2 text-center">
+            <button id="addInventory" class="btn mt-2 mb-4 btn-primary mx-auto"> Add New Book </button>
+        </div>
 
 		<div class="row mx-2">
+            {{#if books}}
 			<table id="inventoryTable" class="mx-auto">
                 <tr>
                     <th>Title</th>
@@ -94,14 +97,23 @@
                     </tr>
                 {{/each}}
 			</table>
+        {{else}}
+        You haven't added any books that you own. Start by adding a book!
+        {{/if}}
 		</div>
 	</div>
 
 	<div id="swaps" class="tabcontent mx-auto">
-        <div class="section-top"><h3> Pending Swaps </h3></div>
-        <div class="section">
+        <div class="sectionTop mt-2">
+            <span> Swaps In Progress </span>
+            <button class="btn-sm btn-success mb-1" type="button" data-toggle="collapse" data-target="#collapsePending" id="pendingBtn">
+                Hide
+            </button>
+        </div>
+        <div class="sectionBottom collapse show" id="collapsePending">
             <!-- traded_to == current user scenario -->
-            <h4> Swaps Requested By Me <span class="highlight count">{{swapsToMePending}}</span>  </h4>
+            <h4> Swaps You Have Requested <span class="highlight count">{{swapsToMePending}}</span>  </h4>
+            {{#if swapsToMePending}}
             <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
@@ -113,7 +125,6 @@
                     <th>Claim Date</th>
                     <th>Status</th>
                 </tr>
-
                 {{#each swapsToMe}}
                     {{#unless is_complete}}
                         <tr>
@@ -129,9 +140,13 @@
                     {{/unless}}
                 {{/each}}
             </table>
+            {{else}}
+            You have no open swaps that you have requested to other.
+            {{/if}}
             <hr>
             <!-- traded_by == current user scenario -->
-            <h4> Swaps Requested To Me  <span class="highlight count">{{add swapsByMePending newReqs}}</span></h4>
+            <h4> Swaps Requested to You  <span class="highlight count">{{add swapsByMePending newReqs}}</span></h4>
+            {{#if swapsToMe}}
             <form id="accept-trade" action="/swap/accept" method="POST"></form>
             <form id="reject-trade" action="/swap/reject" method="POST"></form>
             <form id="get-shipping" action="/swap/get-shipping" method="POST"></form>
@@ -179,11 +194,20 @@
                     {{/unless}}
                 {{/each}}
             </table>
+            {{else}}
+            There are no swaps in progress that others have requested to you.
+            {{/if}}
         </div>
-
-        <div class="section-top"><h3> Previous/Completed Swaps </h3></div>
-        <div class="section">
-            <h4>Swaps Requested By Me - <span class="highlight count">{{swapsToMeComplete}}</span></h4>
+        <div class="mb-4">
+        <div class="sectionTop mt-2">
+            <span> Previous/Completed Swaps </span>
+            <button class="btn-sm btn-success mb-1" type="button" data-toggle="collapse" data-target="#collapseComplete" id="completeBtn">
+                Expand
+            </button>
+        </div>
+        <div class="sectionBottom collapse" id="collapseComplete">
+            <h4> Swaps You've Requested <span class="highlight count">{{swapsToMeComplete}}</span></h4>
+            {{#if swapsToMeComplete}}
             <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
@@ -216,7 +240,12 @@
                     {{/if}}
                 {{/each}}
             </table>
-            <h4>Swaps Requested To Me - <span class="highlight count">{{swapsByMeComplete}}</span></h4>
+            {{else}}
+            There are no completed swaps that you requested to others.
+            {{/if}}
+            <hr>
+            <h4> Swaps Requested to You <span class="highlight count">{{swapsByMeComplete}}</span></h4>
+            {{#if swapsByMeComplete}}
             <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
@@ -249,6 +278,10 @@
                     {{/if}}
                 {{/each}}
             </table>
+            {{else}}
+            There are no completed any swaps that others have requested to you.
+            {{/if}}
+        </div>
         </div>
     </div>
 

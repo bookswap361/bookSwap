@@ -2,11 +2,7 @@ body{
     color: #184d47;
 }
 
-h3 {
-    color: white;
-}
-
-#accountHeader {
+#accountHeader, h4 {
     color: #1b6ca8;
 }
 
@@ -39,11 +35,15 @@ h3 {
 .tabcontent {
     display: none;
     padding: 6px 12px;
-    /* border: 1px solid #ccc; */
     border-top: none;
     text-align: center;
+    width: 100%;
 }
-    
+
+.tabcontent #swaps {
+    width: 100%;
+}
+
 .smallHeader {
     text-transform: uppercase;
     font-size: smaller;
@@ -64,6 +64,10 @@ table, th {
     border-spacing: 1em .5em;
 }
 
+/* .bordered {
+    border-bottom: 1px solid rgba(155, 155, 155, 0.5);
+} */
+
 .dashboard-top {
     border-radius: 10px;
 }
@@ -76,22 +80,21 @@ table, th {
     line-height: 67%;
 }
 
-.section {
-    border: 1px solid #71a0a5;
-    border-top: none;
+.sectionBottom {
+    background-color: #f9f9f9;
     padding: 5px;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
+    padding-top: 12px;
+    border-bottom:1px solid rgba(88, 141, 168, 0.8);
 }
 
-.section-top {
+.sectionTop {
     padding: 5px;
-    padding-bottom: 1px;
-    margin-top: 15px;
-    background-color: #1b6ca8;
-    color: white;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-bottom:1px solid rgba(88, 141, 168, 0.8);
+}
+
+.sectionTop span {
+    color: #184d47;
+    font-size: 1.6rem;
 }
 
 .swap-notifications {

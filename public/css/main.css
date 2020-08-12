@@ -99,6 +99,12 @@ table {
     color: #154D47;
 }
 
+.btn-success:hover {
+    background-color: rgba(21, 77, 71, 0.8);
+    border: none;
+    color: white;
+}
+
 .info-header {
     color: #2A4185;
     font-size: 1.6rem;

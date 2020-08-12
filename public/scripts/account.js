@@ -225,3 +225,19 @@ for (var i = 0; i < cancels.length; i++) {
 }
 
 window.onload = document.getElementById("profileTab").click();
+
+var pb = document.getElementById("pendingBtn");
+var cb = document.getElementById("completeBtn");
+
+pb.onclick = function(event) { collapseExpand(pb); }
+cb.onclick = function(event) { collapseExpand(cb); }
+
+function collapseExpand(button) {
+	var text = button.innerText;
+	toggleBtn(button, text);
+}
+
+function toggleBtn(button, text) {
+	if (text == "Expand") button.innerText = "Hide";
+	else button.innerText = "Expand";
+}
