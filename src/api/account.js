@@ -129,11 +129,7 @@ router.route("/update_password")
             res.redirect('/account');
         })
         .catch(function(err) {
-<<<<<<< HEAD
             res.render("manageaccount", err);
-=======
-            res.render("manageaccount", err)
->>>>>>> 89c902d55869096c55b038a062d6925c703a9370
         })
     })
 
