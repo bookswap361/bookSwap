@@ -77,6 +77,7 @@ AccountServices.addWish = function(user_id, book_id) {
 
 
 AccountServices.deleteAccount = function(user) {
+    let error = {"err": "Password was entered incorrectly"};
     return new Promise(function(resolve, reject) {
         UserServices.verifyLogin(user)
         .then(function(result) {
@@ -90,12 +91,19 @@ AccountServices.deleteAccount = function(user) {
                 .then(resolve)
                 .catch(reject);
             } else {
+<<<<<<< HEAD
                 reject({"err":"Password was entered incorrectly"});
             }
         })
         .catch(function() {
             reject({"err":"Password was entered incorrectly"});
         })
+=======
+                reject(error);
+            }
+        })
+        .catch(reject(error));
+>>>>>>> 89c902d55869096c55b038a062d6925c703a9370
     });
 };
 
