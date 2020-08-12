@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var AccountServices = require("../services/account");
 var AlertServices = require("../services/alert");
+const UserServices = require("../services/user");
 
 router.route("/")
     .get(function(req, res, next) {
@@ -111,12 +112,10 @@ router.route("/delete_wish")
 
 //update account info
 router.route("/update")
-    .put(function(req, res) {
+    .post(function(req, res) {
         AccountServices.updateAccount(req.body)
-            .then(function(result) {
-                if (result) {
-                    res.redirect('/account');
-                }
+            .then(function() {
+                res.redirect('/account');
             })
             .catch(function(err) {
                 next(err);
@@ -148,8 +147,14 @@ router.route("/delete_alert")
     })
 
 router.route("/manage")
-    .get(function(req, res) {
-        res.render("manageaccount", req.session)
+    .get(function(req, res, next) {
+        UserServices.getUserById(req.session.u_id)
+        .then(function(user) {
+            res.render("manageaccount", user[0])
+        })
+        .catch(function(err) {
+            next(err);
+        })
     })
 
 module.exports = router;
