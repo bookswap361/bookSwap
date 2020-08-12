@@ -21,9 +21,10 @@
             <input type="submit" name="editBtn" value="finish changes!">
         </form>
         <input type="submit" name="changePassBtn" value="change password!">
+        <button onclick="deleteAccount()">delete account!</button>
         <form id="deleteForm" form action="/account/delete" method="POST">
             <input type="hidden" name="user_id" value={{user_id}}>
-            <input type="submit" name="deleteBtn" value="delete my account!">
         </form>
     </div>
 </div>
+<script src="../scripts/manageaccount.js"></script>
