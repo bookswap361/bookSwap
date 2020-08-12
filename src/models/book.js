@@ -9,6 +9,14 @@ Book.getAllBooks = function() {
     });
 }
 
+Book.getBooksBy = function(title) {
+    return new Promise(function(resolve, reject) {
+        mysql.query(getQuery("getBooksBy"), [title])
+            .then(resolve)
+            .catch(reject);
+    });
+}
+
 Book.getBookByOLId = function(id) {
     return new Promise(function(resolve, reject) {
         mysql.query(getQuery("getBookByOLId"), [id])
@@ -99,6 +107,14 @@ function getQuery(type) {
     switch(type) {
         case "allBooks":
             query = "SELECT * FROM book;"
+            break;
+        case "getBooksBy":
+            query = "SELECT b.title, b.thumbnail_url, b.ol_key AS book_id, b.description, \
+                a.name AS author, a.ol_key AS author_id \
+                FROM book b \
+                INNER JOIN book_author ba ON b.book_id = ba.book_id \
+                INNER JOIN author a ON ba.author_id = a.author_id \
+                WHERE title LIKE ?;"
             break;
         case "getBookByOLId":
             query = "SELECT \

@@ -79,7 +79,7 @@ ForumServices.getThreadById = function(threadId, userId) {
                     "message_id": message.message_id,
                     "user": message.first_name + " " + message.last_name,
                     "post": message.post,
-                    "date": message.date
+                    "post_date": message.date
                 });
             });
             resolve({"isResolved": isResolved, "thread_id": thread_id, "title": title, "messages": messages, "isOwner": isOwner});

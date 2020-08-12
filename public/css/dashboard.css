@@ -2,6 +2,10 @@ body{
     color: #184d47;
 }
 
+h3 {
+    color: white;
+}
+
 #accountHeader {
     color: #1b6ca8;
 }
