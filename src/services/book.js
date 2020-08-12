@@ -1,6 +1,7 @@
 var BookModel = require("../models/book"),
-    BooksOwnedModel = require("../models/books_owned");
-    WishListModel = require("../models/wishlist")
+    BooksOwnedModel = require("../models/books_owned"),
+    WishListModel = require("../models/wishlist");
+var searchBooks = require("../loaders/openLibrary");
 var BookServices = {};
 
 BookServices.getAllBooks = function() {
@@ -9,6 +10,31 @@ BookServices.getAllBooks = function() {
             .then(resolve)
             .catch(reject);
     });
+};
+
+BookServices.getBooksBy = function(query) {
+    return new Promise(function(resolve, reject) {
+        searchBooks.makeRequest.search(query)
+            .then(function(results) {
+                if (query.title) {
+                    var title = replace(query.title);
+                    BookModel.getBooksBy(`%${title}%`)
+                        .then(function(db_books){
+                            if (db_books) {
+                                db_books.forEach(function(book) {
+                                    results.books.unshift(book);
+                                    results.numResults++;
+                                })
+                            }
+                            results.numResults = maxResults(results.numResults);
+                            resolve(results)
+                        })
+                        .catch(reject)
+                }
+                else resolve(results)
+            })
+            .catch(reject);
+    })
 };
 
 BookServices.getGenreList = function() {
@@ -102,3 +128,12 @@ BookServices.getOlKeys = function() {
 
 
 module.exports = BookServices;
+
+function replace(str) {
+    return str.replace("+", " ")
+}
+
+function maxResults(num) {
+    if (num >= 1000) return 999;
+    else return num;
+}

@@ -97,11 +97,11 @@
 		</div>
 	</div>
 
-	<div id="swaps" class="tabcontent mx-auto container">
-        <div class="section-top"><h2> Pending Swaps </h2></div>
+	<div id="swaps" class="tabcontent mx-auto">
+        <div class="section-top"><h3> Pending Swaps </h3></div>
         <div class="section">
             <!-- traded_to == current user scenario -->
-            <h4>Swaps Requested By Me&nbsp;&nbsp;<span class="highlight count">{{swapsToMePending}}</span>  </h4>
+            <h4> Swaps Requested By Me <span class="highlight count">{{swapsToMePending}}</span>  </h4>
             <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
@@ -181,9 +181,9 @@
             </table>
         </div>
 
-        <div class="section-top"><h2> Previous/Completed Swaps </h2></div>
+        <div class="section-top"><h3> Previous/Completed Swaps </h3></div>
         <div class="section">
-            <h4>Swaps Requested By Me - <span class="highlight">{{swapsToMeComplete}}</span></h4>
+            <h4>Swaps Requested By Me - <span class="highlight count">{{swapsToMeComplete}}</span></h4>
             <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
@@ -216,7 +216,7 @@
                     {{/if}}
                 {{/each}}
             </table>
-            <h4>Swaps Requested To Me - <span class="highlight">{{swapsByMeComplete}}</span></h4>
+            <h4>Swaps Requested To Me - <span class="highlight count">{{swapsByMeComplete}}</span></h4>
             <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
