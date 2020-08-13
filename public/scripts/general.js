@@ -24,3 +24,4 @@ function disableBtn(button) {
     button.classList.contains("btn-primary") ? button.classList.remove("btn-primary") : button.classList.remove("btn-info");
     button.classList.add("btn-secondary");
 };
+

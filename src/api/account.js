@@ -8,7 +8,7 @@ router.route("/")
     .get(function(req, res, next) {
         AccountServices.getAccount(req.session.u_id)
             .then(function(account) {
-                res.render('account', account);
+                res.render('account', {"account": account, "tab": req.query && req.query.tab ? JSON.stringify(req.query.tab) : "profile"});
             })
             .catch(function(err) {
                 next(err);
@@ -74,7 +74,7 @@ router.route("/delete")
 router.post("/update_books", function(req, res, next){
     AccountServices.updateCondition(req.body)
         .then(function(result) {
-            res.redirect('/account');
+            res.redirect('/account/?tab=books');
         }).catch(function(err) {
             next(err);
         });
@@ -87,7 +87,7 @@ router.route("/delete_books")
         AccountServices.deleteBooks(req.body, req.session.u_id)
             .then(function(result) {
                 if (result) {
-                    res.redirect('/account');
+                    res.redirect('/account/?tab=books');
                 }
             })
             .catch(function(err) {
@@ -102,7 +102,7 @@ router.route("/delete_wish")
         AccountServices.deleteWish(req.session.u_id, req.body.book_id)
             .then(function(result) {
                 if (result) {
-                    res.redirect('/account');
+                    res.redirect('/account/?tab=wish');
                 }
             })
             .catch(function(err) {
@@ -139,7 +139,7 @@ router.route("/update_points")
         AccountServices.updatePoints(req.body)
             .then(function(result) {
                 if (result) {
-                    res.redirect('/account');
+                    res.redirect('/account/?tab=profile');
                 }
             })
             .catch(function(err) {
@@ -151,7 +151,7 @@ router.route("/delete_alert")
     .post(function(req, res, next) {
         AlertServices.deleteByAlertId(req.body.alertId)
         .then(function() {
-            res.redirect("/account");
+            res.redirect("/account/?tab=profile");
         })
         .catch(function(err) {
             next(err);

@@ -17,7 +17,7 @@ router.route("/accept")
     .post(function(req, res, next) {
         SwapServices.acceptSwap(Number(req.body.swapId), req.session.u_name + " " + req.session.u_name_last)
             .then(function() {
-                res.redirect("/account");
+                res.redirect("/account/?tab=swaps");
             })
             .catch(function(err) {
                 next(err);
@@ -28,7 +28,7 @@ router.route("/reject")
     .post(function(req, res, next) {
         SwapServices.rejectSwap(Number(req.body.swapId), req.session.u_name + " " + req.session.u_name_last)
             .then(function() {
-                res.redirect("/account");
+                res.redirect("/account/?tab=swaps");
             })
             .catch(function(err) {
                 next(err);
@@ -39,7 +39,7 @@ router.route("/shipped")
     .post(function(req, res, next) {
         SwapServices.updateShipDate(Number(req.body.swapId), req.session.u_name + " " + req.session.u_name_last)
             .then(function(result) {
-                res.redirect("/account");
+                res.redirect("/account/?tab=swaps");
             })
             .catch(function(err) {
                 next(err);
@@ -50,7 +50,7 @@ router.route("/received")
     .post(function(req, res, next) {
         SwapServices.updateReceivedDate(Number(req.body.swapId))
             .then(function(result) {
-                res.redirect("/account");
+                res.redirect("/account/?tab=swaps");
             })
             .catch(function(err) {
                 next(err);
@@ -61,7 +61,7 @@ router.route("/lost")
     .post(function(req, res, next) {
         SwapServices.updateLostDate(Number(req.body.swapId), req.session.u_id)
             .then(function() {
-                res.redirect("/account");
+                res.redirect("/account/?tab=swaps");
             })
             .catch(function(err) {
                 next(err);
@@ -72,7 +72,7 @@ router.route("/not_received")
     .post(function(req, res, next) {
         SwapServices.notReceived(Number(req.body.swapId))
         .then(function() {
-            res.redirect("/account");
+            res.redirect("/account/?tab=swaps");
         })
         .catch(function(err) {
             next(err);
@@ -84,7 +84,7 @@ router.route("/not_received_refund")
         SwapServices.notReceived(Number(req.body.swapId))
         .then(SwapServices.refundSwap.bind(null, Number(req.body.swapId)))
         .then(function() {
-            res.redirect("/account");
+            res.redirect("/account/?tab=swaps");
         })
         .catch(function(err) {
             next(err);
@@ -95,7 +95,7 @@ router.route("/claim")
     .post(function(req, res, next) {
         SwapServices.updateClaimDate(Number(req.body.swapId))
         .then(function() {
-            res.redirect("/account");
+            res.redirect("/account/?tab=swaps");
         })
         .catch(function(err) {
             next(err);
