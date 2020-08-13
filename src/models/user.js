@@ -7,14 +7,17 @@ User.getUserById = function(user_id) {
     return mysql.query(getQuery("userById"), [user_id]);
 }
 
-User.searchUserByfName = function(name) {
-    return mysql.query(getQuery("userByfName"), [name]);
+User.getUserByFName = function(name, userId) {
+    return mysql.query(getQuery("userByfName"), [name, userId]);
 }
 
-User.searchUserBylName = function(lname) {
-    return mysql.query(getQuery("userBylName"), [lname]);
+User.getUserByLName = function(lname, userId) {
+    return mysql.query(getQuery("userBylName"), [lname, userId]);
 }
 
+User.getUserByEmailSearch = function(email, userId) {
+    return mysql.query(getQuery("getUserByEmailSearch"), [email, userId]);
+}
 
 User.getUserByEmail = function(email) {
     return mysql.query(getQuery("userByEmail"), [email]);
@@ -76,7 +79,9 @@ function getQuery(type) {
         case "userByEmail":
             query = "SELECT * from user WHERE email = ?";
             break;
-
+        case "getUserByEmailSearch":
+            query = "SELECT * FROM usre where email = ? AND user_id != ?";
+            break;
         case "deleteUserById":
             query = "DELETE from user WHERE user_id = ?";
             break;
@@ -91,11 +96,11 @@ function getQuery(type) {
             break;
             
         case "userByfName":
-            query = "SELECT * FROM user WHERE first_name = ?";
+            query = "SELECT * FROM user WHERE first_name = ? AND user_id != ?";
             break;
 
         case "userBylName":
-            query = "SELECT * FROM user WHERE last_name = ?";
+            query = "SELECT * FROM user WHERE last_name = ? AND user_id != ?";
             break;
             
         case "updatePoints":
