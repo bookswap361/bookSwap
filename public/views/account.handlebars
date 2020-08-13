@@ -15,9 +15,9 @@
 
 {{!-- Notifications --}}
 <form id="delete-alert" action="/account/delete_alert" method="POST"></form>
-{{#if acccount.newReqs}}
+{{#if account.newReqs}}
 	<div class="swap-notifications mx-auto px-3">
-		<i class="fas fa-user-clock"></i> You have {{account.newReqs}} new requests for trade!
+		<i class="fas fa-user-clock"></i> You have {{newReqs}} new requests for trade!
 	</div>
 {{/if}}
 {{#each account.alerts}}
@@ -40,7 +40,7 @@
 				<i class="fas fa-book"></i> Book Inventory
 			</button>
 			<button class="tablinks" id="swapsTab">
-				<i class="far fa-handshake"></i> Swaps {{#if newReqs}} <span id="notify">{{newReqs}}</span> {{/if}}
+				<i class="far fa-handshake"></i> Swaps {{#if account.newReqs}} <span id="notify">{{account.newReqs}}</span> {{/if}}
 			</button>
 			<button class="tablinks" id="wishlistTab">
 				<i class="far fa-heart"></i> Wishlist
@@ -148,7 +148,7 @@
             <hr>
             <!-- traded_by == current user scenario -->
             <h4> Swaps Requested to You  <span class="highlight count">{{add account.swapsByMePending account.newReqs}}</span></h4>
-            {{#if account.swapsByMePending}}
+            {{#if (add account.swapsByMePending account.newReqs)}}
             <form id="accept-trade" action="/swap/accept" method="POST"></form>
             <form id="reject-trade" action="/swap/reject" method="POST"></form>
             <form id="get-shipping" action="/swap/get-shipping" method="POST"></form>
