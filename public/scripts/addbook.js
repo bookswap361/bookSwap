@@ -45,7 +45,7 @@ function makeReq(type) {
             var confirmStr = `You have successfully added ${data.title} 
             in ${data.condition_description} condition 
             (asking for ${data.condition_points} points) to your collection! 
-            View <a href="../account/">your account</a> to see it.`;
+            View <a href="../account/?tab=books">your account</a> to see it.`;
             
             fetchHelper("/account/add_books", "POST", data)
             .then(function() {                
@@ -59,7 +59,7 @@ function makeReq(type) {
         break;
     case "wishlist":
         var confirmStr = `You have successfully added ${data.title} to your wishlist.
-        View <a href="../account/">your account</a> to see it.`;
+        View <a href="../account/?tab=wish">your account</a> to see it.`;
         
         fetchHelper("/account/add_wish", "POST", data)
         .then(function() {
