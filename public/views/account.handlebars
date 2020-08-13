@@ -97,9 +97,11 @@
                     </tr>
                 {{/each}}
 			</table>
-        {{else}}
-        You haven't added any books that you own. Start by adding a book!
-        {{/if}}
+            {{else}}
+            <div class="text-center mx-auto">
+                You haven't added any books that you own. Start by adding a book!
+            </div>
+            {{/if}}
 		</div>
 	</div>
 
@@ -146,7 +148,7 @@
             <hr>
             <!-- traded_by == current user scenario -->
             <h4> Swaps Requested to You  <span class="highlight count">{{add swapsByMePending newReqs}}</span></h4>
-            {{#if swapsToMe}}
+            {{#if swapsByMePending}}
             <form id="accept-trade" action="/swap/accept" method="POST"></form>
             <form id="reject-trade" action="/swap/reject" method="POST"></form>
             <form id="get-shipping" action="/swap/get-shipping" method="POST"></form>
@@ -199,106 +201,106 @@
             {{/if}}
         </div>
         <div class="mb-4">
-        <div class="sectionTop mt-2">
-            <span> Previous/Completed Swaps </span>
-            <button class="btn-sm btn-success mb-1" type="button" data-toggle="collapse" data-target="#collapseComplete" id="completeBtn">
-                Expand
-            </button>
-        </div>
-        <div class="sectionBottom collapse" id="collapseComplete">
-            <h4> Swaps You've Requested <span class="highlight count">{{swapsToMeComplete}}</span></h4>
-            {{#if swapsToMeComplete}}
-            <table class="mx-auto">
-                <tr>
-                    <th class="hidden">Swap ID</th>
-                    <th>Request Date</th>
-                    <th>Name</th>
-                    <th>Title</th>
-                    <th>Approve Date</th>
-                    <th>Reject Date</th>
-                    <th>Shipped Date</th>
-                    <th>Received Date</th>
-                    <th>Lost Date</th>
-                    <th>Refund Date</th>
-                    <th>Status</th>
-                </tr>
-                {{#each swapsToMe}}
-                    {{#if is_complete}}
-                        <tr>
-                            <td class="hidden">{{swap_id}}</td>
-                            <td>{{formatDate request_date}}</td>
-                            <td>{{name}}</td>
-                            <td>{{title}}</td>
-                            <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
-                            <td>{{#if reject_date}} {{formatDate reject_date}} {{/if}}</td>
-                            <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
-                            <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
-                            <td>{{#if lost_date}} {{formatDate lost_date}} {{/if}}</td>
-                            <td>{{#if refund_date}} {{formatDate refund_date}} {{/if}}</td>
-                            <td class="highlight">{{{getStatus this}}}</td>
-                        </tr>
-                    {{/if}}
-                {{/each}}
-            </table>
-            {{else}}
-            There are no completed swaps that you requested to others.
-            {{/if}}
-            <hr>
-            <h4> Swaps Requested to You <span class="highlight count">{{swapsByMeComplete}}</span></h4>
-            {{#if swapsByMeComplete}}
-            <table class="mx-auto">
-                <tr>
-                    <th class="hidden">Swap ID</th>
-                    <th>Request Date</th>
-                    <th>Name</th>
-                    <th>Title</th>
-                    <th>Approve Date</th>
-                    <th>Reject Date</th>
-                    <th>Shipped Date</th>
-                    <th>Received Date</th>
-                    <th>Lost Date</th>
-                    <th>Refund Date</th>
-                    <th>Status</th>
-                </tr>
-                {{#each swapsByMe}}
-                    {{#if is_complete}}
-                        <tr>
-                            <td class="hidden">{{swap_id}}</td>
-                            <td>{{formatDate request_date}}</td>
-                            <td>{{name}}</td>
-                            <td>{{title}}</td>
-                            <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
-                            <td>{{#if reject_date}} {{formatDate reject_date}} {{/if}}</td>
-                            <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
-                            <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
-                            <td>{{#if lost_date}} {{formatDate lost_date}} {{/if}}</td>
-                            <td>{{#if refund_date}} {{formatDate refund_date}} {{/if}}</td>
-                            <td class="highlight">{{{getStatus this}}}</td>
-                        </tr>
-                    {{/if}}
-                {{/each}}
-            </table>
-            {{else}}
-            There are no completed any swaps that others have requested to you.
-            {{/if}}
-        </div>
+            <div class="sectionTop mt-2">
+                <span> Previous/Completed Swaps </span>
+                <button class="btn-sm btn-success mb-1" type="button" data-toggle="collapse" data-target="#collapseComplete" id="completeBtn">
+                    Expand
+                </button>
+            </div>
+            <div class="sectionBottom collapse" id="collapseComplete">
+                <h4> Swaps You've Requested <span class="highlight count">{{swapsToMeComplete}}</span></h4>
+                {{#if swapsToMeComplete}}
+                <table class="mx-auto">
+                    <tr>
+                        <th class="hidden">Swap ID</th>
+                        <th>Request Date</th>
+                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Approve Date</th>
+                        <th>Reject Date</th>
+                        <th>Shipped Date</th>
+                        <th>Received Date</th>
+                        <th>Lost Date</th>
+                        <th>Refund Date</th>
+                        <th>Status</th>
+                    </tr>
+                    {{#each swapsToMe}}
+                        {{#if is_complete}}
+                            <tr>
+                                <td class="hidden">{{swap_id}}</td>
+                                <td>{{formatDate request_date}}</td>
+                                <td>{{name}}</td>
+                                <td>{{title}}</td>
+                                <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
+                                <td>{{#if reject_date}} {{formatDate reject_date}} {{/if}}</td>
+                                <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
+                                <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
+                                <td>{{#if lost_date}} {{formatDate lost_date}} {{/if}}</td>
+                                <td>{{#if refund_date}} {{formatDate refund_date}} {{/if}}</td>
+                                <td class="highlight">{{{getStatus this}}}</td>
+                            </tr>
+                        {{/if}}
+                    {{/each}}
+                </table>
+                {{else}}
+                There are no completed swaps that you requested to others.
+                {{/if}}
+                <hr>
+                <h4> Swaps Requested to You <span class="highlight count">{{swapsByMeComplete}}</span></h4>
+                {{#if swapsByMeComplete}}
+                <table class="mx-auto">
+                    <tr>
+                        <th class="hidden">Swap ID</th>
+                        <th>Request Date</th>
+                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Approve Date</th>
+                        <th>Reject Date</th>
+                        <th>Shipped Date</th>
+                        <th>Received Date</th>
+                        <th>Lost Date</th>
+                        <th>Refund Date</th>
+                        <th>Status</th>
+                    </tr>
+                    {{#each swapsByMe}}
+                        {{#if is_complete}}
+                            <tr>
+                                <td class="hidden">{{swap_id}}</td>
+                                <td>{{formatDate request_date}}</td>
+                                <td>{{name}}</td>
+                                <td>{{title}}</td>
+                                <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
+                                <td>{{#if reject_date}} {{formatDate reject_date}} {{/if}}</td>
+                                <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
+                                <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
+                                <td>{{#if lost_date}} {{formatDate lost_date}} {{/if}}</td>
+                                <td>{{#if refund_date}} {{formatDate refund_date}} {{/if}}</td>
+                                <td class="highlight">{{{getStatus this}}}</td>
+                            </tr>
+                        {{/if}}
+                    {{/each}}
+                </table>
+                {{else}}
+                There are no completed any swaps that others have requested to you.
+                {{/if}}
+            </div>
         </div>
     </div>
 
 	<div id="wishlist" class="tabcontent mx-auto">
-    <form id="delete-this-wish" form action="/account/delete_wish" method="POST"></form>
+        <form id="delete-this-wish" form action="/account/delete_wish" method="POST"></form>
         <h2> Your Wishlist </h2>
-            <div class="row mx-2 text-center">
-                <button id="addWish" class="btn mt-2 mb-4 btn-primary mx-auto" onclick="window.location.href='/book/search';"> Add New Book </button>
-            </div>
-            <div class="slideshow-container mx-auto">
+        <div class="row mx-2 text-center">
+            <button id="addWish" class="btn mt-2 mb-4 btn-primary mx-auto" onclick="window.location.href='/book/search';"> Add New Book </button>
+        </div>
+        <div class="slideshow-container mx-auto">
 			{{#if wishlist}}
                 <div class="nav-arrows">
                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                     <a class="next" onclick="plusSlides(1)">&#10095;</a>
                 {{#each wishlist}}
                     <div class="mySlides">
-                        <table>
+                        <table class="mx-auto">
                             <tr>
                                 <td>
                                     <img class="cover" src="{{thumbnail_url}}">
@@ -317,7 +319,6 @@
 			{{else}}
 				There's nothing in your wishlist. Click the button to add new books.
 			{{/if}}
-
         </div>
     </div>
 
