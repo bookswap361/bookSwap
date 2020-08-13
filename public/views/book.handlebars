@@ -2,10 +2,10 @@
 <div class="container">
     <div class="col-sm-9">
         <div class="row">
-            View:   &emsp;
+            View: &emsp;
             <form id="filter-swaps" action="/books_available/" method="GET">
                 <input type="radio" form="filter-swaps" id="view-all" name="filter" value="all" onclick="filterSubmit(this)" {{{setChecked "all" criteria}}}>
-                <label for="view-all">All   &emsp;</label>
+                <label for="view-all">All &emsp;</label>
                 <input type="radio" form="filter-swaps" id="view-afford" name="filter" value="afford" onclick="filterSubmit(this)" {{{setChecked "afford" criteria}}}>
                 <label for="view-afford">Swaps I Can Afford &emsp;</label>
                 <label for="genre">Select Genre:</label>
@@ -21,7 +21,8 @@
 
     <div class="mx-auto my-2">
         <h2>Select a Book to Swap</h2>
-	    <table>
+	    {{#if books}}
+        <table class="mx-auto">
             <tr>
                 <th>Title</th>
                 <th>Author</th>
@@ -40,6 +41,9 @@
                 </tr>
             {{/each}}
         </table>
+        {{else}}
+        There are no books that match your selection- <a href="/book/search">add some books</a> to start trading!
+        {{/if}}
 
         <!-- Modal for book conditions/add a swap -->
         <div id="conditionModal" class="modal bd-example-modal-lg" tabindex="-1" role="dialog">
@@ -81,7 +85,6 @@
                 </div>
             </div>
         </div>
-
 
     </div>
 </div>
