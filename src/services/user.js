@@ -1,4 +1,5 @@
 var UserModel = require("../models/user");
+var BookModel = require("../models/book");
 var bcrypt = require('bcryptjs');
 const User = require("../models/user");
 var UserServices = {};
@@ -13,14 +14,93 @@ UserServices.getUserById = function(user_id) {
 };
 
 
-//TODO
-UserServices.searchUsers = function() {
-    return new Promise(function(resolve, reject) {
-        UserModel.searchUsers()
-            .then(resolve)
-            .catch(reject);
-    });
-};
+UserServices.searchUsers = function(criteria, content, u_id) {
+    switch(criteria)
+    {
+        case '1':
+            var p1 = new Promise(function(resolve, reject) {
+                UserModel.searchUserByfName(content)
+                    .then(function(result) {
+                        resolve({"users": result});
+                    })
+                    .catch(reject);
+            });
+             var p2 = new Promise(function(resolve, reject) {
+                BookModel.getBooksByFName(content)
+                    .then(function(result) {
+                        resolve({"books": result});
+                    })
+                    .catch(reject);
+            });
+            var p3 = new Promise(function(resolve, reject) {
+                UserModel.getPoints(u_id)
+                    .then(function(result) {
+                        resolve(result[0]);
+                    })
+                    .catch(reject);
+            });
+            return Promise.all([p1, p2, p3]).then(function(result) {
+                let user = {...result[0], ...result[1], ...result[2]}
+                return user;
+            });
+            break;
+        case '2':
+            var p1 = new Promise(function(resolve, reject) {
+                UserModel.searchUserBylName(content)
+                    .then(function(result) {
+                        resolve({"users": result});
+                    })
+                    .catch(reject);
+            });
+             var p2 = new Promise(function(resolve, reject) {
+                BookModel.getBooksByLName(content)
+                    .then(function(result) {
+                        resolve({"books": result});
+                    })
+                    .catch(reject);
+            });
+            var p3 = new Promise(function(resolve, reject) {
+                UserModel.getPoints(u_id)
+                    .then(function(result) {
+                        resolve(result[0]);
+                    })
+                    .catch(reject);
+            });
+            return Promise.all([p1, p2, p3]).then(function(result) {
+                let user = {...result[0], ...result[1], ...result[2]}
+                return user;
+            });
+            break;
+        case '3':
+            var p1 = new Promise(function(resolve, reject) {
+                UserModel.searchUserByEmail(content)
+                    .then(function(result) {
+                        resolve({"users": result});
+                    })
+                    .catch(reject);
+            });
+             var p2 = new Promise(function(resolve, reject) {
+                BookModel.getBooksByEmail(content)
+                    .then(function(result) {
+                        resolve({"books": result});
+                    })
+                    .catch(reject);
+            });
+            var p3 = new Promise(function(resolve, reject) {
+                UserModel.getPoints(u_id)
+                    .then(function(result) {
+                        resolve(result[0]);
+                    })
+                    .catch(reject);
+            });
+            return Promise.all([p1, p2, p3]).then(function(result) {
+                let user = {...result[0], ...result[1], ...result[2]}
+                return user;
+            });
+            
+    }
+
+}
 
 UserServices.getUserByEmail = function(email) {
     return new Promise(function(resolve, reject) {
