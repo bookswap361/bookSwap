@@ -19,7 +19,6 @@ UserServices.searchUsers = function(criteria, content, u_id) {
     var userPromise;
     var bookPromise = BooksOwnedModel.getBooksOwnedByUserId;
     var pointsPromise = UserModel.getPoints;
-    var searchResults = [];
     switch(criteria) {
         case "1": //Search by first name
             userPromise = UserModel.getUserByFName;
