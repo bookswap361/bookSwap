@@ -1,18 +1,50 @@
-<div id="results">
-  {{#if result}}
-      <table><tr>
-        <th>First name</th> <th>Last Name</th> <th>email</th> <th>Available Swaps</th> <th> </th>
+
+<link rel="stylesheet" href="/css/user.css">
+<div id="content">
+  {{#if users}}
+  <h4>Success! Results found:</h4>
+    {{#each users}}
+      <table id="user_display"><tr>
+        <th>First name</th> <th>Last Name</th> <th>contact</th>
       </tr>
-    {{#each result}}
       <tr>
-        <td>{{first_name}}</td>
-        <td>{{last_name}}</td>
-        <td>{{email}}</td>
-        <td>{{swaps}}</td>
-        <td><button id="request">Request swap</button></td>
+        <td>{{fname}}</td>
+        <td>{{lname}}</td>
+        <td>
+        {{#if mail}}
+        <a class="btn" href="mailto:{{mail}}">Send email</a>
+        {{else}}
+        Contact information is private.
+        {{/if}}
+        </td>
       </tr>
-    {{/each}}
       </table>
+      <br>
+{{#if books}}
+<table id ="book_display">
+<tr>
+      <th colspan="3">Books Available</th>
+      </tr>
+      {{#each books}}
+      <tr>
+      <td>{{title}}</td>
+      <td>
+      Condition: {{condition}}</td>
+          <td>
+            {{#if olKey}}
+                <a class="btn" href="../book/{{olKey}}">Request Swap</a>
+            {{else}}
+          <text style="color:red">You don't have enough points to request this book</style>
+          </td>
+          {{/if}}
+      </tr>
+      {{/each}}
+      {{/if}}
+      </table>
+      <br><br><br>
+    {{/each}}
   {{else}}
-    Sorry, no results matched your search.
+    <h4>Sorry, no results matched your search. <a href="/user">Search again?</a></h4>
   {{/if}}
+  </div>
+  <div id ="success"></div>
