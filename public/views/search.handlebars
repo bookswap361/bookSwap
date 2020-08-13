@@ -3,25 +3,34 @@
     <div class="row pl-3 pl-md-0"><h2><i class="fas fa-search"></i> Search for Books</h2></div>
     <div class="row pl-3 pl-md-0">
         {{#if query}}
-        <form action="/book/search" method="GET">
+        <form action="/book/search" method="GET" id="searchForm">
             <input type="text" name="title" {{{formatForm query.title}}}>
             <input type="text" name="author" {{{formatForm query.author}}}>
-            <input name="page" id="pageQuery" hidden>
-            <input type="submit" value="Submit">
-            <div>
-                Go to Page: &nbsp; {{{createResultPages pages query}}}
-                <p>
-                {{total}} results found | Showing results {{{showResultsRange query.page total}}}
-                </p>
-            </div>
+            <input type="submit" value="Submit" onclick="$("#loading").show();" id="submitBtn">
         </form>
+    </div>
+    <div class="row pl-3 pl-md-0">
+        <div>
+            Go to Page: &nbsp; {{{createResultPages pages query}}}
+            <p>
+            {{total}} results found | Showing results {{{showResultsRange query.page total}}}
+            </p>
+        </div>
+    </div>
         {{else}}
-        <form action="/book/search" method="GET">
+        <form action="/book/search" method="GET" id="searchForm">
             <input type="text" name="title" placeholder="Title/ISBN/Genre">
             <input type="text" name="author" placeholder="Author">
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" onclick="$("#loading").show();" id="submitBtn">
         </form>
         {{/if}}
+    </div>
+    <div id="loading" style="display:none;" class="loading">
+        <div>
+            <div id="loader"></div>
+            <img src="../imgs/bookshelf.png">
+            <p class="mt-4">Searching our bookshelves...</p>
+        </div>
     </div>
 
 </div>
@@ -35,8 +44,8 @@
             <div class="col-6 col-md-3">
                 {{{nullImg thumbnail_url}}}
             </div>
-            <div class="col-6 col-md-9">
-                {{title}} by {{author}}
+            <div class="col-6 col-md-9 result">
+                <strong>{{title}} by {{author}}</strong>
                 <p>{{nullDescription description}}</p>
                 <hr>
                 <form action=/book/{{book_id}} method="POST">
@@ -56,8 +65,16 @@
     </div>
     <div class="container" id="noFind">
         <div class="row note">
-            <strong>Can't find your book?</strong>&emsp;Try another search or add it&emsp;<a href="/book/create-book">here!</a>
+            <strong>Can"t find your book?</strong>&emsp;Try another search or add it&emsp;<a href="/book/create-book">here!</a>
         </div>
     </div>
 </div>
 {{/if}}
+
+<script type="text/javascript">
+    (function (doc) {
+        doc.getElementById("searchForm").onsubmit = function () {
+        doc.getElementById("loading").style.display = "block";
+    };
+    }(document));
+</script>

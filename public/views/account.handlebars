@@ -65,9 +65,12 @@
 
 	<div id="booksInventory" class="tabcontent mx-auto">
 		<div class="mx-auto text-center"><h2> Your Listed Books: </h2></div>
-		<div class="row mx-2 text-center"><button id="addInventory" class="btn mt-2 mb-4 btn-primary mx-auto"> Add New Book </button></div>
+		<div class="row mx-2 text-center">
+            <button id="addInventory" class="btn mt-2 mb-4 btn-primary mx-auto"> Add New Book </button>
+        </div>
 
 		<div class="row mx-2">
+            {{#if account.books}}
 			<table id="inventoryTable" class="mx-auto">
                 <tr>
                     <th>Title</th>
@@ -94,14 +97,25 @@
                     </tr>
                 {{/each}}
 			</table>
+            {{else}}
+            <div class="text-center mx-auto">
+                You haven't added any books that you own. Start by adding a book!
+            </div>
+            {{/if}}
 		</div>
 	</div>
 
 	<div id="swaps" class="tabcontent mx-auto">
-        <div class="section-top"><h3> Pending Swaps </h3></div>
-        <div class="section">
+        <div class="sectionTop mt-2">
+            <span> Swaps In Progress </span>
+            <button class="btn-sm btn-success mb-1" type="button" data-toggle="collapse" data-target="#collapsePending" id="pendingBtn">
+                Hide
+            </button>
+        </div>
+        <div class="sectionBottom collapse show" id="collapsePending">
             <!-- traded_to == current user scenario -->
-            <h4>Swaps Requested By Me <span class="highlight count">{{account.swapsToMePending}}</span>  </h4>
+            <h4> Swaps You Have Requested <span class="highlight count">{{account.swapsToMePending}}</span>  </h4>
+            {{#if account.swapsToMePending}}
             <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
@@ -113,7 +127,6 @@
                     <th>Claim Date</th>
                     <th>Status</th>
                 </tr>
-
                 {{#each account.swapsToMe}}
                     {{#unless is_complete}}
                         <tr>
@@ -129,9 +142,13 @@
                     {{/unless}}
                 {{/each}}
             </table>
+            {{else}}
+            You have no open swaps that you have requested to other.
+            {{/if}}
             <hr>
             <!-- traded_by == current user scenario -->
-            <h4> Swaps Requested To Me  <span class="highlight count">{{add account.swapsByMePending account.newReqs}}</span></h4>
+            <h4> Swaps Requested to You  <span class="highlight count">{{add account.swapsByMePending account.newReqs}}</span></h4>
+            {{#if account.swapsByMePending}}
             <form id="accept-trade" action="/swap/accept" method="POST"></form>
             <form id="reject-trade" action="/swap/reject" method="POST"></form>
             <form id="get-shipping" action="/swap/get-shipping" method="POST"></form>
@@ -179,93 +196,111 @@
                     {{/unless}}
                 {{/each}}
             </table>
+            {{else}}
+            There are no swaps in progress that others have requested to you.
+            {{/if}}
         </div>
-
-        <div class="section-top"><h3> Previous/Completed Swaps </h3></div>
-        <div class="section">
-            <h4>Swaps Requested By Me - <span class="highlight count">{{account.swapsToMeComplete}}</span></h4>
-            <table class="mx-auto">
-                <tr>
-                    <th class="hidden">Swap ID</th>
-                    <th>Request Date</th>
-                    <th>Name</th>
-                    <th>Title</th>
-                    <th>Approve Date</th>
-                    <th>Reject Date</th>
-                    <th>Shipped Date</th>
-                    <th>Received Date</th>
-                    <th>Lost Date</th>
-                    <th>Refund Date</th>
-                    <th>Status</th>
-                </tr>
-                {{#each account.swapsToMe}}
-                    {{#if is_complete}}
-                        <tr>
-                            <td class="hidden">{{swap_id}}</td>
-                            <td>{{formatDate request_date}}</td>
-                            <td>{{name}}</td>
-                            <td>{{title}}</td>
-                            <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
-                            <td>{{#if reject_date}} {{formatDate reject_date}} {{/if}}</td>
-                            <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
-                            <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
-                            <td>{{#if lost_date}} {{formatDate lost_date}} {{/if}}</td>
-                            <td>{{#if refund_date}} {{formatDate refund_date}} {{/if}}</td>
-                            <td class="highlight">{{{getStatus this}}}</td>
-                        </tr>
-                    {{/if}}
-                {{/each}}
-            </table>
-            <h4>Swaps Requested To Me - <span class="highlight count">{{account.swapsByMeComplete}}</span></h4>
-            <table class="mx-auto">
-                <tr>
-                    <th class="hidden">Swap ID</th>
-                    <th>Request Date</th>
-                    <th>Name</th>
-                    <th>Title</th>
-                    <th>Approve Date</th>
-                    <th>Reject Date</th>
-                    <th>Shipped Date</th>
-                    <th>Received Date</th>
-                    <th>Lost Date</th>
-                    <th>Refund Date</th>
-                    <th>Status</th>
-                </tr>
-                {{#each account.swapsByMe}}
-                    {{#if is_complete}}
-                        <tr>
-                            <td class="hidden">{{swap_id}}</td>
-                            <td>{{formatDate request_date}}</td>
-                            <td>{{name}}</td>
-                            <td>{{title}}</td>
-                            <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
-                            <td>{{#if reject_date}} {{formatDate reject_date}} {{/if}}</td>
-                            <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
-                            <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
-                            <td>{{#if lost_date}} {{formatDate lost_date}} {{/if}}</td>
-                            <td>{{#if refund_date}} {{formatDate refund_date}} {{/if}}</td>
-                            <td class="highlight">{{{getStatus this}}}</td>
-                        </tr>
-                    {{/if}}
-                {{/each}}
-            </table>
+        <div class="mb-4">
+            <div class="sectionTop mt-2">
+                <span> Previous/Completed Swaps </span>
+                <button class="btn-sm btn-success mb-1" type="button" data-toggle="collapse" data-target="#collapseComplete" id="completeBtn">
+                    Expand
+                </button>
+            </div>
+            <div class="sectionBottom collapse" id="collapseComplete">
+                <h4> Swaps You've Requested <span class="highlight count">{{account.swapsToMeComplete}}</span></h4>
+                {{#if account.swapsToMeComplete}}
+                <table class="mx-auto">
+                    <tr>
+                        <th class="hidden">Swap ID</th>
+                        <th>Request Date</th>
+                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Approve Date</th>
+                        <th>Reject Date</th>
+                        <th>Shipped Date</th>
+                        <th>Received Date</th>
+                        <th>Lost Date</th>
+                        <th>Refund Date</th>
+                        <th>Status</th>
+                    </tr>
+                    {{#each account.swapsToMe}}
+                        {{#if is_complete}}
+                            <tr>
+                                <td class="hidden">{{swap_id}}</td>
+                                <td>{{formatDate request_date}}</td>
+                                <td>{{name}}</td>
+                                <td>{{title}}</td>
+                                <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
+                                <td>{{#if reject_date}} {{formatDate reject_date}} {{/if}}</td>
+                                <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
+                                <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
+                                <td>{{#if lost_date}} {{formatDate lost_date}} {{/if}}</td>
+                                <td>{{#if refund_date}} {{formatDate refund_date}} {{/if}}</td>
+                                <td class="highlight">{{{getStatus this}}}</td>
+                            </tr>
+                        {{/if}}
+                    {{/each}}
+                </table>
+                {{else}}
+                There are no completed swaps that you requested to others.
+                {{/if}}
+                <hr>
+                <h4> Swaps Requested to You <span class="highlight count">{{account.swapsByMeComplete}}</span></h4>
+                {{#if account.swapsByMeComplete}}
+                <table class="mx-auto">
+                    <tr>
+                        <th class="hidden">Swap ID</th>
+                        <th>Request Date</th>
+                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Approve Date</th>
+                        <th>Reject Date</th>
+                        <th>Shipped Date</th>
+                        <th>Received Date</th>
+                        <th>Lost Date</th>
+                        <th>Refund Date</th>
+                        <th>Status</th>
+                    </tr>
+                    {{#each account.swapsByMe}}
+                        {{#if is_complete}}
+                            <tr>
+                                <td class="hidden">{{swap_id}}</td>
+                                <td>{{formatDate request_date}}</td>
+                                <td>{{name}}</td>
+                                <td>{{title}}</td>
+                                <td>{{#if approve_date}} {{formatDate approve_date}} {{/if}}</td>
+                                <td>{{#if reject_date}} {{formatDate reject_date}} {{/if}}</td>
+                                <td>{{#if ship_date}} {{formatDate ship_date}} {{/if}}</td>
+                                <td>{{#if received_date}} {{formatDate received_date}} {{/if}}</td>
+                                <td>{{#if lost_date}} {{formatDate lost_date}} {{/if}}</td>
+                                <td>{{#if refund_date}} {{formatDate refund_date}} {{/if}}</td>
+                                <td class="highlight">{{{getStatus this}}}</td>
+                            </tr>
+                        {{/if}}
+                    {{/each}}
+                </table>
+                {{else}}
+                There are no completed any swaps that others have requested to you.
+                {{/if}}
+            </div>
         </div>
     </div>
 
 	<div id="wishlist" class="tabcontent mx-auto">
-    <form id="delete-this-wish" form action="/account/delete_wish" method="POST"></form>
+        <form id="delete-this-wish" form action="/account/delete_wish" method="POST"></form>
         <h2> Your Wishlist </h2>
-            <div class="row mx-2 text-center">
-                <button id="addWish" class="btn mt-2 mb-4 btn-primary mx-auto" onclick="window.location.href='/book/search';"> Add New Book </button>
-            </div>
-            <div class="slideshow-container mx-auto">
+        <div class="row mx-2 text-center">
+            <button id="addWish" class="btn mt-2 mb-4 btn-primary mx-auto" onclick="window.location.href='/book/search';"> Add New Book </button>
+        </div>
+        <div class="slideshow-container mx-auto">
 			{{#if account.wishlist}}
                 <div class="nav-arrows">
                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                     <a class="next" onclick="plusSlides(1)">&#10095;</a>
                 {{#each account.wishlist}}
                     <div class="mySlides">
-                        <table>
+                        <table class="mx-auto">
                             <tr>
                                 <td>
                                     <img class="cover" src="{{thumbnail_url}}">
@@ -284,7 +319,6 @@
 			{{else}}
 				There's nothing in your wishlist. Click the button to add new books.
 			{{/if}}
-
         </div>
     </div>
 

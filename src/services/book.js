@@ -1,5 +1,6 @@
 var BookModel = require("../models/book"),
     BooksOwnedModel = require("../models/books_owned"),
+    UserModel = require("../models/user"),
     WishListModel = require("../models/wishlist");
 var searchBooks = require("../loaders/openLibrary");
 var BookServices = {};
@@ -77,15 +78,23 @@ BookServices.getBookByOLId = function(id, user_id) {
 	});
     var p3 = new Promise(function(resolve, reject) {
         WishListModel.getWishList(user_id)
-        .then(resolve)
-        .catch(reject);
+            .then(resolve)
+            .catch(reject);
     });
     var p4 = new Promise(function(resolve, reject) {
         BookServices.getGenreList()
             .then(resolve)
             .catch(reject);
     });
-	return Promise.all([p1, p2, p3, p4])
+    var p5 = new Promise(function(resolve, reject) {
+        UserModel.getPoints(user_id)
+            .then(function(results){
+                resolve(results[0]["points"]);
+            })
+            .catch(reject);
+    });
+    
+	return Promise.all([p1, p2, p3, p4, p5])
 };
 
 BookServices.createBook = function(info) {

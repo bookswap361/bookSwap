@@ -82,8 +82,12 @@ function getQuery(type) {
             break;
         case "getAvailableBooksByOLId":
             query = "SELECT \
-            b.book_id, b.ol_key, bo.condition_description, bo.list_date \
-            FROM books_owned bo INNER JOIN book b ON b.book_id = bo.book_id \
+            bo.condition_description, bo.list_date, bo.list_id, \
+            bc.cost, u.first_name, u.last_name, u.user_id \
+            FROM books_owned bo \
+            INNER JOIN book b ON b.book_id = bo.book_id \
+            INNER JOIN book_condition bc ON bo.condition_id = bc.condition_id \
+            INNER JOIN user u ON bo.user_id = u.user_id \
             WHERE bo.is_available = 1 AND b.ol_key = ? AND bo.user_id != ? \
             GROUP BY bo.condition_id;"
             break;

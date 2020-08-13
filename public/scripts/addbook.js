@@ -42,11 +42,14 @@ function makeReq(type) {
     var data = getDataOwn();
     switch (type) {
         case "booklist":
-            var confirmStr = `You have successfully added ${data.title} in ${data.condition_description} condition (asking for ${data.condition_points} points) to your collection! View your account to see it.`;
+            var confirmStr = `You have successfully added ${data.title} 
+            in ${data.condition_description} condition 
+            (asking for ${data.condition_points} points) to your collection! 
+            View <a href="../account/">your account</a> to see it.`;
             
             fetchHelper("/account/add_books", "POST", data)
             .then(function() {                
-                confirmDiv.innerText = confirmStr;
+                confirmDiv.innerHTML = confirmStr;
                 disableBtn(addBookBtn);
             })
             .catch(function(err) {
@@ -55,11 +58,12 @@ function makeReq(type) {
             });
         break;
     case "wishlist":
-        var confirmStr = `You have successfully added ${data.title} to your wishlist. View your account to see it.`;
+        var confirmStr = `You have successfully added ${data.title} to your wishlist.
+        View <a href="../account/">your account</a> to see it.`;
         
         fetchHelper("/account/add_wish", "POST", data)
         .then(function() {
-            confirmDiv.innerText = confirmStr;
+            confirmDiv.innerHTML = confirmStr;
             disableBtn(addWishBtn);
         })
         .catch(function(err) {
