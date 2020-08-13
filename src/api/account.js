@@ -2,12 +2,13 @@ var express = require("express");
 var router = express.Router();
 var AccountServices = require("../services/account");
 var AlertServices = require("../services/alert");
+var UserServices = require("../services/user");
 
 router.route("/")
     .get(function(req, res, next) {
         AccountServices.getAccount(req.session.u_id)
             .then(function(account) {
-                res.render('account', account);
+                res.render('account', {"account": account, "tab": req.query && req.query.tab ? JSON.stringify(req.query.tab) : "profile"});
             })
             .catch(function(err) {
                 next(err);
@@ -56,7 +57,7 @@ router.route("/add_wish")
 //delete account
 router.route("/delete")
     .post(function(req, res, next) {
-        AccountServices.deleteAccount(req.body.user_id)
+        AccountServices.deleteAccount(req.body)
             .then(function(result) {
                 if (result) {
                     req.session.destroy();
@@ -64,7 +65,7 @@ router.route("/delete")
                 }
             })
             .catch(function(err) {
-                next(err);
+                res.render("manageaccount", err);
             });
     })
 
@@ -73,7 +74,7 @@ router.route("/delete")
 router.post("/update_books", function(req, res, next){
     AccountServices.updateCondition(req.body)
         .then(function(result) {
-            res.redirect('/account');
+            res.redirect('/account/?tab=books');
         }).catch(function(err) {
             next(err);
         });
@@ -86,7 +87,7 @@ router.route("/delete_books")
         AccountServices.deleteBooks(req.body, req.session.u_id)
             .then(function(result) {
                 if (result) {
-                    res.redirect('/account');
+                    res.redirect('/account/?tab=books');
                 }
             })
             .catch(function(err) {
@@ -101,7 +102,7 @@ router.route("/delete_wish")
         AccountServices.deleteWish(req.session.u_id, req.body.book_id)
             .then(function(result) {
                 if (result) {
-                    res.redirect('/account');
+                    res.redirect('/account/?tab=wish');
                 }
             })
             .catch(function(err) {
@@ -111,24 +112,34 @@ router.route("/delete_wish")
 
 //update account info
 router.route("/update")
-    .put(function(req, res) {
+    .post(function(req, res, next) {
         AccountServices.updateAccount(req.body)
-            .then(function(result) {
-                if (result) {
-                    res.redirect('/account');
-                }
+            .then(function() {
+                res.redirect('/account');
             })
             .catch(function(err) {
                 next(err);
             });
     })
+
+router.route("/update_password")
+    .post(function(req, res, next) {
+        UserServices.updatePassword(req.body)
+        .then(function() {
+            res.redirect('/account');
+        })
+        .catch(function(err) {
+            res.render("manageaccount", err);
+        })
+    })
+
 //update points
 router.route("/update_points")
     .put(function(req, res) {
         AccountServices.updatePoints(req.body)
             .then(function(result) {
                 if (result) {
-                    res.redirect('/account');
+                    res.redirect('/account/?tab=profile');
                 }
             })
             .catch(function(err) {
@@ -140,7 +151,7 @@ router.route("/delete_alert")
     .post(function(req, res, next) {
         AlertServices.deleteByAlertId(req.body.alertId)
         .then(function() {
-            res.redirect("/account");
+            res.redirect("/account/?tab=profile");
         })
         .catch(function(err) {
             next(err);
@@ -148,8 +159,14 @@ router.route("/delete_alert")
     })
 
 router.route("/manage")
-    .get(function(req, res) {
-        res.render("manageaccount", req.session)
+    .get(function(req, res, next) {
+        UserServices.getUserById(req.session.u_id)
+        .then(function(user) {
+            res.render("manageaccount", user[0])
+        })
+        .catch(function(err) {
+            next(err);
+        })
     })
 
 module.exports = router;

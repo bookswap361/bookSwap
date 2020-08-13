@@ -17,20 +17,30 @@ BookServices.getBooksBy = function(query) {
     return new Promise(function(resolve, reject) {
         searchBooks.makeRequest.search(query)
             .then(function(results) {
-                if (query.title) {
+                if (query.title && !query.page) {
                     var title = replace(query.title);
-                    BookModel.getBooksBy(`%${title}%`)
-                        .then(function(db_books){
-                            if (db_books) {
-                                db_books.forEach(function(book) {
-                                    results.books.unshift(book);
-                                    results.numResults++;
-                                })
-                            }
-                            results.numResults = maxResults(results.numResults);
-                            resolve(results)
-                        })
-                        .catch(reject)
+                        BookModel.getBooksBy(`%${title}%`)
+                            .then(function(db_books) {
+                                if (db_books) {
+                                    db_books.forEach(function(book) {
+                                        var index = -1;
+                                        for (var i = 0; i < results.books.length; i++) {
+                                            if (results.books[i].book_id == book.book_id) {
+                                                index = i;
+                                                break;
+                                            }
+                                        }
+                                        if (index > -1) {
+                                            results.books.splice(index, 1);
+                                        }
+                                        results.books.unshift(book);
+                                        results.numResults++;
+                                    })
+                                }
+                                results.numResults = maxResults(results.numResults);
+                                resolve(results)
+                            })
+                            .catch(reject)
                 }
                 else resolve(results)
             })

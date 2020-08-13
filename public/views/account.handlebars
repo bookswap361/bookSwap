@@ -7,7 +7,7 @@
             <h2 id="accountHeader"><i class="fas fa-user-circle"></i>&#32;{{first_name}}'s account</h2>
         </div>
         <div class="col-4 col-md-5 text-left align-self-start">
-            <span class="largeHeader points">{{points}}</span>
+            <span class="largeHeader points">{{account.points}}</span>
             <span class="smallHeader">Points</span>
         </div>
     </div>
@@ -15,12 +15,12 @@
 
 {{!-- Notifications --}}
 <form id="delete-alert" action="/account/delete_alert" method="POST"></form>
-{{#if newReqs}}
+{{#if acccount.newReqs}}
 	<div class="swap-notifications mx-auto px-3">
-		<i class="fas fa-user-clock"></i> You have {{newReqs}} new requests for trade!
+		<i class="fas fa-user-clock"></i> You have {{account.newReqs}} new requests for trade!
 	</div>
 {{/if}}
-{{#each alerts}}
+{{#each account.alerts}}
     <div class="swap-notifications mx-auto">
         {{alert}} &nbsp 
         <div id="delete-alert-button">
@@ -54,11 +54,11 @@
 	<div id="profile" class="tabcontent ml-4 mx-sm-auto">
         <div id="userDetails" class="container text-center">
             <div class="smallHeader">Name:</div>
-            <div class="largeHeader">{{first_name}} {{last_name}}</div>
+            <div class="largeHeader">{{account.first_name}} {{account.last_name}}</div>
             <div class="smallHeader">Email:</div>
-            <div class="largeHeader">{{email}}</div>
+            <div class="largeHeader">{{account.email}}</div>
             <div class="smallHeader">Address:</div>
-            <div class="largeHeader">{{street}}<BR>{{city}}, {{state}} {{zip}}</div>
+            <div class="largeHeader">{{account.street}}<BR>{{account.city}}, {{account.state}} {{account.zip}}</div>
             <a href="/account/manage"><u>Edit Profile Details</u></a>
         </div>
     </div>
@@ -80,9 +80,9 @@
                     <th></th>
                     <th></th>
                 </tr>
-                {{#each books}}
+                {{#each account.books}}
                     <tr id="{{list_id}}">
-                        <td>{{title}}</td>
+                        <td><a href="./book/{{ol_key}}">{{title}}</a></td>
                         <td>{{name}}</td>
                         <td>{{condition_description}}</td>
                         <td>{{formatDate list_date}}</td>
@@ -114,8 +114,8 @@
         </div>
         <div class="sectionBottom collapse show" id="collapsePending">
             <!-- traded_to == current user scenario -->
-            <h4> Swaps You Have Requested <span class="highlight count">{{swapsToMePending}}</span>  </h4>
-            {{#if swapsToMePending}}
+            <h4> Swaps You Have Requested <span class="highlight count">{{account.swapsToMePending}}</span>  </h4>
+            {{#if account.swapsToMePending}}
             <table class="mx-auto">
                 <tr>
                     <th class="hidden">Swap ID</th>
@@ -127,7 +127,7 @@
                     <th>Claim Date</th>
                     <th>Status</th>
                 </tr>
-                {{#each swapsToMe}}
+                {{#each account.swapsToMe}}
                     {{#unless is_complete}}
                         <tr>
                             <td class="hidden">{{swap_id}}</td>
@@ -147,8 +147,8 @@
             {{/if}}
             <hr>
             <!-- traded_by == current user scenario -->
-            <h4> Swaps Requested to You  <span class="highlight count">{{add swapsByMePending newReqs}}</span></h4>
-            {{#if swapsByMePending}}
+            <h4> Swaps Requested to You  <span class="highlight count">{{add account.swapsByMePending account.newReqs}}</span></h4>
+            {{#if account.swapsByMePending}}
             <form id="accept-trade" action="/swap/accept" method="POST"></form>
             <form id="reject-trade" action="/swap/reject" method="POST"></form>
             <form id="get-shipping" action="/swap/get-shipping" method="POST"></form>
@@ -170,7 +170,7 @@
                     <th>Status</th>
                 </tr>
 
-                {{#each swapsByMe}}
+                {{#each account.swapsByMe}}
                     {{#unless is_complete}}
                         <tr>
                             <td class="hidden">{{swap_id}}</td>
@@ -208,8 +208,8 @@
                 </button>
             </div>
             <div class="sectionBottom collapse" id="collapseComplete">
-                <h4> Swaps You've Requested <span class="highlight count">{{swapsToMeComplete}}</span></h4>
-                {{#if swapsToMeComplete}}
+                <h4> Swaps You've Requested <span class="highlight count">{{account.swapsToMeComplete}}</span></h4>
+                {{#if account.swapsToMeComplete}}
                 <table class="mx-auto">
                     <tr>
                         <th class="hidden">Swap ID</th>
@@ -224,7 +224,7 @@
                         <th>Refund Date</th>
                         <th>Status</th>
                     </tr>
-                    {{#each swapsToMe}}
+                    {{#each account.swapsToMe}}
                         {{#if is_complete}}
                             <tr>
                                 <td class="hidden">{{swap_id}}</td>
@@ -246,8 +246,8 @@
                 There are no completed swaps that you requested to others.
                 {{/if}}
                 <hr>
-                <h4> Swaps Requested to You <span class="highlight count">{{swapsByMeComplete}}</span></h4>
-                {{#if swapsByMeComplete}}
+                <h4> Swaps Requested to You <span class="highlight count">{{account.swapsByMeComplete}}</span></h4>
+                {{#if account.swapsByMeComplete}}
                 <table class="mx-auto">
                     <tr>
                         <th class="hidden">Swap ID</th>
@@ -262,7 +262,7 @@
                         <th>Refund Date</th>
                         <th>Status</th>
                     </tr>
-                    {{#each swapsByMe}}
+                    {{#each account.swapsByMe}}
                         {{#if is_complete}}
                             <tr>
                                 <td class="hidden">{{swap_id}}</td>
@@ -294,11 +294,11 @@
             <button id="addWish" class="btn mt-2 mb-4 btn-primary mx-auto" onclick="window.location.href='/book/search';"> Add New Book </button>
         </div>
         <div class="slideshow-container mx-auto">
-			{{#if wishlist}}
+			{{#if account.wishlist}}
                 <div class="nav-arrows">
                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                     <a class="next" onclick="plusSlides(1)">&#10095;</a>
-                {{#each wishlist}}
+                {{#each account.wishlist}}
                     <div class="mySlides">
                         <table class="mx-auto">
                             <tr>
@@ -326,3 +326,15 @@
 
 
 <script src="../scripts/account.js"></script>
+<script>
+    var tab = {{{tab}}} || "";
+    if (tab == "wish") {
+        document.getElementById("wishlistTab").click();
+    } else if (tab == "swaps") {
+        document.getElementById("swapsTab").click();
+    } else if (tab == "books") {
+        document.getElementById("booksTab").click();
+    } else {
+        document.getElementById("profileTab").click();
+    }
+</script>
