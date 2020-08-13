@@ -73,7 +73,7 @@ UserServices.searchUsers = function(criteria, content, u_id) {
             break;
         case '3':
             var p1 = new Promise(function(resolve, reject) {
-                UserModel.searchUserByEmail(content)
+                UserModel.getUserByEmail(content)
                     .then(function(result) {
                         resolve({"users": result});
                     })
