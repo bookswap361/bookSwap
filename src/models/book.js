@@ -74,6 +74,7 @@ Book.joinAuthBook = function(info) {
     });
 }
 
+
 Book.getAvailableBooks = function(userId) {
     return mysql.query(getQuery("getAvailableBooks"), [userId]);
 };
@@ -100,6 +101,18 @@ Book.setGenre = function(genre, book_id) {
 
 Book.getTitleByListId = function(list_id) {
     return mysql.query(getQuery("getTitleByListId"), [list_id]);
+}
+
+Book.getBooksByFName = function(name) {
+    return mysql.query(getQuery("BooksByFName"), [name]);
+}
+
+Book.getBooksByLName = function(name) {
+    return mysql.query(getQuery("BooksByLName"), [name]);
+}
+
+Book.getBooksByEmail = function(email) {
+    return mysql.query(getQuery("BooksByEmail"), [email]);
 }
 
 function getQuery(type) {
@@ -202,6 +215,18 @@ function getQuery(type) {
                     INNER JOIN author a ON ba.author_id = a.author_id \
                     WHERE bo.list_id = ?;";
             break;
+            
+        case "BooksByFName":
+            query = "SELECT book.title, book.ol_key, books_owned.condition_description, book_condition.cost, user.user_id FROM book INNER JOIN books_owned ON book.book_id = books_owned.book_id INNER JOIN book_condition ON book_condition.condition_id = books_owned.condition_id INNER JOIN user ON user.user_id = books_owned.user_id WHERE user.first_name = ?";
+            break;  
+
+        case "BooksByLName":
+            query = "SELECT book.title, book.ol_key, books_owned.condition_description, book_condition.cost, user.user_id FROM book INNER JOIN books_owned ON book.book_id = books_owned.book_id INNER JOIN book_condition ON book_condition.condition_id = books_owned.condition_id INNER JOIN user ON user.user_id = books_owned.user_id WHERE user.last_name = ?";
+            break; 
+
+        case "BooksByEmail":
+            query = "SELECT book.title, book.ol_key, books_owned.condition_description, book_condition.cost, user.user_id FROM book INNER JOIN books_owned ON book.book_id = books_owned.book_id INNER JOIN book_condition ON book_condition.condition_id = books_owned.condition_id INNER JOIN user ON user.user_id = books_owned.user_id WHERE user.email = ?";
+            break;      
         }
 
     return query;
