@@ -21,14 +21,14 @@
             </table>
             <br>
             {{#if books.length}}
-                <div>
+                <div id="book_display">
                     <b>Books {{fname}} has to trade</b>
                 </div>
                 <div class="openSwaps">
                     {{#each books}}
                     <div>
-                        <div style="display:inline;padding:5px;">{{title}}</div>
-                        <div style="display:inline;padding:5px;">{{description}}</div>
+                        <div style="display:inline;padding:15px;">{{title}}</div>
+                        <div style="display:inline;padding:15px;">{{description}}</div>
                         <div style="display:inline-block;padding:5px;">
                             {{#if (checkAffordability cost @root.points)}}
                             <form action="/swap/create" method="POST" class="inline-form">
