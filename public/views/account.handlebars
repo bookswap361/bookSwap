@@ -143,12 +143,12 @@
                 {{/each}}
             </table>
             {{else}}
-            You have no open swaps that you have requested to other.
+            You have no open swaps that you have requested to others.
             {{/if}}
             <hr>
             <!-- traded_by == current user scenario -->
             <h4> Swaps Requested to You  <span class="highlight count">{{add account.swapsByMePending account.newReqs}}</span></h4>
-            {{#if account.swapsByMePending}}
+            {{#if (add account.swapsByMePending account.newReqs)}}
             <form id="accept-trade" action="/swap/accept" method="POST"></form>
             <form id="reject-trade" action="/swap/reject" method="POST"></form>
             <form id="get-shipping" action="/swap/get-shipping" method="POST"></form>
@@ -243,7 +243,7 @@
                     {{/each}}
                 </table>
                 {{else}}
-                There are no completed swaps that you requested to others.
+                There are no completed swaps that you have requested to others.
                 {{/if}}
                 <hr>
                 <h4> Swaps Requested to You <span class="highlight count">{{account.swapsByMeComplete}}</span></h4>
@@ -281,7 +281,7 @@
                     {{/each}}
                 </table>
                 {{else}}
-                There are no completed any swaps that others have requested to you.
+                There are no completed swaps that others have requested to you.
                 {{/if}}
             </div>
         </div>
