@@ -21,10 +21,11 @@
             <input type="reset" name="resetManageBtn" value="reset!" class="details btn btn-primary">
             <input type="submit" name="editBtn" value="finish changes!" class="details btn btn-primary">
         </form>
-        {{/if}}
-        
         <button type="button" data-toggle="modal" data-target="#passModal" class="details btn btn-primary">update password!</button>
         <button type="button" data-toggle="modal" data-target="#deleteModal" class="details btn btn-primary">delete account :(</button>
+        {{/if}}
+        
+        
         {{#if err}}
             <P>{{err}}</P>
         {{/if}}
