@@ -77,9 +77,10 @@
 
     <div class="container my-4 py-2">
         <h4>Open Swaps for this Book:</h4>
+            Your available points: {{points}}
             {{#if copies}}
                 {{#each copies}}
-                    <div class="row py-3 pl-4 ml-2">
+                    <div class="row py-3 pl-4 ml-2 openSwaps">
                         {{first_name}} {{last_name}} listed this book in {{condition_description}} condition on {{formatDate list_date}}
                         <BR>
                         {{#if (checkAffordability cost ../points)}}
@@ -91,7 +92,7 @@
                                 <input type="submit" value="Swap for {{cost}} points">
                             </form>
                         {{else}}
-                        You do not have enough points to trade for this copy
+                        <span> &nbsp;&nbsp; (You do not have enough points to trade for this copy) </span>
                         {{/if}}
                     </div>
                     <hr>
