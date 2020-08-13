@@ -30,7 +30,8 @@ module.exports = { makeRequest };
 
 function determineUrl(query) {
     var postfix = `search.json?q=${query.title}`;
-    if (query.author) postfix += `&author=${query.author}`;
+    if (query.title && query.author) postfix += `+${query.author}`;
+    else if (query.author) postfix += `&author=${query.author}`;
     if (query.page) postfix += `&page=${query.page}`;
     return postfix
 }
