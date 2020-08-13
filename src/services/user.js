@@ -25,6 +25,7 @@ UserServices.searchUsers = function(criteria, content, u_id) {
             break;
         case "2": //Search by last name
             userPromise = UserModel.getUserByLName;
+            break;
         case "3": //Search by email
             userPromise = UserModel.getUserByEmail;
             break;
