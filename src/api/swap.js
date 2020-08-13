@@ -4,7 +4,6 @@ var SwapServices = require("../services/swap");
 
 router.route("/create")
     .post(function(req, res, next) {
-        console.log(req.body)
         SwapServices.createSwap({"list_id": Number(req.body.list_id), "traded_by": req.body.owner_id, "traded_to": req.session.u_id, "cost": req.body.cost})
             .then(function(result) {
                 if (req.body.book_page) {
