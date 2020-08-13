@@ -124,6 +124,9 @@ AccountServices.deleteWish = function(user_id, book_id) {
 
 AccountServices.updateAccount = function(user) {
     return new Promise(function(resolve, reject) {
+        if (user.private.length > 1) {
+            user.private = user.private[1];
+        }
         UserModel.updateUser(user)
             .then(resolve)
             .catch(reject);

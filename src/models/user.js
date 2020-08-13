@@ -45,7 +45,7 @@ User.updatePoints = function(amount, user_id) {
 User.updateUser = function(user) {
     return mysql.query(getQuery("updateUser"), 
     [user.first_name, user.last_name, user.email, user.street, user.city,
-        user.state, user.zip, user.user_id]);
+        user.state, user.zip, user.private, user.user_id]);
 }
 
 User.updatePassword = function(user_id, password) {
@@ -88,7 +88,7 @@ function getQuery(type) {
 
         case "updateUser":
             query = "UPDATE user SET first_name = ?, last_name = ?, email = ?, street = ?, \
-            city = ?, state = ?, zip = ? WHERE user_id = ?";
+            city = ?, state = ?, zip = ?, private = ? WHERE user_id = ?";
             break;
         
         case "updatePassword":
