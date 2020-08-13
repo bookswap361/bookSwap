@@ -1,0 +1,48 @@
+h4, h2 {
+    color: #184d47
+}
+
+#content {
+	align-self:auto;
+	padding:20px;
+}
+
+td th {
+	padding: 0 15px;
+	text-align:center;
+}
+
+
+#book_display th {
+	background-color: #5aa1c7;
+	color:white;
+}
+
+
+#user_display th {
+	background-color: #1b6ca8;
+	color:white;
+}
+
+table {
+	width:85%;
+	font-size:16px;
+}
+
+select {
+	height:30px;
+}
+
+.btn {
+  background-color: #0c7b93;
+  color: white;
+  padding: 0.5em;
+  text-decoration: none;
+  border-color: white;
+
+}
+
+
+
+
+
