@@ -79,23 +79,22 @@
         <h4>Open Swaps for this Book:</h4>
             {{#if copies}}
                 {{#each copies}}
-                    <div class="row py-3">
-                        <div class="col-8">
-                            {{first_name}} {{last_name}} listed this book in {{condition_description}} condition on {{formatDate list_date}}.
-                            <BR>
-                            {{!-- if cant afford --}}
-                            <form action="/swap/create" method="POST">
+                    <div class="row py-3 pl-4 ml-2">
+                        {{first_name}} {{last_name}} listed this book in {{condition_description}} condition on {{formatDate list_date}}
+                        <BR>
+                        {{#if (checkAffordability cost ../points)}}
+                            <form action="/swap/create" method="POST" class="inline-form">
                                 <input hidden {{{formatForm list_id}}} name="list_id">                                
                                 <input hidden {{{formatForm user_id}}} name="owner_id">                                
                                 <input hidden {{{formatForm cost}}} name="cost">
                                 <input hidden value=1 name="book_page">
                                 <input type="submit" value="Swap for {{cost}} points">
                             </form>
-                        </div>
-
-                        </ul>
-                        <hr>
+                        {{else}}
+                        You do not have enough points to trade for this copy
+                        {{/if}}
                     </div>
+                    <hr>
                 {{/each}}
             {{/if}}
 

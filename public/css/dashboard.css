@@ -84,12 +84,12 @@ table, th {
     background-color: #f9f9f9;
     padding: 5px;
     padding-top: 12px;
-    border-bottom:1px solid rgba(88, 141, 168, 0.8);
+    border-bottom:1px solid rgba(88, 141, 168, 0.33);
 }
 
 .sectionTop {
     padding: 5px;
-    border-bottom:1px solid rgba(88, 141, 168, 0.8);
+    border-bottom:1px solid rgba(88, 141, 168, 0.33);
 }
 
 .sectionTop span {

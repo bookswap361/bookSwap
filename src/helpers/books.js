@@ -28,4 +28,9 @@ BookHbsHelpers.showResultsRange = function(page, total) {
     else return `1 to 99`;
 };
 
+BookHbsHelpers.checkAffordability = function(cost, points) {
+    if (Number(points) >= Number(cost)) return true;
+    else return false;
+};
+
 module.exports = BookHbsHelpers;
