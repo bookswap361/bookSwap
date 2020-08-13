@@ -162,6 +162,11 @@ router.route("/manage")
     .get(function(req, res, next) {
         UserServices.getUserById(req.session.u_id)
         .then(function(user) {
+            if (user[0].private == 1) {
+                user[0].private = "checked";
+            } else {
+                user[0].private = "";
+            }
             res.render("manageaccount", user[0])
         })
         .catch(function(err) {
