@@ -80,7 +80,7 @@ function getQuery(type) {
             query = "SELECT * from user WHERE email = ?";
             break;
         case "getUserByEmailSearch":
-            query = "SELECT * FROM usre where email = ? AND user_id != ?";
+            query = "SELECT * FROM user where email = ? AND user_id != ?";
             break;
         case "deleteUserById":
             query = "DELETE from user WHERE user_id = ?";
