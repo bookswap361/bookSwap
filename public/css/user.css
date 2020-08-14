@@ -3,7 +3,6 @@ h4, h2 {
 }
 
 #content {
-	text-align: center;
 	padding:20px;
 }
 
@@ -25,8 +24,9 @@ td th {
 }
 
 table {
-	width:85%;
+	width:90%;
 	font-size:16px;
+	align:center;
 }
 
 select {
