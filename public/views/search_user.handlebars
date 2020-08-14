@@ -1,18 +1,56 @@
-<div id="results">
-  {{#if result}}
-      <table><tr>
-        <th>First name</th> <th>Last Name</th> <th>email</th> <th>Available Swaps</th> <th> </th>
-      </tr>
-    {{#each result}}
-      <tr>
-        <td>{{first_name}}</td>
-        <td>{{last_name}}</td>
-        <td>{{email}}</td>
-        <td>{{swaps}}</td>
-        <td><button id="request">Request swap</button></td>
-      </tr>
-    {{/each}}
-      </table>
-  {{else}}
-    Sorry, no results matched your search.
-  {{/if}}
+<link rel="stylesheet" href="/css/user.css">
+<div id="content" class="container">
+{{#if users}}
+    <h4>Success! Results found:</h4>
+        {{#each users}}
+            <table id="user_display">
+                <tr>
+                    <th>First name</th> <th>Last Name</th> <th>contact</th>
+                </tr>
+                <tr>
+                    <td>{{fname}}</td>
+                    <td>{{lname}}</td>
+                    <td>
+                        {{#if mail}}
+                            <a id="btn" href="mailto:{{mail}}">Send email</a>
+                        {{else}}
+                            Contact information is private.
+                        {{/if}}
+                    </td>
+                </tr>
+            </table>
+            <br>
+            {{#if books.length}}
+                <table id="book_display">
+                    <tr><th colspan="3">Books {{fname}} has to trade</th>
+                </tr>
+                    {{#each books}}
+                    <tr>
+                        <td>{{title}}</td>
+                        <td>{{description}}</td>
+                        <td>
+                            {{#if (checkAffordability cost @root.points)}}
+                            <form action="/swap/create" method="POST" class="inline-form">
+                                <input hidden {{{formatForm list_id}}} name="list_id">
+                                <input hidden {{{formatForm owner_id}}} name="owner_id">
+                                <input hidden {{{formatForm cost}}} name="cost">
+                                <input type="submit" class="details btn btn-primary" value="Swap for {{cost}} points">
+                                <input hidden value=1 name="book_page">
+                            </form>
+                            {{else}}
+                            <span> &nbsp;&nbsp; (You do not have enough points to trade for this copy) </span>
+                            {{/if}}
+                        </td>
+                     </tr>
+                     {{/each}}
+            {{else}}
+            <tr><td colspan="3">
+                {{fname}} doesn't have any books available.
+            </td></tr>
+            {{/if}}
+            </table>
+        {{/each}}
+{{else}}
+<h4>Sorry, no results matched your search. <a href="/user">Search again?</a></h4>
+{{/if}}
+<div id ="success"></div>

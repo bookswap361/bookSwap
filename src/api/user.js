@@ -2,23 +2,23 @@ var express = require("express");
 var router = express.Router();
 var UserServices = require("../services/user");
 
-router.route("/user")
+router.route("/")
     .get(function(req, res) {
-        res.render("/user");
+        res.render("user");
     })
 
-//TODO
 router.route("/search")
     .get(function(req, res, next) {
-        UserServices.searchUsers(req.session.u_id, req.params.query, req.params.search_by)
-            .then(function(result) {
-                res.render('/search', result);
-            })
-            .catch(function(err) {
-                next(err);
-            })
+        UserServices.searchUsers(req.query.criteria, req.query.content, req.session.u_id)
+        .then(function(result) {
+            UserServices.getPoints(req.session.u_id)
+                .then(function(points) {
+                    res.render("search_user", {"users": result, "points": points[0].points})
+                })
+        })
+        .catch(function(err) {
+            next(err);
+        })
     })
-
-
 
 module.exports = router;
