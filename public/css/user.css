@@ -33,7 +33,7 @@ select {
 	height:30px;
 }
 
-.btn {
+#btn {
   background-color: #0c7b93;
   color: white;
   padding: 0.5em;
@@ -41,6 +41,13 @@ select {
   border-color: white;
 
 }
+
+#btn:hover
+{
+   background-color: #b52b65;
+   color:white
+}
+
 
 #request {
   background-color: #0c7b93;
