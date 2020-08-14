@@ -7,7 +7,7 @@ h4, h2 {
 }
 
 td th {
-	padding: 0 15px;
+	padding: 0 20px;
 	text-align:center;
 }
 
@@ -24,7 +24,7 @@ td th {
 }
 
 table {
-	width:90%;
+	width:100%;
 	font-size:16px;
 	align:center;
 }
@@ -46,15 +46,12 @@ select {
 {
    background-color: #b52b65;
    color:white
-}
-
-
-#request {
-  background-color: #0c7b93;
-  color: white;
+  padding: 0.5em;
+  text-decoration: none;
   border-color: white;
-	
 }
+
+
 
 
 
