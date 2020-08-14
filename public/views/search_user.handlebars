@@ -27,7 +27,7 @@
                     {{#each books}}
                     <tr>
                         <td>{{title}}</td>
-                        </td>{{description}}</td>
+                        <td>{{description}}</td>
                         <td>
                             {{#if (checkAffordability cost @root.points)}}
                             <form action="/swap/create" method="POST" class="inline-form">
